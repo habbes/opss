@@ -73,6 +73,7 @@ abstract class RequestHandler
 	 * gets a GET variable with the given name if the variable is set
 	 * @param string $name the name of the variable to retriev
 	 * @param mixed $default value returned when the variable is not set
+	 * @returns string
 	 */
 	public function getVar($name, $default = null)
 	{
@@ -83,10 +84,27 @@ abstract class RequestHandler
 	 * gets a POST variable with the given name if the variable is set
 	 * @param string $name the name of the variable to retriev
 	 * @param mixed $default value returned when the variable is not set
+	 * @return string
 	 */
 	public function postVar($name, $default = null)
 	{
 		return isset($_POST[$name])? $_POST[$name] : $default;
+	}
+	
+	/**
+	 * gets a FILE variable with the given name and returns an object with the file's metadata
+	 * @param string $name
+	 * @param mixed $default
+	 * @return StdClass
+	 */
+	public function fileVar($name, $default = null)
+	{
+		if(!isset($_FILES[$name]))
+			return $default;
+		
+		$file = $_FILES[$name];
+		
+		return (object) $file;
 	}
 	
 }

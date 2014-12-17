@@ -20,10 +20,9 @@ class TestHandler extends RequestHandler
 	public function post()
 	{
 		
-		$file = $_FILES['file'];
-		
-		$name = $file['name'];
-		$path = $file['tmp_name'];
+		$file = $this->fileVar("file");
+		$name = $file->name;
+		$path = $file->tmp_name;
 		$directory = "test";
 		try
 		{

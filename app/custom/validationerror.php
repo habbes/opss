@@ -7,6 +7,7 @@
  */
 class ValidationError
 {
+	//User errors
 	const USER_USERNAME_INVALID = 1;
 	const USER_PASSWORD_INVALID = 2;
 	const USER_EMAIL_INVALID = 3;
