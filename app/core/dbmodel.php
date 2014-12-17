@@ -28,7 +28,7 @@ class DBModel extends Model
 	public static function table()
 	{
 		//TODO: find a way to cache the table name
-		return Utils::stringToLowerPlural(get_called_class());
+		return Utils::camelToDelimitedCasePlural(get_called_class());
 		
 	}
 	
@@ -101,9 +101,10 @@ class DBModel extends Model
 	/**
 	 * called before the model is inserted in the database
 	 * if false is returned, the model will not be inserted in the database
+	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onInsert()
+	protected function onInsert(&$errors = null)
 	{
 		return true;
 	}
@@ -111,9 +112,10 @@ class DBModel extends Model
 	/**
 	 * called before the model is updated in the database
 	 * if false is returned, the model will not be updated
+	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onUpdate()
+	protected function onUpdate(&$errors = null)
 	{
 		return true;
 	}
@@ -121,9 +123,10 @@ class DBModel extends Model
 	/**
 	 * called before the model is deleted from the database
 	 * if false is returned, the model will not be deleted
+	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onDelete()
+	protected function onDelete(&$errors = null)
 	{
 		return true;
 	}
@@ -134,9 +137,15 @@ class DBModel extends Model
 	 */
 	protected function insert()
 	{
-		
-		if(!$this->onInsert() || !$this->validate()){
+		//potential validation errors will be stored here
+		$errors = [];
+		if(!$this->onInsert($errors) || !$this->validate($errors) || count($errors) > 0){
+			//throw exception
+			$ex = new ValidationException();
+			$ex->setErrors($errors);
+			throw $ex;
 			return false;
+			
 		}
 		
 		$q1 = "INSERT INTO ".static::table(). " (";
@@ -182,8 +191,15 @@ class DBModel extends Model
 	 */
 	protected function update()
 	{
-		if(!$this->onUpdate() || !$this->validate()){
+		//potential validation errors will be stored here
+		$errors = [];
+		if(!$this->onUpdate($errors) || !$this->validate($errors) || count($errors) > 0){
+			//throw exception
+			$ex = new ValidationException();
+			$ex->setErrors($errors);
+			throw $ex;
 			return false;
+			
 		}
 		$fields = static::getDbFields();
 		$query = "UPDATE " . static::table() . " SET";
@@ -217,8 +233,11 @@ class DBModel extends Model
 	 */
 	public function delete()
 	{
-		if(!$this->onDelete()){
-			return false;
+		$errors = [];
+		if(!$this->onDelete($errors) || count($errors) > 0){
+			$ex = new ValidationException();
+			$ex->setErrors($errors);
+			throw $ex;
 		}
 		$query = "DELETE FROM " . static::table();
 		$query .= " WHERE id=?";

@@ -20,7 +20,7 @@ class Config
 	 */
 	private static function loadConfig(){
 		if(!self::$config){
-			require_once DIR_CONFIG . DIRECTORY_SEPARATOR . "config.php";
+			require_once DIR_CONFIG . DIRECTORY_SEPARATOR . "configurations.php";
 			self::$config = $config;
 		}
 		
@@ -36,7 +36,7 @@ class Config
 	 */
 	public static function __callStatic($name, $arguments)
 	{
-		$key = empty($arguments)? null : $argumets[0];
+		$key = empty($arguments)? null : $arguments[0];
 		return self::getConfigValue($name, $key);
 	}
 	

@@ -55,4 +55,27 @@ class DataObject
 	public function __unset($name){
 		unset($this->data[$name]);
 	}
+	
+	/**
+	 * returns all the data in this object in a dictionary array
+	 * @return array
+	 */
+	public function toArray()
+	{
+		$a = array();
+		foreach($this->data as $key => $value){
+			$a[$key] = $value;
+		}
+		
+		return $a;
+	}
+	
+	/**
+	 * returns the  number of data elements in this object
+	 * @return number
+	 */
+	public function dataCount()
+	{
+		return count($this->data);
+	}
 }

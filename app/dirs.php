@@ -13,3 +13,4 @@ define("DIR_MODELS",DIR_APP.$ds."models");
 define("DIR_VIEWS",DIR_APP.$ds."views");
 define("DIR_CONFIG", DIR_APP.$ds."config");
 define("DIR_CUSTOM", DIR_APP.$ds."custom");
+define("DIR_DATA", DIR_APP.$ds."data");

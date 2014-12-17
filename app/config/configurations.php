@@ -5,7 +5,7 @@ $config = [
 			"hostname" => "localhost",
 			"username" => "root",
 			"password" => "",
-			"database" => "",
+			"dbname" => "aerc_opss",
 		],
 		
 		"smtp" => [
