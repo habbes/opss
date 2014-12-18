@@ -1,0 +1,25 @@
+body{
+    margin: 0px;
+}
+#header{
+    background-color: rgb(30,120,255);
+}
+#main-title{
+    position: relative;
+    left: 0px;
+    color: #111;
+    font-size: 1.2em;
+    font-family: calibri;
+    padding: 9px 0px 10px 50px;
+    height: 50%;
+    width: 200px;
+}
+#main-title > a{
+    text-decoration: none;
+    color: #111;
+}
+#main-content-area{
+    height: auto;
+    background-color: rgb(255,255,255);
+}
+

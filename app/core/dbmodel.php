@@ -126,7 +126,7 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onDelete(&$errors = null)
+	protected function onDelete()
 	{
 		return true;
 	}
