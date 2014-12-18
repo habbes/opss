@@ -74,13 +74,33 @@ class Mailer
 		self::$fromName = Config::smtp("from_name");
 	}
 	
+	/**
+	 * 
+	 * @param Swift_Message $msg
+	 * @return number number of successful emails
+	 */
+	public static function send($msg)
+	{
+		$msg->setFrom([self::$fromEmail => self::$fromName]);
+		return self::getInstance()->send($msg);
+	}
+	
+	/**
+	 * sends an email with html content as body
+	 * @param string $email
+	 * @param string $name
+	 * @param string $subject
+	 * @param string $htmlbody
+	 * @param string $textbody the alternative text to display if the client does support html,
+	 * if this is not provided, a text version will be generated from stripping the tags off the html
+	 * @return number|boolean
+	 */
 	public static function sendHtml($email, $name, $subject, $htmlbody, $textbody="")
 	{
 		$mailer = self::getInstance();
 		$msg = Swift_Message::newInstance($subject);
 		$msg->setTo([$email]);
 		$msg->setBody($htmlbody, "text/html");
-		$msg->setFrom([self::$fromEmail => self::$fromName]);
 		
 		if(empty($textbody)){
 			$textbody = html_entity_decode(strip_tags($htmlbody));
@@ -89,12 +109,13 @@ class Mailer
 		$msg->addPart($textbody, "text/plain");
 		
 		try {
-			return $mailer->send($msg);
+			return self::send($msg);
 		}
 		catch(Exception $e){
 			echo $e->getMessage();
 			return false;
 		}
 	}
+	
 	
 }

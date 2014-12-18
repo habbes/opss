@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * represents a user
+ * @author Habbes
+ *
+ */
 class User extends DBModel
 {
 	protected $username;
@@ -16,6 +21,8 @@ class User extends DBModel
 	protected $residence;
 	protected $nationality;
 	protected $gender;
+	
+	private $_messageBox;
 	
 	/**
 	 * 
@@ -45,6 +52,15 @@ class User extends DBModel
 	public function isEmailActivated()
 	{
 		return (boolean) $this->email_activated;
+	}
+	
+	/**
+	 * 
+	 * @return number
+	 */
+	public function getType()
+	{
+		return (int) $this->type;
 	}
 	
 	/**
@@ -112,18 +128,60 @@ class User extends DBModel
 	}
 	
 	/**
-	 * finds the user with the given username or email
-	 * @param string $unameOrEmail username or email, the format of the string will indicate whether
-	 * a search is made by email or by username
-	 * @return User
+	 * get the role associated with this user
+	 * @return UserRole
 	 */
-	public static function findByUsernameOrEmail($unameOrEmail)
+	public function getRole()
 	{
-		if(User::isValidEmail($unameOrEmail)){
-			return static::findByEmail($unameOrEmail);
-		}
-		return static::findByUsername($unameOrEmail);
-		
+		return UserRole::forUser($this);
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isAdmin()
+	{
+		return $this->getType() == UserType::ADMIN;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isResearcher()
+	{
+		return $this->getType() == UserType::RESEARCHER;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isReviewer()
+	{
+		return $this->getType() == UserType::REVIEWER;
+	}
+	
+	/**
+	 * 
+	 * @return MessageBox
+	 */
+	public function getMessageBox()
+	{
+		if(!$this->_messageBox)
+			$this->_messageBox = MessageBox::findByUser($this);
+		return $this->_messageBox;
+	}
+	
+	/**
+	 * send a message to this user
+	 * @param Message $msg
+	 * @return Message the message that has been sent
+	 */
+	public function sendMessage($msg)
+	{
+		return $msg->sendTo($this);
 	}
 	
 	protected function validate(array &$errors)
@@ -170,6 +228,21 @@ class User extends DBModel
 		
 		return true;
 		
+	}
+	
+	/**
+	 * finds the user with the given username or email
+	 * @param string $unameOrEmail username or email, the format of the string will indicate whether
+	 * a search is made by email or by username
+	 * @return User
+	 */
+	public static function findByUsernameOrEmail($unameOrEmail)
+	{
+		if(User::isValidEmail($unameOrEmail)){
+			return static::findByEmail($unameOrEmail);
+		}
+		return static::findByUsername($unameOrEmail);
+	
 	}
 	
 	

@@ -9,13 +9,22 @@ class DataObject
 {
 	protected $data;
 	
-	public function __construct($data = null)
+	public function __construct($data = array())
 	{
 		$this->data = array();
-		if(gettype($data) == "array"){
-			foreach($data as $key=>$value){
-				$this->data[$key] = $value;
-			}
+		$this->loadData($data);
+	}
+	
+	
+	/**
+	 * loads the data in the specified assocative array
+	 * to the data in this object
+	 * @param array $data
+	 */
+	public function loadData($data)
+	{
+		foreach($data as $key => $val){
+			$this->set($key, $val);
 		}
 	}
 	

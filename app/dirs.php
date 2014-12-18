@@ -14,3 +14,4 @@ define("DIR_VIEWS",DIR_APP.$ds."views");
 define("DIR_CONFIG", DIR_APP.$ds."config");
 define("DIR_CUSTOM", DIR_APP.$ds."custom");
 define("DIR_DATA", DIR_APP.$ds."data");
+define("DIR_MESSAGES", DIR_DATA.$ds."messages");
