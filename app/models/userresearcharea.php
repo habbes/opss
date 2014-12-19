@@ -58,6 +58,15 @@ class UserResearchArea extends DBModel
 	
 	/**
 	 * 
+	 * @return number PaperGroup
+	 */
+	public function getGroup()
+	{
+		return (int) $this->group;
+	}
+	
+	/**
+	 * 
 	 * @param User $user
 	 * @return array(UserResearchArea)
 	 */

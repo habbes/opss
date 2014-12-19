@@ -1,6 +1,6 @@
 <?php
 
-class Email extends MessageTemplate
+class Email
 {
 	
 	protected $innerMsg;

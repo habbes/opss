@@ -23,6 +23,9 @@ class User extends DBModel
 	protected $gender;
 	
 	private $_messageBox;
+	private $_thematicAreas;
+	private $_collaborativeAreas;
+	private $_role;
 	
 	/**
 	 * 
@@ -110,6 +113,42 @@ class User extends DBModel
 		return true;
 	}
 	
+	public function addThematicArea($area)
+	{
+		
+	}
+	
+	public function getThematicAreas()
+	{
+		if(!$this->_thematicAreas){
+			$areas = UserResearchArea::findThematicByUser($this);
+			$this->_thematicAreas = array();
+			foreach($areas as $area){
+				$this->_thematicAreas[] = $area->getGroup();
+			}
+		}
+		return $this->_thematicAreas;
+			
+	}
+	
+	public function addCollaborativeArea($area)
+	{
+		
+	}
+	
+	public function getCollaborativeAreas()
+	{
+		if(!$this->_collaborativeAreas){
+			$areas = UserResearchArea::findCollaborativeByUser($this);
+			$this->_collaborativeAreas = array();
+			foreach($areas as $area){
+				$this->_collaborativeAreas[] = $area->getGroup();
+			}
+		}
+		
+		return $this->_collaborativeAreas;
+	}
+	
 	/**
 	 * checks whether a user with the given credentials exists
 	 * and returns that User
@@ -133,7 +172,9 @@ class User extends DBModel
 	 */
 	public function getRole()
 	{
-		return UserRole::forUser($this);
+		if(!$this->_role)
+			$this->_role = UserRole::forUser($this);
+		return $this->_role;
 	}
 	
 	/**
