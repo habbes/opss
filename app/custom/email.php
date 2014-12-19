@@ -1,6 +1,6 @@
 <?php
 
-class Email extends View
+class Email extends MessageTemplate
 {
 	
 	protected $innerMsg;
@@ -39,7 +39,7 @@ class Email extends View
 	public function addRecipient($email, $name = "")
 	{
 		if($name){
-			$this->innerMsg->addTo($email, $name)
+			$this->innerMsg->addTo($email, $name);
 		}
 		else {
 			$this->innerMsg->addTo($email);
@@ -67,12 +67,16 @@ class Email extends View
 	
 	/**
 	 * sets the body of the message with the template saved on the file
-	 * @param unknown $template
+	 * @param string $template
+	 * @param array $vars a mapping of placeholder names to values
 	 */
-	public function setBodyFromTemplate($template, $args = array)
+	public function setBodyFromTemplate($template, $vars = array())
 	{
-		$this->data->loadData($args);
-		$this->setBody($this->read($template));
+		$path = $this->template($template);
+		$mt = new MessageTemplate();
+		$mt->setTemplatePath($path);
+		$mt->setVars($vars);
+		$this->setBody($mt->getOutput());
 	}
 	
 	/**
@@ -93,7 +97,7 @@ class Email extends View
 	public function attachFromPath($path, $filename, $type)
 	{
 		$this->innerMsg->attach(
-				Swift_Attachment::fromPath($path, $type)->setFilename($filename);
+				Swift_Attachment::fromPath($path, $type)->setFilename($filename)
 		);
 	}	
 	

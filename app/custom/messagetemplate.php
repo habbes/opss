@@ -45,6 +45,17 @@ class MessageTemplate
 	}
 	
 	/**
+	 * set each of the var in the given array to the specified value
+	 * @param array $vars
+	 */
+	public function setVars($vars)
+	{
+		foreach($vars as $name => $value){
+			$this->setVar($name, $value);
+		}
+	}
+	
+	/**
 	 * gets the value set fo the given placeholder variable or the
 	 * default val if no value has been set
 	 * @param string $name
