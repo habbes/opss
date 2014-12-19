@@ -26,7 +26,7 @@ class JsonObject extends DataObject
 	 */
 	public static function decode($json)
 	{
-		$data = json_decode($json);
+		$data = json_decode($json, true);
 		return new static($data);
 	}
 	

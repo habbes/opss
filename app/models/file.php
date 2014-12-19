@@ -38,13 +38,12 @@ class File extends DBModel
 		$file->filetype = $finfo->file($sourcePath);
 		$file->directory = $directory;
 		$file->filename = $filename;
-		$ds = DIRECTORY_SEPARATOR;
-		$file->inner_filename = Utils::uniqueFilename($file->directory, $ds);
 		
 		//create directory if it doesn't exits
-		if(!file_exists($file->getDirectory())){
-			mkdir($file->getDirectory(), $recursive = true);
-		}
+		$file->ensureDirectoryExists();
+		$file->inner_filename = Utils::uniqueFilename($file->getDirectory());
+		
+		
 		
 		//move or copy depending on whether or not the file is from upload
 		if($fromUpload){
@@ -71,6 +70,33 @@ class File extends DBModel
 	public static function createFromUpload($filename, $directory, $tempname)
 	{
 		return static::create($filename, $directory, $tempname, true);
+	}
+	
+	/**
+	 * creates a file from the specified content
+	 * @param string $directory where to save the file
+	 * @param string $content
+	 * @return File
+	 */
+	public static function createFromContent($directory, $content)
+	{
+		$file = new File();
+		$file->directory = $directory;
+		$file->ensureDirectoryExists();
+		$file->inner_filename = Utils::uniqueFilename($file->getDirectory());
+		file_put_contents($file->getFilepath(), $content);
+		return $file->save();
+	}
+	
+	/**
+	 * creates this file's directory if it does not exist
+	 */
+	private function ensureDirectoryExists()
+	{
+		//create directory if it doesn't exits
+		if(!file_exists($file->getDirectory())){
+			mkdir($file->getDirectory(), $recursive = true);
+		}
 	}
 	
 	/**

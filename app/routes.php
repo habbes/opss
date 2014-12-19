@@ -5,8 +5,6 @@
  */
 $routes = [
 	['^test\/?$', "Test"],
-	['^test\/(\d+)$', "Test"],
-	
-	
+	['^test\/(\d+)$', "Test"]
 	
 ];
