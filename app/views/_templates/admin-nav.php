@@ -1,7 +1,7 @@
 <div class="col-sm-3 col-md-2 sidebar">
 	<div class="nav nav-sidebar" id="titles">Notifications</div>
 		<ul class="nav nav-sidebar">
-				<li class="active"><a href="#">All no	span class="sr-only">(current)</span></a></li>
+				<li class="active"><a href="#">All notifications<span class="sr-only">(current)</span></a></li>
 				<li><a href="#">Unread</a></li>
 		</ul>
 		<div class="nav nav-sidebar" id="titles">Papers</div>

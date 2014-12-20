@@ -7,13 +7,13 @@
 	<meta charset="UTF-8">
 	<title><?=isset($data->pageTitle)?$data->pageTitle:"Aerc | Title"?></title>
 		<!--<base href="http://localhost/mvc/project/public/" >-->
-        <link rel="stylesheet" type="text/css" href="css/home.css">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="http://localhost/mvc/project/public/css/home.css">
+        <link rel="stylesheet" type="text/css" href="http://localhost/mvc/project/public/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="css/dashboard.css">
+		<link rel="stylesheet" type="text/css" href="http://localhost/mvc/project/public/css/dashboard.css">
         <!-- <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">-->
 	<style type="text/css">
 	#bs-example{
@@ -40,7 +40,7 @@
 </div>
 <div class="container-fluid">
 	<div class="row">
-	<?=isset($data->pageBody)?$data->pageBody:"There is nothing to show!";?>
+	<?=$data->pageBody;?>
 	</div>
 </div>
 <div id="footer">
