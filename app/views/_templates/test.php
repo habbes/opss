@@ -1,8 +1,4 @@
-<html>
-	<head>
-		<title>Test</title>
-	</head>
-	<body>
+
 		<h3>Upload</h3>
 		<form method="post" enctype="multipart/form-data">
 			<input type="file" name="file"/>
@@ -18,5 +14,3 @@
 			
 		}?>
 		</ul>
-	</body>
-</html>

@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title><?=isset($data->pageTitle)?$data->pageTitle:"Aerc | Title"?></title>
+	<title><?=$data->pageTitle?></title>
 		<!--<base href="http://localhost/mvc/project/public/" >-->
         <link rel="stylesheet" type="text/css" href="http://localhost/mvc/project/public/css/home.css">
         <link rel="stylesheet" type="text/css" href="http://localhost/mvc/project/public/css/bootstrap.min.css">
@@ -29,7 +29,7 @@
     <ul class="nav nav-tabs">
         <li class="active"><a href="#">Home</a></li>
         <li class="dropdown pull-right">
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=isset($data->userName)?$data->userName:"User";?><b class="caret"></b></a>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=$data->userName?><b class="caret"></b></a>
             <ul class="dropdown-menu">
                 <li><a href="#">Profile</a></li>
                 <li class="divider"></li>

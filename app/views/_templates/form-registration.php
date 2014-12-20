@@ -4,8 +4,8 @@
       					<legend class="">Personal info</legend>
     				<div class="form-group">
       					<!-- Title -->
-      					<label class="control-label col-sm-1"  for="title">Title</label>
-      					<div class="col-sm-3">
+      					<label class="control-label col-sm-1 col-lg-2"  for="title">Title</label>
+      					<div class="col-sm-3 col-md-5">
       						<select class="form-control" name="title">
       						<option>--Select One--</option>
       							<option>Doctor</option>
@@ -18,8 +18,8 @@
     				</div>
 				    <div class="form-group">
 				      <!-- First name -->
-				      <label class="control-label col-sm-1" for="email">First name</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="email">First name</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="email" name="firstname" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="firstNameErrorMessage"></span>
 				        <p class="help-block">Please provide your first name</p>
@@ -27,8 +27,8 @@
 				    </div>
 				    <div class="form-group">
 				      <!-- Second name -->
-				      <label class="control-label col-sm-1" for="email">Second name</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="email">Second name</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="secondname" name="secondname" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="secondNameErrorMessage"></span>
 				        <p class="help-block">Please provide your second name</p>
@@ -36,8 +36,8 @@
 				    </div>
  					 <div class="form-group">
 				      <!-- Gender -->
-				      <label class="control-label col-sm-1" for="email">Gender</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="email">Gender</label>
+				      <div class="col-sm-3 col-md-5">
 				      	<label class="radio-inline"><input type="radio" value="1" name="gender">Male</label>
 				      	<label class="radio-inline"><input type="radio" value="2" name="gender"></input>Female</label>
 				      	<span class="help-block alert-danger" id="genderErrorMessage"></span>
@@ -46,8 +46,8 @@
 				    </div>
 				    <div class="form-group">
       					<!-- Nationality -->
-      					<label class="control-label col-sm-1"  for="username">Country of nationality</label>
-      					<div class="col-sm-3">
+      					<label class="control-label col-sm-1 col-lg-2"  for="username">Country of nationality</label>
+      					<div class="col-sm-3 col-md-5">
       						<select class="form-control" title="select your country of nationality" name="nationality">
       							<option>--Select One--</option>
       						</select>
@@ -57,8 +57,8 @@
     				</div>
     				<div class="form-group">
       					<!-- Residence -->
-      					<label class="control-label col-sm-1"  for="username">Country of residence</label>
-      					<div class="col-sm-3">
+      					<label class="control-label col-sm-1 col-lg-2"  for="username">Country of residence</label>
+      					<div class="col-sm-3 col-md-5">
       						<select class="form-control" title="select your country of residence" name="residence">
       							<option>--Select One--</option>
       						</select>
@@ -68,8 +68,8 @@
     				</div>
     				<div class="form-group">
 				      <!-- E-mail -->
-				      <label class="control-label col-sm-1" for="email">Email</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="email">Email</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="email" id="email" name="email" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="emailErrorMessage"></span>
 				        <p class="help-block">Please provide your email</p>
@@ -77,8 +77,8 @@
 				    </div>
 				    <div class="form-group">
 				      <!-- Address -->
-				      <label class="control-label col-sm-1" for="email">Address</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="email">Address</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="address" name="address" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="addressErrorMessage"></span>
 				        <p class="help-block">Please provide your address</p>
@@ -89,8 +89,8 @@
 				    	<legend>Area of specialization</legend>
 				    	<div class="form-group">
 	      					<!-- Thematic research -->
-	      					<label class="control-label col-sm-1"  for="username">Thematic research</label>
-	      					<div class="col-sm-3">
+	      					<label class="control-label col-sm-1 col-lg-2"  for="username">Thematic research</label>
+	      					<div class="col-sm-3 col-md-5">
 	      						<select class="form-control" title="select your thematic research" name="thematic_area">
 	      							<option>A:Poverty,Income Distribution and Food Security</option>
 	      							<option>B:Macroeconomics Policies,Investments and Growth</option>
@@ -105,8 +105,8 @@
     					</div>
     					<div class="form-group">
 	      					<!-- collaborative research -->
-	      					<label class="control-label col-sm-1"  for="username">Collaborative research</label>
-	      					<div class="col-sm-3">
+	      					<label class="control-label col-sm-1 col-lg-2"  for="username">Collaborative research</label>
+	      					<div class="col-sm-3 col-md-5">
 	      						<select class="form-control" title="select your thematic research" name="collaborative_area">
 	      							<option>A:Poverty,Income Distribution and Food Security</option>
 	      							<option>B:Macroeconomics Policies,Investments and Growth</option>
@@ -124,8 +124,8 @@
 				    	<legend>Account access info</legend>
 				    	<div class="form-group">
 				      <!-- username -->
-				      <label class="control-label col-sm-1" for="username">User name</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="username">User name</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="username" name="username" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="usernameErrorMessage"></span>
 				        <p class="help-block">Please provide your username, you will use this user name to access your account</p>
@@ -133,8 +133,8 @@
 				    </div>
 				    <div class="form-group">
 				      <!-- password -->
-				      <label class="control-label col-sm-1" for="password">Password</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="password">Password</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="password" id="password" name="password" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="passwordErrorMessage"></span>
 				        <p class="help-block">Please provide your password, you will use this password to access your account</p>
@@ -142,8 +142,8 @@
 				    </div>
 				    <div class="form-group">
 				      <!-- password(confirm) -->
-				      <label class="control-label col-sm-1" for="password_confirm">Confirm password</label>
-				      <div class="col-sm-3">
+				      <label class="control-label col-sm-1 col-lg-2" for="password_confirm">Confirm password</label>
+				      <div class="col-sm-3 col-md-5">
 				        <input type="password" onkeyup="check()" id="password_confirm" name="password_confirm" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" id="password_confirmErrorMessage"></span>
 				        <p class="help-block">Please confirm your password</p>
@@ -156,7 +156,7 @@
       					<!-- Button -->
       						<div class="col-sm-offset-1">
         						<button type="submit" class="btn btn-success inline">Proceed</button>
-        						<button style="margin-left: 190px" type="reset" class="btn btn-fail">Clear</button>
+        						<button style="margin-left: 280px" type="reset" class="btn btn-fail">Clear</button>
      						</div>
     					</div>
     				</fieldset>
