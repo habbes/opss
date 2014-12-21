@@ -2,7 +2,8 @@ body{
     margin: 0px;
 }
 #header{
-    background-color: rgb(30,120,255);
+    background-color: #fff;
+
 }
 #main-title{
     position: relative;
@@ -21,5 +22,20 @@ body{
 #main-content-area{
     height: auto;
     background-color: rgb(255,255,255);
+}
+#inputUsername{
+	border-radius: 4px 4px 0 0;
+}
+#inputPassword{
+    margin-bottom: 10px;
+    border-radius:  0 0 4px 4px;
+}
+#titles{
+	padding-left: 10px;
+	font-size: 1.2em;
+	color: #999;
+}
+#footer{
+	background-color: rgb(245,245,245);
 }
 
