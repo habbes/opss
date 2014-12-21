@@ -23,7 +23,7 @@
 		<ul class="list-group">
 		<?php foreach($data->get('files', []) as $file) {
 			?>
-		<li   class="list-group-item"><span class="glyphicon glyphicon-file"></span><a href="test/<?= $file->getId()?>"><?= $file->getFilename() ?></a></li>
+		<li   class="list-group-item"><span class="glyphicon glyphicon-file"></span>&nbsp;<a href="test/<?= $file->getId()?>"><?= $file->getFilename() ?></a></li>
 			<?php 
 			
 		}?>
