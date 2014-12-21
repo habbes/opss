@@ -5,14 +5,14 @@
 					<div class="form-group">
 						<label class="control-label col-sm-1 col-lg-4"  for="title">Select file</label>
 						<div class="col-sm-3 col-md-5">
-							<input type="file" name="file" class="form-control"/>
+							<input type="file" name="file" class="form-control input-md"/>
 							<p class="help-block">Please choose file to upload</p>
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-1 col-lg-4" for="">Finish him!!</label>
 						<div class="col-sm-3 col-md-5">
-							<button type="submit" value="Upload" class="btn btn-success form-control">Upload</button>
+							<button type="submit" value="Upload" class="btn btn-success">Upload</button>
 						</div>
 					</div>
 				</form>

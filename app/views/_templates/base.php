@@ -6,11 +6,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?=$data->pageTitle?></title>
-        <link rel="stylesheet" type="text/css" href="http://localhost/aerc_opss/app/public/css/home.css">
-        <link rel="stylesheet" type="text/css" href="http://localhost/aerc_opss/app/public/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="http://localhost/aerc_opss/app/public/css/dashboard.css">
-        <link rel="stylesheet" type="text/css" href="http://localhost/aerc_opss/app/public/css/bootstrap-theme.min.css">
-        <script type="text/javascript" src="http://localhost/aerc_opss/app/public/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/home.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/dashboard.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/bootstrap-theme.min.css">
+        <script type="text/javascript" src="<?=URL_ROOT?>/app/public/js/bootstrap.min.js"></script>
         
         <!-- 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -23,7 +23,6 @@
 <body>
 <div class="navbar navbar-fixed-top" id="header" role="navigation">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#">Home</a></li>
         <li class="dropdown pull-right">
             <a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=$data->userName?><b class="caret"></b></a>
             <ul class="dropdown-menu">
