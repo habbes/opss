@@ -7,6 +7,7 @@ class SubmitView extends View
 		$this->data->pageTitle = "Submit";
 		$this->data->pageHeading = "Submit: Researcher";
 		$this->data->userName = "Mr Clement";
+		$this->data->countries = $params->countries;
 		$this->data->pageContent = $this->read("form-proposal-submission");
 		$this->data->nav = $this->read("researcher-nav");
 		$this->data->pageBody = $this->read("main-layout");

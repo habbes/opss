@@ -6,11 +6,11 @@
 <head>
 	<meta charset="UTF-8">
 	<title><?=$data->pageTitle?></title>
-        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/home.css">
-        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/dashboard.css">
-        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/bootstrap-theme.min.css">
-        <script type="text/javascript" src="<?=URL_ROOT?>/app/public/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/home.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/dashboard.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/bootstrap-theme.min.css">
+        <script type="text/javascript" src="<?=URL_ROOT?>/public/js/bootstrap.min.js"></script>
         
         <!-- 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
@@ -40,7 +40,7 @@
 </div>
 <div id="footer">
 	<div class="col-sm-5 col-sm-offset-4">
-		<p class="muted credit">Contact us on <a target="_blank" href="http://research@aercafrica.org">research@aercafrica.org</a></p>
+		<p class="muted credit">Contact us on <a href="mailto:research@aercafrica.org">research@aercafrica.org</a></p>
 	</div>
 </div>
 

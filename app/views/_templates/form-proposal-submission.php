@@ -55,7 +55,7 @@
       					<div class="col-sm-3 col-md-5">
       						<select class="form-control" title="select your country of residence" name="residence">
       							<option>--Select One--</option>
-      							<?php foreach(file("app/sys_data/countries-en",FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $country){ ?>
+      							<?php foreach($data->countries as $country){ ?>
       								<option><?=$country?></option>
       							<?php } ?>
       						</select>
