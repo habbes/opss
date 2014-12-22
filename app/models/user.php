@@ -113,11 +113,24 @@ class User extends DBModel
 		return true;
 	}
 	
+	/**
+	 * add the specified research area to the list
+	 * this user's areas of thematic research
+	 * @param int $area PaperGroup
+	 */
 	public function addThematicArea($area)
 	{
-		
+		if(!in_array($area, $this->getCollaborativeAreas())){
+			UserResearchArea::createThematic($this, $area);
+			array_push($this->_thematicAreas, $area);
+		}
 	}
 	
+	/**
+	 * get all the areas of research for thematic papers for this
+	 * user
+	 * @return array(int) elements are from PaperGroup
+	 */
 	public function getThematicAreas()
 	{
 		if(!$this->_thematicAreas){
@@ -131,11 +144,23 @@ class User extends DBModel
 			
 	}
 	
+	/**
+	 * add the specified research area to this user's list of
+	 * areas of collaborative research
+	 * @param int $area PaperGroup
+	 */
 	public function addCollaborativeArea($area)
 	{
-		
+		if(!in_array($area, $this->getCollaborativeAreas())){
+			UserResearchArea::createCollaborative($this, $area);
+			array_push($this->_collaborativeAreas, $area);
+		}
 	}
 	
+	/**
+	 * get all the areas of collaborative research for this user
+	 * @return array(int) elements are from PaperGroup
+	 */
 	public function getCollaborativeAreas()
 	{
 		if(!$this->_collaborativeAreas){
