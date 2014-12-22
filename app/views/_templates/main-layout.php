@@ -1,0 +1,3 @@
+<?=$data->nav?>
+
+          <?=$data->pageContent?>

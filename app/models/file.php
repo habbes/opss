@@ -137,7 +137,7 @@ class File extends DBModel
 		return true;
 	}
 	
-	protected function validate()
+	protected function validate(array &$errors)
 	{
 		if(!file_exists($this->getFilepath()))
 			return false;

@@ -1,10 +1,10 @@
 <?php
-class FormHandler extends RequestHandler
+class SubmitHandler extends RequestHandler
 {
 	public function show()
 	{
 		//$this->viewParams->form = "this is a test";
-		$this->renderView("Form");
+		$this->renderView("submit");
 	}
 	public function get()
 	{

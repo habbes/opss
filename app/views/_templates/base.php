@@ -1,22 +1,49 @@
+<?php 
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
-	<title>AERC | OPSSS</title>
-		<base href="http://localhost/aerc_opss/public/" >
-        <link rel="stylesheet" type="text/css" href="bootstrap/css/home.css">
-        <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
+	<meta charset="UTF-8">
+	<title><?=$data->pageTitle?></title>
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/home.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/dashboard.css">
+        <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/app/public/css/bootstrap-theme.min.css">
+        <script type="text/javascript" src="<?=URL_ROOT?>/app/public/js/bootstrap.min.js"></script>
+        
+        <!-- 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+		-->
+      
 </head>
-	<body>
-		<nav class="navbar navbar-inverse navbar-fixed-top " id="header" role="navigation" >
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<img class="navbar-brand" src="images/logo.png" >
-				</div>
-		</div>
-		</nav>
-		<div class="container-fluid" style="margin-top:51px">
-			<!-- here is where you echo the login form -->
-		</div>
-	</body>
+<body>
+<div class="navbar navbar-fixed-top" id="header" role="navigation">
+    <ul class="nav nav-tabs">
+        <li class="dropdown pull-right">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><?=$data->userName?><b class="caret"></b></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">Profile</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Log out</a></li>
+            </ul>
+        </li>
+    </ul>
+</div>
+<div class="container-fluid">
+	<div class="row">
+	<?=$data->pageBody;?>
+	</div>
+</div>
+<div id="footer">
+	<div class="col-sm-5 col-sm-offset-4">
+		<p class="muted credit">Contact us on <a target="_blank" href="http://research@aercafrica.org">research@aercafrica.org</a></p>
+	</div>
+</div>
+
+</body>
 </html>
-		
+	

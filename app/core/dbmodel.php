@@ -93,7 +93,7 @@ class DBModel extends Model
 	 * if false is returned, the model will not be saved
 	 * @return boolean
 	 */
-	protected function validate()
+	protected function validate(array &$errors)
 	{
 		return true;
 	}
