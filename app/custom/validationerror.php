@@ -20,6 +20,7 @@ class ValidationError
 	const USER_RESIDENCE_EMPTY = 10;
 	const USER_NATIONALITY_EMPTY = 11;
 	const USER_GENDER_INVALID = 12;
+	const PAPER_TYPE_INVALID = 13;
 	
 	
 	
