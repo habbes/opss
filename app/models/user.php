@@ -284,7 +284,7 @@ class User extends DBModel
 		if(!self::isValidEmail($this->email)){
 			$errors[] = ValidationError::USER_EMAIL_INVALID;
 		}
-		if(static::findByUsername($username)){
+		if(static::findByUsername($this->username)){
 			$errors[] = ValidationError::USER_USERNAME_UNAVAILABLE;
 		}
 		if(static::findByEmail($this->email)){

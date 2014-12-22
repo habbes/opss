@@ -6,7 +6,7 @@ final class UserType extends Enum
 	const RESEARCHER = 2;
 	const REVIEWER = 3;
 	
-	protected $values = [
+	protected static $values = [
 			self::ADMIN => "Admin",
 			self::RESEARCHER => "Researcher",
 			self::REVIEWER => "Reviewer"
