@@ -28,6 +28,19 @@ class User extends DBModel
 	private $_role;
 	
 	/**
+	 * createa user of the given type/role
+	 * @param int $type UserType
+	 * @return User
+	 */
+	public static function create($type)
+	{
+		$u = new static();
+		$u->type = $type;
+		
+		return $u;
+	}
+	
+	/**
 	 * 
 	 * @return number
 	 */
@@ -248,6 +261,13 @@ class User extends DBModel
 	public function sendMessage($msg)
 	{
 		return $msg->sendTo($this);
+	}
+	
+	protected function onInsert(array &$errors)
+	{
+		//create MessageBox for this user
+		
+		return true;
 	}
 	
 	protected function validate(array &$errors)
