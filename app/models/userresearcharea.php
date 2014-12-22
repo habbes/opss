@@ -68,7 +68,7 @@ class UserResearchArea extends DBModel
 	protected function validate(&$errors)
 	{
 		if(!PaperGroup::isValue((int)$this->group))
-			$errors[] = ValidationError::PAPER_TYPE_INVALID;
+			$errors[] = ValidationError::PAPER_GROUP_INVALID;
 		
 		return true;
 	}
