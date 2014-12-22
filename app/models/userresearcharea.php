@@ -9,7 +9,7 @@
 class UserResearchArea extends DBModel
 {
 	protected $user_id;
-	protected $group;
+	protected $paper_group;
 	protected $type;
 	
 	private $_user;
@@ -29,7 +29,7 @@ class UserResearchArea extends DBModel
 		$r = new static();
 		$r->user_id = $user->getId();
 		$r->_user = $user;
-		$r->group = $group;
+		$r->paper_group = $group;
 		$r->type = $type;
 		return $r->save();
 	}
