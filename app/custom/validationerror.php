@@ -8,19 +8,19 @@
 class ValidationError
 {
 	//User errors
-	const USER_USERNAME_INVALID = 1;
-	const USER_PASSWORD_INVALID = 2;
-	const USER_EMAIL_INVALID = 3;
-	const USER_USERNAME_UNAVAILABLE = 4;
-	const USER_EMAIL_UNAVAILABLE = 5;
-	const USER_FIRST_NAME_EMPTY = 6;
-	const USER_LAST_NAME_EMPTY = 7;
-	const USER_TYPE_INVALID = 8;
-	const USER_ADDRESS_EMPTY = 9;
-	const USER_RESIDENCE_EMPTY = 10;
-	const USER_NATIONALITY_EMPTY = 11;
-	const USER_GENDER_INVALID = 12;
-	const PAPER_TYPE_INVALID = 13;
+	const USER_USERNAME_INVALID = "UserNameInvalid";
+	const USER_PASSWORD_INVALID = "UserPasswordInvalid";
+	const USER_EMAIL_INVALID = "UserEmailInvalid";
+	const USER_USERNAME_UNAVAILABLE = "UserUsernameUnavailable";
+	const USER_EMAIL_UNAVAILABLE = "UserEmailUnavailable";
+	const USER_FIRST_NAME_EMPTY = "UserFirstNameEmpty";
+	const USER_LAST_NAME_EMPTY = "UserLastNameEmpty";
+	const USER_TYPE_INVALID = "UserTypeInvalid";
+	const USER_ADDRESS_EMPTY = "UserAddressEmpty";
+	const USER_RESIDENCE_EMPTY = "UserResidenceEmpty";
+	const USER_NATIONALITY_EMPTY = "UserNationalityEmpty";
+	const USER_GENDER_INVALID = "UserGenderInvalid";
+	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
 	
 	
 	
