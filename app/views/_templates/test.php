@@ -7,7 +7,7 @@
 					<div class="form-group">
 						<label class="control-label col-sm-1 col-lg-4"  for="title">Select file</label>
 						<div class="col-sm-3 col-md-5">
-							<input type="file" name="file" class="form-control input-md"/>
+							<input type="file" name="file" class=" input-md"/>
 							<p class="help-block">Please choose file to upload</p>
 						</div>
 					</div>
@@ -22,12 +22,14 @@
 		</div>
 		<hr>
 		<h4>Download</h4>
-		<ul class="list-group">
-		<?php foreach($data->get('files', []) as $file) {
+		<div class="list-group">
+		<?php 
+		$i = 0;
+		foreach($data->get('files', []) as $file) {
 			?>
-		<li   class="list-group-item"><span class="glyphicon glyphicon-file"></span>&nbsp;<a href="test/<?= $file->getId()?>"><?= $file->getFilename() ?></a></li>
+		<a   class="list-group-item" href="test/<?= $file->getId()?>"><p class="list-group-item-text"><span class="glyphicon glyphicon-file"></span> <?= $file->getFilename() ?></p></a>
 			<?php 
-			
+			$i++;
 		}?>
-		</ul>
+		</div>
 </div>

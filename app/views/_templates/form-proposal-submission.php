@@ -17,7 +17,7 @@
 				      <!-- main document -->
 				      <label class="control-label col-sm-1 col-lg-2" for="email">Main document</label>
 				      <div class="col-sm-3 col-md-5">
-				        <input type="file" id="file" name="file" placeholder="" class="form-control">
+				        <input type="file" id="file" name="file" placeholder="" class="">
 				        <span class="help-block alert-danger" id="fileErrorMessage"></span>
 				        <p class="help-block">Please provide your first name</p>
 				      </div>
@@ -26,7 +26,7 @@
 				      <!-- Document cover -->
 				      <label class="control-label col-sm-1 col-lg-2" for="email">Second name</label>
 				      <div class="col-sm-3 col-md-5">
-				        <input type="file" id="cover" name="cover" placeholder="" class="form-control">
+				        <input type="file" id="cover" name="cover" placeholder="" class="">
 				        <span class="help-block alert-danger" id="secondNameErrorMessage"></span>
 				        <p class="help-block">Please provide the cover of your document</p>
 				      </div>
