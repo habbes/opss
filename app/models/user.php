@@ -58,7 +58,7 @@ class User extends DBModel
 	{
 		$name = $this->first_name . " " . $this->last_name;
 		if($this->title)
-			$name = $title . " " . $name;
+			$name = $this->title . " " . $name;
 		return $name;
 	}
 	
@@ -278,9 +278,7 @@ class User extends DBModel
 		if(!self::isValidUsername($this->username)){
 			$errors[] = ValidationError::USER_USERNAME_INVALID;
 		}
-		if(!self::isValidPassword($this->password)){
-			$errors[] = ValidationError::USER_PASSWORD_INVALID;
-		}
+		
 		if(!self::isValidEmail($this->email)){
 			$errors[] = ValidationError::USER_EMAIL_INVALID;
 		}
@@ -310,7 +308,7 @@ class User extends DBModel
 			if(empty($this->nationality)){
 				$errors[] = ValidationError::USER_NATIONALITY_EMPTY;
 			}
-			if(UserGender::isValue((int) $this->gender)){
+			if((int) $this->gender && !UserGender::isValue((int) $this->gender)){
 				$errors[] = ValidationError::USER_GENDER_INVALID;
 			}
 		}
