@@ -36,6 +36,7 @@ class User extends DBModel
 	{
 		$u = new static();
 		$u->type = $type;
+		$u->email_activated = false;
 		
 		return $u;
 	}
@@ -265,6 +266,8 @@ class User extends DBModel
 	
 	protected function onInsert(array &$errors)
 	{
+		
+		$this->date_added = Utils::dbDateFormat(time());
 		//create MessageBox for this user
 		
 		return true;
