@@ -361,7 +361,8 @@ class User extends DBModel
 	 */
 	public static function isValidPassword($password)
 	{
-		
+		//upper/lower case, digits and special characters from the US keyboard
+		return preg_match("/^[a-zA-Z0-9`~!@#\$%\^&\*\(\)\-_\+=\[\{\]\}\'\";:\\\|,<\.>\/\? ]{6,50}$/",$password);
 	}
 	
 	
