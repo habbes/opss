@@ -26,6 +26,9 @@ class User extends DBModel
 	private $_thematicAreas;
 	private $_collaborativeAreas;
 	private $_role;
+	//used to store the password before it has been hashed
+	//so it can be checked for validity before being saved to db
+	private $_plainPassword;
 	
 	/**
 	 * createa user of the given type/role
@@ -98,6 +101,7 @@ class User extends DBModel
 	{
 		if($this->isInDb())
 			return false;
+		$this->_plainPassword = $password;
 		$this->password = Utils::hashPassword($password);
 		return true;
 	}
@@ -123,6 +127,7 @@ class User extends DBModel
 		if(!$this->verifyPassword($old)){
 			return false;
 		}
+		$this->_plainPassword = $new;
 		$this->password = Utils::hashPassword($new);
 		return true;
 	}
@@ -287,6 +292,10 @@ class User extends DBModel
 		}
 		if(static::findByEmail($this->email)){
 			$errors[] = ValidationError::USER_EMAIL_UNAVAILABLE;
+		}
+		//if _plainPassword is set, then the password has been changed or created
+		if($this->_plainPassword && !static::isValidPassword($this->_plainPassword)){
+			$errors[] = ValidationError::USER_PASSWORD_INVALID;
 		}
 		if(empty($this->first_name)){
 			$errors[] = ValidationError::USER_FIRST_NAME_EMPTY;
