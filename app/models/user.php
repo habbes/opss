@@ -269,6 +269,17 @@ class User extends DBModel
 		return $msg->sendTo($this);
 	}
 	
+	/**
+	 * send this user an email
+	 * @param Email $email
+	 * @return number number of successfull emails sent
+	 */
+	public function sendEmail($email)
+	{
+		$email->addUser($this);
+		return $email->send();
+	}
+	
 	protected function onInsert(array &$errors)
 	{
 		
