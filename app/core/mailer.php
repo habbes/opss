@@ -25,6 +25,8 @@ class Mailer
 	
 	private static function mailerFromConfig()
 	{
+		$ds = DIRECTORY_SEPARATOR;
+		require_once DIR_CORE.$ds."Swift".$ds."lib".$ds."swift_required.php";
 		$host = Config::smtp("host");
 		$port = Config::smtp("port");
 		$security = Config::smtp("security");
@@ -46,11 +48,21 @@ class Mailer
 	 * the working instance of this class
 	 * @return Swift_Mailer
 	 */
-	public static function getInstance(){
+	public static function getInstance()
+	{
 		if(!self::$instance){
 			self::$instance = self::mailerFromConfig();
 		}
 		return self::$instance;
+	}
+	
+	/**
+	 * gets an instance of the Message class used for building emails
+	 * @return Swift_Message
+	 */
+	public static function getMessageInstance()
+	{
+		return new Swift_Message();
 	}
 	
 	public static function setFromEmail($email)
@@ -81,8 +93,9 @@ class Mailer
 	 */
 	public static function send($msg)
 	{
+		$mailer = self::getInstance();
 		$msg->setFrom([self::$fromEmail => self::$fromName]);
-		return self::getInstance()->send($msg);
+		return $mailer->send($msg);
 	}
 	
 	/**

@@ -8,6 +8,8 @@
 class EmailActivation extends DBModel
 {
 	
+	protected static $table = "email_activation";
+	
 	protected $user_id;
 	protected $code;
 	protected $expiry_date;

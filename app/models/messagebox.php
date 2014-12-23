@@ -2,6 +2,8 @@
 
 class MessageBox extends DBModel
 {
+	protected static $table = "message_boxes";
+	
 	protected $user_id;
 	protected $last_query_time;
 	
@@ -126,7 +128,7 @@ class MessageBox extends DBModel
 	 */
 	public function getUnreadBySenderType($type)
 	{
-		return $this->getAllByQuery("read=? AND sender_type='?'",[(int) false, $type])
+		return $this->getAllByQuery("read=? AND sender_type='?'",[(int) false, $type]);
 	}
 	
 	/**

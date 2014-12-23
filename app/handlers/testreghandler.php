@@ -33,6 +33,16 @@ class TestRegHandler extends RequestHandler
 		
 		try {
 			$user->save();
+			$email = new Email();
+			$ea = EmailActivation::create($user);
+			$ea->save();
+			
+			$email->setBodyFromTemplate("post_registration",
+					["link"=>URL_ROOT."/code=".$ea->getCode(),
+							"name"=>$user->getFullName(),
+							"accountType"=>UserType::getString($user->getType())
+					]);
+			$user->sendEmail($email);
 		}
 		catch(ValidationException $e) {
 			$this->viewParams->resultMessage = "Failed due to form errors";

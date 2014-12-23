@@ -7,8 +7,7 @@ class Email
 	
 	public function __construct()
 	{
-		$this->innerMsg = new Swift_Message();
-		parent::__construct();	
+		$this->innerMsg = Mailer::getMessageInstance();
 	}
 
 	/**
@@ -19,7 +18,7 @@ class Email
 	public function template($template)
 	{
 		$ds = DIRECTORY_SEPARATOR;
-		return DIR_VIEWS . $ds ."_templates" . $ds . "emails" . $ds . str_replace("/",$ds,$template).".php";
+		return DIR_EMAIL_TEMPLATES . $ds . str_replace("/",$ds,$template).".php";
 	}
 	
 	/**
@@ -39,10 +38,10 @@ class Email
 	public function addRecipient($email, $name = "")
 	{
 		if($name){
-			$this->innerMsg->addTo($email, $name);
+			$this->innerMsg->setTo([$email => $name]);
 		}
 		else {
-			$this->innerMsg->addTo($email);
+			$this->innerMsg->setTo([$email]);
 		}
 	}
 	
@@ -116,7 +115,7 @@ class Email
 	 */
 	public function send()
 	{
-		return Mailer::send($this->innserMsg);
+		return Mailer::send($this->innerMsg);
 	}
 	
 }

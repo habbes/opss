@@ -27,6 +27,9 @@ class DBModel extends Model
 	
 	public static function table()
 	{
+		if(isset(static::$table) && static::$table){
+			return static::$table;
+		}
 		//TODO: find a way to cache the table name
 		return Utils::camelToDelimitedCasePlural(get_called_class());
 		
