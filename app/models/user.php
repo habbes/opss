@@ -273,7 +273,10 @@ class User extends DBModel
 	{
 		
 		$this->date_added = Utils::dbDateFormat(time());
-		//create MessageBox for this user
+		
+		//create MessageBox for this user		
+		$mb = MessageBox::create($this);
+		$this->_messageBox = $mb->save();
 		
 		return true;
 	}

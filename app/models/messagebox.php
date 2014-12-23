@@ -8,6 +8,21 @@ class MessageBox extends DBModel
 	private $_user;
 	
 	/**
+	 * creates a MessageBox for the specified User
+	 * @param User $user
+	 * @return MessageBox
+	 */
+	public static function create($user)
+	{
+		$m = new static();
+		$m->user_id = $user->getId();
+		$m->_user = $user;
+		$m->last_query_time = Utils::dbDateFormat(time());
+		
+		return $m;
+	}
+	
+	/**
 	 * 
 	 * @return User
 	 */
