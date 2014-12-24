@@ -4,7 +4,7 @@
                  <form method="post" class="form-signin" role="form" >
                  		<h2 class="form-signin-heading">Sign in</h2>
       						<label for="username" class="sr-only">Username:</label>
-         						<input type="text" class="form-control" name="username" id="inputUsername" placeholder="Enter Username" required>
+         						<input type="text" class="form-control" name="username" id="inputUsername" placeholder="Enter Username or Email" required>
       						<label for="password" class="sr-only">Password:</label>
          						<input type="password" id="inputPassword" name="password" class="form-control" id="firstname" placeholder="Enter Password" required>
                                  <button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
