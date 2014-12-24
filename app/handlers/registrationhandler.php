@@ -69,6 +69,12 @@ class RegistrationHandler extends RequestHandler
 			$user->save();
 			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
 			$user->addThematicArea((int) $this->postVar("thematic-area"));
+			
+			//send activation email
+			$ea = EmailActivation::create($user);
+			$mail = WelcomeEmail::create($user, $ea->getCode());
+			$mail->send();
+			
 		}
 		catch(ValidationException $e) {
 			$errors = new DataObject();
