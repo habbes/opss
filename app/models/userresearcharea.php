@@ -62,12 +62,12 @@ class UserResearchArea extends DBModel
 	 */
 	public function getGroup()
 	{
-		return (int) $this->group;
+		return (int) $this->paper_group;
 	}
 	
 	protected function validate(&$errors)
 	{
-		if(!PaperGroup::isValue((int)$this->group))
+		if(!PaperGroup::isValue((int)$this->paper_group))
 			$errors[] = ValidationError::PAPER_GROUP_INVALID;
 		
 		return true;
@@ -80,7 +80,7 @@ class UserResearchArea extends DBModel
 	 */
 	public static function findThematicByUser($user)
 	{
-		return static::findAll("user_id=? AND type=?",[$user->getId(), (int) $this->type]);
+		return static::findAll("user_id=? AND type=?",[$user->getId(), (int) self::THEMATIC]);
 	}
 	
 	/**
@@ -90,6 +90,6 @@ class UserResearchArea extends DBModel
 	 */
 	public static function findCollaborativeByUser($user)
 	{
-		return static::findAll("user_id=? AND type=?", [$user->getId(), (int) $this->type]);
+		return static::findAll("user_id=? AND type=?", [$user->getId(), (int) self::COLLABORATIVE]);
 	}
 }
