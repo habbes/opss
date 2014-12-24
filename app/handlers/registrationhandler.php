@@ -2,7 +2,7 @@
 
 class RegistrationHandler extends LogoutHandler
 {
-	private function showPage()
+	private function showRegPage()
 	{
 		$this->viewParams->countries = SysDataList::get("countries-en");
 		$this->viewParams->titles = SysDataList::get("titles-en");
@@ -14,19 +14,17 @@ class RegistrationHandler extends LogoutHandler
 		$this->renderView("Registration");
 	}
 	
-	public function get()
+	private function showPostRegPage()
 	{
-		$this->showPage();
+		$this->renderView("PostRegistration");
 	}
 	
-	public function post()
+	private function handleRegistration()
 	{
-		
 		$this->viewParams->form = new DataObject($_POST);
-		
 		try {
 			$errors = [];
-			
+				
 			$user = User::create(UserType::RESEARCHER);
 			//properties common to all user types
 			$user->setTitle($this->trimPostVar("title"));
@@ -39,9 +37,9 @@ class RegistrationHandler extends LogoutHandler
 			if($pass != $passConfirm){
 				$errors[] = ValidationError::USER_PASSWORDS_DONT_MATCH;
 			}
-				
+		
 			$user->setPassword($this->postVar("password"));
-			
+				
 			//properties required for researchers
 			switch($this->trimPostVar("gender")){
 				case "male":
@@ -63,18 +61,21 @@ class RegistrationHandler extends LogoutHandler
 				$errors[] = ValidationError::COLLAB_AREA_INVALID;
 			if(!PaperGroup::isValue($thematicArea))
 				$errors[] = ValidationError::THEMATIC_AREA_INVALID;
-			
+				
 			if(!empty($errors))
 				throw new ValidationException($errors);
 			$user->save();
 			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
 			$user->addThematicArea((int) $this->postVar("thematic-area"));
-			
+				
 			//send activation email
 			$ea = EmailActivation::create($user);
 			$mail = WelcomeEmail::create($user, $ea->getCode());
 			$mail->send();
-			
+				
+			Session::instance()->registerdUserId =  $user->getId();
+			$this->showPostRegPage();
+				
 		}
 		catch(ValidationException $e) {
 			$errors = new DataObject();
@@ -119,13 +120,13 @@ class RegistrationHandler extends LogoutHandler
 					case ValidationError::USER_PASSWORD_INVALID:
 						$errors->password = "Invalid password. The password should have 6 to 50 characters including "
 								."letters, numbers, and special characters like *, !, etc.";
-						break;
+								break;
 					case ValidationError::USER_PASSWORDS_DONT_MATCH:
 						$errors->set("password-confirm", "This does not match the entered password");
 						break;
 				}
 			}
-				
+		
 			$this->viewParams->errors = $errors;
 		}
 		catch(Exception $e) {
@@ -133,6 +134,34 @@ class RegistrationHandler extends LogoutHandler
 		}
 		
 		$this->showPage();
+	}
+	
+	private function resendActivation()
+	{
+		$user = User::findById(Session::instance()->registerdUserId);
+		//send activation email
+		$ea = EmailActivation::create($user);
+		$mail = WelcomeEmail::create($user, $ea->getCode());
+		$mail->send();
+		$this->showPostRegPage();
+		
+	}
+	
+	public function get()
+	{
+		if(!Session::instance()->registeredUserId)
+			$this->showRegPage();
+		else
+			$this->showPostRegPage();
+	}
+	
+	public function post()
+	{
+		
+		if(Session::instance()->registerdUserId)
+			$this->resendActivation();
+		else		
+			$this->handleRegistration();
 		
 		
 	}

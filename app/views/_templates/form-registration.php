@@ -2,8 +2,10 @@
 $formdata = $data->form;
 $formerror = $data->errors;
 ?>
+
 <div class="form">
 			 	<form class="form-horizontal" method="POST" role="form">
+			 		<input type="hidden" name="action" value="registration"/>
   					<fieldset>
       					<legend class="">Personal info</legend>
     				<div class="form-group">
