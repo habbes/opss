@@ -22,7 +22,7 @@ class RegistrationHandler extends RequestHandler
 	public function post()
 	{
 		
-		
+		$this->viewParams->form = new DataObject($_POST);
 		
 		try {
 			$errors = [];
@@ -81,6 +81,7 @@ class RegistrationHandler extends RequestHandler
 		}
 		
 		$this->showPage();
+		
 		
 	}
 }
