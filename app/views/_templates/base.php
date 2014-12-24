@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title><?=$data->pageTitle?></title>
+	<title><?=$data->pageTitle?> | AERC OPSS</title>
         <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/home.css">
         <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/dashboard.css">
