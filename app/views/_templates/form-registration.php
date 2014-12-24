@@ -9,13 +9,13 @@
       					<label class="control-label col-sm-1 col-lg-2"  for="title">Title</label>
       					<div class="col-sm-3 col-md-5">
       						<select class="form-control" name="title">
-      						<option>--Select One--</option>
-      							<option>Doctor</option>
-      							<option>Sir</option>
-      							<option>Teacher</option>
+      							<option value="">Select Title</option>
+      						<?php foreach($data->titles as $title){	?>
+      							<option value="<?=$title?>"><?= $title ?></option>	
+      						<?php }	?>
       						</select>
       						<span class="help-block alert-danger" class="form-error" id="title-error"></span>
-        					<p class="help-block">This is your title eg Mr Ms Mrs</p>
+        					<p class="help-block">This is your title e.g: Mr Ms Mrs</p>
       					</div>
     				</div>
     				
@@ -35,7 +35,7 @@
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="lastname" name="lastname" placeholder="" class="form-control">
 				        <span class="help-block alert-danger" class="form-error" id="lastname-error"></span>
-				        <p class="help-block">Please provide your second name</p>
+				        <p class="help-block">Please provide your last name</p>
 				      </div>
 				    </div>
 				    
@@ -55,9 +55,9 @@
       					<label class="control-label col-sm-1 col-lg-2"  for="nationality">Country of nationality</label>
       					<div class="col-sm-3 col-md-5">
       						<select class="form-control" id="nationality" title="select your country of nationality" name="nationality">
-      							<option>--Select One--</option>
-      							<?php foreach(file("app/sys_data/countries-en",FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $country){ ?>
-      								<option><?=$country?></option>
+      							<option value="">Select Country</option>
+      							<?php foreach($data->countries as $country){ ?>
+      								<option value="<?=$country?>"><?=$country?></option>
       							<?php } ?>
       						</select>
       						<span class="help-block alert-danger" class="form-error" id="nationality-error"></span>
@@ -70,9 +70,9 @@
       					<label class="control-label col-sm-1 col-lg-2"  for="residence">Country of residence</label>
       					<div class="col-sm-3 col-md-5">
       						<select class="form-control" title="select your country of residence" name="residence">
-      							<option>--Select One--</option>
-      							<?php foreach(file("app/sys_data/countries-en",FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $country){ ?>
-      								<option><?=$country?></option>
+      							<option value="">Select Country</option>
+      							<?php foreach($data->countries as $country){ ?>
+      								<option value="<?=$country?>"><?=$country?></option>
       							<?php } ?>
       						</select>
       						<span class="help-block alert-danger form-error" id="residence-error"></span>
