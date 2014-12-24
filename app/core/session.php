@@ -50,15 +50,35 @@ class Session extends DataObject {
 		//destroy session data
 		return session_destroy();
 	}
-
-	public function __get($name){
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see DataObject::set()
+	 */
+	public function set($name, $val = true)
+	{
+		parent::set($name, $val);
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see DataObject::get()
+	 */
+	public function get($name)
+	{
 		if(array_key_exists($name, $_SESSION)){
 			return $_SESSION[$name];
 		}
 		else {
-			return parent::__get($name);
+			return parent::get($name);
 		}
 	}
+
+	public function __get($name){
+		return $this->get($name);
+	}
+	
+	
 	
 	/**
 	 * gets the seconds this session has been alive
