@@ -1,6 +1,6 @@
 <?php
 
-class RegistrationHandler extends LogoutHandler
+class RegistrationHandler extends LoggedOutHandler
 {
 	private function showRegPage()
 	{

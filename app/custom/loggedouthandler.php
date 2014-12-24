@@ -6,7 +6,7 @@
  * @author Habbes
  *
  */
-class LogoutHandler extends RequestHandler
+class LoggedOutHandler extends RequestHandler
 {
 	
 	/**

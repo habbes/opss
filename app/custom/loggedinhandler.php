@@ -7,7 +7,7 @@
  * @author Habbes
  *
  */
-class LoginHandler extends RequestHandler
+class LoggedInHandler extends RequestHandler
 {
 	
 	protected $user;
