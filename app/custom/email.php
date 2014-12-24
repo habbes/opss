@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * class used to send emails from templates
+ * @author Habbes
+ *
+ */
 class Email
 {
 	
