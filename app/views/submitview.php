@@ -9,7 +9,7 @@ class SubmitView extends View
 		$this->data->userName = "Mr Clement";
 		$this->data->countries = $params->countries;
 		$this->data->pageContent = $this->read("form-proposal-submission");
-		$this->data->nav = $this->read("researcher-nav");
+		$this->data->pageNav = $this->read("researcher-nav");
 		$this->data->pageBody = $this->read("main-layout");
 		$this->show("base");
 	}
