@@ -27,7 +27,7 @@ class LoginHandler extends RequestHandler
 		}
 		else {
 			$destination = $_SERVER['PATH'];
-			$this->localRedirect("login?destionation=$destination");
+			$this->localRedirect("login?destination=$destination");
 		}
 	}
 	
