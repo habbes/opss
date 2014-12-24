@@ -157,10 +157,10 @@
 				      </div>
 				    </div>
 				    <div class="form-group">
-				      <!-- password(confirm) -->
+				      <!-- password confirm  -->
 				      <label class="control-label col-sm-1 col-lg-2" for="password-confirm">Confirm Password</label>
 				      <div class="col-sm-3 col-md-5">
-				        <input type="password" onkeyup="check()" id="password-confirm" name="password-confirm" placeholder="" class="form-control">
+				        <input type="password" id="password-confirm" name="password-confirm" placeholder="" class="form-control">
 				        <span class="help-block alert-danger form-error" id="password-confirm-error"></span>
 				        <p class="help-block">Please confirm your password</p>
 				      </div>
@@ -178,6 +178,7 @@
     				</fieldset>
 </form>
 <script>
+	/*
 	var pass = document.getElementById("password");
 	var pass_confirm = document.getElementById("password_confirm");
 
@@ -192,7 +193,18 @@
 					pass_confirm.style.borderColor = "green";
 					}
 		}
-	
+	*/
+	var pass = $("#pass");
+	var passConfirm = $("#pass-confirm");
+	passConfirm.on("keyup", function(){
+		$(this).addClass("alert");
+		if(pass.val() == $(this).val()){
+			$(this).addClass("alert-warning").removeClass("alert-success");
+		}
+		else {
+			$(this).addClass("alert-success").removeClass("alert-warning");
+		}
+	});
 </script>
 </div>
 </div>
