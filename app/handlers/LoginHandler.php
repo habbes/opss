@@ -14,6 +14,9 @@ class LoginHandler extends LoggedOutHandler
 			Login::userLogin($user);
 			$this->localRedirect("researcher");
 			exit;
+		}else{
+			echo "Unsuccessful login <a href='".URL_ROOT."/login'>Try Again</a>";
+			exit;
 		}
 	}
 	protected function show()
