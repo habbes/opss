@@ -9,7 +9,8 @@ class Session extends DataObject {
 
 	private static $instance = null;
 
-	public function __construct(){
+	public function __construct()
+	{
 		session_start();
 		if(!isset($_SESSION["data"])){
 			$_SESSION["data"] = array();
@@ -25,18 +26,29 @@ class Session extends DataObject {
 	 * gets the current session
 	 * @return Session
 	 */
-	public static function getInstance(){
+	public static function getInstance()
+	{
 		if(self::$instance == null){
 			self::$instance = new self();
 		}
 		return self::$instance;
+	}
+	
+	/**
+	 * alias for getInstance()
+	 * @return Session
+	 */
+	public static function instance()
+	{
+		return self::getInstance();
 	}
 
 	/**
 	 * deletes all data stored in the session as well as its cookie
 	 * @return boolean
 	 */
-	public function destroy(){
+	public function destroy()
+	{
 		//delete all session vars
 		$_SESSION = array();
 
@@ -74,17 +86,13 @@ class Session extends DataObject {
 		}
 	}
 
-	public function __get($name){
-		return $this->get($name);
-	}
-	
-	
 	
 	/**
 	 * gets the seconds this session has been alive
 	 * @return number
 	 */
-	public function age(){
+	public function age()
+	{
 		return $_SESSION["lastTime"] - $_SESSION["startTime"];
 	}
 	
@@ -93,7 +101,8 @@ class Session extends DataObject {
 	 * last IP that made a request on this session
 	 * @return boolean
 	 */
-	public function sameIp(){
+	public function sameIp()
+	{
 		return $_SESSION["lastIp"] == $_SESSION["startIp"];
 	}
 	
@@ -101,15 +110,9 @@ class Session extends DataObject {
 	 * deletes the specified info from the session
 	 * @param string $key
 	 */
-	public function deleteData($key){
+	public function deleteData($key)
+	{
 		unset($_SESSION["data"][$key]);
 	}
 	
-	
-	public static function __callStatic($method, $args)
-	{
-		return call_user_func_array([self::getInstance(), $method], $args);
-	}
-	
-
 }
