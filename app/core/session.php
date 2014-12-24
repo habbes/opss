@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * stores data on the current session
+ * @author Habbes
+ *
+ */
 class Session extends DataObject {
 
 	private static $instance = null;
@@ -15,7 +20,11 @@ class Session extends DataObject {
 		$_SESSION["lastTime"] = time();
 		$_SESSION["lastIp"] = $_SERVER["REMOTE_ADDR"];
 	}
-
+	
+	/**
+	 * gets the current session
+	 * @return Session
+	 */
 	public static function getInstance(){
 		if(self::$instance == null){
 			self::$instance = new self();
@@ -23,6 +32,10 @@ class Session extends DataObject {
 		return self::$instance;
 	}
 
+	/**
+	 * deletes all data stored in the session as well as its cookie
+	 * @return boolean
+	 */
 	public function destroy(){
 		//delete all session vars
 		$_SESSION = array();
@@ -46,17 +59,37 @@ class Session extends DataObject {
 			return parent::__get($name);
 		}
 	}
-
+	
+	/**
+	 * gets the seconds this session has been alive
+	 * @return number
+	 */
 	public function age(){
 		return $_SESSION["lastTime"] - $_SESSION["startTime"];
 	}
-
+	
+	/**
+	 * gets whether the IP used for this request is the same as the
+	 * last IP that made a request on this session
+	 * @return boolean
+	 */
 	public function sameIp(){
 		return $_SESSION["lastIp"] == $_SESSION["startIp"];
 	}
-
+	
+	/**
+	 * deletes the specified info from the session
+	 * @param string $key
+	 */
 	public function deleteData($key){
 		unset($_SESSION["data"][$key]);
 	}
+	
+	
+	public static function __callStatic($method, $args)
+	{
+		return call_user_func_array([self::getInstance(), $method], $args);
+	}
+	
 
 }
