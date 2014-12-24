@@ -11,11 +11,16 @@ class LoginHandler extends LoggedOutHandler
 		
 		if($user = User::login($username, $password))
 		{
-			echo $user->getFullName() . " has logged in";
+			Login::userLogin($user);
+			$this->redirect("researcher");
 		}
 	}
 	protected function show()
 	{
 		$this->renderView("form");
+	}
+	protected function redirect($handler)
+	{
+		header("Location:" . $handler );
 	}
 }

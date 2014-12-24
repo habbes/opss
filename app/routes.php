@@ -13,4 +13,6 @@ $routes = [
 		['^registration\/?$', "Registration"],
 		['^\/?$',"Login"],
 		['^login\/?$',"Login"],
+		['^researcher\/?$',"Researcher"],
+		['^researcher\/(\.+)?$',"Researcher"],
 ];
