@@ -6,7 +6,7 @@
 $routes = [
 		['^submit\/(\d+)$',"Submit"],
 		['^submit\/?$',"Submit"],
-                ['^form\/?$',"Form"],
+                ['^form\/?$',"Index"],
 		['^form\/(\d+)$',"Form"],
 		['^test\/?$', "Test"],
 		['^test\/(\d+)$', "Test"],
@@ -16,6 +16,7 @@ $routes = [
 		['^\/?$',"Researcher"],
 		
 		['^login\/?$',"Login"],
+		['^logout\/?$',"Logout"],
 		['^researcher\/?$',"Researcher"],
 		['^researcher\/(\.+)?$',"Researcher"],
 ];
