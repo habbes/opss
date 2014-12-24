@@ -30,7 +30,10 @@ class LoggedInHandler extends RequestHandler
 			$this->localRedirect("login?destination=$destination");
 		}
 	}
-	
+	public function logout()
+	{
+		Login::logout();
+	}
 	public function onCreate()
 	{
 		$this->assertLogin();
