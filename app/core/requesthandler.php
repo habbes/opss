@@ -81,6 +81,17 @@ abstract class RequestHandler
 	}
 	
 	/**
+	 * gets a trimmed GET variable with the given name if the variable is set
+	 * @param string $name the name of the variable to retriev
+	 * @param mixed $default value returned when the variable is not set
+	 * @returns string
+	 */
+	public function trimGetVar($name, $default = null)
+	{
+		return trim($this->getVar($name, $default));
+	}
+	
+	/**
 	 * gets a POST variable with the given name if the variable is set
 	 * @param string $name the name of the variable to retriev
 	 * @param mixed $default value returned when the variable is not set
@@ -89,6 +100,17 @@ abstract class RequestHandler
 	public function postVar($name, $default = null)
 	{
 		return isset($_POST[$name])? $_POST[$name] : $default;
+	}
+	
+	/**
+	 * gets a trimmed POST variable with the given name if the variable is set
+	 * @param string $name the name of the variable to retriev
+	 * @param mixed $default value returned when the variable is not set
+	 * @returns string
+	 */
+	public function trimPostVar($name, $default = null)
+	{
+		return trim($this->postVar($name, $default));
 	}
 	
 	/**
