@@ -178,22 +178,7 @@
     				</fieldset>
 </form>
 <script>
-	/*
-	var pass = document.getElementById("password");
-	var pass_confirm = document.getElementById("password_confirm");
-
-	function check(){
-			if(pass.value != pass_confirm.value){
-					pass_confirm.setAttribute("class","alert alert-warning form-control");
-					pass_confirm.style.padding = "0px 5px 2px 15px";
-					pass_confirm.style.borderColor = "red";
-				}else{
-					pass_confirm.setAttribute("class","alert alert-success form-control");
-					pass_confirm.style.padding = "2px 5px 2px 15px";
-					pass_confirm.style.borderColor = "green";
-					}
-		}
-	*/
+	
 	var pass = $("#password");
 	var passConfirm = $("#password-confirm");
 	passConfirm.on("keyup", function(){
