@@ -26,7 +26,8 @@ class LoginHandler extends RequestHandler
 			$this->viewParams->user = $this->user;
 		}
 		else {
-			$this->localRedirect("login");
+			$destination = $_SERVER['PATH'];
+			$this->localRedirect("login?destionation=$destination");
 		}
 	}
 	
