@@ -17,7 +17,7 @@ class LogoutHandler extends RequestHandler
 	protected function assertLogout()
 	{
 		if(Login::isLoggedIn()){
-			$this->localRedirect(URL_ROOT);
+			$this->localRedirect();
 		}
 	}
 	

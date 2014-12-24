@@ -1,6 +1,6 @@
 <?php
 
-class RegistrationHandler extends RequestHandler
+class RegistrationHandler extends LogoutHandler
 {
 	private function showPage()
 	{
