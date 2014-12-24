@@ -280,7 +280,7 @@ class User extends DBModel
 		return $email->send();
 	}
 	
-	protected function onInsert(array &$errors)
+	protected function onInsert(&$errors = NULL)
 	{
 		
 		$this->date_added = Utils::dbDateFormat(time());

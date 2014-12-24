@@ -76,7 +76,7 @@ class Session extends DataObject {
 	 * (non-PHPdoc)
 	 * @see DataObject::get()
 	 */
-	public function get($name)
+	public function get($name, $default = NULL)
 	{
 		if(array_key_exists($name, $_SESSION)){
 			return $_SESSION[$name];

@@ -11,7 +11,7 @@ class LoginHandler extends LoggedOutHandler
 		
 		if($user = User::login($username, $password))
 		{
-			echo $user->getFullName()." has logged in";
+			echo $user->getFullName() . "has logged in";
 		}
 	}
 	protected function show()
