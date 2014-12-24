@@ -9,7 +9,7 @@
          						<input type="password" id="inputPassword" name="password" class="form-control" id="firstname" placeholder="Enter Password" required>
                                  <button type="submit" class="btn btn-lg btn-primary btn-block">Sign In</button>
    								<span class="help-block">
-                               		New User?<a href="#">Register here</a><br>
+                               		New User?<a href="registration">Register here</a><br>
                                		Forgot Password?<a href="#">Click Here</a>
                             	</span>
                             </div>
