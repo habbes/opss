@@ -8,7 +8,7 @@
  */
 class LoggedOutHandler extends RequestHandler
 {
-	
+
 	/**
 	 * ensure the no user is logged in,
 	 * if there is a login session available, then send
@@ -17,7 +17,7 @@ class LoggedOutHandler extends RequestHandler
 	protected function assertLogout()
 	{
 		if(Login::isLoggedIn()){
-			$this->localRedirect();
+			$this->localRedirect("");
 		}
 	}
 	

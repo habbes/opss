@@ -11,7 +11,10 @@ $routes = [
 		['^test\/?$', "Test"],
 		['^test\/(\d+)$', "Test"],
 		['^registration\/?$', "Registration"],
-		['^\/?$',"Login"],
+		
+		//this route is used to redirect Atomatically to Researcher if there is a session existing
+		['^\/?$',"Researcher"],
+		
 		['^login\/?$',"Login"],
 		['^researcher\/?$',"Researcher"],
 		['^researcher\/(\.+)?$',"Researcher"],

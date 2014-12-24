@@ -1,9 +1,9 @@
 <?php
-class ResearcherHandler extends RequestHandler
+class ResearcherHandler extends LoggedInHandler
 {
 	public function get()
 	{
-		$this->viewParams->userName = Login::getUser()->getFullName();
+		$this->viewParams->userName = $this->user->getFullName();
 		$this->show();
 	}
 	private function show()
