@@ -11,5 +11,6 @@ $routes = [
 		['^test\/?$', "Test"],
 		['^test\/(\d+)$', "Test"],
 		['^registration\/?$', "Registration"],
-		
+		['^\/?$',"Login"],
+		['^login\/?$',"Login"],
 ];
