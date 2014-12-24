@@ -410,6 +410,4 @@ class User extends DBModel
 	}
 	
 	
-	
-	
 }
