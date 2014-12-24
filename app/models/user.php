@@ -139,7 +139,7 @@ class User extends DBModel
 	 */
 	public function addThematicArea($area)
 	{
-		if(!in_array($area, $this->getCollaborativeAreas())){
+		if(!in_array($area, $this->getThematicAreas())){
 			UserResearchArea::createThematic($this, $area);
 			array_push($this->_thematicAreas, $area);
 		}

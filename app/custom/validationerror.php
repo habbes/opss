@@ -22,6 +22,8 @@ class ValidationError
 	const USER_RESIDENCE_EMPTY = "ResidenceEmpty";
 	const USER_NATIONALITY_EMPTY = "NationalityEmpty";
 	const USER_GENDER_INVALID = "UserGenderInvalid";
+	const COLLAB_AREA_INVALID = "CollabAreaInvalid";
+	const THEMATIC_AREA_INVALID = "ThematicAreaInvalid";
 	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
 	
 	

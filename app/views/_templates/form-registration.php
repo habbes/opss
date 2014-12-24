@@ -107,13 +107,10 @@
 	      					<!-- Thematic research -->
 	      					<label class="control-label col-sm-1 col-lg-2"  for="thematic-area">Thematic research</label>
 	      					<div class="col-sm-3 col-md-5">
-	      						<select class="form-control" title="select your thematic research" name="thematic-area">
-	      							<option>A:Poverty,Income Distribution and Food Security</option>
-	      							<option>B:Macroeconomics Policies,Investments and Growth</option>
-	      							<option>C:Finance and Resource Mobilization</option>
-	      							<option>D:Trade and Regional Integration</option>
-	      							<option>E:Political Economy,Natural Resource Management and Agricultural Policy Issues</option>
-	      							<option>None Applicable</option>
+	      						<select class="form-control" title="select your thematic research area" name="thematic-area">
+	      						<?php foreach($data->researchAreaValues as $area ){?>
+	      							<option value="<?=$area?>"><?= $data->researchAreaNames[$area]?></option>
+	      						<?php } ?>
 	      						</select>
 	      						<span class="help-block alert-danger form-error" id="thematic-area-error"></span>
 	        					<p class="help-block">Please select your thematic research type</p>
@@ -123,13 +120,10 @@
 	      					<!-- collaborative research -->
 	      					<label class="control-label col-sm-1 col-lg-2"  for="collaborative-area">Collaborative research</label>
 	      					<div class="col-sm-3 col-md-5">
-	      						<select class="form-control" title="select your thematic research" name="collaborative_area">
-	      							<option>A:Poverty,Income Distribution and Food Security</option>
-	      							<option>B:Macroeconomics Policies,Investments and Growth</option>
-	      							<option>C:Finance and Resource Mobilization</option>
-	      							<option>D:Trade and Regional Integration</option>
-	      							<option>E:Political Economy,Natural Resource Management and Agricultural Policy Issues</option>
-	      							<option>None Applicable</option>
+	      						<select class="form-control" title="select your collaborative research area" name="collaborative-area">
+	      						<?php foreach($data->researchAreaValues as $area ){?>
+	      							<option value="<?=$area?>"><?= $data->researchAreaNames[$area]?></option>
+	      						<?php } ?>
 	      						</select>
 	      						<span class="help-block alert-danger" id="collaborative-area-error"></span>
 	        					<p class="help-block">Please select your collaborative area type</p>
