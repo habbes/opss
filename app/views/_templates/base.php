@@ -10,6 +10,7 @@
         <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/dashboard.css">
         <link rel="stylesheet" type="text/css" href="<?=URL_ROOT?>/public/css/bootstrap-theme.min.css">
+        <script src="<?=URL_ROOT?>/public/js/jquery-1.11.2.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="<?=URL_ROOT?>/public/js/bootstrap.min.js"></script>
         
         <!-- 
