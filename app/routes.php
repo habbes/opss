@@ -9,5 +9,6 @@ $routes = [
                 ['^form\/?$',"Form"],
 		['^form\/(\d+)$',"Form"],
 		['^test\/?$', "Test"],
-		['^test\/(\d+)$', "Test"],	
+		['^test\/(\d+)$', "Test"],
+		['^registration\/?$', "Registration"]
 ];

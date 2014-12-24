@@ -194,12 +194,12 @@
 					}
 		}
 	*/
-	var pass = $("#pass");
-	var passConfirm = $("#pass-confirm");
+	var pass = $("#password");
+	var passConfirm = $("#password-confirm");
 	passConfirm.on("keyup", function(){
 		$(this).addClass("alert");
-		if(pass.val() == $(this).val()){
-			$(this).addClass("alert-warning").removeClass("alert-success");
+		if(pass.val() != $(this).val()){
+			$(this).addClass("alet-warning").removeClass("alert-success");
 		}
 		else {
 			$(this).addClass("alert-success").removeClass("alert-warning");
