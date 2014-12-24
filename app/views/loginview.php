@@ -6,6 +6,6 @@ class LoginView extends BaseView
 		$this->data->pageTitle = "AERC_OPSS | Log in";
 		$this->data->pageContent = $this->read("form-login");
 		//$this->data->nav = $this->read("admin-nav");
-		$this->show($template);
+		$this->showBase();
 	}
 }
