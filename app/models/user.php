@@ -23,6 +23,26 @@ class User extends DBModel
 	protected $gender;
 	
 	private $_messageBox;
+	private $_thematicAreas;
+	private $_collaborativeAreas;
+	private $_role;
+	//used to store the password before it has been hashed
+	//so it can be checked for validity before being saved to db
+	private $_plainPassword = null;
+	
+	/**
+	 * createa user of the given type/role
+	 * @param int $type UserType
+	 * @return User
+	 */
+	public static function create($type)
+	{
+		$u = new static();
+		$u->type = $type;
+		$u->email_activated = false;
+		
+		return $u;
+	}
 	
 	/**
 	 * 
@@ -41,7 +61,7 @@ class User extends DBModel
 	{
 		$name = $this->first_name . " " . $this->last_name;
 		if($this->title)
-			$name = $title . " " . $name;
+			$name = $this->title . " " . $name;
 		return $name;
 	}
 	
@@ -81,6 +101,7 @@ class User extends DBModel
 	{
 		if($this->isInDb())
 			return false;
+		$this->_plainPassword = $password;
 		$this->password = Utils::hashPassword($password);
 		return true;
 	}
@@ -106,8 +127,70 @@ class User extends DBModel
 		if(!$this->verifyPassword($old)){
 			return false;
 		}
+		$this->_plainPassword = $new;
 		$this->password = Utils::hashPassword($new);
 		return true;
+	}
+	
+	/**
+	 * add the specified research area to the list
+	 * this user's areas of thematic research
+	 * @param int $area PaperGroup
+	 */
+	public function addThematicArea($area)
+	{
+		if(!in_array($area, $this->getThematicAreas())){
+			UserResearchArea::createThematic($this, $area);
+			array_push($this->_thematicAreas, $area);
+		}
+	}
+	
+	/**
+	 * get all the areas of research for thematic papers for this
+	 * user
+	 * @return array(int) elements are from PaperGroup
+	 */
+	public function getThematicAreas()
+	{
+		if(!$this->_thematicAreas){
+			$areas = UserResearchArea::findThematicByUser($this);
+			$this->_thematicAreas = array();
+			foreach($areas as $area){
+				$this->_thematicAreas[] = $area->getGroup();
+			}
+		}
+		return $this->_thematicAreas;
+			
+	}
+	
+	/**
+	 * add the specified research area to this user's list of
+	 * areas of collaborative research
+	 * @param int $area PaperGroup
+	 */
+	public function addCollaborativeArea($area)
+	{
+		if(!in_array($area, $this->getCollaborativeAreas())){
+			UserResearchArea::createCollaborative($this, $area);
+			array_push($this->_collaborativeAreas, $area);
+		}
+	}
+	
+	/**
+	 * get all the areas of collaborative research for this user
+	 * @return array(int) elements are from PaperGroup
+	 */
+	public function getCollaborativeAreas()
+	{
+		if(!$this->_collaborativeAreas){
+			$areas = UserResearchArea::findCollaborativeByUser($this);
+			$this->_collaborativeAreas = array();
+			foreach($areas as $area){
+				$this->_collaborativeAreas[] = $area->getGroup();
+			}
+		}
+		
+		return $this->_collaborativeAreas;
 	}
 	
 	/**
@@ -133,7 +216,9 @@ class User extends DBModel
 	 */
 	public function getRole()
 	{
-		return UserRole::forUser($this);
+		if(!$this->_role)
+			$this->_role = UserRole::forUser($this);
+		return $this->_role;
 	}
 	
 	/**
@@ -184,22 +269,47 @@ class User extends DBModel
 		return $msg->sendTo($this);
 	}
 	
+	/**
+	 * send this user an email
+	 * @param Email $email
+	 * @return number number of successfull emails sent
+	 */
+	public function sendEmail($email)
+	{
+		$email->addUser($this);
+		return $email->send();
+	}
+	
+	protected function onInsert(array &$errors)
+	{
+		
+		$this->date_added = Utils::dbDateFormat(time());
+		
+		//create MessageBox for this user		
+		$mb = MessageBox::create($this);
+		$this->_messageBox = $mb->save();
+		
+		return true;
+	}
+	
 	protected function validate(array &$errors)
 	{
 		if(!self::isValidUsername($this->username)){
 			$errors[] = ValidationError::USER_USERNAME_INVALID;
 		}
-		if(!self::isValidPassword($this->password)){
-			$errors[] = ValidationError::USER_PASSWORD_INVALID;
-		}
+		
 		if(!self::isValidEmail($this->email)){
 			$errors[] = ValidationError::USER_EMAIL_INVALID;
 		}
-		if(static::findByUsername($username)){
+		if(static::findByUsername($this->username)){
 			$errors[] = ValidationError::USER_USERNAME_UNAVAILABLE;
 		}
 		if(static::findByEmail($this->email)){
 			$errors[] = ValidationError::USER_EMAIL_UNAVAILABLE;
+		}
+		//if _plainPassword is not null, then the password has been changed or created
+		if($this->_plainPassword !== null && !static::isValidPassword($this->_plainPassword)){
+			$errors[] = ValidationError::USER_PASSWORD_INVALID;
 		}
 		if(empty($this->first_name)){
 			$errors[] = ValidationError::USER_FIRST_NAME_EMPTY;
@@ -221,7 +331,7 @@ class User extends DBModel
 			if(empty($this->nationality)){
 				$errors[] = ValidationError::USER_NATIONALITY_EMPTY;
 			}
-			if(UserGender::isValue((int) $this->gender)){
+			if(!UserGender::isValue((int) $this->gender)){
 				$errors[] = ValidationError::USER_GENDER_INVALID;
 			}
 		}
@@ -295,10 +405,9 @@ class User extends DBModel
 	 */
 	public static function isValidPassword($password)
 	{
-		
+		//upper/lower case, digits and special characters from the US keyboard
+		return preg_match("/^[a-zA-Z0-9`~!@#\$%\^&\*\(\)\-_\+=\[\{\]\}\'\";:\\\|,<\.>\/\? ]{6,50}$/",$password);
 	}
-	
-	
 	
 	
 }

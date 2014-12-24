@@ -8,18 +8,23 @@
 class ValidationError
 {
 	//User errors
-	const USER_USERNAME_INVALID = 1;
-	const USER_PASSWORD_INVALID = 2;
-	const USER_EMAIL_INVALID = 3;
-	const USER_USERNAME_UNAVAILABLE = 4;
-	const USER_EMAIL_UNAVAILABLE = 5;
-	const USER_FIRST_NAME_EMPTY = 6;
-	const USER_LAST_NAME_EMPTY = 7;
-	const USER_TYPE_INVALID = 8;
-	const USER_ADDRESS_EMPTY = 9;
-	const USER_RESIDENCE_EMPTY = 10;
-	const USER_NATIONALITY_EMPTY = 11;
-	const USER_GENDER_INVALID = 12;
+	const USER_USERNAME_INVALID = "UsernameInvalid";
+	const USER_PASSWORD_INVALID = "PasswordInvalid";
+	const USER_PASSWORD_INCORRECT = "PasswordIncorrect";
+	const USER_PASSWORDS_DONT_MATCH = "PasswordsDontMatch";
+	const USER_EMAIL_INVALID = "EmailInvalid";
+	const USER_USERNAME_UNAVAILABLE = "UsernameUnavailable";
+	const USER_EMAIL_UNAVAILABLE = "EmailUnavailable";
+	const USER_FIRST_NAME_EMPTY = "FirstNameEmpty";
+	const USER_LAST_NAME_EMPTY = "LastNameEmpty";
+	const USER_TYPE_INVALID = "UserTypeInvalid";
+	const USER_ADDRESS_EMPTY = "AddressEmpty";
+	const USER_RESIDENCE_EMPTY = "ResidenceEmpty";
+	const USER_NATIONALITY_EMPTY = "NationalityEmpty";
+	const USER_GENDER_INVALID = "UserGenderInvalid";
+	const COLLAB_AREA_INVALID = "CollabAreaInvalid";
+	const THEMATIC_AREA_INVALID = "ThematicAreaInvalid";
+	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
 	
 	
 	

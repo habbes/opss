@@ -1,10 +1,16 @@
 <?php
 
+/**
+ * stores data on the current session
+ * @author Habbes
+ *
+ */
 class Session extends DataObject {
 
 	private static $instance = null;
 
-	public function __construct(){
+	public function __construct()
+	{
 		session_start();
 		if(!isset($_SESSION["data"])){
 			$_SESSION["data"] = array();
@@ -15,15 +21,34 @@ class Session extends DataObject {
 		$_SESSION["lastTime"] = time();
 		$_SESSION["lastIp"] = $_SERVER["REMOTE_ADDR"];
 	}
-
-	public static function getInstance(){
+	
+	/**
+	 * gets the current session
+	 * @return Session
+	 */
+	public static function getInstance()
+	{
 		if(self::$instance == null){
 			self::$instance = new self();
 		}
 		return self::$instance;
 	}
+	
+	/**
+	 * alias for getInstance()
+	 * @return Session
+	 */
+	public static function instance()
+	{
+		return self::getInstance();
+	}
 
-	public function destroy(){
+	/**
+	 * deletes all data stored in the session as well as its cookie
+	 * @return boolean
+	 */
+	public function destroy()
+	{
 		//delete all session vars
 		$_SESSION = array();
 
@@ -37,26 +62,57 @@ class Session extends DataObject {
 		//destroy session data
 		return session_destroy();
 	}
-
-	public function __get($name){
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see DataObject::set()
+	 */
+	public function set($name, $val = true)
+	{
+		parent::set($name, $val);
+	}
+	
+	/**
+	 * (non-PHPdoc)
+	 * @see DataObject::get()
+	 */
+	public function get($name)
+	{
 		if(array_key_exists($name, $_SESSION)){
 			return $_SESSION[$name];
 		}
 		else {
-			return parent::__get($name);
+			return parent::get($name);
 		}
 	}
 
-	public function age(){
+	
+	/**
+	 * gets the seconds this session has been alive
+	 * @return number
+	 */
+	public function age()
+	{
 		return $_SESSION["lastTime"] - $_SESSION["startTime"];
 	}
-
-	public function sameIp(){
+	
+	/**
+	 * gets whether the IP used for this request is the same as the
+	 * last IP that made a request on this session
+	 * @return boolean
+	 */
+	public function sameIp()
+	{
 		return $_SESSION["lastIp"] == $_SESSION["startIp"];
 	}
-
-	public function deleteData($key){
+	
+	/**
+	 * deletes the specified info from the session
+	 * @param string $key
+	 */
+	public function deleteData($key)
+	{
 		unset($_SESSION["data"][$key]);
 	}
-
+	
 }

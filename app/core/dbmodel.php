@@ -27,6 +27,9 @@ class DBModel extends Model
 	
 	public static function table()
 	{
+		if(isset(static::$table) && static::$table){
+			return static::$table;
+		}
 		//TODO: find a way to cache the table name
 		return Utils::camelToDelimitedCasePlural(get_called_class());
 		
@@ -93,7 +96,7 @@ class DBModel extends Model
 	 * if false is returned, the model will not be saved
 	 * @return boolean
 	 */
-	protected function validate()
+	protected function validate(array &$errors)
 	{
 		return true;
 	}
@@ -126,7 +129,7 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onDelete(&$errors = null)
+	protected function onDelete()
 	{
 		return true;
 	}

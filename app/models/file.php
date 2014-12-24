@@ -63,7 +63,7 @@ class File extends DBModel
 	* On windows, include bundled php_fileinfo.dll in php.ini to enable this extension
 	* @param string $filename
 	* @param string $directory
-	* @param string $tempna,e
+	* @param string $tempname
 	* @return File on success the created instance is returned otherwise null is returned
 	* 
 	*/
@@ -163,7 +163,7 @@ class File extends DBModel
 		return true;
 	}
 	
-	protected function validate()
+	protected function validate(array &$errors)
 	{
 		if(!file_exists($this->getFilepath()))
 			return false;

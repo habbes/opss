@@ -2,10 +2,27 @@
 
 class MessageBox extends DBModel
 {
+	protected static $table = "message_boxes";
+	
 	protected $user_id;
 	protected $last_query_time;
 	
 	private $_user;
+	
+	/**
+	 * creates a MessageBox for the specified User
+	 * @param User $user
+	 * @return MessageBox
+	 */
+	public static function create($user)
+	{
+		$m = new static();
+		$m->user_id = $user->getId();
+		$m->_user = $user;
+		$m->last_query_time = Utils::dbDateFormat(time());
+		
+		return $m;
+	}
 	
 	/**
 	 * 
@@ -111,7 +128,7 @@ class MessageBox extends DBModel
 	 */
 	public function getUnreadBySenderType($type)
 	{
-		return $this->getAllByQuery("read=? AND sender_type='?'",[(int) false, $type])
+		return $this->getAllByQuery("read=? AND sender_type='?'",[(int) false, $type]);
 	}
 	
 	/**

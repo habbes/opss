@@ -56,6 +56,33 @@ abstract class UserRole
 		return $this->type;
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isAdmin()
+	{
+		return $this->getType() == UserType::ADMIN;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isReviewer()
+	{
+		return $this->getType() == UserType::REVIEWER;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isResearcher()
+	{
+		return $this->getType() == UserType::RESEARCHER;
+	}
+	
 	//ABSTRACT METHODS
 	
 	/**

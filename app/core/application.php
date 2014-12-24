@@ -61,9 +61,6 @@ class Application
 		call_user_func_array([$handler, "onCreate"], $this->args);
 		//process the request using get() or post() method
 		call_user_func_array([$handler, $method], $this->args);
-	
 	}
 	
-
-
 }

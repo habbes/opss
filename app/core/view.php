@@ -22,8 +22,9 @@ abstract class View
 	
 	/**
 	 * display the view
+	 * @param DataObject $params args passed from the calling RequestHandler
 	 */
-	public function render()
+	public function render($params)
 	{
 		
 	}

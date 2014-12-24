@@ -4,7 +4,12 @@
  * routes mapping url to request handlers
  */
 $routes = [
-	['^test\/?$', "Test"],
-	['^test\/(\d+)$', "Test"]
-	
+		['^submit\/(\d+)$',"Submit"],
+		['^submit\/?$',"Submit"],
+                ['^form\/?$',"Form"],
+		['^form\/(\d+)$',"Form"],
+		['^test\/?$', "Test"],
+		['^test\/(\d+)$', "Test"],
+		['^registration\/?$', "Registration"],
+		
 ];
