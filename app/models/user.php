@@ -28,7 +28,7 @@ class User extends DBModel
 	private $_role;
 	//used to store the password before it has been hashed
 	//so it can be checked for validity before being saved to db
-	private $_plainPassword;
+	private $_plainPassword = null;
 	
 	/**
 	 * createa user of the given type/role
@@ -307,8 +307,8 @@ class User extends DBModel
 		if(static::findByEmail($this->email)){
 			$errors[] = ValidationError::USER_EMAIL_UNAVAILABLE;
 		}
-		//if _plainPassword is set, then the password has been changed or created
-		if($this->_plainPassword && !static::isValidPassword($this->_plainPassword)){
+		//if _plainPassword is not null, then the password has been changed or created
+		if($this->_plainPassword !== null && !static::isValidPassword($this->_plainPassword)){
 			$errors[] = ValidationError::USER_PASSWORD_INVALID;
 		}
 		if(empty($this->first_name)){
@@ -331,7 +331,7 @@ class User extends DBModel
 			if(empty($this->nationality)){
 				$errors[] = ValidationError::USER_NATIONALITY_EMPTY;
 			}
-			if((int) $this->gender && !UserGender::isValue((int) $this->gender)){
+			if(!UserGender::isValue((int) $this->gender)){
 				$errors[] = ValidationError::USER_GENDER_INVALID;
 			}
 		}

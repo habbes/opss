@@ -1,5 +1,6 @@
 <?php 
 $formdata = $data->form;
+$formerror = $data->errors;
 ?>
 <div class="col-sm-3 col-sm-offset-4 col-md-10 col-md-offset-2 main">
           <h1 class="page-header"><?=$data->pageHeading?></h1>
@@ -19,8 +20,7 @@ $formdata = $data->form;
       							><?= $title ?></option>	
       						<?php }	?>
       						</select>
-      						<span class="help-block alert-danger" class="form-error" id="title-error"></span>
-        					<p class="help-block">This is your title e.g: Mr Ms Mrs</p>
+      						<span class="help-block alert-danger" class="form-error" id="title-error"><?= $formerror->title ?></span>
       					</div>
     				</div>
     				
@@ -30,8 +30,7 @@ $formdata = $data->form;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="firstname" name="firstname" value="<?=$formdata->firstname?>"
 				        	placeholder="" class="form-control">
-				        <span class="help-block alert-danger" class="form-error" id="firstname-error"></span>
-				        <p class="help-block">Please provide your first name</p>
+				        <span class="help-block alert-danger" class="form-error" id="firstname-error"><?= $formerror->firstname ?></span>
 				      </div>
 				    </div>
 				    
@@ -41,8 +40,7 @@ $formdata = $data->form;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="lastname" name="lastname" value="<?=$formdata->lastname?>" 
 				        	placeholder="" class="form-control">
-				        <span class="help-block alert-danger" class="form-error" id="lastname-error"></span>
-				        <p class="help-block">Please provide your last name</p>
+				        <span class="help-block alert-danger" class="form-error" id="lastname-error"><?= $formerror->lastname ?></span>
 				      </div>
 				    </div>
 				    
@@ -55,8 +53,7 @@ $formdata = $data->form;
 				      	
 				      	<label class="radio-inline"><input type="radio" value="female" name="gender"
 				      	<?php if($formdata->gender == "female") echo "checked"; ?> >Female</label>
-				      	<span class="help-block alert-danger" class="form-error" id="gender-error"></span>
-				        <p class="help-block">Please provide your gender</p>
+				      	<span class="help-block alert-danger" class="form-error" id="gender-error"><?= $formerror->gender ?></span>
 				      </div>
 				    </div>
 				    
@@ -71,8 +68,8 @@ $formdata = $data->form;
       								<?php if($country == $formdata->nationality) echo "selected"; ?> ><?=$country?></option>
       							<?php } ?>
       						</select>
-      						<span class="help-block alert-danger" class="form-error" id="nationality-error"></span>
-        					<p class="help-block">Please select your country of nationality</p>
+      						<span class="help-block alert-danger" class="form-error" 
+      						id="nationality-error"><?= $formerror->nationality ?></span>
       					</div>
     				</div>
     				
@@ -87,8 +84,7 @@ $formdata = $data->form;
       								<?php if($country == $formdata->residence) echo "selected"; ?> ><?=$country?></option>
       							<?php } ?>
       						</select>
-      						<span class="help-block alert-danger form-error" id="residence-error"></span>
-        					<p class="help-block">Please select your country of residence</p>
+      						<span class="help-block alert-danger form-error" id="residence-error"><?= $formerror->residence ?></span>
       					</div>
     				</div>
     				
@@ -100,8 +96,7 @@ $formdata = $data->form;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="address" name="address" value="<?= $formdata->address ?>"
 				        placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="address-error"></span>
-				        <p class="help-block">Please provide your address</p>
+				        <span class="help-block alert-danger form-error" id="address-error"><?= $formerror->address ?></span>
 				      </div>
 				    </div>
 				    
@@ -119,8 +114,8 @@ $formdata = $data->form;
 	      							><?= $data->researchAreaNames[$area]?></option>
 	      						<?php } ?>
 	      						</select>
-	      						<span class="help-block alert-danger form-error" id="thematic-area-error"></span>
-	        					<p class="help-block">Please select your thematic research type</p>
+	      						<span class="help-block alert-danger form-error" 
+	      						id="thematic-area-error"><?= $formerror->get("thematic-area") ?></span>
 	      					</div>
     					</div>
     					<div class="form-group">
@@ -134,8 +129,8 @@ $formdata = $data->form;
 	      							><?= $data->researchAreaNames[$area]?></option>
 	      						<?php } ?>
 	      						</select>
-	      						<span class="help-block alert-danger" id="collaborative-area-error"></span>
-	        					<p class="help-block">Please select your collaborative area type</p>
+	      						<span class="help-block alert-danger" 
+	      						id="collaborative-area-error"><?= $formerror->get("collaborative-area") ?></span>
 	      					</div>
     					</div>
 				    </fieldset>
@@ -147,8 +142,7 @@ $formdata = $data->form;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="username" name="username" value="<?= $formdata->username; ?>"
 				        placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="username-error"></span>
-				        <p class="help-block">Please provide your username, you will use this user name to access your account</p>
+				        <span class="help-block alert-danger form-error" id="username-error"><?= $formerror->username ?></span>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -157,8 +151,7 @@ $formdata = $data->form;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="email" id="email" name="email" value="<?= $formdata->email ?>"
 				        placeholder="" class="form-control" >
-				        <span class="help-block alert-danger form-error" id="email-error"></span>
-				        <p class="help-block">Please provide your email</p>
+				        <span class="help-block alert-danger form-error" id="email-error"><?= $formerror->email ?></span>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -166,8 +159,7 @@ $formdata = $data->form;
 				      <label class="control-label col-sm-1 col-lg-2" for="password">Password</label>
 				      <div class="col-sm-3 col-md-5">
 				        <input type="password" id="password" name="password" placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="password-error"></span>
-				        <p class="help-block">Please provide your password, you will use this password to access your account</p>
+				        <span class="help-block alert-danger form-error" id="password-error"><?= $formerror->password ?></span>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -175,8 +167,8 @@ $formdata = $data->form;
 				      <label class="control-label col-sm-1 col-lg-2" for="password-confirm">Confirm Password</label>
 				      <div class="col-sm-3 col-md-5">
 				        <input type="password" id="password-confirm" name="password-confirm" placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="password-confirm-error"></span>
-				        <p class="help-block">Please confirm your password</p>
+				        <span class="help-block alert-danger form-error" 
+				        id="password-confirm-error"><?= $formerror->get("password-confirm") ?></span>
 				      </div>
 				    </div>
 				    </fieldset>

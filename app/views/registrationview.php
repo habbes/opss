@@ -6,6 +6,8 @@ class RegistrationView extends BaseView
 	{
 		if(!$params->form)
 			$params->form = new DataObject();
+		if(!$params->errors)
+			$params->errors = new DataObject();
 		$this->data->loadData($params->toArray());
 		$this->data->pageTitle = "Registration";
 		$this->data->pageHeading = "Registration";
