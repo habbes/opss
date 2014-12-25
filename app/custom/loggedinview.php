@@ -13,10 +13,11 @@ class LoggedInView extends BaseView
 	 * display the page on top of the mainlayout
 	 * and show the correct navigation panel based on the
 	 * role of the logged-in user
+	 * @params DataObject $params params passed by the controller
 	 */
-	public function showBase()
+	public function showBase($params)
 	{
-		switch(Login::getUser()->getType()){
+		switch($params->user->getType()){
 			case UserType::RESEARCHER:
 				$data->pageNav = $this->read("researcher-nav");
 				break;
