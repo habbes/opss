@@ -21,6 +21,15 @@ class LoggedOutHandler extends RequestHandler
 		}
 	}
 	
+	/**
+	 * creates a login session for the specified user
+	 * @param User $user
+	 */
+	public function login($user)
+	{
+		Login::userLogin($user);
+	}
+	
 	public function onCreate()
 	{
 		$this->assertLogout();
