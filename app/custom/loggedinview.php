@@ -17,18 +17,20 @@ class LoggedInView extends BaseView
 	 */
 	public function showBase($params)
 	{
+		$this->data->userName = $params->user->getUsername();
 		switch($params->user->getType()){
 			case UserType::RESEARCHER:
-				$data->pageNav = $this->read("researcher-nav");
+				$this->data->pageNav = $this->read("researcher-nav");
 				break;
 			case UserType::REVIEWER:
-				$data->pageNav = $this->read("reviewer-nav");
+				$this->data->pageNav = $this->read("reviewer-nav");
 				break;
 			case UserType::ADMIN:
-				$data->pageNav = $this->read("admin-nav");
+				$this->data->pageNav = $this->read("admin-nav");
 				break;
 			
 		}
+		
 		
 		parent::showBase();
 	}
