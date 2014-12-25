@@ -26,7 +26,7 @@ class LoggedInHandler extends RequestHandler
 			$this->viewParams->user = $this->user;
 		}
 		else {
-			$destination = $_SERVER['PATH'];
+			$destination = $_SERVER['REQUEST_URI'];
 			$this->localRedirect("login?destination=$destination");
 		}
 	}
