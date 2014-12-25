@@ -3,9 +3,10 @@ class HomeHandler extends LoggedInHandler
 {
 	public function get()
 	{
-		$this->show();
+		$this->showPage();
 	}
-	private function show()
+	
+	private function showPage()
 	{
 		$this->renderView("Home");
 	}

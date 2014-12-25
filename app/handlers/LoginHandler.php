@@ -2,7 +2,7 @@
 class LoginHandler extends LoggedOutHandler
 {
 	public function get(){
-		$this->show();
+		$this->showPage();
 	}
 	public function post()
 	{
@@ -12,14 +12,15 @@ class LoginHandler extends LoggedOutHandler
 		if($user = User::login($username, $password))
 		{
 			Login::userLogin($user);
-			$this->localRedirect("researcher");
+			$this->localRedirect("");
 			exit;
 		}else{
 			echo "Unsuccessful login <a href='".URL_ROOT."/login'>Try Again</a>";
 			exit;
 		}
 	}
-	protected function show()
+	
+	protected function showPage()
 	{
 		$this->renderView("form");
 	}
