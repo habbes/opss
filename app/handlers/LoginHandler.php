@@ -4,6 +4,7 @@ class LoginHandler extends LoggedOutHandler
 	public function get(){
 		$this->showPage();
 	}
+	
 	public function post()
 	{
 		$username = $this->postVar("username");
@@ -12,7 +13,7 @@ class LoginHandler extends LoggedOutHandler
 		if($user = User::login($username, $password))
 		{
 			Login::userLogin($user);
-			$this->localRedirect("");
+			$this->localRedirect($this->getVar("destination"));
 			exit;
 		}else{
 			echo "Unsuccessful login <a href='".URL_ROOT."/login'>Try Again</a>";
