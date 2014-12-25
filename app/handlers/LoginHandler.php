@@ -23,7 +23,7 @@ class LoginHandler extends LoggedOutHandler
 	
 	protected function showPage()
 	{
-		$this->renderView("form");
+		$this->renderView("Login");
 	}
 
 }
