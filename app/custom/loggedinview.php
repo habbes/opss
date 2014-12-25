@@ -17,7 +17,7 @@ class LoggedInView extends BaseView
 	 */
 	public function showBase($params)
 	{
-		$this->data->userName = $params->user->getUsername();
+		$this->data->userName = $params->user->getFullName();
 		switch($params->user->getType()){
 			case UserType::RESEARCHER:
 				$this->data->pageNav = $this->read("researcher-nav");
