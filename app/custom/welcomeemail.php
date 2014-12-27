@@ -25,7 +25,7 @@ class WelcomeEmail extends Email
 				[
 					"name" => $user->getFullname(),
 					"accountType" => UserType::getString($user->getType()),
-					"link" => URL_ROOT."/email-activation?code=$activationCode"
+					"link" => URL_ROOT."/login?eactivation=$activationCode"
 				]
 				);
 		$e->addRecipient($user->getEmail(), $user->getFullName());
