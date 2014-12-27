@@ -295,44 +295,44 @@ class User extends DBModel
 	protected function validate(array &$errors)
 	{
 		if(!self::isValidUsername($this->username)){
-			$errors[] = ValidationError::USER_USERNAME_INVALID;
+			$errors[] = OperationError::USER_USERNAME_INVALID;
 		}
 		
 		if(!self::isValidEmail($this->email)){
-			$errors[] = ValidationError::USER_EMAIL_INVALID;
+			$errors[] = OperationError::USER_EMAIL_INVALID;
 		}
 		if(static::findByUsername($this->username)){
-			$errors[] = ValidationError::USER_USERNAME_UNAVAILABLE;
+			$errors[] = OperationError::USER_USERNAME_UNAVAILABLE;
 		}
 		if(static::findByEmail($this->email)){
-			$errors[] = ValidationError::USER_EMAIL_UNAVAILABLE;
+			$errors[] = OperationError::USER_EMAIL_UNAVAILABLE;
 		}
 		//if _plainPassword is not null, then the password has been changed or created
 		if($this->_plainPassword !== null && !static::isValidPassword($this->_plainPassword)){
-			$errors[] = ValidationError::USER_PASSWORD_INVALID;
+			$errors[] = OperationError::USER_PASSWORD_INVALID;
 		}
 		if(empty($this->first_name)){
-			$errors[] = ValidationError::USER_FIRST_NAME_EMPTY;
+			$errors[] = OperationError::USER_FIRST_NAME_EMPTY;
 		}
 		if(empty($this->last_name)){
-			$errors[] = ValidationError::USER_LAST_NAME_EMPTY;
+			$errors[] = OperationError::USER_LAST_NAME_EMPTY;
 		}
 		if(!UserType::isValue((int) $this->type)){
-			$errors[] = ValidationError::USER_TYPE_INVALID;
+			$errors[] = OperationError::USER_TYPE_INVALID;
 		}
 		
 		if((int) $this->type == UserType::RESEARCHER){
 			if(empty($this->address)){
-				$erros[] = ValidationError::USER_ADDRESS_EMPTY;
+				$erros[] = OperationError::USER_ADDRESS_EMPTY;
 			}
 			if(empty($this->residence)){
-				$errors[] = ValidationError::USER_RESIDENCE_EMPTY;
+				$errors[] = OperationError::USER_RESIDENCE_EMPTY;
 			}
 			if(empty($this->nationality)){
-				$errors[] = ValidationError::USER_NATIONALITY_EMPTY;
+				$errors[] = OperationError::USER_NATIONALITY_EMPTY;
 			}
 			if(!UserGender::isValue((int) $this->gender)){
-				$errors[] = ValidationError::USER_GENDER_INVALID;
+				$errors[] = OperationError::USER_GENDER_INVALID;
 			}
 		}
 		

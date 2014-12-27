@@ -1,8 +1,14 @@
 <?php
 
-class ValidationException extends Exception
+/**
+ * exception thrown to report errors in operation, often as
+ * a result of erroneous data supplied by the user
+ * @author Habbes
+ *
+ */
+class OperationException extends Exception
 {
-	private $validationErrors;
+	private $operationErrors;
 	
 	/**
 	 * 
@@ -13,7 +19,7 @@ class ValidationException extends Exception
 	 */
 	public function __construct($errors = [], $message = null, $code = 0, $previous = null)
 	{
-		$this->validationErrors = $errors;
+		$this->operationErrors = $errors;
 		parent::__construct($message, $code, $previous);
 		
 	}
@@ -24,7 +30,7 @@ class ValidationException extends Exception
 	 */
 	public function getErrors()
 	{
-		return $this->validationErrors;
+		return $this->operationErrors;
 	}
 	
 	/**
@@ -33,7 +39,7 @@ class ValidationException extends Exception
 	 */
 	public function setErrors($errors)
 	{
-		$this->validationErrors = $errors;
+		$this->operationErrors = $errors;
 	}
 	
 	/**
@@ -42,7 +48,7 @@ class ValidationException extends Exception
 	 */
 	public function addError($error)
 	{
-		$this->validationErrors[] = $error;
+		$this->operationErrors[] = $error;
 	}
 	
 	/**
@@ -52,6 +58,6 @@ class ValidationException extends Exception
 	 */
 	public function hasError($error)
 	{
-		return array_searcher($error, $this->validationErrors);
+		return array_searcher($error, $this->operationErrors);
 	}
 }

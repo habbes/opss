@@ -1,11 +1,11 @@
 <?php
 
 /**
- * contains constants representing different validation errors
+ * contains constants representing different operation errors
  * @author Habbes
  *
  */
-class ValidationError
+class OperationError
 {
 	//User errors
 	const USER_USERNAME_INVALID = "UsernameInvalid";
