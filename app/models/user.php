@@ -29,6 +29,9 @@ class User extends DBModel
 	//used to store the password before it has been hashed
 	//so it can be checked for validity before being saved to db
 	private $_plainPassword = null;
+	//used to check whether the username is being updated when the user is saved
+	private $_newUsername = false;
+	private $_newEmail = false;
 	
 	/**
 	 * createa user of the given type/role
@@ -63,6 +66,26 @@ class User extends DBModel
 		if($this->title)
 			$name = $this->title . " " . $name;
 		return $name;
+	}
+	
+	/**
+	 * 
+	 * @param string $username
+	 */
+	public function setUsername($username)
+	{
+		$this->username = $username;
+		$this->_newUsername = true;
+	}
+	
+	/**
+	 * 
+	 * @param string $email
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+		$this->_newEmail = true;
 	}
 	
 	/**
@@ -302,10 +325,10 @@ class User extends DBModel
 		if(!self::isValidEmail($this->email)){
 			$errors[] = OperationError::USER_EMAIL_INVALID;
 		}
-		if(static::findByUsername($this->username)){
+		if($this->_newUsername && static::findByUsername($this->username)){
 			$errors[] = OperationError::USER_USERNAME_UNAVAILABLE;
 		}
-		if(static::findByEmail($this->email)){
+		if($this->_newEmail && static::findByEmail($this->email)){
 			$errors[] = OperationError::USER_EMAIL_UNAVAILABLE;
 		}
 		//if _plainPassword is not null, then the password has been changed or created
