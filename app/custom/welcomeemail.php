@@ -21,7 +21,7 @@ class WelcomeEmail extends Email
 	{
 		$e = new static();
 		$e->user = $user;
-		$e->setBodyFromTemplate("post_registration",
+		$e->setBodyFromTemplate("post-registration",
 				[
 					"name" => $user->getFullname(),
 					"accountType" => UserType::getString($user->getType()),
