@@ -144,7 +144,7 @@ class DBModel extends Model
 		$errors = [];
 		if(!$this->onInsert($errors) || !$this->validate($errors) || count($errors) > 0){
 			//throw exception
-			$ex = new ValidationException();
+			$ex = new OperationException();
 			$ex->setErrors($errors);
 			throw $ex;
 			return false;
@@ -198,7 +198,7 @@ class DBModel extends Model
 		$errors = [];
 		if(!$this->onUpdate($errors) || !$this->validate($errors) || count($errors) > 0){
 			//throw exception
-			$ex = new ValidationException();
+			$ex = new OperationException();
 			$ex->setErrors($errors);
 			throw $ex;
 			return false;
@@ -238,7 +238,7 @@ class DBModel extends Model
 	{
 		$errors = [];
 		if(!$this->onDelete($errors) || count($errors) > 0){
-			$ex = new ValidationException();
+			$ex = new OperationException();
 			$ex->setErrors($errors);
 			throw $ex;
 		}
