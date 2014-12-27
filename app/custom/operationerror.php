@@ -8,6 +8,7 @@
 class OperationError
 {
 	//User errors
+	const NOT_FOUND = "NotFound";
 	const USER_NOT_FOUND = "UserNotFound";
 	const USER_USERNAME_INVALID = "UsernameInvalid";
 	const USER_PASSWORD_INVALID = "PasswordInvalid";
@@ -27,6 +28,7 @@ class OperationError
 	const COLLAB_AREA_INVALID = "CollabAreaInvalid";
 	const THEMATIC_AREA_INVALID = "ThematicAreaInvalid";
 	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
+	const EMAIL_ACTIVATION_INVALID = "EmailActivationInvalid";
 	
 	
 	
