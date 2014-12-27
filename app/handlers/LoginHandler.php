@@ -25,8 +25,9 @@ class LoginHandler extends LoggedOutHandler
 					$message = "Password Incorrect";
 					break;
 			}
-			echo "Unsuccessful login: $message. <a href='".URL_ROOT."/login'>Try Again</a>";
-			exit;
+			$this->viewParams->username = $username;
+			$this->viewParams->formResult = $message;
+			$this->showPage();
 		}
 		
 	}
