@@ -8,7 +8,7 @@ class LoginHandler extends LoggedOutHandler
 	public function post()
 	{
 		if($this->postVar("action") == "activation" && $this->session()->allowActivation)
-			$this->handleActivation();
+			$this->sendActivation();
 		else
 			$this->handleLogin();
 		
@@ -49,7 +49,7 @@ class LoginHandler extends LoggedOutHandler
 		}
 	}
 	
-	private function handleActivation()
+	private function sendActivation()
 	{
 		$user = User::findById($this->session()->activationUserId);
 		$ea = EmailActivation::create($user);
