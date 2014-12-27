@@ -70,6 +70,7 @@ class RegistrationHandler extends LoggedOutHandler
 				
 			//send activation email
 			$ea = EmailActivation::create($user);
+			$ea->save();
 			$mail = WelcomeEmail::create($user, $ea->getCode());
 			$mail->send();
 				
@@ -141,6 +142,7 @@ class RegistrationHandler extends LoggedOutHandler
 		$user = User::findById(Session::instance()->registerdUserId);
 		//send activation email
 		$ea = EmailActivation::create($user);
+		$ea->save();
 		$mail = WelcomeEmail::create($user, $ea->getCode());
 		$mail->send();
 		$this->showPostRegPage();
