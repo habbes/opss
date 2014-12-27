@@ -195,7 +195,7 @@ class User extends DBModel
 	
 	/**
 	 * checks whether a user with the given credentials exists
-	 * and returns that User
+	 * and returns that User, throws exception when login fails
 	 * @param string $username username or email
 	 * @param string $password
 	 * @return User
@@ -206,8 +206,9 @@ class User extends DBModel
 			if($user->verifyPassword($password)){
 				return $user;
 			}
+			throw new OperationException([OperationError::USER_PASSWORD_INCORRECT]);
 		}
-		return null;
+		throw new OperationException([OperationError::USER_NOT_FOUND]);
 	}
 	
 	/**

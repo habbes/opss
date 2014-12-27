@@ -10,15 +10,25 @@ class LoginHandler extends LoggedOutHandler
 		$username = $this->postVar("username");
 		$password = $this->postVar("password");
 		
-		if($user = User::login($username, $password))
-		{
-			Login::userLogin($user);
+		try {
+			$user = User::login($username, $password);
+			$this->login($user);
 			$this->localRedirect($this->getVar("destination"));
-			exit;
-		}else{
-			echo "Unsuccessful login <a href='".URL_ROOT."/login'>Try Again</a>";
+		
+		}
+		catch(OperationException $e) {
+			switch($e->getErrors()[0]){
+				case OperationError::USER_NOT_FOUND:
+					$message = "Username or email not found.";
+					break;
+				case OperationError::USER_PASSWORD_INCORRECT:
+					$message = "Password Incorrect";
+					break;
+			}
+			echo "Unsuccessful login: $message. <a href='".URL_ROOT."/login'>Try Again</a>";
 			exit;
 		}
+		
 	}
 	
 	protected function showPage()

@@ -8,6 +8,7 @@
 class OperationError
 {
 	//User errors
+	const USER_NOT_FOUND = "UserNotFound";
 	const USER_USERNAME_INVALID = "UsernameInvalid";
 	const USER_PASSWORD_INVALID = "PasswordInvalid";
 	const USER_PASSWORD_INCORRECT = "PasswordIncorrect";
