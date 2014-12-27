@@ -19,6 +19,10 @@ abstract class RequestHandler
 		$this->viewParams = new DataObject();
 	}
 	
+	/**
+	 * gets the instance of the current session
+	 * @return Session
+	 */
 	public function session()
 	{
 		return Session::getInstance();
