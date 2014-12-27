@@ -16,6 +16,7 @@ class OperationError
 	const USER_EMAIL_INVALID = "EmailInvalid";
 	const USER_USERNAME_UNAVAILABLE = "UsernameUnavailable";
 	const USER_EMAIL_UNAVAILABLE = "EmailUnavailable";
+	const USER_EMAIL_NOT_ACTIVATED = "EmailNotActivated";
 	const USER_FIRST_NAME_EMPTY = "FirstNameEmpty";
 	const USER_LAST_NAME_EMPTY = "LastNameEmpty";
 	const USER_TYPE_INVALID = "UserTypeInvalid";

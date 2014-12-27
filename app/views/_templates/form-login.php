@@ -6,6 +6,7 @@
                  			<div>
                  				<span class="form-result-error"><?= $data->formResult ?></span>
                  			</div>
+                 			
       						<label for="username" class="sr-only">Username:</label>
          						<input type="text" class="form-control" name="username" value="<?= htmlspecialchars($data->username) ?>"id="inputUsername" placeholder="Enter Username or Email" required>
       						<label for="password" class="sr-only">Password:</label>
@@ -15,8 +16,13 @@
                                		New User? <a href="registration">Register here</a><br>
                                		Forgot Password? <a href="#">Click Here</a>
                             	</span>
-                            </div>
                  </form>
+                 <?php if($data->showActivationOption) { ?>
+                 			<form method="post">
+                 				<input type="hidden" name="action" value="activation"/>
+                 				<button>Send me activation email</button>
+                 			</form>
+                 <?php } ?>
                            
 			</div>
 
