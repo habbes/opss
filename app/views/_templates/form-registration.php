@@ -2,48 +2,44 @@
 $formdata = $data->form;
 $formerror = $data->errors;
 ?>
-
+<style>
+	.err{
+		color: red;
+	}
+</style>
 <div class="form">
 			 	<form class="form-horizontal" method="POST" role="form">
 			 		<input type="hidden" name="action" value="registration"/>
   					<fieldset>
-      					<legend class="">Personal info</legend>
     				<div class="form-group">
       					<!-- Title -->
-      					<label class="control-label col-sm-1 col-lg-2"  for="title">Title</label>
-      					<div class="col-sm-3 col-md-5">
-      						<select class="form-control" name="title">
-      							<option value="">Select Title</option>
+    				<div class="form-group">
+      					<!-- Title -->
+      					<label class="control-label col-sm-1 col-lg-2"  for="title">Names</label>
+      					<div class="col-sm-3 col-md-1" style="padding-right:0px">
+      						<select class="form-control" name="title" style="border-radius: 4px 0px 0px 4px;border-right: none">
+      							<option value="">Title</option>
       						<?php foreach($data->titles as $title){	?>
       							<option value="<?=$title?>"
       							<?php if($title == $formdata->title) echo "selected"; ?>
       							><?= $title ?></option>	
       						<?php }	?>
       						</select>
-      						<span class="help-block alert-danger" class="form-error" id="title-error"><?= $formerror->title ?></span>
+      						<span class="help-block err" class="form-error" id="title-error"><?= $formerror->title ?></span>
       					</div>
-    				</div>
-    				
-				    <div class="form-group">
 				      <!-- First name -->
-				      <label class="control-label col-sm-1 col-lg-2" for="firstname">First name</label>
-				      <div class="col-sm-3 col-md-5">
-				        <input type="text" id="firstname" name="firstname" value="<?=$formdata->firstname?>"
-				        	placeholder="" class="form-control">
-				        <span class="help-block alert-danger" class="form-error" id="firstname-error"><?= $formerror->firstname ?></span>
+				      <div class="col-sm-3 col-md-2" style="padding-left: 0px;padding-right:0px">
+				        <input type="text" id="firstname" style="border-radius: 0px;border-right: none;border-left: none" name="firstname" value="<?=$formdata->firstname?>"
+				        	placeholder="First name" class="form-control">
+				        <span class="help-block err" class="form-error" id="firstname-error"><?= $formerror->firstname ?></span>
 				      </div>
-				    </div>
-				    
-				    <div class="form-group">
 				      <!-- Second name -->
-				      <label class="control-label col-sm-1 col-lg-2" for="lastname">Last name</label>
-				      <div class="col-sm-3 col-md-5">
-				        <input type="text" id="lastname" name="lastname" value="<?=$formdata->lastname?>" 
-				        	placeholder="" class="form-control">
-				        <span class="help-block alert-danger" class="form-error" id="lastname-error"><?= $formerror->lastname ?></span>
+				      <div class="col-sm-3 col-md-2" style="padding-left: 0px">
+				        <input type="text" id="lastname" name="lastname" style="border-radius: 0px 4px 4px 0px;border-left: none" value="<?=$formdata->lastname?>" 
+				        	placeholder="Last name" class="form-control">
+				        <span class="help-block err" class="form-error" id="lastname-error"><?= $formerror->lastname ?></span>
 				      </div>
 				    </div>
-				    
  					 <div class="form-group">
 				      <!-- Gender -->
 				      <label class="control-label col-sm-1 col-lg-2" for="gender">Gender</label>
@@ -53,7 +49,7 @@ $formerror = $data->errors;
 				      	
 				      	<label class="radio-inline"><input type="radio" value="female" name="gender"
 				      	<?php if($formdata->gender == "female") echo "checked"; ?> >Female</label>
-				      	<span class="help-block alert-danger" class="form-error" id="gender-error"><?= $formerror->gender ?></span>
+				      	<span class="help-block err" class="form-error" id="gender-error"><?= $formerror->gender ?></span>
 				      </div>
 				    </div>
 				    
@@ -68,7 +64,7 @@ $formerror = $data->errors;
       								<?php if($country == $formdata->nationality) echo "selected"; ?> ><?=$country?></option>
       							<?php } ?>
       						</select>
-      						<span class="help-block alert-danger" class="form-error" 
+      						<span class="help-block err" class="form-error" 
       						id="nationality-error"><?= $formerror->nationality ?></span>
       					</div>
     				</div>
@@ -84,7 +80,7 @@ $formerror = $data->errors;
       								<?php if($country == $formdata->residence) echo "selected"; ?> ><?=$country?></option>
       							<?php } ?>
       						</select>
-      						<span class="help-block alert-danger form-error" id="residence-error"><?= $formerror->residence ?></span>
+      						<span class="help-block err form-error" id="residence-error"><?= $formerror->residence ?></span>
       					</div>
     				</div>
     				
@@ -96,13 +92,13 @@ $formerror = $data->errors;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="address" name="address" value="<?= $formdata->address ?>"
 				        placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="address-error"><?= $formerror->address ?></span>
+				        <span class="help-block err form-error" id="address-error"><?= $formerror->address ?></span>
 				      </div>
 				    </div>
 				    
 				    </fieldset>
 				    <fieldset>
-				    	<legend>Area of specialization</legend>
+				    	<legend></legend>
 				    	<div class="form-group">
 	      					<!-- Thematic research -->
 	      					<label class="control-label col-sm-1 col-lg-2"  for="thematic-area">Thematic research</label>
@@ -114,7 +110,7 @@ $formerror = $data->errors;
 	      							><?= $data->researchAreaNames[$area]?></option>
 	      						<?php } ?>
 	      						</select>
-	      						<span class="help-block alert-danger form-error" 
+	      						<span class="help-block err form-error" 
 	      						id="thematic-area-error"><?= $formerror->get("thematic-area") ?></span>
 	      					</div>
     					</div>
@@ -129,20 +125,20 @@ $formerror = $data->errors;
 	      							><?= $data->researchAreaNames[$area]?></option>
 	      						<?php } ?>
 	      						</select>
-	      						<span class="help-block alert-danger" 
+	      						<span class="help-block err" 
 	      						id="collaborative-area-error"><?= $formerror->get("collaborative-area") ?></span>
 	      					</div>
     					</div>
 				    </fieldset>
 				    <fieldset>
-				    	<legend>Account access info</legend>
+				    	<legend></legend>
 				    	<div class="form-group">
 				      <!-- username -->
 				      <label class="control-label col-sm-1 col-lg-2" for="username">Username</label>
 				      <div class="col-sm-3 col-md-5">
 				        <input type="text" id="username" name="username" value="<?= $formdata->username; ?>"
 				        placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="username-error"><?= $formerror->username ?></span>
+				        <span class="help-block err form-error" id="username-error"><?= $formerror->username ?></span>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -151,7 +147,7 @@ $formerror = $data->errors;
 				      <div class="col-sm-3 col-md-5">
 				        <input type="email" id="email" name="email" value="<?= $formdata->email ?>"
 				        placeholder="" class="form-control" >
-				        <span class="help-block alert-danger form-error" id="email-error"><?= $formerror->email ?></span>
+				        <span class="help-block err form-error" id="email-error"><?= $formerror->email ?></span>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -159,7 +155,7 @@ $formerror = $data->errors;
 				      <label class="control-label col-sm-1 col-lg-2" for="password">Password</label>
 				      <div class="col-sm-3 col-md-5">
 				        <input type="password" id="password" name="password" placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" id="password-error"><?= $formerror->password ?></span>
+				        <span class="help-block err form-error" id="password-error"><?= $formerror->password ?></span>
 				      </div>
 				    </div>
 				    <div class="form-group">
@@ -167,13 +163,13 @@ $formerror = $data->errors;
 				      <label class="control-label col-sm-1 col-lg-2" for="password-confirm">Confirm Password</label>
 				      <div class="col-sm-3 col-md-5">
 				        <input type="password" id="password-confirm" name="password-confirm" placeholder="" class="form-control">
-				        <span class="help-block alert-danger form-error" 
+				        <span class="help-block err form-error" 
 				        id="password-confirm-error"><?= $formerror->get("password-confirm") ?></span>
 				      </div>
 				    </div>
 				    </fieldset>
 				    <fieldset>
-				    	<legend>Completion</legend>
+				    	<legend></legend>
     					<div class="form-group">
       					<!-- Button -->
       						<div class="col-sm-offset-1">

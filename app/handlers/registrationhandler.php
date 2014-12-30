@@ -134,7 +134,7 @@ class RegistrationHandler extends LoggedOutHandler
 			echo "Errors: ".$e->getMessage()."<br>";
 		}
 		
-		$this->showPage();
+		$this->showRegPage();
 	}
 	
 	private function resendActivation()
