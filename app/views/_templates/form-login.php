@@ -20,7 +20,7 @@
                  <?php if($data->showActivationOption) { ?>
                  			<form method="post">
                  				<input type="hidden" name="action" value="activation"/>
-                 				<button>Send me activation email</button>
+                 				<button class="btn btn-md btn-primary btn-block">Send me activation email</button>
                  			</form>
                  <?php } ?>
                            

@@ -6,7 +6,7 @@
 $routes = [
 		['^submit\/(\d+)$',"Submit"],
 		['^submit\/?$',"Submit"],
-                ['^form\/?$',"Index"],
+                ['^form\/?$',"Test"],
 		['^form\/(\d+)$',"Form"],
 		['^test\/?$', "Test"],
 		['^test\/(\d+)$', "Test"],
