@@ -168,7 +168,7 @@ class RegInvitation extends DBModel
 		if(!UserType::isValue($this->getUserType()))
 			$errors[] = OperationError::USER_TYPE_INVALID;
 		if(!$this->isValid())
-			$errors[] = OperationError::INVALID;
+			$errors[] = OperationError::INVITATION_INVALID;
 		if($this->_user && ($this->_user->getType() != $this->getUserType()))
 			$errors[] = OperationError::USER_TYPE_INVALID;
 		
