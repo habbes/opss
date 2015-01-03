@@ -12,7 +12,10 @@ class BaseView extends View
 	 */
 	public function showBase()
 	{
-		$this->data->pageBody = $this->read("main-layout");		
+		if($this->data->pageNav)
+			$this->data->pageBody = $this->read("main-layout");
+		else 
+			$this->data->pageBody = $this->data->pageContent;
 		$this->show("base");
 	}
 }
