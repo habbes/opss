@@ -419,7 +419,7 @@ class User extends DBModel
 	 */
 	public static function isValidUsername($username)
 	{
-		return preg_match("/^[\w-]+/", $username) === 1;
+		return preg_match("/^[\w-]+$/", $username) === 1;
 	}
 
 	/**
