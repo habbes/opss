@@ -9,7 +9,7 @@ class JsonObject extends DataObject
 {
 	
 	/**
-	 * creats and instance from a json file
+	 * creates and instance from a json file
 	 * @param string $path
 	 * @return JsonObject
 	 */
@@ -37,6 +37,15 @@ class JsonObject extends DataObject
 	public function encode()
 	{
 		return json_encode($this->data);
+	}
+
+	/**
+	 * save the json dump to a fle
+	 * @param string $path
+	 */
+	public function save($path)
+	{
+		file_put_contents($path, $this->encode());
 	}
 	
 	/**
