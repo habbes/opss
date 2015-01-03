@@ -17,6 +17,7 @@ $routes = [
 		['^registration\/?$', "Registration"],
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
+		['^setup\/admin\/?$', "AdminSetup"]
 		
 	
 ];
