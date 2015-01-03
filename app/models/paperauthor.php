@@ -11,9 +11,26 @@ class PaperAuthor extends DBModel
 	
 	protected $paper_id;
 	protected $author_id;
+	protected $date_added;
 	
 	private $_paper;
 	private $_author;
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param Author $author
+	 * @return PaperAuthor
+	 */
+	public static function create($paper, $author)
+	{
+		$pa = new static();
+		$pa->_paper = $paper;
+		$pa->paper_id = $paper->getId();
+		$pa->_author = $author;
+		$pa->author_id = $author->getId();
+		return $pa;
+	}
 	
 	/**
 	 * 
@@ -47,6 +64,21 @@ class PaperAuthor extends DBModel
 	
 	/**
 	 * 
+	 * @return number timestamp
+	 */
+	public function getDateAdded()
+	{
+		return strtotime($this->date_added);
+	}
+	
+	protected function onInsert(&$errors)
+	{
+		$this->date_added = Utils::dbDateFormat(time());
+		return true;
+	}
+	
+	/**
+	 * 
 	 * @param Paper $paper
 	 * @return array(PaperAuthor)
 	 */
@@ -54,5 +86,6 @@ class PaperAuthor extends DBModel
 	{
 		return static::findAllByField("paper_id", $paper->getId());
 	}
+	
 	
 }

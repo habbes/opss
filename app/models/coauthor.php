@@ -10,6 +10,7 @@ class CoAuthor extends DBModel
 	
 	protected $name;
 	protected $email;
+	protected $date_added;
 	
 	/**
 	 * 
@@ -25,11 +26,32 @@ class CoAuthor extends DBModel
 		return $author;
 	}
 	
-	public function validate(&$errors)
+	/**
+	 *
+	 * @return number timestamp
+	 */
+	public function getDateAdded()
+	{
+		return strtotime($this->date_added);
+	}
+	
+	protected function onInsert(&$errors)
+	{
+		$this->date_added = Utils::dbDateFormat(time());
+		return true;
+	}
+	
+	protected function validate(&$errors)
 	{
 		if(!User::isValidEmail($this->email))
 			$errors[] = OperationError::USER_EMAIL_INVALID;
 		
+		return true;
+	}
+
+	protected function onInsert(&$errors)
+	{
+		$this->date_added = Utils::dbDateFormat(time());
 		return true;
 	}
 }

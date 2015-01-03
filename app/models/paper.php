@@ -1,7 +1,14 @@
 <?php
 
+/**
+ * represents a submitted paper
+ * @author Habbes
+ *
+ */
 class Paper extends DBModel
 {
+	protected $identifier;
+	protected $revision;
 	protected $researcher_id;
 	protected $title;
 	protected $date_submitted;
@@ -18,6 +25,7 @@ class Paper extends DBModel
 	private $_file;
 	private $_cover;
 	private $_authors;
+	private $_authorsNames;
 	private $_groups;
 	
 	const DIR = "papers";
@@ -120,5 +128,105 @@ class Paper extends DBModel
 		$this->_file = $file;
 	}
 	
+	/**
+	 * fetches co-authors from database
+	 */
+	private function fetchAuthors()
+	{
+		if(!$this->_authors){
+			$this->_authors = PaperAuthor::findByPaper($this);
+			$this->_authorsNames = array();
+			foreach($this->_authors as $author){
+				$this->_authorsNames[] = $author->getName();
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @return array(PaperAuthor)
+	 */
+	public function getAuthors()
+	{
+		$this->fetchAuthors();
+		return $this->_authors;
+	}
+	
+	/**
+	 * 
+	 * @return array(string);
+	 */
+	public function getAuthorsNames()
+	{
+		$this->fetchAuthors();
+		return $this->_authorsNames;
+	}
+	
+	/**
+	 * 
+	 * @param string $name
+	 * @param string $email
+	 * @return PaperAuthor
+	 */
+	public function addAuthor($name, $email)
+	{
+		$author = CoAuthor::create($name, $email);
+		$author->save();
+		$pa = PaperAuthor::create($this, $author);
+		$pa->save();
+		array_push($this->_authors, $author);
+		array_push($this->_authorsNames, $author->getName());
+		return $pa;
+	}
+	
+	/**
+	 * remove the co-author with the given email
+	 * @param string $email
+	 * @return boolean
+	 */
+	public function removeAuthor($email)
+	{
+		$this->fetchAuthors();
+		$pAuthor = null;
+		$i = 0;
+		foreach($this->_authors as $a){
+			$i++;
+			if($a->getEmail() == $email){
+				$pAuthor = $a;
+				break;
+			}
+		}
+		if(!$pAuthor){
+			//TODO: throw exception instead
+			return false;
+		}
+		
+		array_splice($this->authors_names, $i, 1);
+		array_splice($this->authors, $i, 1);
+		
+		$pAuthor->delete();
+		
+		return true;
+	}
+	
+	/**
+	 * 
+	 * @param User $researcher
+	 * @return array(Paper)
+	 */
+	public static function findByResearcher($researcher)
+	{
+		return static::findAllByField("researcher_id", $researcher->getId());
+	}
+	
+	/**
+	 * 
+	 * @param string $identifier
+	 * @return Paper
+	 */
+	public static function findByIdentifier($identifier)
+	{
+		return static::findOneByField("identifier", $identifier);
+	}
 	
 }
