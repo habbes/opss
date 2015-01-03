@@ -1,7 +1,7 @@
 <?php
 
 /**
- * email sent to with link to email activation code
+ * email sent to user with link to email activation code
  * @author Habbes
  *
  */
