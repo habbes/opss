@@ -6,7 +6,7 @@ require_once "dirs.php";
 
 function autoload($class)
 {
-	$dirs = [DIR_APP, DIR_CORE, DIR_HANDLERS, DIR_MODELS, DIR_VIEWS, DIR_CONFIG, DIR_CUSTOM];
+	$dirs = [DIR_APP, DIR_CORE, DIR_HANDLERS, DIR_MODELS, DIR_VIEWS, DIR_CONFIG, DIR_CUSTOM, DIR_EMAILS];
 	
 	foreach($dirs as $dir){
 		
