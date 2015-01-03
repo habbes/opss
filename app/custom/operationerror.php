@@ -29,6 +29,7 @@ class OperationError
 	const THEMATIC_AREA_INVALID = "ThematicAreaInvalid";
 	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
 	const EMAIL_ACTIVATION_INVALID = "EmailActivationInvalid";
+	const INVITATION_INVALID = "InvitationInvalid";
 	
 	
 	
