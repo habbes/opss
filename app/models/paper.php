@@ -18,6 +18,7 @@ class Paper extends DBModel
 	protected $cover_id;
 	protected $status;
 	protected $level;
+	protected $editable;
 	protected $recallable;
 	protected $end_recallable_date;
 	
@@ -30,6 +31,16 @@ class Paper extends DBModel
 	
 	const DIR = "papers";
 	const GRACE_PERIOD = 2;
+	
+	//status
+	const PENDING = 1;
+	const VETTING = 2;
+	const REVIEW = 3;
+	const REWRITE_MAJ = 4;
+	const REWRITE_MIN = 5;
+	const ACCEPTED = 4;
+	
+	
 	
 	public static function create($researcher, $grace_period = null)
 	{
@@ -63,6 +74,24 @@ class Paper extends DBModel
 	public function getStatus()
 	{
 		return (int) $this->status;
+	}
+
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isEditable()
+	{
+		return (boolean) $this->editable();
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isRecallable()
+	{
+		return (boolean) $this->recallable();
 	}
 	
 	/**
@@ -208,6 +237,7 @@ class Paper extends DBModel
 		
 		return true;
 	}
+	
 	
 	/**
 	 * 
