@@ -4,5 +4,6 @@
 		<div  id="page-content">
 			<?= $data->pageContent ?>
 		</div>
+		
 	</div>
 </div>

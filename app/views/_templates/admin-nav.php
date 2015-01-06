@@ -8,7 +8,7 @@
 </ul>
 
 <div class="nav nav-sidebar nav-list-header">
-	<span class="glyphicon glyphicon-envelope nav-icon"></span>
+	<span class="glyphicon glyphicon-user nav-icon"></span>
 	<span class="nav-list-header-text">Users</span>
 </div>
 <ul class="nav nav-sidebar nav-list-group">
