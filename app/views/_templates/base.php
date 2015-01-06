@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/dashboard.css">
         <link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/theme.css">
         
-        
+        <script src="<?=URL_ROOT?>/public/js/jquery-1.11.2.min.js" type="text/javascript"></script>
         <!-- 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
@@ -60,8 +60,6 @@
 
 </div>
 
-
-<script src="<?=URL_ROOT?>/public/js/jquery-1.11.2.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?=URL_ROOT?>/public/js/bootstrap.min.js"></script>
 </body>
 </html>

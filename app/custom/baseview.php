@@ -14,8 +14,8 @@ class BaseView extends View
 	{
 		if($this->data->pageNav)
 			$this->data->pageBody = $this->read("main-layout");
-		else 
-			$this->data->pageBody = $this->read("center-layout");
+		else
+			$this->data->pageBody = $this->read("main-layout");
 		$this->show("base");
 	}
 }

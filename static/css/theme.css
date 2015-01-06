@@ -67,4 +67,13 @@ body {
 	color:#f5d3b3;
 }
 
+.form-group {
+	margin-bottom:5px;
+}
+
+.form-error {
+	color:red;
+	font-size:0.9em;
+}
+
 
