@@ -1,0 +1,55 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	font-size:14px;
+	font-family:segoe ui;
+}
+
+.btn {
+	border-radius:2px;
+}
+
+.form-control {
+	border-radius:2px;
+}
+
+#main-container {
+	
+}
+
+#header {
+
+}
+
+#right-col {
+	position:relative;
+}
+
+#page-content {
+	min-height:400px;
+}
+
+#footer {
+	padding:10px;
+	border-top:1px solid #eee;
+}
+
+#footer-contact {
+	text-align:center;
+}
+
+#opss-title {
+	font-weight:bold;
+	font-size:1em;
+	font-variant:small-caps;
+}
+
+.nav-sidebar {
+	margin-bottom:0px;
+}
+
+.nav-item-header {
+	
+}
+
+
