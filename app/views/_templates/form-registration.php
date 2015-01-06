@@ -173,7 +173,7 @@ $formerror = $data->errors;
 		<fieldset>
     		<div class="form-group">
       		<!-- Button -->
-      			<div class="col-sm-offset-5">
+      			<div class="align-center">
         			<input type="submit" class="btn btn-success inline" value="Proceed With Registration"/>
         			<span>If you already have an account <a href="<?= URL_ROOT?>/login" class="link">sign in here</a></span>
      			</div>
