@@ -131,10 +131,10 @@ $formerror = $data->errors;
 		<!-- 2nd col -->
 		<div class="col-sm-6 col-xs-12">
 			<fieldset>
-				<legend>Account Access Info</legend>
+				<legend class="col-sm-offset-2">Account Access Info</legend>
 				<div class="form-group">
 					<!-- username -->
-				    <div class="col-sm-10">
+				    <div class="col-sm-10 col-sm-offset-2">
 				    	<input type="text" id="username" name="username" value="<?= $formdata->username; ?>"
 				        placeholder="Enter your Username" class="form-control">
 				        <span class="help-block text-danger form-error" id="username-error"><?= $formerror->username ?></span>
@@ -142,7 +142,7 @@ $formerror = $data->errors;
 				</div>
 				<div class="form-group">
 				      <!-- E-mail -->
-				    <div class="col-sm-10">
+				    <div class="col-sm-10 col-sm-offset-2">
 				    	<input type="email" id="email" name="email" value="<?= $formdata->email ?>"
 				        placeholder="Enter your Email address" class="form-control" >
 				        <span class="help-block text-danger form-error" id="email-error"><?= $formerror->email ?></span>
@@ -151,7 +151,7 @@ $formerror = $data->errors;
 				
 				<div class="form-group">
 					<!-- password -->
-					<div class="col-sm-10">
+					<div class="col-sm-10 col-sm-offset-2">
 				        <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
 				        <span class="help-block text-danger form-error" id="password-error"><?= $formerror->password ?></span>
 					</div>
@@ -159,7 +159,7 @@ $formerror = $data->errors;
 		
 				<div class="form-group">
 					<!-- password confirm  -->
-				    <div class="col-sm-10">
+				    <div class="col-sm-10 col-sm-offset-2">
 				    	<input type="password" id="password-confirm" name="password-confirm" class="form-control"
 				    		placeholder="Repeat Password">
 				        <span class="help-block text-danger form-error" 
