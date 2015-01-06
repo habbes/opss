@@ -21,6 +21,10 @@ body {
 
 }
 
+#left-col {
+	background-color:#251c17;
+}
+
 #right-col {
 	position:relative;
 }
@@ -48,8 +52,19 @@ body {
 	margin-bottom:0px;
 }
 
-.nav-item-header {
-	
+.nav-list-header {
+	margin-left:-10px;
+	color:rgb(211,170,82);
+}
+
+.nav-icon{
+	display:inline-block;
+	margin-right:10px;
+}
+
+.nav-item > a {
+	padding-left:40px;
+	color:#f5d3b3;
 }
 
 
