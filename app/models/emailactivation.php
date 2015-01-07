@@ -90,7 +90,7 @@ class EmailActivation extends DBModel
 	/**
 	 * activates the current email of the associated user
 	 * @param string $password user's current password
-	 * @return EmailActivation returns the instance of EmailActivation on success
+	 * @return boolean
 	 */
 	public function activate($password){
 		
@@ -104,7 +104,10 @@ class EmailActivation extends DBModel
 		
 		$this->getUser()->setEmailActivated(true);
 		$this->getUser()->save();
-		return $this->save();
+		//first save so that it is registered as activated just in case deletion fails
+		$this->save();
+		//attempt to remove from database
+		return $this->delete();
 	}
 	
 	protected function onInsert(&$errors)
