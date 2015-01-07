@@ -14,7 +14,8 @@ $routes = [
 		
 		//this route is used to redirect Atomatically to Researcher if there is a session existing
 		['^(?:index|home)?\/?$',"Message"],
-		['^messages\/(?:all)?\/?', "Message"],
+		['^messages\/(?:all\/?)?$', "Message"],
+		['^messages\/unread\/?$',"Message@getUnread"],
 		['^registration\/?$', "Registration"],
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],

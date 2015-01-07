@@ -93,11 +93,11 @@ class MessageBox extends DBModel
 	 * @param array $options
 	 * @return array(Message)
 	 */
-	public function getAllByQuery($query, $vals, $options = null)
+	public function getAllByQuery($query, $vals, $options = [])
 	{
 		$query = "user_id=? AND $query";
 		array_unshift($vals, $this->user_id);
-		return Message::findAll("user_id=? " . $query, $vals, $options);
+		return Message::findAll($query, $vals, $options);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ class MessageBox extends DBModel
 	 */
 	public function getUnread()
 	{
-		$msgs = $this->getAllByQuery("read=?", [(int) false]);
+		$msgs = $this->getAllByQuery("is_read=?", [(int) false]);
 		$this->updateQueryTime();
 		return $msgs;
 	}
@@ -128,7 +128,7 @@ class MessageBox extends DBModel
 	 */
 	public function getUnreadBySenderType($type)
 	{
-		return $this->getAllByQuery("read=? AND sender_type='?'",[(int) false, $type]);
+		return $this->getAllByQuery("is_read=? AND sender_type='?'",[(int) false, $type]);
 	}
 	
 	/**
