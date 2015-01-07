@@ -17,7 +17,7 @@
 			?>
 			<tr class="<?= $unread ?>" data-id="<?= $message->getId() ?>">
 				<td><?= $message->getSubject() ?></td>
-				<td><?= Utils::siteDateFormat($message->getDateSent()) ?></td>
+				<td><?= Utils::siteDateTimeFormat($message->getDateSent()) ?></td>
 			</tr>
 			<?php } //end foreach ?>
 		</tbody>

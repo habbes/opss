@@ -80,9 +80,14 @@ class Utils
 		return strftime("%Y-%m-%d %H:%M:%S",$timestamp);
 	}
 	
-	public static function siteDateFormat($timestamp)
+	public static function siteDateTimeFormat($timestamp)
 	{
 		return strftime("%a %d %b %Y at %H:%M", $timestamp);
+	}
+	
+	public static function siteDateFormat($timestamp)
+	{
+		return strftime("%a %d %b %Y", $timestamp);
 	}
 	
 	/**
