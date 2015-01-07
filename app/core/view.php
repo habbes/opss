@@ -49,8 +49,9 @@ abstract class View
 	 */
 	public function show($template)
 	{
+		require_once DIR_CORE.DIRECTORY_SEPARATOR."viewfunctions.php";
 		$data = $this->data;
-		include $this->template($template);
+		require $this->template($template);
 	}
 	
 	/**
@@ -61,8 +62,9 @@ abstract class View
 	public function read($template)
 	{
 		ob_start();
+		require_once DIR_CORE.DIRECTORY_SEPARATOR."viewfunctions.php";
 		$data = $this->data;
-		include $this->template($template);
+		require $this->template($template);
 		return ob_get_clean();
 	}
 	
