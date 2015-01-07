@@ -113,6 +113,14 @@ class DBModel extends Model
 	}
 	
 	/**
+	 * called after model has been successfully inserted in the database
+	 */
+	protected function afterInsert()
+	{
+	
+	}
+	
+	/**
 	 * called before the model is updated in the database
 	 * if false is returned, the model will not be updated
 	 * @errors array where validation errors will be reported as error name/messages pairs
@@ -121,6 +129,14 @@ class DBModel extends Model
 	protected function onUpdate(&$errors = null)
 	{
 		return true;
+	}
+	
+	/**
+	 * called after the model has been successfully updated in the database
+	 */
+	protected function afterUpdate()
+	{
+	
 	}
 	
 	/**
@@ -133,6 +149,16 @@ class DBModel extends Model
 	{
 		return true;
 	}
+	
+	/**
+	 * called after the model has been successfully deleted from the database
+	 */
+	protected function afterDelete()
+	{
+		
+	}
+	
+	
 	
 	/**
 	 * inserts the model in the database
@@ -183,7 +209,7 @@ class DBModel extends Model
 		
 		$this->id = self::database()->lastInsertId();
 		$this->_inDb = true;
-		
+		$this->afterInsert();
 		return true;
 		
 	}
@@ -226,6 +252,7 @@ class DBModel extends Model
 		$stmt = self::database()->prepare($query);
 		$result = $stmt->execute($values);
 		
+		$this->afterUpdate();
 		return $result;
 		
 	}
@@ -248,6 +275,7 @@ class DBModel extends Model
 		$stmt = self::database()->prepare($query);
 		$result = $stmt->execute([$this->id]);
 		
+		$this->afterDelete();
 		return $result;
 	}
 	
