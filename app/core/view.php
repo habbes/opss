@@ -15,16 +15,19 @@ abstract class View
 	 */
 	protected $data;
 	
-	public function __construct()
+	/**
+	 * 
+	 * @param DataObject $data
+	 */
+	public function __construct($data = null)
 	{
-		$this->data = new DataObject();
+		$this->data = $data? $data : new DataObject();
 	}
 	
 	/**
 	 * display the view
-	 * @param DataObject $params args passed from the calling RequestHandler
 	 */
-	public function render($params)
+	public function render()
 	{
 		
 	}
