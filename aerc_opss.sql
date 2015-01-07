@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2014 at 06:37 PM
+-- Generation Time: Jan 07, 2015 at 09:08 AM
 -- Server version: 5.6.11
 -- PHP Version: 5.5.1
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `email_activation` (
   `email` varchar(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
 
 -- --------------------------------------------------------
 
@@ -57,6 +57,24 @@ CREATE TABLE IF NOT EXISTS `files` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `subject` varchar(255) DEFAULT NULL,
+  `is_read` tinyint(4) DEFAULT NULL,
+  `sender_type` varchar(50) DEFAULT NULL,
+  `date_sent` datetime DEFAULT NULL,
+  `message` text,
+  `other_parts` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `message_boxes`
 --
 
@@ -65,7 +83,29 @@ CREATE TABLE IF NOT EXISTS `message_boxes` (
   `user_id` int(11) DEFAULT NULL,
   `last_query_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=70 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=91 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reg_invitations`
+--
+
+CREATE TABLE IF NOT EXISTS `reg_invitations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `admin_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `paper_id` int(11) DEFAULT NULL,
+  `user_type` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `date_sent` datetime DEFAULT NULL,
+  `date_registered` datetime DEFAULT NULL,
+  `expiry_date` datetime DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `registration_code` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -89,7 +129,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `gender` tinyint(4) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
 
 -- --------------------------------------------------------
 
@@ -103,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `user_research_areas` (
   `paper_group` int(11) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
