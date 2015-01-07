@@ -2,15 +2,17 @@
 
 body {
 	font-size:14px;
-	font-family:segoe ui;
+	font-family:segoe ui, calibri, sans-serif;
 }
 
 .btn {
 	border-radius:2px;
 }
 
-.form-control {
-	border-radius:2px;
+.page-header {
+	font-style: italic;
+	text-transform: lowercase;
+	font-weight:lighter;
 }
 
 #main-container {
@@ -25,8 +27,14 @@ body {
 	background-color:#251c17;
 }
 
-#right-col {
-	position:relative;
+
+
+.panel {
+	padding:20px;
+}
+
+.align-center {
+	text-align:center;
 }
 
 #page-content {
@@ -43,10 +51,12 @@ body {
 }
 
 #opss-title {
-	font-weight:bold;
+	font-weight:normal;
 	font-size:1em;
 	font-variant:small-caps;
 }
+
+/** sidebar nav **/
 
 .nav-sidebar {
 	margin-bottom:0px;
@@ -67,6 +77,9 @@ body {
 	color:#f5d3b3;
 }
 
+/** end sidebar nav **/
+
+/** forms **/
 .form-group {
 	margin-bottom:5px;
 }
@@ -76,4 +89,33 @@ body {
 	font-size:0.9em;
 }
 
+legend {
+	border-bottom:none;
+	font-weight:lighter;
+}
+
+label {
+	font-weight:normal;
+}
+
+.combined-fields-item .form-control {
+	border-radius:0px;
+	border-left:none;
+	border-right:none;
+}
+
+.combined-fields-item:first-of-type .form-control{
+	border-top-left-radius:2px;
+	border-bottom-left-radius:2px;
+	border-left:1px solid #ccc;
+}
+
+.combined-fields-item:last-of-type .form-control{
+	border-top-right-radius:2px;
+	border-bottom-right-radius:2px;
+	border-right:1px solid #ccc;
+}
+
+
+/** end forms **/
 
