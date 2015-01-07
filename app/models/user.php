@@ -308,12 +308,14 @@ class User extends DBModel
 	{
 		
 		$this->date_added = Utils::dbDateFormat(time());
-		
-		//create MessageBox for this user		
+		return true;
+	}
+	
+	protected function afterInsert()
+	{
+		//create MessageBox for this user
 		$mb = MessageBox::create($this);
 		$this->_messageBox = $mb->save();
-		
-		return true;
 	}
 	
 	protected function validate(array &$errors)
@@ -363,6 +365,7 @@ class User extends DBModel
 		return true;
 		
 	}
+	
 	
 	/**
 	 * finds the user with the given username or email
