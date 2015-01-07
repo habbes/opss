@@ -14,6 +14,26 @@
 		
 	<?php }?>
 	<div class="col-md-<?= $rightCols ?> <?= $rightOffset ?> main" id="right-col">
+		<?php 
+		$alertType = "";
+		$alertStyle = "";
+		if($this->data->resultMessage){
+			$alertStyle = 'style="display:block"';
+			switch($this->data->resultMessageType){
+				case "error":
+					$alertType = "alert-danger";
+					break;
+				case "success":
+					$alertType = "alert-success";
+					break;
+				default:
+					$alertType = "alert-info";
+			}
+		}
+		?>
+		<div id="result-message" class="alert<?= " ".$alertType?>" <?= $alertStyle?> >
+			<?= $this->data->resultMessage ?>
+		</div>
 		<h2 class="page-header"><?= $data->pageHeading ?></h2>
 		<div  id="page-content">
 			<?= $data->pageContent ?>
