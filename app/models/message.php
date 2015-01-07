@@ -30,7 +30,7 @@ class Message extends DBModel
 	 * and stored in column "other_parts"
 	 */
 	//attachments
-	private $_parts;
+	private $_parts = [];
 	//metadata about the sender
 	private $_senderArgs;
 	
