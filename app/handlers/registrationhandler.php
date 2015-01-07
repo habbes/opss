@@ -171,10 +171,9 @@ class RegistrationHandler extends LoggedOutHandler
 	
 	public function get()
 	{
-		if(!Session::instance()->registeredUserId)
-			$this->showRegPage();
-		else
-			$this->showPostRegPage();
+		if(Session::instance()->registeredUserId)
+			unset(Session::instance()->registeredUserId);
+		$this->showRegPage();
 	}
 	
 	public function post()
