@@ -195,6 +195,31 @@ class Message extends DBModel
 	}
 	
 	/**
+	 * return the message template file
+	 * @param string $template
+	 * @return string
+	 */
+	public function template($template)
+	{
+		$ds = DIRECTORY_SEPARATOR;
+		return DIR_MESSAGE_TEMPLATES.$ds.str_replace("/",$ds,$template)."php";
+	}
+	
+	/**
+	 *
+	 * @param string $template
+	 * @param array $vars
+	 */
+	public function setMessageFromTemplate($template, $vars = array())
+	{
+		$path = $this->template($template);
+		$mt = new MessageTemplate();
+		$mt->setTemplatePath($path);
+		$mt->setVars($vars);
+		$this->setBody($mt->getOutput());
+	}
+	
+	/**
 	 * 
 	 * @return string
 	 */
