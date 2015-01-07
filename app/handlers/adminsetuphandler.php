@@ -38,6 +38,9 @@ class AdminSetupHandler extends LoggedOutHandler
 			$user->setPassword($this->postVar("password"));
 			$user->setEmailActivated(true);
 			$user->save();
+			//send welcome message
+			$msg = WelcomeMessage::create($user);
+			$msg->send();
 			
 			$this->login($user);
 			$this->localRedirect("");

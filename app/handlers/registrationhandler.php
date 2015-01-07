@@ -67,7 +67,11 @@ class RegistrationHandler extends LoggedOutHandler
 			$user->save();
 			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
 			$user->addThematicArea((int) $this->postVar("thematic-area"));
-				
+			
+			//send welcome message
+			$msg = WelcomeMessage::create($user);
+			$msg->send();
+			
 			//send activation email
 			$ea = EmailActivation::create($user);
 			$ea->save();

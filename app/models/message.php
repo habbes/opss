@@ -9,6 +9,10 @@
 class Message extends DBModel
 {
 	
+	/*
+	 * table is set explicitly so that it's not overriden
+	 * by subclasses' names
+	 */
 	protected static $table="messages";
 	
 	protected $user_id;
