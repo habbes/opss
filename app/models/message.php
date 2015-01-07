@@ -224,7 +224,7 @@ class Message extends DBModel
 		$mt = new MessageTemplate();
 		$mt->setTemplatePath($path);
 		$mt->setVars($vars);
-		$this->setBody($mt->getOutput());
+		$this->setMessage($mt->getOutput());
 	}
 	
 	/**

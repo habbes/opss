@@ -7,13 +7,15 @@
 		<?php } else { ?>
 		<thead>
 			<tr>
-				<th>Subject</th>
+				<th style="width:80%">Subject</th>
 				<th>Date Sent</th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($data->messages as $message) { ?>
-			<tr>
+			<?php foreach($data->messages as $message) { 
+				$unread = $message->isRead()? "" : "unread";
+			?>
+			<tr class="<?= $unread ?>" data-id="<?= $message->getId() ?>">
 				<td><?= $message->getSubject() ?></td>
 				<td><?= Utils::dbDateFormat($message->getDateSent()) ?></td>
 			</tr>
