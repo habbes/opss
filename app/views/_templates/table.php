@@ -1,5 +1,25 @@
 <div class="table-responsive">
-            <table class="table table-striped">
-            <?=isset($data->table)?$data->table:"No table to display <br> Maybe you should use \$data->table instead."?>
-            </table>
+	<table class="table table-striped table-hover">
+		<thead>
+			<tr>
+				<th>Subject</th>
+				<th>Date Sent</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Welcome</td>
+				<td>Sun 12 2014</td>
+			</tr>
+			<tr>
+				<td>Important Update</td>
+				<td>Sun 12 2014</td>
+			</tr>
+			<tr>
+				<td>Welcome</td>
+				<td>Sun 12 2014</td>
+			</tr>
+		</tbody>
+	</table>
+
 </div>

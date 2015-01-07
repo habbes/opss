@@ -6,7 +6,7 @@ class HomeView extends LoggedInView
 		//$this->data->userName = $params->userName;
 		$this->data->pageTitle = "Home";
 		$this->data->pageHeading = "Home";
-		$this->data->pageContent = "You have successifully logged in";
+		$this->data->pageContent = $this->read("table");
 		$this->showBase($params);
 	}
 }
