@@ -1,7 +1,7 @@
 
 <div class="table-responsive">
 	<table class="table table-striped table-hover records-table" id="notifications-table">
-		<?php if(count($data->notifications) == 0 ) {?>
+		<?php if(count($data->messages) == 0 ) {?>
 			No messages found.
 		</table>
 		<?php } else { ?>
@@ -12,18 +12,12 @@
 			</tr>
 		</thead>
 		<tbody>
+			<?php foreach($data->messages as $message) { ?>
 			<tr>
-				<td>Welcome</td>
-				<td>Sun 12 2014</td>
+				<td><?= $message->getSubject() ?></td>
+				<td><?= Utils::dbDateFormat($message->getDateSent()) ?></td>
 			</tr>
-			<tr>
-				<td>Important Update</td>
-				<td>Sun 12 2014</td>
-			</tr>
-			<tr>
-				<td>Welcome</td>
-				<td>Sun 12 2014</td>
-			</tr>
+			<?php } //end foreach ?>
 		</tbody>
 		<?php } //end if-else block?>
 	</table>
