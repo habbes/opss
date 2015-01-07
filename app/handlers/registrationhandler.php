@@ -65,6 +65,7 @@ class RegistrationHandler extends LoggedOutHandler
 			if(!empty($errors))
 				throw new OperationException($errors);
 			$user->save();
+			
 			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
 			$user->addThematicArea((int) $this->postVar("thematic-area"));
 			
@@ -77,8 +78,8 @@ class RegistrationHandler extends LoggedOutHandler
 			$ea->save();
 			$mail = WelcomeEmail::create($user, $ea->getCode());
 			$mail->send();
-				
-			Session::instance()->registerdUserId =  $user->getId();
+			
+			Session::instance()->registeredUserId =  $user->getId();
 			$this->showPostRegPage();
 				
 		}
@@ -143,12 +144,26 @@ class RegistrationHandler extends LoggedOutHandler
 	
 	private function resendActivation()
 	{
-		$user = User::findById(Session::instance()->registerdUserId);
-		//send activation email
-		$ea = EmailActivation::create($user);
-		$ea->save();
-		$mail = WelcomeEmail::create($user, $ea->getCode());
-		$mail->send();
+		try {
+			$user = User::findById(Session::instance()->registeredUserId);
+			if(!$user)
+				throw new OperationException(["UserNotFound"]);
+			//send activation email
+			$ea = EmailActivation::create($user);
+			$ea->save();
+			$mail = WelcomeEmail::create($user, $ea->getCode());
+			$mail->send();
+		}
+		catch(OperationException $e) {
+			foreach($e->getErrors() as $error){
+				switch($error){
+					case "UserNotFound":
+						$this->data->resultMessage = "Error occured while trying to send email.";
+						$this->data->resultType = "error";
+						break;
+				}
+			}
+		}
 		$this->showPostRegPage();
 		
 	}
