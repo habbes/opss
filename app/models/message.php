@@ -12,13 +12,19 @@ class Message extends DBModel
 	protected $subject;
 	protected $date_sent;
 	protected $read;
-	protected $file_id;
+	protected $message;
 	protected $sender_type;
+	protected $other_parts;
 	
 	private $_user;
-	private $_file;
+	
+	/*
+	 * _parts and _senderArgs are encoded as json when saved,
+	 * and stored in column "other_parts"
+	 */
+	//attachments
 	private $_parts;
-	private $_message;
+	//metadata about the sender
 	private $_senderArgs;
 	
 	/*
@@ -29,8 +35,6 @@ class Message extends DBModel
 	 */
 	private $_jsonLoaded = false;
 	
-	const DIR = DIR_MESSAGES;
-	
 	/**
 	 * 
 	 * @return Message
@@ -39,10 +43,10 @@ class Message extends DBModel
 	{
 		$this->date_sent = Utils::dbDateFormat(time());
 		$ds = DIRECTORY_SEPARATOR;
-		$dir = self::DIR.$ds.$this->getUser()->getUsername();
-		
-		$this->file = File::createFromContent($dir, 
-				$this->getJsonObject()->encode());
+		$json = new JsonObject();
+		$json->senderArgs = $this->_senderArgs;
+		$json->parts = $this->_parts;
+		$this->other_parts = $json->encode();
 		
 		return $this->save();
 		
@@ -108,16 +112,17 @@ class Message extends DBModel
 	}
 	
 	/**
+	 * list of metadata about the sender
 	 * @return array
 	 */
 	public function getSenderArgs()
 	{
-		$this->loadJsonData();
+		$this->decodeOtherParts();
 		return $this->_senderArgs;
 	}
 	
 	/**
-	 * 
+	 * metadata about the sender
 	 * @param array $args
 	 */
 	public function setSenderArgs($args)
@@ -126,7 +131,7 @@ class Message extends DBModel
 	}
 	
 	/**
-	 * 
+	 * metadata about the sender
 	 * @param string $arg
 	 * @param string $value
 	 */
@@ -136,22 +141,12 @@ class Message extends DBModel
 	}
 	
 	/**
-	 * @return File
-	 */
-	public function getFile()
-	{
-		if(!$this->_file)
-			$this->_file = File::findById($this->file_id);
-		return $this->_file;
-	}
-	
-	/**
 	 * 
 	 * @param string $msg
 	 */
 	public function setMessage($msg)
 	{
-		$this->_message = $msg;
+		$this->message = $msg;
 	}
 	
 	/**
@@ -160,8 +155,7 @@ class Message extends DBModel
 	 */
 	public function getMessage()
 	{
-		$this->loadJsonData();
-		return $this->_message;
+		return $this->message;
 	}
 	
 	/**
@@ -169,7 +163,7 @@ class Message extends DBModel
 	 */
 	public function getParts()
 	{
-		$this->loadJsonData();
+		$this->decodeOtherParts();
 		return $this->_parts;
 	}
 	
@@ -189,6 +183,8 @@ class Message extends DBModel
 	 */
 	public function addPart($type, $args)
 	{
+		if(!$this->_parts)
+			$this->_parts = array();
 		array_push($this->_parts, ["type"=>$type, "args"=>$args]);
 	}
 	
@@ -207,7 +203,7 @@ class Message extends DBModel
 		$j->username = $this->getUser()->getUsername();
 		$j->senderType = $this->getSenderType();
 		$j->senderArgs = $this->getSenderArgs();
-		$j->parts = $this->_parts;
+		$j->parts = $this->getParts();
 		
 		/*
 		 * this info should not be stored in json file because it can changed
@@ -230,14 +226,13 @@ class Message extends DBModel
 	}
 	
 	/**
-	 * load additional data not in db from the json file
+	 * decode data in the other_parts column
 	 */
-	private function loadJsonData()
+	private function decodeOtherParts()
 	{
 		if($this->_jsonLoaded || !$this->isInDb())
 			return;
-		$json = JsonObject::load($this->getFile()->getFilepath());
-		$this->_message = $json->message;
+		$json = JsonObject::decode($this->json);
 		$this->_senderArgs = $json->senderArgs;
 		$this->_parts = $json->parts;
 		$this->_jsonLoaded = true;
