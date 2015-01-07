@@ -11,8 +11,8 @@ $formerror = $data->errors;
 			<fieldset>
 				<legend>Personal Info</legend>
 				<div class="form-group row combined-fields">
-					<div class="col-sm-2" style="padding-right:0px">
-	      				<select class="form-control combined-fields-item" name="title" placeholder="Title" style="border-radius: 4px 0px 0px 4px;border-right: none">
+					<div class="col-sm-2 combined-fields-item" style="padding-right:0px">
+	      				<select class="form-control" name="title" placeholder="Title">
 	      					<option value="">Title</option>
 	      					<?php foreach($data->titles as $title){	?>
 	      					<option value="<?=$title?>"
@@ -24,17 +24,17 @@ $formerror = $data->errors;
 	      			</div>
 	      			
 	      			<!-- First name -->
-					<div class="col-sm-4" style="padding-left: 0px;padding-right:0px">
+					<div class="col-sm-4 combined-fields-item" style="padding-left: 0px;padding-right:0px">
 						<input type="text" id="firstname"
-							style="border-radius: 0px;border-right: none;border-left: none" name="firstname" value="<?=$formdata->firstname?>"
-							placeholder="First name" class="form-control combined-fields-item">
+							name="firstname" value="<?=$formdata->firstname?>"
+							placeholder="First name" class="form-control">
 						<span class="help-block text-danger form-error" id="firstname-error"><?= $formerror->firstname ?></span>
 					</div>
 					
 					<!-- Last name -->
-					<div class="col-sm-4" style="padding-left: 0px">
-						<input type="text" id="lastname" name="lastname" 
-								style="border-radius: 0px 4px 4px 0px;border-left: none" value="<?=$formdata->lastname?>" 
+					<div class="col-sm-4 combined-fields-item" style="padding-left: 0px">
+						<input type="text" id="lastname" name="lastname"
+								value="<?=$formdata->lastname?>" 
 					        	placeholder="Last name" class="form-control">
 					    <span class="help-block text-danger form-error" id="lastname-error"><?= $formerror->lastname ?></span>
 					</div>
