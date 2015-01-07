@@ -6,10 +6,10 @@ class LoginHandler extends LoggedOutHandler
 			$ea = EmailActivation::findByCode($code);
 			if($ea && $ea->isValid()){
 				$this->viewParams->username = $ea->getUser()->getEmail();
-				$this->viewParams->formResult = "Fill in your password to complete activation.";
+				$this->setResultMessage("Fill in your password to complete activation.");
 			}
 			else {
-				$this->viewParams->formResult = "Invalid activation code";
+				$this->setResultMessage("Invalid activation code", "error");
 			}
 		}
 		
@@ -53,7 +53,7 @@ class LoginHandler extends LoggedOutHandler
 					$message = "Username or email not found.";
 					break;
 				case OperationError::USER_PASSWORD_INCORRECT:
-					$message = "Password Incorrect";
+					$message = "Incorrect password.";
 					break;
 				case OperationError::USER_EMAIL_NOT_ACTIVATED;
 				$message = "You have not activated your account by email.";
@@ -61,7 +61,7 @@ class LoginHandler extends LoggedOutHandler
 				break;
 			}
 			$this->viewParams->username = $username;
-			$this->viewParams->formResult = $message;
+			$this->setResultMessage($message, "error");
 			$this->showPage();
 		}
 	}
@@ -73,7 +73,7 @@ class LoginHandler extends LoggedOutHandler
 		$ea->save();
 		$mail = EmailActivationEmail::create($user, $ea->getCode());
 		$mail->send();
-		$this->viewParams->formResult = "An activation email has been sent to your account's email address.";
+		$this->setResultMessage("An activation email has been sent to your account's email address.");
 		unset($this->session()->allowActivation);
 		unset($this->session()->activationUserId);
 		$this->showPage();
@@ -99,11 +99,11 @@ class LoginHandler extends LoggedOutHandler
 		catch(OperationException $e){
 			switch($e->getErrors()[0]){
 				case OperationError::EMAIL_ACTIVATION_INVALID:
-					$this->viewParams->formResult = "Invalid activation code.";
+					$this->setResultMessage("Invalid activation code.", "error");
 					break;
 				case OperationError::USER_PASSWORD_INCORRECT:
 				case "UsernameIncorrect":
-					$this->viewParams->formResult = "You entered incorrect credentials.";
+					$this->setResultMessage("You entered incorrect credentials.", "error");
 					break;
 			}
 			$this->viewParams->username = $username;

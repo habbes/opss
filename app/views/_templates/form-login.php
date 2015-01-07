@@ -2,9 +2,6 @@
 <div class="col-sm-4 col-sm-offset-4 panel panel-default" >
 	<div class="panel-body">
 	    <form method="post" class="form-signin" role="form" >
-			<div>
-				<span class="form-result-error text-danger"><?= $data->formResult ?></span>
-	       	</div>
 	       	<div class="form-group">
 				<label for="form-username">Username or Email</label>
 	         	<input type="text" class="form-control" name="username" value="<?= htmlspecialchars($data->username) ?>" 

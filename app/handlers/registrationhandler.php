@@ -131,6 +131,8 @@ class RegistrationHandler extends LoggedOutHandler
 						$errors->set("password-confirm", "This does not match the entered password");
 						break;
 				}
+				
+				$this->setResultMessage("Please correct the indicated errors.", "error");
 			}
 		
 			$this->viewParams->errors = $errors;
@@ -158,8 +160,7 @@ class RegistrationHandler extends LoggedOutHandler
 			foreach($e->getErrors() as $error){
 				switch($error){
 					case "UserNotFound":
-						$this->data->resultMessage = "Error occured while trying to send email.";
-						$this->data->resultType = "error";
+						$this->setResultMessage("Error occured while trying to send email. Email was not sent.","error");
 						break;
 				}
 			}
