@@ -5,6 +5,8 @@
 	</p>
 	<form class="form-horizontal" method="POST" role="form">
 		<input type="hidden" name="action" value="resend-activation"/>
-		<button class="btn btn-lg btn-primary btn-block">I have not received any email, please send again</button>
+		<div class="align-center">
+			<button class="btn btn-primary">I have not received any email, please send again</button>
+		</div>
 	</form>
 </div>

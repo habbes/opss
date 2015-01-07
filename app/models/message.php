@@ -56,6 +56,7 @@ class Message extends DBModel
 	public function send()
 	{
 		$this->date_sent = Utils::dbDateFormat(time());
+		$this->setRead(false);
 		if(!$this->sender_type)
 			$this->sender_type = self::SYSTEM_GENERATED;
 		$ds = DIRECTORY_SEPARATOR;
@@ -209,7 +210,7 @@ class Message extends DBModel
 	public function template($template)
 	{
 		$ds = DIRECTORY_SEPARATOR;
-		return DIR_MESSAGE_TEMPLATES.$ds.str_replace("/",$ds,$template)."php";
+		return DIR_MESSAGE_TEMPLATES.$ds.str_replace("/",$ds,$template).".php";
 	}
 	
 	/**

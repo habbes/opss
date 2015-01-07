@@ -12,7 +12,8 @@ class WelcomeMessage extends Message
 		
 		$m = new static();
 		$m->setUser($user);
-		$m->setBodyFromTemplate("welcome",
+		$m->setSubject("Welcome");
+		$m->setMessageFromTemplate("welcome",
 				[
 					"name" => $user->getFullName(),
 					"accountType" => UserType::getString($user->getType()),	
