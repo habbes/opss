@@ -119,3 +119,13 @@ label {
 
 /** end forms **/
 
+/** tables **/
+#notifications-table .unread {
+	font-weight:600;
+}
+
+.table-hover td:hover {
+	cursor:pointer;
+}
+
+/** end tables **/

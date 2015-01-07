@@ -80,6 +80,11 @@ class Utils
 		return strftime("%Y-%m-%d %H:%M:%S",$timestamp);
 	}
 	
+	public static function siteDateFormat($timestamp)
+	{
+		return strftime("%a %d %b %Y at %H:%M", $timestamp);
+	}
+	
 	/**
 	 * hashes a password
 	 * @param string $password
