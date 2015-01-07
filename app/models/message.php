@@ -8,6 +8,9 @@
  */
 class Message extends DBModel
 {
+	
+	protected static $table="messages";
+	
 	protected $user_id;
 	protected $subject;
 	protected $date_sent;
