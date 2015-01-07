@@ -16,5 +16,6 @@ define("DIR_CUSTOM", DIR_APP.$ds."custom");
 define("DIR_DATA", DIR_APP.$ds."data");
 define("DIR_SYS_DATA", DIR_APP.$ds."sys_data");
 define("DIR_EMAILS", DIR_APP.$ds."emails");
-define("DIR_MESSAGES", DIR_DATA.$ds."messages");
+define("DIR_MESSAGES", DIR_APP.$ds."messages");
+define("DIR_MESSAGE_TEMPLATES", DIR_MESSAGES.$ds."message_templates");
 define("DIR_EMAIL_TEMPLATES", DIR_EMAILS.$ds."email_templates");

@@ -36,6 +36,7 @@ class AdminSetupHandler extends LoggedOutHandler
 				$erros[] = OperationError::USER_PASSWORDS_DONT_MATCH;
 			
 			$user->setPassword($this->postVar("password"));
+			$user->setEmailActivated(true);
 			$user->save();
 			
 			$this->login($user);
