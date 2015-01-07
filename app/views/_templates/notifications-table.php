@@ -16,7 +16,7 @@
 				$unread = $message->isRead()? "" : "unread";
 			?>
 			<tr class="<?= $unread ?>" data-id="<?= $message->getId() ?>">
-				<td><?= $message->getSubject() ?></td>
+				<td><?= escape($message->getSubject()) ?></td>
 				<td><?= Utils::siteDateTimeFormat($message->getDateSent()) ?></td>
 			</tr>
 			<?php } //end foreach ?>
