@@ -96,7 +96,7 @@ class DBModel extends Model
 	 * if false is returned, the model will not be saved
 	 * @return boolean
 	 */
-	protected function validate(array &$errors)
+	protected function validate(&$errors)
 	{
 		return true;
 	}
@@ -107,7 +107,7 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onInsert(&$errors = null)
+	protected function onInsert(&$errors)
 	{
 		return true;
 	}
@@ -126,7 +126,7 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onUpdate(&$errors = null)
+	protected function onUpdate(&$errors)
 	{
 		return true;
 	}
@@ -145,7 +145,7 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onDelete()
+	protected function onDelete(&$errors)
 	{
 		return true;
 	}
