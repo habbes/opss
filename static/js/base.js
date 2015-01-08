@@ -12,3 +12,7 @@ function showAlertMessage(message, type)
 		.addClass("alert-" + type)
 		.show();
 }
+
+$(function(){
+	Message.startPoll();
+});

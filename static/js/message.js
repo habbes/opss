@@ -19,7 +19,6 @@ var Message = {
 	startPoll : function()
 	{
 		Message.pollTimeout = setTimeout(function(){
-			console.log("called");
 			Message.pollXHR = $.getJSON(URL_ROOT + "/messages/ajax/new", function(response, status){
 				var count = response.messages.length;
 				if(count > 0){
