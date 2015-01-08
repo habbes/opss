@@ -11,7 +11,7 @@
         
 	<script src="<?=URL_PUBLIC?>/js/jquery-1.11.2.min.js" type="text/javascript"></script>
 	<script src="<?=URL_PUBLIC?>/js/base.js" type="text/javascript"></script>
-	<script src="<?=URL_PUBLIC?>/js/message.js" type="text/javascript"></script>
+	<script src="<?=URL_PUBLIC?>/js/ready.js" type="text/javascript"></script>
 	<!-- 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
