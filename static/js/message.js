@@ -12,14 +12,15 @@ var Message = {
 		
 	},	
 	
-	pollTimeout : null,	
+	pollTimeout : null,
+	pollXHR : null,
 	pollCallback : null,
 	
 	startPoll : function()
 	{
 		Message.pollTimeout = setTimeout(function(){
 			console.log("called");
-			$.getJSON(URL_ROOT + "/messages/ajax/new", function(response, status){
+			Message.pollXHR = $.getJSON(URL_ROOT + "/messages/ajax/new", function(response, status){
 				var count = response.messages.length;
 				if(count > 0){
 					showAlertMessage("You have " + count + " new message" + (count>1?"s":"") + ".", "normal");
@@ -39,6 +40,7 @@ var Message = {
 	
 	stopPoll : function()
 	{
+		if(Message.pollXHR) Message.pollXHR.abort();
 		clearTimeout(Message.pollTimeout);
 	},
 	

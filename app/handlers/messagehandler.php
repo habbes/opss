@@ -38,6 +38,9 @@ class MessageHandler extends LoggedInHandler
 	public function ajaxNew()
 	{
 		//long poll new messages
+		
+		//release session file to avoid blocking other requests
+		session_write_close();
 		$limit = 40;
 		$started = time();
 		set_time_limit($limit + 3);//+ grace period
