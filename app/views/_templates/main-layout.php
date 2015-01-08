@@ -33,7 +33,7 @@
 		?>
 		<div id="result-message" role="alert" class="alert alert-dismissble <?=$alertType?>" <?= $alertStyle?> >
 			<button type="button" class="close" data-dismiss="alert" 
-				aria-label="Close"><span aria-hidden="true" >&times</span></button>
+				aria-label="Close"><span aria-hidden="true" >&times;</span></button>
 			<?= $this->data->resultMessage ?>
 		</div>
 		<h2 class="page-header"><?= $data->pageHeading ?></h2>

@@ -28,6 +28,6 @@
 <script>
 $("#notifications-table tbody tr").click(function(){
 	Message.show($(this).data("id"));
-	this.removeClass("unread");
+	$(this).removeClass("unread");
 });
 </script>
