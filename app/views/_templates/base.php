@@ -5,6 +5,7 @@
 	<title><?=$data->pageTitle?> - AERC OPSS</title>
         
 	<link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/dashboard.css">
 	<link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/theme.css">
         
