@@ -8,7 +8,7 @@
         <link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/dashboard.css">
         <link rel="stylesheet" type="text/css" href="<?=URL_PUBLIC?>/css/theme.css">
         
-        <script src="<?=URL_ROOT?>/public/js/jquery-1.11.2.min.js" type="text/javascript"></script>
+        <script src="<?=URL_PUBLIC?>/js/jquery-1.11.2.min.js" type="text/javascript"></script>
         <!-- 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
@@ -24,7 +24,7 @@
 		<div class="nav navbar-default navbar-fixed-top">
 			<div class="container-fluid">
 				<div class="navbar-header" id="logo-container">
-					<a class="navbar-brand" href="<?=URL_ROOT?>">Logo</a>
+					<a class="navbar-brand" href="<?=URL_ROOT?>"><img id="logo-image" src="<?=URL_PUBLIC?>/images/logo.png"/></a>
 				</div>
 				<ul class="nav navbar-nav" id="opss-title-container">
 					<li>

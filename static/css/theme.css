@@ -2,7 +2,7 @@
 
 body {
 	font-size:14px;
-	font-family:segoe ui, calibri, sans-serif;
+	font-family:segoe ui,calibri,tahoma,sans-serif;
 }
 
 .btn {
@@ -27,12 +27,6 @@ body {
 	background-color:#251c17;
 }
 
-
-
-.panel {
-	padding:20px;
-}
-
 .align-center {
 	text-align:center;
 }
@@ -54,6 +48,16 @@ body {
 	font-weight:normal;
 	font-size:1em;
 	font-variant:small-caps;
+}
+
+#result-message {
+	display:none;
+}
+
+#logo-image {
+	width:45px;
+	position:relative;
+	top:-15px;
 }
 
 /** sidebar nav **/
@@ -80,6 +84,10 @@ body {
 /** end sidebar nav **/
 
 /** forms **/
+.form-control {
+	border-radius:2px;
+}
+
 .form-group {
 	margin-bottom:5px;
 }
