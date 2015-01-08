@@ -60,7 +60,7 @@ class MessageBox extends DBModel
 	 */
 	public function updateQueryTime()
 	{
-		$this->setQueryTime(time());
+		$this->setLastQueryTime(time());
 		$this->save();
 	}
 	

@@ -34,4 +34,24 @@ class MessageHandler extends LoggedInHandler
 		$this->viewParams->message = $message;
 		$this->renderView("MessageAjax");
 	}
+	
+	public function ajaxNew()
+	{
+		//long poll new messages
+		$limit = 40;
+		$started = time();
+		set_time_limit($limit + 3);//+ grace period
+		$box = $this->user->getMessageBox();
+		while(time() - $started < $limit){
+			$messages = $box->getNew();
+			if(count($messages) > 0){
+				$this->viewParams->messages = $messages;
+				$this->renderView("NewMessagesAjax");
+				exit;
+			}
+			sleep(1);
+		}
+		$this->viewParams->messages = [];
+		$this->renderView("NewMessagesAjax");
+	}
 }
