@@ -16,12 +16,15 @@ $routes = [
 		['^(?:index|home)?\/?$',"Message"],
 		['^messages\/(?:all\/?)?$', "Message"],
 		['^messages\/unread\/?$',"Message@getUnread"],
+		['^messages\/ajax\/(\d+)\/?', "Message@ajaxRead"],
 		['^registration\/?$', "Registration"],
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
-		//['^setup\/admin\/?$', "AdminSetup"]
+		//['^setup\/admin\/?$', "AdminSetup"],
+		
+		
 		
 		
 	

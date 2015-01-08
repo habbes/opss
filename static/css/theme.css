@@ -137,3 +137,14 @@ label {
 }
 
 /** end tables **/
+
+/** message viewer **/
+.message-time {
+	font-size:0.8em;
+	padding-top:10px;
+}
+
+.modal-footer:empty {
+	display:none;
+}
+/** end message viewer **/
