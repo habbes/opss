@@ -50,7 +50,7 @@ body {
 	font-variant:small-caps;
 }
 
-#result-message {
+#result-message-container {
 	display:none;
 }
 

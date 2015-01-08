@@ -6,6 +6,8 @@ var Message = {
 			$("#popup-viewer .modal-title").text(response.subject);
 			$("#popup-viewer .modal-body").html(response.body);
 			$("#popup-viewer").modal({keyboard:false});
+		}).fail(function(){
+			showAlertMessage("Failed to retrieve message.", "error");
 		});
 		
 	}
