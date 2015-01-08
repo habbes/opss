@@ -17,7 +17,7 @@
 			?>
 			<tr class="<?= $unread ?>" data-id="<?= $message->getId() ?>">
 				<td><?= escape($message->getSubject()) ?></td>
-				<td><?= Utils::siteDateTimeFormat($message->getDateSent()) ?></td>
+				<td><?= Utils::siteDateFormat($message->getDateSent()) ?></td>
 			</tr>
 			<?php } //end foreach ?>
 		</tbody>
@@ -25,3 +25,9 @@
 	</table>
 
 </div>
+<script>
+$("#notifications-table tbody tr").click(function(){
+	Message.show($(this).data("id"));
+	this.removeClass("unread");
+});
+</script>
