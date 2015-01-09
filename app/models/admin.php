@@ -7,7 +7,7 @@
  */
 class Admin extends UserRole
 {
-	protected $type = UserType::ADMIN;
+	protected static $type = UserType::ADMIN;
 	
 	public function hasResidence()
 	{
@@ -28,4 +28,5 @@ class Admin extends UserRole
 	{
 		return false;
 	}
+	
 }

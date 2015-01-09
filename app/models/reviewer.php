@@ -7,5 +7,5 @@
  */
 class Reviewer extends UserRole
 {
-	protected $type = UserType::REVIEWER;
+	protected static $type = UserType::REVIEWER;
 }

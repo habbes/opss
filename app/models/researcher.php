@@ -7,7 +7,7 @@
  */
 class Researcher extends UserRole
 {
-	protected $type = UserType::RESEARCHER;
+	protected static $type = UserType::RESEARCHER;
 	
 	public function hasResidence()
 	{

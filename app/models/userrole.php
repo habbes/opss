@@ -10,7 +10,7 @@
 abstract class UserRole
 {
 	protected $user;
-	protected $type;
+	protected static $type;
 	
 	/**
 	 * 
@@ -53,7 +53,7 @@ abstract class UserRole
 	 */
 	public function getType()
 	{
-		return $this->type;
+		return static::$type;
 	}
 	
 	/**
@@ -84,6 +84,15 @@ abstract class UserRole
 	}
 	
 	//ABSTRACT METHODS
+	
+	/**
+	 * find all users with this role
+	 * @return array(User)
+	 */
+	public static function findAll()
+	{
+		return User::findAllByField("type", static::$type);
+	}
 	
 	/**
 	 * @return boolean
