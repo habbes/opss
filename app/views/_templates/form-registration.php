@@ -175,7 +175,7 @@ $formerror = $data->errors;
       		<!-- Button -->
       			<div class="align-center">
         			<input type="submit" class="btn btn-success inline" value="Proceed With Registration"/>
-        			<span>If you already have an account <a href="<?= URL_ROOT?>/login" class="link">sign in here</a></span>
+        			<div>If you already have an account <a href="<?= URL_ROOT?>/login" class="link">sign in here</a></div>
      			</div>
     		</div>
     	</fieldset>
