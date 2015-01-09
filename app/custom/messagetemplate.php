@@ -108,7 +108,7 @@ class MessageTemplate
 	 */
 	protected function varReplaceCallback($matches)
 	{
-		return $this->getVar($matches[1]);
+		return htmlspecialchars($this->getVar($matches[1]));
 	}
 	
 	/**
