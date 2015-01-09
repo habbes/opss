@@ -73,11 +73,18 @@ class RegistrationHandler extends LoggedOutHandler
 			$msg = WelcomeMessage::create($user);
 			$msg->send();
 			
+			//notify admins
+			foreach(Admin::findAll() as $admin)
+			{
+				$msg = UserRegisteredMessage::create($user);
+				$msg->sendTo($admin);
+			}
+			
 			//send activation email
 			$ea = EmailActivation::create($user);
 			$ea->save();
 			$mail = WelcomeEmail::create($user, $ea->getCode());
-			$mail->send();
+			$mail->send();			
 			
 			Session::instance()->registeredUserId =  $user->getId();
 			$this->showPostRegPage();
