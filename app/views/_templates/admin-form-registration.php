@@ -9,7 +9,7 @@ $formerror = $data->errors;
 		<!-- first col -->
 		<div class="col-sm-6 col-sm-offset-3 col-xs-12">
 			<fieldset>
-				<legend class="col-sm-offset-1">Personal Info</legend>
+				
 				<div class="form-group row combined-fields">
 					<div class="col-sm-2 col-sm-offset-1 combined-fields-item" style="padding-right:0px">
 	      				<select class="form-control" name="title" placeholder="Title">
@@ -17,45 +17,45 @@ $formerror = $data->errors;
 	      					<?php foreach($data->titles as $title){	?>
 	      					<option value="<?=$title?>"
 	      					<?php if($title == $formdata->title) echo "selected"; ?>
-	      							><?= $title ?></option>	
+	      							><?= escape($title) ?></option>	
 	      					<?php }	?>
 	      				</select>
-	      				<span class="help-block text-danger form-error" id="title-error"><?= $formerror->title ?></span>
+	      				<span class="help-block text-danger form-error" id="title-error"><?= escape($formerror->title) ?></span>
 	      			</div>
 	      			
 	      			<!-- First name -->
 					<div class="col-sm-4 combined-fields-item" style="padding-left: 0px;padding-right:0px">
 						<input type="text" id="firstname"
-							name="firstname" value="<?=$formdata->firstname?>"
+							name="firstname" value="<?= escape($formdata->firstname) ?>"
 							placeholder="First name" class="form-control">
-						<span class="help-block text-danger form-error" id="firstname-error"><?= $formerror->firstname ?></span>
+						<span class="help-block text-danger form-error" id="firstname-error"><?= escape($formerror->firstname) ?></span>
 					</div>
 					
 					<!-- Last name -->
 					<div class="col-sm-4 combined-fields-item" style="padding-left: 0px">
 						<input type="text" id="lastname" name="lastname"
-								value="<?=$formdata->lastname?>" 
+								value="<?= escape($formdata->lastname) ?>" 
 					        	placeholder="Last name" class="form-control">
-					    <span class="help-block text-danger form-error" id="lastname-error"><?= $formerror->lastname ?></span>
+					    <span class="help-block text-danger form-error" id="lastname-error"><?= escape($formerror->lastname) ?></span>
 					</div>
 				</div>
 				
 				<fieldset>
-				<legend class="col-sm-offset-1">Account Access Info</legend>
+				
 				<div class="form-group">
 					<!-- username -->
 				    <div class="col-sm-10 col-sm-offset-1">
-				    	<input type="text" id="username" name="username" value="<?= $formdata->username; ?>"
+				    	<input type="text" id="username" name="username" value="<?= escape($formdata->username) ?>"
 				        placeholder="Enter your Username" class="form-control">
-				        <span class="help-block text-danger form-error" id="username-error"><?= $formerror->username ?></span>
+				        <span class="help-block text-danger form-error" id="username-error"><?= escape($formerror->username) ?></span>
 				    </div>
 				</div>
 				<div class="form-group">
 				      <!-- E-mail -->
 				    <div class="col-sm-10 col-sm-offset-1">
-				    	<input type="email" id="email" name="email" value="<?= $formdata->email ?>"
+				    	<input type="email" id="email" name="email" value="<?= escape($formdata->email) ?>"
 				        placeholder="Enter your Email address" class="form-control" >
-				        <span class="help-block text-danger form-error" id="email-error"><?= $formerror->email ?></span>
+				        <span class="help-block text-danger form-error" id="email-error"><?= escape($formerror->email) ?></span>
 					</div>
 				</div>
 				
@@ -63,7 +63,7 @@ $formerror = $data->errors;
 					<!-- password -->
 					<div class="col-sm-10 col-sm-offset-1">
 				        <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
-				        <span class="help-block text-danger form-error" id="password-error"><?= $formerror->password ?></span>
+				        <span class="help-block text-danger form-error" id="password-error"><?= escape($formerror->password) ?></span>
 					</div>
 				</div>
 		
@@ -73,7 +73,7 @@ $formerror = $data->errors;
 				    	<input type="password" id="password-confirm" name="password-confirm" class="form-control"
 				    		placeholder="Repeat Password">
 				        <span class="help-block text-danger form-error" 
-				        id="password-confirm-error"><?= $formerror->get("password-confirm") ?></span>
+				        id="password-confirm-error"><?= escape($formerror->get("password-confirm")) ?></span>
 				     </div>
 				</div>
 			</fieldset>

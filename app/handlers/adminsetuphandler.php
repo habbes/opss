@@ -75,6 +75,8 @@ class AdminSetupHandler extends LoggedOutHandler
 						$errors->set("password-confirm", "This does not match the entered password");
 						break;
 				}
+				
+				$this->setResultMessage("Please correct the indicated errors.", "error");
 			}
 			$this->viewParams->errors = $errors;
 		}
