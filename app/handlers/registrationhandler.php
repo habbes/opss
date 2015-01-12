@@ -35,7 +35,7 @@ class RegistrationHandler extends LoggedOutHandler
 			$pass = $this->postVar("password");
 			$passConfirm = $this->postVar("password-confirm");
 			if($pass != $passConfirm){
-				$errors[] = ValidationError::USER_PASSWORDS_DONT_MATCH;
+				$errors[] = OperationError::USER_PASSWORDS_DONT_MATCH;
 			}
 		
 			$user->setPassword($this->postVar("password"));
@@ -58,18 +58,19 @@ class RegistrationHandler extends LoggedOutHandler
 			$collabArea = (int) $this->postVar("collaborative-area");
 			$thematicArea = (int) $this->postVar("thematic-area");
 			if(!PaperGroup::isValue($collabArea))
-				$errors[] = ValidationError::COLLAB_AREA_INVALID;
+				$errors[] = OperationError::COLLAB_AREA_INVALID;
 			if(!PaperGroup::isValue($thematicArea))
-				$errors[] = ValidationError::THEMATIC_AREA_INVALID;
+				$errors[] = OperationError::THEMATIC_AREA_INVALID;
 				
 			if(!empty($errors))
-				throw new ValidationException($errors);
+				throw new OperationException($errors);
 			$user->save();
 			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
 			$user->addThematicArea((int) $this->postVar("thematic-area"));
 				
 			//send activation email
 			$ea = EmailActivation::create($user);
+			$ea->save();
 			$mail = WelcomeEmail::create($user, $ea->getCode());
 			$mail->send();
 				
@@ -77,51 +78,51 @@ class RegistrationHandler extends LoggedOutHandler
 			$this->showPostRegPage();
 				
 		}
-		catch(ValidationException $e) {
+		catch(OperationException $e) {
 			$errors = new DataObject();
 			foreach($e->getErrors() as $error){
 				switch($error){
-					case ValidationError::USER_FIRST_NAME_EMPTY:
+					case OperationError::USER_FIRST_NAME_EMPTY:
 						$errors->firstname = "First name is required";
 						break;
-					case ValidationError::USER_LAST_NAME_EMPTY:
+					case OperationError::USER_LAST_NAME_EMPTY:
 						$errors->lastname = "Last name is required";
 						break;
-					case ValidationError::USER_GENDER_INVALID:
+					case OperationError::USER_GENDER_INVALID:
 						$errors->gender = "Gender is required";
 						break;
-					case ValidationError::USER_NATIONALITY_EMPTY:
+					case OperationError::USER_NATIONALITY_EMPTY:
 						$errors->nationality = "Country of nationality is required";
 						break;
-					case ValidationError::USER_RESIDENCE_EMPTY:
+					case OperationError::USER_RESIDENCE_EMPTY:
 						$errors->residence = "Country of residence is required";
 						break;
-					case ValidationError::USER_ADDRESS_EMPTY:
+					case OperationError::USER_ADDRESS_EMPTY:
 						$errors->address = "Address is required";
 						break;
-					case ValidationError::COLLAB_AREA_INVALID:
+					case OperationError::COLLAB_AREA_INVALID:
 						$errors->set("collaborative-area", "Invalid choice. Please select one of the provided.");
 						break;
-					case ValidationError::THEMATIC_AREA_INVALID:
+					case OperationError::THEMATIC_AREA_INVALID:
 						$errors->set("thematic-area", "Invalid choice. Please select one of the provided.");
 						break;
-					case ValidationError::USER_USERNAME_INVALID:
+					case OperationError::USER_USERNAME_INVALID:
 						$errors->username = "Invalid username. Please user only letters, numbers, _ and -";
 						break;
-					case ValidationError::USER_USERNAME_UNAVAILABLE:
+					case OperationError::USER_USERNAME_UNAVAILABLE:
 						$errors->username = "This username is not available, please choose a different one.";
 						break;
-					case ValidationError::USER_EMAIL_INVALID:
+					case OperationError::USER_EMAIL_INVALID:
 						$errors->email = "Invalid email address. An email address should be of the form johndoe@example.com";
 						break;
-					case ValidationError::USER_EMAIL_UNAVAILABLE:
+					case OperationError::USER_EMAIL_UNAVAILABLE:
 						$errors->email = "This email is not available, please choose a different one.";
 						break;
-					case ValidationError::USER_PASSWORD_INVALID:
+					case OperationError::USER_PASSWORD_INVALID:
 						$errors->password = "Invalid password. The password should have 6 to 50 characters including "
 								."letters, numbers, and special characters like *, !, etc.";
 								break;
-					case ValidationError::USER_PASSWORDS_DONT_MATCH:
+					case OperationError::USER_PASSWORDS_DONT_MATCH:
 						$errors->set("password-confirm", "This does not match the entered password");
 						break;
 				}
@@ -133,7 +134,7 @@ class RegistrationHandler extends LoggedOutHandler
 			echo "Errors: ".$e->getMessage()."<br>";
 		}
 		
-		$this->showPage();
+		$this->showRegPage();
 	}
 	
 	private function resendActivation()
@@ -141,6 +142,7 @@ class RegistrationHandler extends LoggedOutHandler
 		$user = User::findById(Session::instance()->registerdUserId);
 		//send activation email
 		$ea = EmailActivation::create($user);
+		$ea->save();
 		$mail = WelcomeEmail::create($user, $ea->getCode());
 		$mail->send();
 		$this->showPostRegPage();

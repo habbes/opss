@@ -19,6 +19,10 @@ abstract class RequestHandler
 		$this->viewParams = new DataObject();
 	}
 	
+	/**
+	 * gets the instance of the current session
+	 * @return Session
+	 */
 	public function session()
 	{
 		return Session::getInstance();
@@ -65,7 +69,13 @@ abstract class RequestHandler
 	 */
 	public function localRedirect($url)
 	{
-		header("Location: ".URL_ROOT . "/$url");
+		if(URL_ROOT_SUBPATH && strpos($url, URL_ROOT_SUBPATH) === 0)
+			$url = substr($url, strlen(URL_ROOT_SUBPATH));
+		
+		if(substr($url, 0, 1) != "/")
+			$url = "/".$url;
+		
+		header("Location: ".URL_ROOT.$url);
 		exit;
 	}
 	

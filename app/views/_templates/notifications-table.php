@@ -1,5 +1,10 @@
+
 <div class="table-responsive">
-	<table class="table table-striped table-hover records-table">
+	<table class="table table-striped table-hover records-table" id="notifications-table">
+		<?php if(count($data->notifications) == 0 ) {?>
+			No messages found.
+		</table>
+		<?php } else { ?>
 		<thead>
 			<tr>
 				<th>Subject</th>
@@ -20,6 +25,7 @@
 				<td>Sun 12 2014</td>
 			</tr>
 		</tbody>
+		<?php } //end if-else block?>
 	</table>
 
 </div>

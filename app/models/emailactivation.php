@@ -94,12 +94,11 @@ class EmailActivation extends DBModel
 	 */
 	public function activate($password){
 		
-		//TODO: throw exception instead of returning false?
 		if(!$this->isValid())
-			return false;
+			throw new OperationException([OperationError::EMAIL_ACTIVATION_INVALID]);
 		
 		if(!$this->getUser()->verifyPassword($password))
-			return false;
+			throw new OperationException([OperationError::USER_PASSWORD_INCORRECT]);
 		
 		$this->activated = true;
 		

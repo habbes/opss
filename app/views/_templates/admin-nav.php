@@ -1,29 +1,18 @@
-<div class="col-sm-3 col-md-2 sidebar">
-	<div class="nav nav-sidebar" id="titles"><span class="glyphicon glyphicon-envelope"></span>&nbsp;Notifications</div>
-		<ul class="nav nav-sidebar">
-				<li class="active"><a href="#">All notifications<span class="sr-only">(current)</span></a></li>
-				<li><a href="#">Unread</a></li>
-		</ul>
-		<div class="nav nav-sidebar" id="titles"><span class="glyphicon glyphicon-file"></span>&nbsp;Papers</div>
-		<ul class="nav nav-sidebar">
-			<li><a href="">Submit papers</a></li>
-			<li><a href="">All papers</a></li>
-			<li><a href="">Proposals</a></li>
-			<li><a href="">Projects</a></li>
-			<li><a href="">Final reports</a></li>
-		</ul>
-		<div class="nav nav-sidebar" id="titles"><span class="glyphicon glyphicon-user"></span>&nbsp;Users</div>
-		<ul class="nav nav-sidebar">
-			 <li><a href="">Nav item again</a></li>
-			 <li><a href="">One more nav</a></li>
-			 <li><a href="">Another nav item</a></li>
-		</ul>
-		<div class="nav nav-sidebar" id="titles"><span class="glyphicon glyphicon-cog"></span>&nbsp;Workshop</div>
-		<ul class="nav nav-sidebar">
-			 <li><a href="">Manage</a></li>
-		</ul>
-		<div class="nav nav-sidebar" id="titles"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Grants</div>
-			<ul class="nav nav-sidebar">
-			    <li><a href="">All</a></li>
-			</ul>
+<div class="nav nav-sidebar nav-list-header">
+	<span class="glyphicon glyphicon-envelope nav-icon"></span>
+	<span class="nav-list-header-text">Notifications</span>
 </div>
+<ul class="nav nav-sidebar nav-list-group">
+	<li class="nav-item active"><a href="messages/all">All notifications</a></li>
+	<li class="nav-item"><a href="messages/unread">Unread</a>
+</ul>
+
+<div class="nav nav-sidebar nav-list-header">
+	<span class="glyphicon glyphicon-user nav-icon"></span>
+	<span class="nav-list-header-text">Users</span>
+</div>
+<ul class="nav nav-sidebar nav-list-group">
+	<li class="nav-item"><a href="users/invite">Invite</a></li>
+	<li class="nav-item"><a href="users/all">All</a>
+</ul>
+

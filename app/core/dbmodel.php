@@ -96,7 +96,7 @@ class DBModel extends Model
 	 * if false is returned, the model will not be saved
 	 * @return boolean
 	 */
-	protected function validate(array &$errors)
+	protected function validate(&$errors)
 	{
 		return true;
 	}
@@ -107,9 +107,17 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onInsert(&$errors = null)
+	protected function onInsert(&$errors)
 	{
 		return true;
+	}
+	
+	/**
+	 * called after model has been successfully inserted in the database
+	 */
+	protected function afterInsert()
+	{
+	
 	}
 	
 	/**
@@ -118,9 +126,17 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onUpdate(&$errors = null)
+	protected function onUpdate(&$errors)
 	{
 		return true;
+	}
+	
+	/**
+	 * called after the model has been successfully updated in the database
+	 */
+	protected function afterUpdate()
+	{
+	
 	}
 	
 	/**
@@ -129,10 +145,20 @@ class DBModel extends Model
 	 * @errors array where validation errors will be reported as error name/messages pairs
 	 * @return boolean
 	 */
-	protected function onDelete()
+	protected function onDelete(&$errors)
 	{
 		return true;
 	}
+	
+	/**
+	 * called after the model has been successfully deleted from the database
+	 */
+	protected function afterDelete()
+	{
+		
+	}
+	
+	
 	
 	/**
 	 * inserts the model in the database
@@ -144,7 +170,7 @@ class DBModel extends Model
 		$errors = [];
 		if(!$this->onInsert($errors) || !$this->validate($errors) || count($errors) > 0){
 			//throw exception
-			$ex = new ValidationException();
+			$ex = new OperationException();
 			$ex->setErrors($errors);
 			throw $ex;
 			return false;
@@ -183,7 +209,7 @@ class DBModel extends Model
 		
 		$this->id = self::database()->lastInsertId();
 		$this->_inDb = true;
-		
+		$this->afterInsert();
 		return true;
 		
 	}
@@ -198,7 +224,7 @@ class DBModel extends Model
 		$errors = [];
 		if(!$this->onUpdate($errors) || !$this->validate($errors) || count($errors) > 0){
 			//throw exception
-			$ex = new ValidationException();
+			$ex = new OperationException();
 			$ex->setErrors($errors);
 			throw $ex;
 			return false;
@@ -226,6 +252,7 @@ class DBModel extends Model
 		$stmt = self::database()->prepare($query);
 		$result = $stmt->execute($values);
 		
+		$this->afterUpdate();
 		return $result;
 		
 	}
@@ -238,7 +265,7 @@ class DBModel extends Model
 	{
 		$errors = [];
 		if(!$this->onDelete($errors) || count($errors) > 0){
-			$ex = new ValidationException();
+			$ex = new OperationException();
 			$ex->setErrors($errors);
 			throw $ex;
 		}
@@ -248,6 +275,7 @@ class DBModel extends Model
 		$stmt = self::database()->prepare($query);
 		$result = $stmt->execute([$this->id]);
 		
+		$this->afterDelete();
 		return $result;
 	}
 	

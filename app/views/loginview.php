@@ -1,10 +1,12 @@
 <?php
-class LoginView extends View
+class LoginView extends BaseView
 {
 	public function render($params)
-	{
-		$this->data->pageTitle = "AERC_OPSS | LogIn";
-		$this->data->body = $this->read("form-login");
-		$this->show("base");
+	{	
+		$this->data->loadData($params->toArray());
+		$this->data->pageTitle = "Sign In";
+		$this->data->pageHeading = "Sign In";
+		$this->data->pageContent = $this->read("form-login");
+		$this->showBase();
 	}
 }

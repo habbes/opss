@@ -29,6 +29,9 @@ class User extends DBModel
 	//used to store the password before it has been hashed
 	//so it can be checked for validity before being saved to db
 	private $_plainPassword = null;
+	//used to check whether the username is being updated when the user is saved
+	private $_newUsername = false;
+	private $_newEmail = false;
 	
 	/**
 	 * createa user of the given type/role
@@ -63,6 +66,26 @@ class User extends DBModel
 		if($this->title)
 			$name = $this->title . " " . $name;
 		return $name;
+	}
+	
+	/**
+	 * 
+	 * @param string $username
+	 */
+	public function setUsername($username)
+	{
+		$this->username = $username;
+		$this->_newUsername = true;
+	}
+	
+	/**
+	 * 
+	 * @param string $email
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+		$this->_newEmail = true;
 	}
 	
 	/**
@@ -195,7 +218,7 @@ class User extends DBModel
 	
 	/**
 	 * checks whether a user with the given credentials exists
-	 * and returns that User
+	 * and returns that User, throws exception when login fails
 	 * @param string $username username or email
 	 * @param string $password
 	 * @return User
@@ -206,8 +229,9 @@ class User extends DBModel
 			if($user->verifyPassword($password)){
 				return $user;
 			}
+			throw new OperationException([OperationError::USER_PASSWORD_INCORRECT]);
 		}
-		return null;
+		throw new OperationException([OperationError::USER_NOT_FOUND]);
 	}
 	
 	/**
@@ -280,65 +304,68 @@ class User extends DBModel
 		return $email->send();
 	}
 	
-	protected function onInsert(array &$errors)
+	protected function onInsert(&$errors = NULL)
 	{
 		
 		$this->date_added = Utils::dbDateFormat(time());
-		
-		//create MessageBox for this user		
+		return true;
+	}
+	
+	protected function afterInsert()
+	{
+		//create MessageBox for this user
 		$mb = MessageBox::create($this);
 		$this->_messageBox = $mb->save();
-		
-		return true;
 	}
 	
 	protected function validate(array &$errors)
 	{
 		if(!self::isValidUsername($this->username)){
-			$errors[] = ValidationError::USER_USERNAME_INVALID;
+			$errors[] = OperationError::USER_USERNAME_INVALID;
 		}
 		
 		if(!self::isValidEmail($this->email)){
-			$errors[] = ValidationError::USER_EMAIL_INVALID;
+			$errors[] = OperationError::USER_EMAIL_INVALID;
 		}
-		if(static::findByUsername($this->username)){
-			$errors[] = ValidationError::USER_USERNAME_UNAVAILABLE;
+		if($this->_newUsername && static::findByUsername($this->username)){
+			$errors[] = OperationError::USER_USERNAME_UNAVAILABLE;
 		}
-		if(static::findByEmail($this->email)){
-			$errors[] = ValidationError::USER_EMAIL_UNAVAILABLE;
+		if($this->_newEmail && static::findByEmail($this->email)){
+			$errors[] = OperationError::USER_EMAIL_UNAVAILABLE;
 		}
 		//if _plainPassword is not null, then the password has been changed or created
 		if($this->_plainPassword !== null && !static::isValidPassword($this->_plainPassword)){
-			$errors[] = ValidationError::USER_PASSWORD_INVALID;
+			$errors[] = OperationError::USER_PASSWORD_INVALID;
 		}
 		if(empty($this->first_name)){
-			$errors[] = ValidationError::USER_FIRST_NAME_EMPTY;
+			$errors[] = OperationError::USER_FIRST_NAME_EMPTY;
 		}
 		if(empty($this->last_name)){
-			$errors[] = ValidationError::USER_LAST_NAME_EMPTY;
+			$errors[] = OperationError::USER_LAST_NAME_EMPTY;
 		}
 		if(!UserType::isValue((int) $this->type)){
-			$errors[] = ValidationError::USER_TYPE_INVALID;
+			$errors[] = OperationError::USER_TYPE_INVALID;
 		}
 		
 		if((int) $this->type == UserType::RESEARCHER){
 			if(empty($this->address)){
-				$erros[] = ValidationError::USER_ADDRESS_EMPTY;
+				$erros[] = OperationError::USER_ADDRESS_EMPTY;
 			}
 			if(empty($this->residence)){
-				$errors[] = ValidationError::USER_RESIDENCE_EMPTY;
+				$errors[] = OperationError::USER_RESIDENCE_EMPTY;
 			}
 			if(empty($this->nationality)){
-				$errors[] = ValidationError::USER_NATIONALITY_EMPTY;
+				$errors[] = OperationError::USER_NATIONALITY_EMPTY;
 			}
 			if(!UserGender::isValue((int) $this->gender)){
-				$errors[] = ValidationError::USER_GENDER_INVALID;
+				$errors[] = OperationError::USER_GENDER_INVALID;
 			}
 		}
 		
 		return true;
 		
 	}
+	
 	
 	/**
 	 * finds the user with the given username or email
@@ -395,7 +422,7 @@ class User extends DBModel
 	 */
 	public static function isValidUsername($username)
 	{
-		return preg_match("/^[\w-]+/", $username) === 1;
+		return preg_match("/^[\w-]+$/", $username) === 1;
 	}
 
 	/**

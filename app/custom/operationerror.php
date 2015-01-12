@@ -1,13 +1,15 @@
 <?php
 
 /**
- * contains constants representing different validation errors
+ * contains constants representing different operation errors
  * @author Habbes
  *
  */
-class ValidationError
+class OperationError
 {
 	//User errors
+	const NOT_FOUND = "NotFound";
+	const USER_NOT_FOUND = "UserNotFound";
 	const USER_USERNAME_INVALID = "UsernameInvalid";
 	const USER_PASSWORD_INVALID = "PasswordInvalid";
 	const USER_PASSWORD_INCORRECT = "PasswordIncorrect";
@@ -15,6 +17,7 @@ class ValidationError
 	const USER_EMAIL_INVALID = "EmailInvalid";
 	const USER_USERNAME_UNAVAILABLE = "UsernameUnavailable";
 	const USER_EMAIL_UNAVAILABLE = "EmailUnavailable";
+	const USER_EMAIL_NOT_ACTIVATED = "EmailNotActivated";
 	const USER_FIRST_NAME_EMPTY = "FirstNameEmpty";
 	const USER_LAST_NAME_EMPTY = "LastNameEmpty";
 	const USER_TYPE_INVALID = "UserTypeInvalid";
@@ -25,6 +28,8 @@ class ValidationError
 	const COLLAB_AREA_INVALID = "CollabAreaInvalid";
 	const THEMATIC_AREA_INVALID = "ThematicAreaInvalid";
 	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
+	const EMAIL_ACTIVATION_INVALID = "EmailActivationInvalid";
+	const INVITATION_INVALID = "InvitationInvalid";
 	
 	
 	
