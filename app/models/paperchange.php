@@ -141,7 +141,7 @@ class PaperChange extends DBModel
 	}
 	
 	/**
-	 * creates a change pointing at the paper's initial submission into the system
+	 * creates a change event for paper's initial submission into the system
 	 * @param Paper $paper
 	 * @return PaperChange
 	 */
