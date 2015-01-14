@@ -25,6 +25,9 @@ class PaperChange extends DBModel
 	 */
 	private $_args;
 	
+	//actions
+	const ACTION_SUBMITTED = "submitted";
+	
 	/**
 	 * 
 	 * @param Paper $paper
@@ -127,14 +130,39 @@ class PaperChange extends DBModel
 			$this->_args[$name] : $default;
 	}
 	
-	public function validate(&$errors)
+	protected function validate(&$errors)
 	{
 		$this->args = json_encode($this->_args);
 	}
 	
-	public function onInsert(&$errors)
+	protected function onInsert(&$errors)
 	{
 		$this->date = Utils::dbDateFormat(time());
+	}
+	
+	/**
+	 * creates a change pointing at the paper's initial submission into the system
+	 * @param Paper $paper
+	 * @return PaperChange
+	 */
+	public static function createSubmitted($paper)
+	{
+		$pc = static::create($paper, self::ACTION_SUBMITTED);
+		$pc->setArg("researcherId", $paper->getResearcher()->getId());
+		$pc->setArg("title", $paper->getTitle());
+		$pc->setArg("dateSubmitted", Utils::dbDateFormat($paper->getDateSubmitted()));
+		$pc->setArg("country", $paper->getCountry());
+		$pc->setArg("language", $paper->getLanguage());
+		$pc->setArg("fileId", $paper->getFile()->getId());
+		$pc->setArg("coverId", $paper->getCover()->getId());
+		$authors = [];
+		foreach($paper->getAuthors() as $author){
+			$authors[] = ["name"=>$author->getName(), 
+				"email"=>$author->getEmail()];
+		}
+		$pc->setArg("authors", $authors);
+		return $pc;
+		
 	}
 	
 	/**
