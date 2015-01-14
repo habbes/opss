@@ -30,7 +30,7 @@ class Paper extends DBModel
 	private $_groups;
 	
 	const DIR = "papers";
-	const GRACE_PERIOD = 2;
+	const GRACE_PERIOD = 2; //days
 	
 	//status
 	const PENDING = 1;
@@ -41,10 +41,26 @@ class Paper extends DBModel
 	const ACCEPTED = 4;
 	
 	
-	
+	/**
+	 * 
+	 * @param User $researcher
+	 * @param int $grace_period
+	 * @return Paper
+	 */
 	public static function create($researcher, $grace_period = null)
 	{
+		$paper = new static();
+		$paper->_researcher = $researcher;
+		$paper->researcher_id = $researcher->getId();
+		$paper->status = Paper::PENDING;
+		$paper->editable = true;
+		$paper->recallable = true;
+		$paper->level = PaperLevel::PROPOSAL;
+		$paper->revision = 1;
+		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
+		$paper->end_recallable_date = time() + $grace_period * 84600;
 		
+		return $paper;
 	}
 	
 	/**
@@ -74,6 +90,32 @@ class Paper extends DBModel
 	public function getStatus()
 	{
 		return (int) $this->status;
+	}
+	
+	/**
+	 * 
+	 * @return number
+	 */
+	public function getRevision()
+	{
+		return (int) $this->revision;
+	}
+	
+	/**
+	 * 
+	 * @param number $rev
+	 */
+	public function setRevision($rev)
+	{
+		$this->revision = $rev;
+	}
+	
+	/**
+	 * 
+	 */
+	public function incrementRevision()
+	{
+		$this->setRevision($this->getRevision + 1);
 	}
 
 	/**
@@ -238,6 +280,24 @@ class Paper extends DBModel
 		return true;
 	}
 	
+	protected function afterInsert()
+	{
+		$date = getdate($this->getDateSubmitted());
+		$identifier = $date["year"].$date["month"].$this->getId();
+		$this->identifier = $identifier;
+		$this->save();
+	}
+	
+	/**
+	 * send paper for vetting
+	 */
+	public function sendForVetting()
+	{
+		$this->status = self::VETTING;
+		$this->editable = false;
+		$this->recallable = false;
+		$this->save();
+	}
 	
 	/**
 	 * 
