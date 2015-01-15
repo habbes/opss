@@ -35,12 +35,6 @@ class CoAuthor extends DBModel
 		return strtotime($this->date_added);
 	}
 	
-	protected function onInsert(&$errors)
-	{
-		$this->date_added = Utils::dbDateFormat(time());
-		return true;
-	}
-	
 	protected function validate(&$errors)
 	{
 		if(!User::isValidEmail($this->email))
