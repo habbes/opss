@@ -19,7 +19,7 @@ class PaperChange extends DBModel
 	protected $revision;
 	
 	private $_paper;
-	private $_file;
+	
 	/**
 	 * @var JsonObject
 	 */
@@ -57,16 +57,6 @@ class PaperChange extends DBModel
 		return $this->_paper;
 	}
 	
-	/**
-	 * 
-	 * @return File
-	 */
-	public function getFile()
-	{
-		if(!$this->_file)
-			$this->_file = File::findById($this->file_id);
-		return $this->_file;
-	}
 	
 	/**
 	 * the revision of the paper during which this change
@@ -133,11 +123,13 @@ class PaperChange extends DBModel
 	protected function validate(&$errors)
 	{
 		$this->args = json_encode($this->_args);
+		return true;
 	}
 	
 	protected function onInsert(&$errors)
 	{
 		$this->date = Utils::dbDateFormat(time());
+		return true;
 	}
 	
 	/**
