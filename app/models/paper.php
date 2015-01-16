@@ -286,6 +286,18 @@ class Paper extends DBModel
 		return true;
 	}
 	
+	protected function validate(&$errors)
+	{
+		if(!$this->title)
+			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
+		if(!$this->language)
+			$errors[] = OperationError::PAPER_LANGUAGE_EMPTY;
+		if(!$this->country)
+			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
+		
+		return true;
+	}
+	
 	protected function afterInsert()
 	{
 		$date = getdate($this->getDateSubmitted());

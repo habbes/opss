@@ -69,13 +69,13 @@ $formerror = $data->errors;
 					<legend>1<sup>st</sup> Co-author</legend>
 					<div class="form-group row combined-fields">
 						<div class="col-sm-5 combined-fields-item" style="padding-right:0px;" >
-							<input type="text" name="author1-name" id="author1-name" 
+							<input type="text" name="author1-name" id="author1-name" value="<?= escape($formdata->get("author1-name")) ?>"
 								placeholder="Name" class="form-control">
 							<span class="help-block text-danger form-error" 
 								id="author1-name-error"><?= escape($formerror->get("author1-name")) ?></span>
 						</div>
 						<div class="col-sm-5 combined-fields-item" style="padding-left:0px">
-							<input type="email" name="author1-email" id="author1-email" 
+							<input type="email" name="author1-email" id="author1-email" value="<?= escape($formdata->get("author1-email")) ?>"
 								placeholder="Email" class="form-control">
 							<span class="help-block text-danger form-error" 
 								id="author1-email-error"><?= escape($formerror->get("author1-email")) ?></span>
@@ -88,12 +88,12 @@ $formerror = $data->errors;
 					<div class="form-group row combined-fields">
 						<div class="col-sm-5 combined-fields-item" style="padding-right:0px;" >
 							<input type="text" name="author2-name" id="author2-name" 
-								placeholder="Name" class="form-control">
+								placeholder="Name" class="form-control" value="<?= escape($formdata->get("author2-name")) ?>">
 							<span class="help-block text-danger form-error" 
 								id="author2-name-error"><?= escape($formerror->get("author2-name")) ?></span>
 						</div>
 						<div class="col-sm-5 combined-fields-item" style="padding-left:0px">
-							<input type="email" name="author2-email" id="author2-email" 
+							<input type="email" name="author2-email" id="author2-email" value="<?= escape($formdata->get("author2-email")) ?>"
 								placeholder="Email" class="form-control">
 							<span class="help-block text-danger form-error" 
 								id="author2-email-error"><?= escape($formerror->get("author2-email")) ?></span>
