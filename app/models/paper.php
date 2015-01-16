@@ -289,7 +289,7 @@ class Paper extends DBModel
 	protected function afterInsert()
 	{
 		$date = getdate($this->getDateSubmitted());
-		$identifier = $date["year"].sprintf("%2d",$date["mon"]).$this->getId();
+		$identifier = sprintf("%04d%02d%d",$date['year'],$date['mon'],$this->getId());
 		$this->identifier = $identifier;
 		$this->save();
 	}
