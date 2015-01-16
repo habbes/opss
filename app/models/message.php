@@ -53,6 +53,7 @@ class Message extends DBModel
 	//constants for parts
 	
 	const PART_USER = "user";
+	const PART_PAPER = "paper";
 	
 	/**
 	 * 
@@ -330,6 +331,15 @@ class Message extends DBModel
 	public function attachUser($user)
 	{
 		$this->addPart(self::PART_USER, ["id"=>$user->getId(), "username"=>$user->getUsername()]);
+	}
+	
+	/**
+	 * attach a paper to this message
+	 * @param Paper $paper
+	 */
+	public function attachPaper($paper)
+	{
+		$this->addPart(self::PART_PAPER,["id"=>$paper->getId(), "identifier"=>$paper->getIdentifier()]);
 	}
 	
 	/**
