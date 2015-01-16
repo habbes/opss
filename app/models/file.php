@@ -94,8 +94,8 @@ class File extends DBModel
 	private function ensureDirectoryExists()
 	{
 		//create directory if it doesn't exits
-		if(!file_exists($file->getDirectory())){
-			mkdir($file->getDirectory(), $recursive = true);
+		if(!file_exists($this->getDirectory())){
+			mkdir($this->getDirectory(), 0777, true);
 		}
 	}
 	

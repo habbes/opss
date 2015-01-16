@@ -25,8 +25,8 @@ class Paper extends DBModel
 	private $_researcher;
 	private $_file;
 	private $_cover;
-	private $_authors;
-	private $_authorsNames;
+	private $_authors = [];
+	private $_authorsNames = [];
 	private $_groups;
 	
 	const DIR = "papers";
@@ -143,7 +143,7 @@ class Paper extends DBModel
 	 * @param string $sourcePath where the file is being copied/moved from
 	 * @param boolean $fromUpload whether the file comes from a user upload
 	 */
-	private function createFile($filename, $sourcePath, $fromUpload)
+	private function createFile($filename, $sourcePath, $fromUpload = true)
 	{
 		$ds = DIRECTORY_SEPARATOR;
 		$dir = self::DIR.$ds.$this->getResearcher()->getUsername();
@@ -168,7 +168,7 @@ class Paper extends DBModel
 	 * @param string $sourcePath
 	 * @param boolean $fromUpload
 	 */
-	public function setFile($filename, $sourcePath, $fromUpload)
+	public function setFile($filename, $sourcePath, $fromUpload = true)
 	{
 		$file = $this->createFile($filename, $sourcePath, $fromUpload);
 		$this->file_id = $file->getId();
@@ -192,11 +192,11 @@ class Paper extends DBModel
 	 * @param string $sourcePath
 	 * @param boolean $fromUpload
 	 */
-	public function setCover($filename, $sourcePath, $fromUpload)
+	public function setCover($filename, $sourcePath, $fromUpload = true)
 	{
 		$file = $this->createFile($filename, $sourcePath, $fromUpload);
-		$this->file_id = $file->getId();
-		$this->_file = $file;
+		$this->cover_id = $file->getId();
+		$this->_cover = $file;
 	}
 	
 	/**
@@ -280,10 +280,16 @@ class Paper extends DBModel
 		return true;
 	}
 	
+	protected function onInsert(&$errors)
+	{
+		$this->date_submitted = Utils::dbDateFormat(time());
+		return true;
+	}
+	
 	protected function afterInsert()
 	{
 		$date = getdate($this->getDateSubmitted());
-		$identifier = $date["year"].$date["month"].$this->getId();
+		$identifier = $date["year"].sprintf("%2d",$date["mon"]).$this->getId();
 		$this->identifier = $identifier;
 		$this->save();
 	}

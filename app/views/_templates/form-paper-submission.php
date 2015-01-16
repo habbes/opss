@@ -4,8 +4,7 @@ $formerror = $data->errors;
 ?>
 
 <div class="form row">
-	<form class="form-horizontal" method="post" role="form">
-		<input type="hidden" name="action" value="registration"/>
+	<form class="form-horizontal" method="post" role="form" enctype="multipart/form-data">
 		<!--  first col -->
 		<div class="col-sm-6 col-xs-12">
 			<div class="form-group">
@@ -40,7 +39,7 @@ $formerror = $data->errors;
 			<!-- Language -->
 				<div class="col-sm-10">
 					<label for="language">Language of Paper</label>
-					<select class="form-control" id="language" required>
+					<select class="form-control" id="language" name="language" required>
 						<option value="">Language of Paper</option>
 						<?php foreach($data->languages as $lang) {?>
 						<option value="<?= $lang ?>"  <?= $lang == $formdata->language? "selected" : "" ?>><?= $lang ?></option>
@@ -54,7 +53,7 @@ $formerror = $data->errors;
 			<!-- Country -->
 				<div class="col-sm-10">
 					<label for="country">Country of Research</label>
-					<select class="form-control" id="country" placeholder="Country of Research" required>
+					<select class="form-control" name="country" id="country" placeholder="Country of Research" required>
 						<option value="">Country of Research</option>
 						<?php foreach($data->countries as $country) {?>
 						<option value="<?= $country ?>"  <?= $country == $formdata->country? "selected" : "" ?>><?= $country ?></option>
