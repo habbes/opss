@@ -25,4 +25,8 @@ class Researcher extends UserRole
 	{
 		return true;
 	}
+	public function hasAccessToPaper($paper)
+	{
+		return $this->user->is($paper->getResearcher());
+	}
 }

@@ -29,4 +29,9 @@ class Admin extends UserRole
 		return false;
 	}
 	
+	public function hasAccessToPaper($paper)
+	{
+		return true;
+	}
+	
 }

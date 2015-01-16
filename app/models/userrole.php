@@ -111,4 +111,11 @@ abstract class UserRole
 	 */
 	public abstract function hasGender();
 	
+	/**
+	 * checks whether this role has access to the specified paper
+	 * @param Paper $paper
+	 * @return boolean
+	 */
+	public abstract function hasAccessToPaper($paper);
+	
 }
