@@ -103,6 +103,15 @@ class Paper extends DBModel
 	
 	/**
 	 * 
+	 * @return string
+	 */
+	public function getRevisionIdentifier()
+	{
+		return sprintf("%s-%d",$this->identifier, $this->getRevision());
+	}
+	
+	/**
+	 * 
 	 * @param number $rev
 	 */
 	public function setRevision($rev)
