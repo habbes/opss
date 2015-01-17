@@ -15,12 +15,12 @@ abstract class PaperHandler extends LoggedInHandler
 	 */
 	protected function assertPaperAccess()
 	{
-		if(!$this->user->getRole()->hasAccessToPaper($paper)){
+		if(!$this->user->getRole()->hasAccessToPaper($this->paper)){
 			$this->localRedirect("");
 		}
 	}
 	
-	protected function onCreate($identifier)
+	public function onCreate($identifier)
 	{
 		$paper = Paper::findByIdentifier($identifier);
 		if(!$paper)

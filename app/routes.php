@@ -21,7 +21,8 @@ $routes = [
 		['^registration\/?$', "Registration"],
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
-		['^papers\/submit\/?$', "PaperSubmit"]
+		['^papers\/submit\/?$', "PaperSubmit"],
+		['^papers\/([\w\-]+)\/test\/?', "papers/Test"]
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
 		//['^setup\/admin\/?$', "AdminSetup"],
