@@ -8,7 +8,21 @@
 abstract class PaperHandler extends LoggedInHandler
 {
 	
+	/**
+	 * 
+	 * @var Paper
+	 */
 	protected $paper;
+	
+	/**
+	 * indicates whether this particular sub-page of the paper dashboard should be visible,
+	 * if not, the user will be redirected to the paper's home page
+	 * @return boolean
+	 */
+	protected function isPageVisible()
+	{
+		return true;
+	}
 	
 	/**
 	 * ensures the user has access to this paper and redirects otherwise
@@ -17,6 +31,9 @@ abstract class PaperHandler extends LoggedInHandler
 	{
 		if(!$this->user->getRole()->hasAccessToPaper($this->paper)){
 			$this->localRedirect("");
+		}
+		if(!$this->isPageVisible()){
+			$this->localRedirect("papers/".$this->paper->getIdentifier());
 		}
 	}
 	
