@@ -28,6 +28,8 @@ abstract class PaperHandler extends LoggedInHandler
 		$this->paper = $paper;
 		parent::onCreate();
 		$this->assertPaperAccess();
+		$this->viewParams->paper = $paper;
+		$this->viewParams->paperBaseUrl = URL_PAPERS . "/" . $this->paper->getIdentifier();
 		
 	}
 }
