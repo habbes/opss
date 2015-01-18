@@ -70,6 +70,7 @@ class PaperView extends LoggedInView
 		$this->data->pageHeading = $this->data->pageTitle;
 		$this->data->paperSidebarItems = $this->sidebarItems;
 		$this->data->paperNavLinks = $this->getVisiblePaperNavLinks();
+		$this->data->paperSidebar = $this->read("paper-sidebar");
 		$this->data->pageContent = $this->read("paper-layout");
 		parent::showBase();
 	}
