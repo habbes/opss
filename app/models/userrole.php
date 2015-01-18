@@ -123,4 +123,10 @@ abstract class UserRole
 	 * @return boolean
 	 */
 	public abstract function canViewPaperCover();
+	
+	/**
+	 * checks whether this role can view the researcher/co-authors of a paper the role has access to
+	 * @return boolean
+	 */
+	public abstract function canViewPaperAuthor();
 }

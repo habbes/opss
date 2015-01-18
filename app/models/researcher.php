@@ -33,4 +33,8 @@ class Researcher extends UserRole
 	{
 		return true;
 	}
+	public function canViewPaperAuthor()
+	{
+		return true;
+	}
 }

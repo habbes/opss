@@ -13,8 +13,48 @@
 			<a class="link" role="button" href="<?=$data->paperBaseUrl?>/download/cover">Download Cover</a><br>
 		</div>
 		<?php } ?>
-	</div>				
+	</div>			
 </div>
+
+<?php if($data->user->getRole()->canViewPaperAuthor()) { ?>
+<div class="paper-sidebar-item panel panel-default">
+	<div class="panel-heading">
+		<span class="">Authors</span>
+	</div>
+	<div class="panel-body">
+		<div>
+			<span class="font-bold">Principal Researcher</span><br>
+			<span><?= $data->paper->getResearcher()->getFullName() ?></span>
+		</div>
+		<?php if($data->paper->getAuthors()) {?>
+		<div>
+			<span class="font-bold">Co-Authors</span><br>
+			<?php foreach($data->paper->getAuthors() as $author) { ?>
+			<span><?= sprintf("%s (%s)", $author->getName(), $author->getEmail())?></span><br>
+			<?php } ?>
+		</div>
+		<?php } ?>
+	</div>			
+</div>
+<?php } ?>
+
+<div class="paper-sidebar-item panel panel-default">
+	<div class="panel-heading">
+		<span class="">Details</span>
+	</div>
+	<div class="panel-body">
+		<div>
+			<span class="font-bold">Language</span><br>
+			<span><?= $data->paper->getLanguage() ?></span>
+		</div>
+		<div>
+			<span class="font-bold">Country of Research</span><br>
+			<span><?= $data->paper->getCountry() ?></span>
+		</div>
+		
+	</div>			
+</div>
+
 <?php foreach($data->paperSidebarItems as $item) {?>
 <div class="paper-sidebar-item">
 	<?= $item ?>
