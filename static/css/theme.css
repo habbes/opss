@@ -10,6 +10,10 @@ body {
 	border-radius:2px;
 }
 
+.panel-default> .panel-heading {
+	background-image: none;
+}
+
 .page-header {
 	font-style: italic;
 	text-transform: lowercase;
@@ -149,3 +153,11 @@ label {
 	display:none;
 }
 /** end message viewer **/
+
+/** paper sidebar **/
+#paper-sidebar {
+	padding-top:20px;
+	border-left: 1px solid #f6f6f6;
+}
+
+/** end paper sidebar **/
