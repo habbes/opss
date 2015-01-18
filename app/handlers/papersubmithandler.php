@@ -17,9 +17,9 @@ class PaperSubmitHandler extends ResearcherHandler
 	
 	public function post()
 	{
+		$paper = Paper::create($this->user);
 		try {
 			$errors = [];
-			$paper = Paper::create($this->user);
 			$paper->setTitle($this->trimPostVar("title"));
 			$paper->setLanguage($this->trimPostVar("language"));
 			$paper->setCountry($this->trimPostVar("country"));
@@ -118,6 +118,11 @@ class PaperSubmitHandler extends ResearcherHandler
 						$formerror->set("author2-email", "You entered an invalid email address.");
 						break;
 					
+				}
+				
+				//delete paper if it was saved
+				if($paper->isInDb()){
+					$paper->delete();
 				}
 			}
 			$this->viewParams->errors = $formerror;
