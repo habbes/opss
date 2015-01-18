@@ -22,6 +22,7 @@ $routes = [
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
 		['^papers\/submit\/?$', "PaperSubmit"],
+		['^papers\/(\w+)\/?$', "papers/Home"],
 		['^papers\/(\w+)\/download\/?$', "papers/Download"],
 		['^papers\/(\w+)\/download\/cover\/?$', "papers/Download@downloadCover"],
 		['^papers\/(\w+)\/details', "papers/Details"],
