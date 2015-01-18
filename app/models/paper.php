@@ -36,6 +36,15 @@ class Paper extends DBModel
 	const DIR = "papers";
 	const GRACE_PERIOD = 2; //days
 	
+	//status
+	const ENTRY = 1;
+	const PENDING = 1;
+	const VETTING = 2;
+	const REVIEW = 3;
+	const REWRITE_MAJ = 4;
+	const REWRITE_MIN = 5;
+	const ACCEPTED = 4;
+	
 	const STATUS_GRACE_PERIOD = "grace";
 	const STATUS_PENDING = "pending";
 	const STATUS_VETTING = "vetting";
@@ -57,7 +66,7 @@ class Paper extends DBModel
 		$paper = new static();
 		$paper->_researcher = $researcher;
 		$paper->researcher_id = $researcher->getId();
-		$paper->status = Paper::PENDING;
+		$paper->status = Paper::STATUS_GRACE_PERIOD;
 		$paper->editable = true;
 		$paper->recallable = true;
 		$paper->level = PaperLevel::PROPOSAL;
@@ -384,7 +393,7 @@ class Paper extends DBModel
 	 */
 	public function sendForVetting()
 	{
-		$this->status = self::VETTING;
+		$this->status = self::STATUS_VETTING;
 		$this->editable = false;
 		$this->recallable = false;
 		$this->save();
