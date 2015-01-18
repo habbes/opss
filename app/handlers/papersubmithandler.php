@@ -46,7 +46,7 @@ class PaperSubmitHandler extends ResearcherHandler
 				$errors[] = "Author1NameEmpty"; 
 			
 			if($author1Name){
-				if(!$author1Email || !User::isValidEmail("author1-email")){
+				if(!$author1Email || !User::isValidEmail($author1Email)){
 					$errors[] = "Author1EmailInvalid";
 				}
 				if(empty($errors))
