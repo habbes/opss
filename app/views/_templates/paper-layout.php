@@ -8,10 +8,10 @@
 		<?php } ?>
 	</ul>
 	<div class="" id="paper-body">
-		<div class="col-sm-9" id="paper-page-content">
+		<div class="col-sm-9 " id="paper-page-content">
 			<?= $data->paperPageContent ?>
 		</div>
-		<div class="col-sm-3 col-sm-offset-9" id="paper-sidebar">
+		<div class="col-sm-3 pull-right " id="paper-sidebar">
 			<div class="paper-sidebar-item panel panel-default">
 				<div class="panel-heading">
 					<span class="">Downloads</span>

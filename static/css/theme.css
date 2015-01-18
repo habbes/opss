@@ -36,6 +36,10 @@ body {
 	text-align:center;
 }
 
+.font-bold {
+	font-weight:600;
+}
+
 #page-content {
 	min-height:400px;
 }
@@ -154,9 +158,12 @@ label {
 }
 /** end message viewer **/
 
+#paper-body {
+	padding-top:20px;
+}
+
 /** paper sidebar **/
 #paper-sidebar {
-	padding-top:20px;
 	border-left: 1px solid #f6f6f6;
 }
 

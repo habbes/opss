@@ -24,6 +24,7 @@ $routes = [
 		['^papers\/submit\/?$', "PaperSubmit"],
 		['^papers\/(\w+)\/download\/?$', "papers/Download"],
 		['^papers\/(\w+)\/download\/cover\/?$', "papers/Download@downloadCover"],
+		['^papers\/(\w+)\/details', "papers/Details"],
 		['^papers\/(\w+)\/test\/?', "papers/Test"]
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
