@@ -36,14 +36,14 @@ class Paper extends DBModel
 	const DIR = "papers";
 	const GRACE_PERIOD = 2; //days
 	
-	//status
-	const ENTRY = 1;
-	const PENDING = 1;
-	const VETTING = 2;
-	const REVIEW = 3;
-	const REWRITE_MAJ = 4;
-	const REWRITE_MIN = 5;
-	const ACCEPTED = 4;
+	const STATUS_GRACE_PERIOD = "grace";
+	const STATUS_PENDING = "pending";
+	const STATUS_VETTING = "vetting";
+	const STATUS_VETTING_REVISION = "vettingRewrite";
+	const STATUS_REVIEW = "review";
+	const STATUS_REVIEW_REVISION_MAJ = "reviewRevisionMaj";
+	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
+	
 	
 	
 	/**
