@@ -50,13 +50,13 @@
 		<div>
 			<span class="font-bold">Status</span><br>
 			<span><?php switch($data->paper->getStatus()){
-				case Paper::PENDING:
+				case Paper::STATUS_PENDING:
 					echo "Pending";
 					break;				
-				case Paper::VETTING:
+				case Paper::STATUS_VETTING:
 					echo "Vetting process";
 					break;
-				case Paper::REVIEW:
+				case Paper::STATUS_REVIEW:
 					echo "Review process";
 					break;
 				
