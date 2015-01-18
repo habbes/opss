@@ -8,12 +8,24 @@
 		<?php } ?>
 	</ul>
 	<div class="" id="paper-body">
-		<div class="col-sm-10" id="paper-page-content">
+		<div class="col-sm-9" id="paper-page-content">
 			<?= $data->paperPageContent ?>
 		</div>
-		<div class="col-sm-2 col-sm-offset-10" id="paper-sidebar">
-			<div class="paper-sidebar-item">
-				<a class="btn btn-default" role="button" href="<?=$data->paperBaseUrl?>/download/main">Download Paper</a>
+		<div class="col-sm-3 col-sm-offset-9" id="paper-sidebar">
+			<div class="paper-sidebar-item panel panel-default">
+				<div class="panel-heading">
+					<span class="">Downloads</span>
+				</div>
+				<div class="panel-body">
+					<div>
+						<span class="glyphicon glyphicon-download"></span>
+						<a class="link" role="button" href="<?=$data->paperBaseUrl?>/download">Download Paper</a>
+					</div>
+					<div>
+						<span class="glyphicon glyphicon-download"></span>
+						<a class="link" role="button" href="<?=$data->paperBaseUrl?>/download/cover">Download Cover</a><br>
+					</div>
+				</div>				
 			</div>
 			<?php foreach($data->paperSidebarItems as $item) {?>
 			<div class="paper-sidebar-item">
