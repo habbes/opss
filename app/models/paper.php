@@ -21,6 +21,7 @@ class Paper extends DBModel
 	protected $editable;
 	protected $recallable;
 	protected $end_recallable_date;
+	protected $other_parts;
 	
 	private $_researcher;
 	private $_file;
@@ -28,11 +29,15 @@ class Paper extends DBModel
 	private $_authors = [];
 	private $_authorsNames = [];
 	private $_groups;
+	private $_jsonLoaded = false;
+	private $_nextActions = [];
+
 	
 	const DIR = "papers";
 	const GRACE_PERIOD = 2; //days
 	
 	//status
+	const ENTRY = 1;
 	const PENDING = 1;
 	const VETTING = 2;
 	const REVIEW = 3;
@@ -289,6 +294,61 @@ class Paper extends DBModel
 		return true;
 	}
 	
+	/**
+	 * decode the json text containing other info such as nextActions
+	 * and set the values to the corresponding properties
+	 */
+	private function loadOtherParts()
+	{
+		if(!$his->_jsonLoaded){
+			if($this->other_parts){
+				$json = json_decode($this->other_parts);
+				$this->_nextActions = isset($json['nextActions'])? $json['nextActions'] : [];
+			}
+			$this->_jsonLoaded = true;
+		}
+	}
+	
+	/**
+	 * returns a list of possible actions that can be taken on this paper if it is in
+	 * a pending state
+	 * @return array(string)
+	 */
+	public function getNextActions()
+	{
+		$this->loadOtherParts();
+		return $this->_nextActions;
+	}
+	
+	/**
+	 * add an action that can be performed next on this paper
+	 * @param string $action one of the ACTION_* constants
+	 */
+	public function addNextAction($action)
+	{
+		$this->loadOtherParts();
+		$this->_nextActions[] = $action;
+	}
+	
+	/**
+	 * add a list of actions that can be performed next on this paper
+	 * @param array $actions use the ACTION_* constants
+	 */
+	public function addNextActions($actions)
+	{
+		$this->loadOtherParts();
+		$this->_nextActions = array_merge($this->_nextActions, $actions);
+	}
+	
+	/**
+	 * remove of all actions currently in the nextActions list
+	 */
+	public function resetNextActionsList()
+	{
+		$this->loadOtherParts();
+		$this->_nextActions = [];
+	}
+	
 	protected function onInsert(&$errors)
 	{
 		$this->date_submitted = Utils::dbDateFormat(time());
@@ -303,6 +363,10 @@ class Paper extends DBModel
 			$errors[] = OperationError::PAPER_LANGUAGE_EMPTY;
 		if(!$this->country)
 			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
+		
+		//save nextActions
+		$other_parts = ["nextActions" => $this->_nextActions];
+		$this->other_parts = json_encode($other_parts);
 		
 		return true;
 	}
