@@ -19,7 +19,7 @@ class PaperAuthor extends DBModel
 	/**
 	 * 
 	 * @param Paper $paper
-	 * @param Author $author
+	 * @param CoAuthor $author
 	 * @return PaperAuthor
 	 */
 	public static function create($paper, $author)
@@ -60,6 +60,14 @@ class PaperAuthor extends DBModel
 	public function getName()
 	{
 		return $this->getAuthor()->getName();
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->getAuthor()->getEmail();
 	}
 	
 	/**
