@@ -14,6 +14,7 @@
 		<div class="col-sm-3 pull-right " id="paper-sidebar">
 			<?= $data->paperSidebar ?>
 		</div>
+		<span class="clearfix"></span>
 	</div>
 	
 
