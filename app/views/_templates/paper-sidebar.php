@@ -40,9 +40,17 @@
 
 <div class="paper-sidebar-item panel panel-default">
 	<div class="panel-heading">
-		<span class="">Progress</span>
+		<span class="">Details</span>
 	</div>
 	<div class="panel-body">
+		<div>
+			<span class="font-bold">Language</span><br>
+			<span><?= $data->paper->getLanguage() ?></span>
+		</div>
+		<div>
+			<span class="font-bold">Country of Research</span><br>
+			<span><?= $data->paper->getCountry() ?></span>
+		</div>
 		<div>
 			<span class="font-bold">Level</span><br>
 			<span><?= PaperLevel::getString($data->paper->getLevel())?></span>
@@ -62,22 +70,9 @@
 				
 			}?></span>
 		</div>
-		
-	</div>			
-</div>
-
-<div class="paper-sidebar-item panel panel-default">
-	<div class="panel-heading">
-		<span class="">Details</span>
-	</div>
-	<div class="panel-body">
 		<div>
-			<span class="font-bold">Language</span><br>
-			<span><?= $data->paper->getLanguage() ?></span>
-		</div>
-		<div>
-			<span class="font-bold">Country of Research</span><br>
-			<span><?= $data->paper->getCountry() ?></span>
+			<span class="font-bold">Date Submitted</span><br>
+			<span><?= Utils::siteDateTimeFormat($data->paper->getDateSubmitted())?></span>
 		</div>
 		
 	</div>			
