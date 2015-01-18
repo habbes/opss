@@ -40,6 +40,34 @@
 
 <div class="paper-sidebar-item panel panel-default">
 	<div class="panel-heading">
+		<span class="">Progress</span>
+	</div>
+	<div class="panel-body">
+		<div>
+			<span class="font-bold">Level</span><br>
+			<span><?= PaperLevel::getString($data->paper->getLevel())?></span>
+		</div>
+		<div>
+			<span class="font-bold">Status</span><br>
+			<span><?php switch($data->paper->getStatus()){
+				case Paper::PENDING:
+					echo "Pending";
+					break;				
+				case Paper::VETTING:
+					echo "Vetting process";
+					break;
+				case Paper::REVIEW:
+					echo "Review process";
+					break;
+				
+			}?></span>
+		</div>
+		
+	</div>			
+</div>
+
+<div class="paper-sidebar-item panel panel-default">
+	<div class="panel-heading">
 		<span class="">Details</span>
 	</div>
 	<div class="panel-body">

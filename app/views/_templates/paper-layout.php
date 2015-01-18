@@ -11,9 +11,11 @@
 		<div class="col-sm-9 " id="paper-page-content">
 			<?= $data->paperPageContent ?>
 		</div>
+		<?php if($data->paperSidebar){?>
 		<div class="col-sm-3 pull-right " id="paper-sidebar">
 			<?= $data->paperSidebar ?>
 		</div>
+		<?php } ?>
 		<span class="clearfix"></span>
 	</div>
 	
