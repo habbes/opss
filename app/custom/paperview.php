@@ -10,11 +10,21 @@ class PaperView extends LoggedInView
 	
 	protected $sidebarItems = [];
 	protected $paperNavLinks = [];
+	protected $homePageItems = [];
 	
 	public function __construct($data)
 	{
 		parent::__construct($data);
 		$this->setPaperNavLinks();
+	}
+	
+	/**
+	 * 
+	 * @param unknown $template template module to include in the paper's home page
+	 */
+	public function addHomePageItem($template)
+	{
+		$this->homePageItems[] = $template;
 	}
 	
 	/**
@@ -64,6 +74,7 @@ class PaperView extends LoggedInView
 		$this->data->pageHeading = $this->data->pageTitle;
 		$this->data->paperSidebarItems = $this->sidebarItems;
 		$this->data->paperNavLinks = $this->paperNavLinks;
+		$this->data->paperHomePageItems = $this->homePageItems;
 		$this->data->paperSidebar = $this->read("paper-sidebar");
 		$this->data->pageContent = $this->read("paper-layout");
 		parent::showBase();
