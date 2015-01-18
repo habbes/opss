@@ -29,4 +29,8 @@ class Researcher extends UserRole
 	{
 		return $this->user->is($paper->getResearcher());
 	}
+	public function canViewPaperCover()
+	{
+		return true;
+	}
 }

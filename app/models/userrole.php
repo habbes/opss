@@ -118,4 +118,9 @@ abstract class UserRole
 	 */
 	public abstract function hasAccessToPaper($paper);
 	
+	/**
+	 * checks whether this role can view the cover a paper the role has access to
+	 * @return boolean
+	 */
+	public abstract function canViewPaperCover();
 }

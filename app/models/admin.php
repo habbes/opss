@@ -34,4 +34,9 @@ class Admin extends UserRole
 		return true;
 	}
 	
+	public function canViewPaperCover()
+	{
+		return true;
+	}
+	
 }
