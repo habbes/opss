@@ -4,6 +4,11 @@ class HomeHandler extends PaperHandler
 {
 	private function showPage()
 	{
+		if($this->paper->getStatus() == Paper::STATUS_VETTING_REVISION){
+			//TODO: create a method to get latest vetReview from paper: $paper->findLatestVetReview
+			$vrs = VetReview::findByPaper($this->paper);
+			$this->viewParams->vetReview = array_pop($vrs);
+		}
 		$this->renderView("papers/Home");
 	}
 	
@@ -23,8 +28,9 @@ class HomeHandler extends PaperHandler
 			if(isset($_POST[VetReview::VERDICT_REJECTED])){
 				$verdict = VetReview::VERDICT_REJECTED;
 			}
-			else if(isset($_POST[VetReview::VERDICT_ACCEPTED]))
+			else if(isset($_POST[VetReview::VERDICT_ACCEPTED])){
 				$verdict = VetReview::VERDICT_ACCEPTED;
+			}
 			
 			$vet->submit($this->user, $verdict);
 			PaperChange::createVetted($this->paper, $vet);

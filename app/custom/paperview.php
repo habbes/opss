@@ -29,6 +29,9 @@ class PaperView extends LoggedInView
 	public function setPaperNavLinks()
 	{
 		$this->paperNavLinks[] = (object) ["name"=>"Home","url"=>"","active"=>false];
+		if($this->data->user->isResearcher() && $this->data->paper->getStatus() == Paper::STATUS_VETTING_REVISION){
+			$this->paperNavLinks[] = (object) ["name"=>"Edit","url"=>"edit","active"=>false];
+		}
 		$this->paperNavLinks[] = (object) ["name"=>"Reviews","url"=>"reviews","active"=>false];
 		$this->paperNavLinks[] = (object) ["name"=>"History","url"=>"history","active"=>false];
 	}

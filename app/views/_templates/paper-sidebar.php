@@ -67,6 +67,9 @@
 				case Paper::STATUS_REVIEW:
 					echo "Review process";
 					break;
+				case Paper::STATUS_VETTING_REVISION:
+					echo "Revision by researcher";
+					break;
 				
 			}?></span>
 		</div>
