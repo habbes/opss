@@ -16,7 +16,7 @@
 					<option value="<?=$group?>" <?= $selected?> ><?= $name ?></option>
 					<?php } ?>
 				</select>
-				<span class="form-error"><?= $data->errors->group ?></span>
+				<span class="form-error help-block"><?= $data->errors->group ?></span>
 			</div>
 			<div class="form-group">
 				<label>Comments</label>
@@ -28,7 +28,7 @@
 				<span class="glyphicon glyphicon-ok text-success"></span></button> or 
 				<button class="btn" type="submit" name="<?= VetReview::VERDICT_REJECTED ?>">Send Proposal back to Researcher 
 				<span class="glyphicon glyphicon-remove text-danger"></span></button>
-				<span class="form-error"><?= $data->errors->verdict ?></span>
+				<span class="form-error help-block"><?= $data->errors->verdict ?></span>
 			</div>
 		</form>
 	</div>
