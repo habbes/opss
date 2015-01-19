@@ -28,6 +28,13 @@ class PaperChange extends DBModel
 	//actions
 	const ACTION_SUBMITTED = "submitted";
 	const ACTION_VETTED = "vetted";
+	const ACTION_TITLE_CHANGED = "titleChanged";
+	const ACTION_LANGUAGE_CHANGED = "languageChanged";
+	const ACTION_COUNTRY_CHANGED = "countryChanged";
+	const ACTION_AUTHOR_ADDED = "authorAdded";
+	const ACTION_AUTHOR_REMOVED = "authorRemoved";
+	const ACTION_FILE_CHANGED = "fileChanged";
+	const ACTION_COVER_CHANGED = "coverChanged";
 	
 	/**
 	 * 
@@ -169,6 +176,52 @@ class PaperChange extends DBModel
 		$pc = static::create($paper, self::ACTION_VETTED);
 		$pc->setArg("vetReviewId", $vetReview->getId());
 		
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param string $from
+	 * @param string $to
+	 * @return PaperChange
+	 */
+	public static function createTitleChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_TITLE_CHANGED);
+		$pc->setArg("from", $from);
+		$pc->setArg("to", $to);		
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param string $from
+	 * @param string $to
+	 * @return PaperChange
+	 */
+	public static function createLanguageChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_LANGUAGE_CHANGED);
+		$pc->setArg("from", $from);
+		$pc->setArg("to", $to);
+		
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param string $from
+	 * @param string $to
+	 * @return PaperChange
+	 */
+	public static function createCountryChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_COUNTRY_CHANGED);
+		$pc->setArg("from", $from);
+		$pc->setArg("to", $to);
 		return $pc;
 	}
 	
