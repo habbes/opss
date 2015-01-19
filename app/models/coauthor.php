@@ -39,7 +39,8 @@ class CoAuthor extends DBModel
 	{
 		if(!User::isValidEmail($this->email))
 			$errors[] = OperationError::USER_EMAIL_INVALID;
-		
+		if(!$this->name)
+			$errors[] = OperationError::AUTHOR_NAME_EMPTY;
 		return true;
 	}
 

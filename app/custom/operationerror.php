@@ -30,6 +30,7 @@ class OperationError
 	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
 	const EMAIL_ACTIVATION_INVALID = "EmailActivationInvalid";
 	const INVITATION_INVALID = "InvitationInvalid";
+	const AUTHOR_NAME_INVALID = "AuthorNameInvalid";
 	//paper errors
 	const PAPER_TITLE_EMPTY = "PaperTitleEmpty";
 	const PAPER_LANGUAGE_EMPTY = "PaperLanguageEmpty";
