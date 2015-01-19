@@ -32,7 +32,7 @@ class PaperVettedMessage extends Message
 				break;
 			case UserType::RESEARCHER:
 				$template = $verdict == VetReview::VERDICT_ACCEPTED?
-					"paper-vetted-accepted-researcher" : "paper-vetted-accepted-researcher";
+					"paper-vetted-accepted-researcher" : "paper-vetted-rejected-researcher";
 				$m->setMessageFromTemplate($template, [
 						"title" => $paper->getTitle(),
 						"identifier" => $paper->getIdentifier(),
