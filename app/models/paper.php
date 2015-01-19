@@ -70,8 +70,6 @@ class Paper extends DBModel
 		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
 		$paper->end_recallable_date = time() + $grace_period * 84600;
 		
-		$paper->addStatusMessage(self::STATMSG_NEW_PAPER);
-		
 		return $paper;
 	}
 	
