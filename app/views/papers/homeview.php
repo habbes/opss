@@ -13,7 +13,7 @@ class HomeView extends PaperView
 	public function render()
 	{
 		
-		if($this->data->user->isAdmin()){
+		if($this->data->user->isAdmin() && $this->data->paper->getStatus() == Paper::STATUS_VETTING){
 			$this->addVetReviewForm();
 		}
 		

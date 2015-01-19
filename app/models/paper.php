@@ -99,11 +99,11 @@ class Paper extends DBModel
 	
 	/**
 	 * 
-	 * @return number
+	 * @return string
 	 */
 	public function getStatus()
 	{
-		return (int) $this->status;
+		return $this->status;
 	}
 	
 	/**
