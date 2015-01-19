@@ -70,6 +70,8 @@ class Paper extends DBModel
 		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
 		$paper->end_recallable_date = time() + $grace_period * 84600;
 		
+		$paper->addStatusMessage(self::STATMSG_NEW_PAPER);
+		
 		return $paper;
 	}
 	
@@ -309,9 +311,22 @@ class Paper extends DBModel
 			if($this->other_parts){
 				$json = json_decode($this->other_parts);
 				$this->_nextActions = isset($json['nextActions'])? $json['nextActions'] : [];
+				$this->_statusMessages = isset($json['statusMessages'])? $json['statusMessages'] : [];
 			}
 			$this->_jsonLoaded = true;
 		}
+	}
+	
+	/**
+	 * encode and save additional info such as nextActions
+	 */
+	private function saveOtherParts()
+	{
+		$other_parts = [
+				"nextActions" => $this->_nextActions,
+				"statusMessages" => $this->_statusMessages
+		];
+		$this->other_parts = json_encode($other_parts);
 	}
 	
 	/**
@@ -420,9 +435,9 @@ class Paper extends DBModel
 		if(!$this->country)
 			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
 		
-		//save nextActions
-		$other_parts = ["nextActions" => $this->_nextActions];
-		$this->other_parts = json_encode($other_parts);
+		//save other parts
+		$this->saveOtherParts();
+		
 		
 		return true;
 	}

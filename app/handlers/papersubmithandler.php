@@ -90,6 +90,8 @@ class PaperSubmitHandler extends ResearcherHandler
 			$msg = PaperSubmittedMessage::create($paper, $this->user);
 			$msg->send();
 			
+			//redirect to paper
+			$this->localRedirect("/papers/".$paper->getIdentifier());
 			
 		}
 		catch (OperationException $e){
