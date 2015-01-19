@@ -10,9 +10,9 @@
 	</p>
 	<div>
 		
-		<form class="form-inline" method="post" action="<?$data->paperBaseUrl?>/resubmit">
+		<form method="post" action="<?= $data->paperBaseUrl?>/resubmit">
 			<span class="font-bold">Ready to resubmit?</span>
-			<button class="btn btn-primary" >Submit revised paper</button>
+			<button class="btn btn-success" >Submit revised paper</button>
 		</form>
 	</div>
 </div>

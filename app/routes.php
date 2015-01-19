@@ -30,6 +30,7 @@ $routes = [
 		['^papers\/(\w+)\/edit\/details\/?$', "papers/Edit@handleDetailsChanges"],
 		['^papers\/(\w+)\/edit\/files\/?$', "papers/Edit@handleFileChanges"],
 		['^papers\/(\w+)\/edit\/add\-author\/?$', "papers/Edit@handleAddAuthor"],
+		['^papers\/(\w+)\/resubmit\/?$', "papers/Resubmit"],
 		['^papers\/(\w+)\/details', "papers/Details"],
 		['^papers\/(\w+)\/test\/?', "papers/Test"]
 		//this route is only used for initial setup to allow an inital admin to sign up

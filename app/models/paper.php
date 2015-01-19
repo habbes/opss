@@ -48,6 +48,7 @@ class Paper extends DBModel
 	
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
+	const STATMSG_RESUBMITTED_AFTER_VET_REVISION = "resubmittedAfterVetRevision";
 	
 	//next actions
 	const ACTION_EXTERNAL_REVIEW = "externalReview";
@@ -137,7 +138,7 @@ class Paper extends DBModel
 	 */
 	public function incrementRevision()
 	{
-		$this->setRevision($this->getRevision + 1);
+		$this->setRevision($this->getRevision() + 1);
 	}
 
 	/**
@@ -459,6 +460,18 @@ class Paper extends DBModel
 		$this->status = self::STATUS_VETTING;
 		$this->editable = false;
 		$this->recallable = false;
+		$this->save();
+	}
+	
+	/**
+	 * resubmit paper for vetting (after revision)
+	 */
+	public function vettingResubmit()
+	{
+		$this->status = self::STATUS_VETTING;
+		$this->editable = false;
+		$this->incrementRevision();
+		$this->addStatusMessage(self::STATMSG_RESUBMITTED_AFTER_VET_REVISION);
 		$this->save();
 	}
 	

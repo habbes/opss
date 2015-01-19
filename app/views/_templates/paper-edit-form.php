@@ -93,7 +93,7 @@ $addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObje
 		</div>
 		<div>
 			<span>Add Author</span>
-			<form method="post" action="<?= $data->paperBaseUrl?>/edit/add-author">
+			<form method="post" action="<?= $data->paperBaseUrl ?>/edit/add-author">
 				<div class="form-group row combined-fields">
 					<div class="col-sm-6 combined-fields-item" style="padding-right:0px">
 						<input class="form-control" type="text" name="name" placeholder="Name" value="<?= $addAuthorForm->name ?>" required>

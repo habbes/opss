@@ -35,6 +35,7 @@ class PaperChange extends DBModel
 	const ACTION_AUTHOR_REMOVED = "authorRemoved";
 	const ACTION_FILE_CHANGED = "fileChanged";
 	const ACTION_COVER_CHANGED = "coverChanged";
+	const ACTION_RESUBMITTED = "resubmitted";
 	
 	/**
 	 * 
@@ -163,6 +164,30 @@ class PaperChange extends DBModel
 		$pc->setArg("authors", $authors);
 		return $pc;
 		
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return PaperChange
+	 */
+	public static function createResubmitted($paper)
+	{
+		$pc = static::create($paper, self::ACTION_SUBMITTED);
+		$pc->setArg("title", $paper->getTitle());
+		$pc->setArg("dateSubmitted", Utils::dbDateFormat($paper->getDateSubmitted()));
+		$pc->setArg("country", $paper->getCountry());
+		$pc->setArg("language", $paper->getLanguage());
+		$pc->setArg("fileId", $paper->getFile()->getId());
+		$pc->setArg("coverId", $paper->getCover()->getId());
+		$authors = [];
+		foreach($paper->getAuthors() as $author){
+			$authors[] = ["name"=>$author->getName(),
+					"email"=>$author->getEmail()];
+		}
+		$pc->setArg("authors", $authors);
+		return $pc;
+	
 	}
 	
 	/**
