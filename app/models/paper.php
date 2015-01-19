@@ -31,20 +31,13 @@ class Paper extends DBModel
 	private $_groups;
 	private $_jsonLoaded = false;
 	private $_nextActions = [];
+	private $_statusMessages = [];
 
 	
 	const DIR = "papers";
 	const GRACE_PERIOD = 2; //days
 	
 	//status
-	const ENTRY = 1;
-	const PENDING = 1;
-	const VETTING = 2;
-	const REVIEW = 3;
-	const REWRITE_MAJ = 4;
-	const REWRITE_MIN = 5;
-	const ACCEPTED = 4;
-	
 	const STATUS_GRACE_PERIOD = "grace";
 	const STATUS_PENDING = "pending";
 	const STATUS_VETTING = "vetting";
@@ -52,6 +45,9 @@ class Paper extends DBModel
 	const STATUS_REVIEW = "review";
 	const STATUS_REVIEW_REVISION_MAJ = "reviewRevisionMaj";
 	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
+	
+	//status messages
+	const STATMSG_NEW_PAPER = "new";
 	
 	
 	
@@ -356,6 +352,57 @@ class Paper extends DBModel
 	{
 		$this->loadOtherParts();
 		$this->_nextActions = [];
+	}
+	
+	/**
+	 * adds a message that is meant to be displayed on this paper's page
+	 * @param string $message use the STATMSG_* constants
+	 */
+	public function addStatusMessage($message)
+	{
+		$this->loadOtherParts();
+		$this->_statusMessages[] = $message;
+	}
+	
+	/**
+	 * 
+	 * @param array $messages use the STATMSG_* constants as elements of the array
+	 */
+	public function addStatusMessages($messages)
+	{
+		$this->loadOtherParts();
+		$this->_statusMessages = array_merge($this->_statusMessages, $messages);
+	}
+	
+	/**
+	 * 
+	 * @return array
+	 */
+	public function getStatusMessages()
+	{
+		$this->loadOtherParts();
+		return $this->_statusMessages;
+	}
+	
+	/**
+	 * delete the status message if it's in the list
+	 * @param string $message user the STATMSG_* constants
+	 */
+	public function deleteStatusMessage($message)
+	{
+		$this->loadOtherParts();
+		$i = array_search($message, $this->_statusMessages);
+		if($i !== false)
+			$this->_statusMessages = array_splice($this->_statusMessages, $i, 1);
+	}
+	
+	/**
+	 * removes all status messages
+	 */
+	public function resetStatusMessagesList()
+	{
+		$this->loadOtherParts();
+		$this->_statusMessages = [];
 	}
 	
 	protected function onInsert(&$errors)
