@@ -34,6 +34,9 @@ class OperationError
 	const PAPER_TITLE_EMPTY = "PaperTitleEmpty";
 	const PAPER_LANGUAGE_EMPTY = "PaperLanguageEmpty";
 	const PAPER_COUNTRY_EMPTY = "PaperCountryEmpty";
+	//vet review errors
+	const VET_INVALID_VERDICT = "VetInvalidVerdict";
+	const VET_COMMENTS_EMPTY = "VetCommentsEmpty";
 	
 	
 	

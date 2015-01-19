@@ -49,6 +49,9 @@ class Paper extends DBModel
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
 	
+	//next actions
+	const ACTION_EXTERNAL_REVIEW = "externalReview";
+	
 	
 	
 	/**
