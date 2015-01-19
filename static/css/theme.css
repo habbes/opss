@@ -10,6 +10,12 @@ body {
 	border-radius:2px;
 }
 
+.btn-default {
+	background-image:none;
+	color:#686868;
+	background-color:#f6f6f6;
+}
+
 .panel-default> .panel-heading {
 	background-image: none;
 }
