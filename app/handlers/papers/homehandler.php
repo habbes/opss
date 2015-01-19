@@ -28,6 +28,13 @@ class HomeHandler extends PaperHandler
 			
 			$vet->submit($this->user, $verdict);
 			PaperChange::createVetted($this->paper, $vet);
+			//notify researcher
+			PaperVettedMessage::create($this->paper, $vet->getVerdict(), $this->paper->getResearcher())->send();
+			
+			//notify admins
+			foreach(Admin::findAll() as $admin){
+				PaperVettedMessage::create($this->paper, $vet->getVerdict(), $admin)->send();
+			}
 		}
 		catch(OperationException $e)
 		{
@@ -37,14 +44,10 @@ class HomeHandler extends PaperHandler
 				switch($error){
 					case OperationError::VET_INVALID_VERDICT:
 						$this->viewParams->errors->verdict = "Invalid verdict selected.";
-						echo "ERROR $error<br>";
 						break;
 					case OperationError::VET_COMMENTS_EMPTY:
 						$this->viewParams->errors->comments = "Please enter comments.";
-						echo "ERROR $error<br>";
 						break;
-					default:
-						echo "ERROR $error<br>";
 				}
 			}
 			
