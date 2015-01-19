@@ -6,7 +6,7 @@ $formerror = $data->errors;
 	<div class="">
 		<!-- paper details -->
 		<h4>Details</h4>
-		<form class="form-vertical">
+		<form class="form-vertical" method="post" action="<?= $data->paperBaseUrl?>/edit/details" >
 			<div class="form-group">
 				<label>Title</label>
 				<input class="form-control" type="text" name="title" value="<?= escape($formdata->title) ?>">

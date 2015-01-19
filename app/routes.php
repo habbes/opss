@@ -26,7 +26,8 @@ $routes = [
 		['^papers\/(\w+)\/vet\/?$', "papers/Home@handleVetReview"],
 		['^papers\/(\w+)\/download\/?$', "papers/Download"],
 		['^papers\/(\w+)\/download\/cover\/?$', "papers/Download@downloadCover@post"],
-		['^papers\/(\w+)\/edit', "papers/Edit"],
+		['^papers\/(\w+)\/edit\/?$', "papers/Edit"],
+		['^papers\/(\w+)\/edit\/details\/?$', "papers/Edit@handleDetailsChanges"],
 		['^papers\/(\w+)\/details', "papers/Details"],
 		['^papers\/(\w+)\/test\/?', "papers/Test"]
 		//this route is only used for initial setup to allow an inital admin to sign up
