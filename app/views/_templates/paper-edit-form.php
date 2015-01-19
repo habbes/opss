@@ -47,16 +47,16 @@ $formerror = $data->errors;
 	<!-- paper details -->
 	<div>
 		<h4>Files</h4>
-		<form class="form-vertical" enctype="multipart/form-data">
+		<form class="form-vertical" enctype="multipart/form-data" method="post" action="<?=$data->paperBaseUrl?>/edit/files">
 			<div class="form-group">
 				<label>Main Document</label>
 				<input class="" type="file" name="document">
-				<span class="form-error help-block"><?= $formerror->title ?></span>
+				<span class="form-error help-block"><?= $formerror->document ?></span>
 			</div>
 			<div class="form-group">
 				<label>Cover</label>
-				<input class="" type="file" name="document">
-				<span class="form-error help-block"><?= $formerror->title ?></span>
+				<input class="" type="file" name="cover">
+				<span class="form-error help-block"><?= $formerror->cover ?></span>
 			</div>
 			<div class="form-group">
 				<button class="btn btn-default">Upload and Replace Files</button>

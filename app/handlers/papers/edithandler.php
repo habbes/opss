@@ -20,8 +20,25 @@ class EditHandler extends PaperHandler
 			$this->setResultMessage("Changes saved successfully.", "success");
 			$this->session()->deleteData("paperChangesSaved");
 		}
+		
+		if($this->session()->paperUnchanged){
+			$this->setResultMessage("No changes detected.", "normal");
+			$this->session()->deleteData("paperUnchanged");
+		}
 			
 		$this->renderView("papers/Edit");
+	}
+	
+	private function redirectSuccess()
+	{
+		$this->session()->paperChangesSaved = true;
+		$this->paperLocalRedirect("edit");
+	}
+	
+	private function redirectUnchanged()
+	{
+		$this->session()->paperUnchanged = true;
+		$this->paperLocalRedirect("edit");
 	}
 	
 	public function get()
@@ -32,6 +49,7 @@ class EditHandler extends PaperHandler
 	public function handleDetailsChanges()
 	{
 		try {
+			$changesMade = false;
 			$oldTitle = $this->paper->getTitle();
 			$oldLanguage = $this->paper->getLanguage();
 			$oldCountry = $this->paper->getCountry();
@@ -48,19 +66,23 @@ class EditHandler extends PaperHandler
 			
 			if($oldTitle != $this->paper->getTitle()){
 				PaperChange::createTitleChanged($this->paper, $oldTitle, $this->paper->getTitle())->save();
+				$changesMade = true;
 			}
 			
 			if($oldLanguage != $this->paper->getLanguage()){
 				PaperChange::createLanguageChanged($this->paper, $oldLanguage, $this->paper->getLanguage())->save();
+				$changesMade = true;
 			}
 			
 			if($oldCountry != $this->paper->getCountry()){
 				PaperChange::createCountryChanged($this->paper, $oldCountry, $this->paper->getCountry())->save();
+				$changesMade = true;
 			}
 			
-			$this->session()->paperChangesSaved = true;
-			$this->localRedirect("/papers/".$this->paper->getIdentifier()."/edit");
-			
+			if($changesMade)
+				$this->redirectSuccess();
+			else
+				$this->redirectUnchanged();
 		}
 		catch(OperationException $e){
 			$errors = new DataObject();
@@ -82,6 +104,41 @@ class EditHandler extends PaperHandler
 			$this->setResultMessage("Please correct the highlighted errors.", "error");
 			$this->showPage();
 			
+		}
+	}
+	
+	public function handleFileChanges()
+	{
+		try {
+			$changeMade = false;
+			$file = $this->fileVar("document");
+			$cover = $this->fileVar("cover");
+			if($file->name){
+				$oldFile = $this->paper->getFile();
+				$this->paper->setFile($file->name, $file->tmp_name, true);
+				$newFile = $this->paper->getFile();
+				$this->paper->save();
+				PaperChange::createFileChanged($this->paper, $oldFile, $newFile)->save();
+				$changeMade = true;
+			}
+			if($cover->name){
+				$oldCover = $this->paper->getCover();
+				$this->paper->setCover($cover->name, $cover->tmp_name, true);
+				$newCover = $this->paper->getCover();
+				$this->paper->save();
+				PaperChange::createCoverChanged($this->paper, $oldCover, $newCover)->save();
+				$changeMade = true;
+				
+			}
+			
+			if($changeMade)
+				$this->redirectSuccess();
+			else
+				$this->redirectUnchanged();
+		}
+		catch(OperationException $e){
+			$this->setResultMessage("Error occured.");
+			$this->showPage();
 		}
 	}
 }

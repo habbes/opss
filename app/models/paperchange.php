@@ -228,6 +228,36 @@ class PaperChange extends DBModel
 	/**
 	 * 
 	 * @param Paper $paper
+	 * @param File $from
+	 * @param File $to
+	 * @return PaperChange
+	 */
+	public static function createFileChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_FILE_CHANGED);
+		$pc->setArg("fromId", $from->getId());
+		$pc->setArg("toId", $to->getId());
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param File $from
+	 * @param File $to
+	 * @return PaperChange
+	 */
+	public static function createCoverChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_COVER_CHANGED);
+		$pc->setArg("fromId", $from->getId());
+		$pc->setArg("toId", $to->getId());
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
 	 * @return array(PaperChange)
 	 */
 	public static function findByPaper($paper)
