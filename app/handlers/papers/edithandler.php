@@ -141,4 +141,41 @@ class EditHandler extends PaperHandler
 			$this->showPage();
 		}
 	}
+	
+	public function handleAddAuthor()
+	{
+		try {
+			$name = $this->trimPostVar("name");
+			$email = $this->trimPostVar("email");
+			$reasons = $this->trimPostVar("reasons");
+			if(!$reasons)
+				throw new OperationException(["reasonsEmpty"]);
+			$this->paper->addAuthor($name, $email);
+			$this->paper->save();
+			PaperChange::createAuthorAdded($this->paper, $name, $email);
+			$this->redirectSuccess();
+		}
+		catch(OperationException $e){
+			$errors = new DataObject();
+			foreach($e->getErrors() as $error){
+				switch($error){
+					case OperationError::USER_EMAIL_INVALID:
+						$errors->email = "You entered an incorrect email format.";
+						break;
+					case OperationError::AUTHOR_NAME_EMPTY:
+						$errors->name = "You did not specify a name.";
+						break;
+					case OperationError::PAPER_MAX_AUTHORS_REACHED:
+						$errors->form = "The paper already has the maximum number of allowed co-authors.";
+						break;
+					case "reasonsEmpty":
+						$errors->reasons = "You did not specify reasons.";
+						break;
+				}
+			}
+			$this->viewParams->addAuthorForm = new DataObject($_POST);
+			$this->viewParams->addAuthorErrors = $errors;
+			$this->showPage();
+		}
+	}
 }

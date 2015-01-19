@@ -258,6 +258,23 @@ class PaperChange extends DBModel
 	/**
 	 * 
 	 * @param Paper $paper
+	 * @param string $name
+	 * @param string $email
+	 * @param string $reasons
+	 * @return PaperChange
+	 */
+	public static function createAuthorAdded($paper, $name, $email, $reasons)
+	{
+		$pc = static::create($paper, self::ACTION_AUTHOR_ADDED);
+		$pc->setArg("name", $name);
+		$pc->setArg("email", $email);
+		$pc->setArg("reasons", $reasons);
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
 	 * @return array(PaperChange)
 	 */
 	public static function findByPaper($paper)

@@ -1,6 +1,9 @@
 <?php 
 $formdata = $data->form;
 $formerror = $data->errors;
+
+$addAuthorForm = $data->addAuthorForm? $data->addAuthorForm : new DataObject();
+$addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObject();
 ?>
 <div class="col-sm-10">
 	<div class="">
@@ -90,23 +93,25 @@ $formerror = $data->errors;
 		</div>
 		<div>
 			<span>Add Author</span>
-			<form method="post">
+			<form method="post" action="<?= $data->paperBaseUrl?>/edit/add-author">
 				<div class="form-group row combined-fields">
 					<div class="col-sm-6 combined-fields-item" style="padding-right:0px">
-						<input class="form-control" type="text" name="name" placeholder="Name" required>
-						<span class="form-error help-block"></span>
+						<input class="form-control" type="text" name="name" placeholder="Name" value="<?= $addAuthorForm->name ?>" required>
+						<span class="form-error help-block"><?= $addAuthorErrors->name ?></span>
 					</div>
 					<div class="col-sm-6 combined-fields-item" style="padding-left:0px">
-						<input class="form-control" type="email" name="email" placeholder="Email" required>
-						<span class="form-error help-block"></span>
+						<input class="form-control" type="email" name="email" value="<?= $addAuthorForm->email ?>" placeholder="Email" required>
+						<span class="form-error help-block"><?= $addAuthorErrors->email ?></span>
 					</div>
 				</div>
 				<div class="form-group">
-					<textarea class="form-control" name="reasons" placeholder="Reasons for adding author" required></textarea>
-					<span class="form-error help-block"></span>
+					<textarea class="form-control" name="reasons" placeholder="Reasons for adding author" 
+						value="<?= $addAuthorForm->reasons ?>" required></textarea>
+					<span class="form-error help-block"><?= $addAuthorErrors->reasons ?></span>
 				</div>
 				<div class="form-group">
 					<button class="btn btn-default">Add Author</button>
+					<span class="form-error help-block"><?= $addAuthorErrors->form ?></span>
 				</div>
 			</form>
 		</div>
