@@ -118,7 +118,7 @@ class VetReview extends DBModel
 	 */
 	public function getVerdict()
 	{
-		return $this->verdict();
+		return $this->verdict;
 	}
 	
 	/**

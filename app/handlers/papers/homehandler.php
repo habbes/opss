@@ -37,7 +37,7 @@ class HomeHandler extends PaperHandler
 			}
 			
 			//redirect to paper home
-			$this->localRedirect("/papers/".$this->paper->getIdentifer);
+			$this->localRedirect("/papers/".$this->paper->getIdentifier());
 		}
 		catch(OperationException $e)
 		{

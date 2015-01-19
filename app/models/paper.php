@@ -308,11 +308,11 @@ class Paper extends DBModel
 	 */
 	private function loadOtherParts()
 	{
-		if(!$his->_jsonLoaded){
+		if(!$this->_jsonLoaded){
 			if($this->other_parts){
 				$json = json_decode($this->other_parts);
-				$this->_nextActions = isset($json['nextActions'])? $json['nextActions'] : [];
-				$this->_statusMessages = isset($json['statusMessages'])? $json['statusMessages'] : [];
+				$this->_nextActions = $json->nextActions? $json->nextActions : [];
+				$this->_statusMessages = $json->statusMessages? $json->statusMessages : [];
 			}
 			$this->_jsonLoaded = true;
 		}

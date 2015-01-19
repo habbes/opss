@@ -22,7 +22,7 @@ class PaperVettedMessage extends Message
 		
 		switch($recipient->getType()){
 			case UserType::ADMIN:
-				$template = $verdict == VetReview::VERDICT_ACCEPTED? 
+				$template = $verdict == VetReview::VERDICT_ACCEPTED?
 					"paper-vetted-accepted-admin" : "paper-vetted-rejected-admin";
 				$m->setMessageFromTemplate($template,[
 					"title" => $paper->getTitle(),
