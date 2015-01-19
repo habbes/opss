@@ -39,7 +39,7 @@ class VetReview extends DBModel
 		$vr->_paper = $paper;
 		$vr->paper_id = $paper->getId();
 		$vr->date_initiated = Utils::dbDateFormat(time());
-		$vr->status = static::ONGOING;
+		$vr->status = static::STATUS_ONGOING;
 		
 		return $vr;
 	
@@ -133,16 +133,16 @@ class VetReview extends DBModel
 		if($comments)
 			$this->comments = $comments;
 		$this->verdict = $verdict;
-		$this->status = self::COMPLETED;
+		$this->status = self::STATUS_COMPLETED;
 		$this->date_submitted = Utils::dbDateFormat(time());
 		
 		$errors = [];
 		switch($verdict){
-			case self::REJECTED:
+			case self::VERDICT_REJECTED:
 				$this->getPaper()->setEditable(true);
 				$this->getPaper()->setStatus(Paper::STATUS_VETTING_REVISION);
 				break;
-			case self::ACCEPTED:
+			case self::VERDICT_ACCEPTED:
 				$this->getPaper()->setEditable(false);
 				$this->getPaper()->setStatus(Paper::STATUS_PENDING);
 				$this->getPaper()->addNextAction(Paper::ACTION_EXTERNAL_REVIEW);
@@ -151,7 +151,7 @@ class VetReview extends DBModel
 				$errors[] = OperationError::VET_INVALID_VERDICT;
 		}
 		
-		if(!$this->comments && $this->verdict == self::REJECTED){
+		if(!$this->comments && $this->verdict == self::VERDICT_REJECTED){
 			$errors[] = OperationError::VET_COMMENTS_EMPTY;
 		}
 		

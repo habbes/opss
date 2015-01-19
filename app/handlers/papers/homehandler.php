@@ -19,10 +19,10 @@ class HomeHandler extends PaperHandler
 			$vet = VetReview::create($this->paper);
 			$vet->setComments($this->trimPostVar("comments"));
 			$verdict = "";
-			if($this->postVar(VetReview::REJECTED))
-				$verdict == VetReview::REJECTED;
-			else if($this->postVar(VetReview::ACCEPTED))
-				$verdict == VetReview::ACCEPTED;
+			if($this->postVar(VetReview::VERDICT_REJECTED))
+				$verdict == VetReview::VERDICT_REJECTED;
+			else if($this->postVar(VetReview::VERDICT_ACCEPTED))
+				$verdict == VetReview::VERDICT_ACCEPTED;
 			
 			$vet->submit($this->user, $verdict);
 		}
