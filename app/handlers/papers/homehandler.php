@@ -35,6 +35,9 @@ class HomeHandler extends PaperHandler
 			foreach(Admin::findAll() as $admin){
 				PaperVettedMessage::create($this->paper, $vet->getVerdict(), $admin)->send();
 			}
+			
+			//redirect to paper home
+			$this->localRedirect("/papers/".$this->paper->getIdentifer);
 		}
 		catch(OperationException $e)
 		{
