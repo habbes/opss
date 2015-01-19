@@ -137,6 +137,19 @@ class VetReview extends DBModel
 		$this->date_submitted = Utils::dbDateFormat(time());
 		
 		$errors = [];
+		
+		if(!$this->comments && $this->verdict == self::VERDICT_REJECTED){
+			$errors[] = OperationError::VET_COMMENTS_EMPTY;
+		}
+		
+		if(!in_array($verdict, [self::VERDICT_ACCEPTED, self::VERDICT_REJECTED])){
+			$errors[] = OperationError::VET_INVALID_VERDICT;
+		}
+		
+		if($errors){
+			throw new OperationException($errors);
+		}
+		
 		switch($verdict){
 			case self::VERDICT_REJECTED:
 				$this->getPaper()->setEditable(true);
@@ -147,16 +160,6 @@ class VetReview extends DBModel
 				$this->getPaper()->setStatus(Paper::STATUS_PENDING);
 				$this->getPaper()->addNextAction(Paper::ACTION_EXTERNAL_REVIEW);
 				break;
-			default:
-				$errors[] = OperationError::VET_INVALID_VERDICT;
-		}
-		
-		if(!$this->comments && $this->verdict == self::VERDICT_REJECTED){
-			$errors[] = OperationError::VET_COMMENTS_EMPTY;
-		}
-		
-		if($errors){
-			throw new OperationException($errors);
 		}
 		
 		$this->save();

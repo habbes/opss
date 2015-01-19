@@ -8,7 +8,7 @@
 		<h4>Vet this paper</h4>
 		<form method="post" action="<?= $data->paperBaseUrl ?>/vet" id="vet-review-form">
 			<div class="form-group">
-				<select class="form-control">
+				<select name="group" class="form-control">
 					<option value="">Select group for this paper</option>
 					<?php foreach(PaperGroup::getValues() as $group => $name) { 
 						$selected = $data->form->group == $group? "selected" : "";
@@ -20,11 +20,11 @@
 			</div>
 			<div class="form-group">
 				<label>Comments</label>
-				<textarea class="form-control" rows="7" id="comments" placeholder="Enter comments"><?= escape($data->form->comments) ?></textarea>
+				<textarea name="comments" class="form-control" rows="7" id="comments" placeholder="Enter comments"><?= escape($data->form->comments) ?></textarea>
 				<span class="form-error"><?= $data->errors->comments?></span>
 			</div>
 			<div class="form-group">
-				<button class="btn" type="submit" name="<?= VetReview::VERDICT_REJECTED ?>">Accept Proposal
+				<button class="btn" type="submit" name="<?= VetReview::VERDICT_ACCEPTED ?>">Accept Proposal
 				<span class="glyphicon glyphicon-ok text-success"></span></button> or 
 				<button class="btn" type="submit" name="<?= VetReview::VERDICT_REJECTED ?>">Send Proposal back to Researcher 
 				<span class="glyphicon glyphicon-remove text-danger"></span></button>
