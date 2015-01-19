@@ -25,6 +25,16 @@ abstract class PaperHandler extends LoggedInHandler
 	}
 	
 	/**
+	 * redirects relatively to the root/home page of the current paper
+	 * @param string $url
+	 */
+	protected function paperLocalRedirect($url = "")
+	{
+		if($url[0] != "/") $url = "/$url";
+		$this->localRedirect("papers/".$this->paper->getIdentifier().$url);
+	}
+	
+	/**
 	 * ensures the user has access to this paper and redirects otherwise
 	 */
 	protected function assertPaperAccess()
@@ -33,7 +43,7 @@ abstract class PaperHandler extends LoggedInHandler
 			$this->localRedirect("");
 		}
 		if(!$this->isPageVisible()){
-			$this->localRedirect("papers/".$this->paper->getIdentifier());
+			$this->localPaperRedirect("");
 		}
 	}
 	
