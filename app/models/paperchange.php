@@ -27,6 +27,7 @@ class PaperChange extends DBModel
 	
 	//actions
 	const ACTION_SUBMITTED = "submitted";
+	const ACTION_VETTED = "vetted";
 	
 	/**
 	 * 
@@ -155,6 +156,20 @@ class PaperChange extends DBModel
 		$pc->setArg("authors", $authors);
 		return $pc;
 		
+	}
+	
+	/**
+	 * creates change event when paper is vetted
+	 * @param Paper $paper
+	 * @param VetReview $vetReview
+	 * @return PaperChange
+	 */
+	public static function createVetted($paper, $vetReview)
+	{
+		$pc = static::create($paper, self::ACTION_VETTED);
+		$pc->setArg("vetReviewId", $vetReview->getId());
+		
+		return $pc;
 	}
 	
 	/**

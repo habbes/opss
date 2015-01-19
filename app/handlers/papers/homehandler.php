@@ -27,6 +27,7 @@ class HomeHandler extends PaperHandler
 				$verdict = VetReview::VERDICT_ACCEPTED;
 			
 			$vet->submit($this->user, $verdict);
+			PaperChange::createVetted($this->paper, $vet);
 		}
 		catch(OperationException $e)
 		{
