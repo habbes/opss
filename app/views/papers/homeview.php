@@ -13,8 +13,13 @@ class HomeView extends PaperView
 	public function render()
 	{
 		
-		if($this->data->user->isAdmin() && $this->data->paper->getStatus() == Paper::STATUS_VETTING){
-			$this->addVetReviewForm();
+		switch($this->data->paper->getStatus()){
+			case Paper::STATUS_VETTING:
+				if($this->data->user->isAdmin())
+					$this->addVetReviewForm();
+				if($this->data->user->isResearcher())
+					$this->addVettingNoticeForResearcher();
+				break;
 		}
 		
 		$this->setActivePaperNavLink("Home");
@@ -28,5 +33,10 @@ class HomeView extends PaperView
 		$this->data->form or $this->data->form = new DataObject();
 		$this->data->errors or $this->data->errors = new DataObject();
 		$this->addHomePageItem("paper-vet-review");
+	}
+	
+	private function addVettingNoticeForResearcher()
+	{
+		$this->addHomePageItem("paper-in-vetting-researcher");
 	}
 }
