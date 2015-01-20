@@ -51,10 +51,16 @@ class RegistrationHandler extends LoggedOutHandler
 				default:
 					$gender = 0;
 			}
-			$user->setGender($gender);
-			$user->setAddress($this->trimPostVar("address"));
-			$user->setResidence($this->trimPostVar("residence"));
-			$user->setNationality($this->trimPostVar("nationality"));
+			$role = $user->getRole();
+			if($role->hasGender())
+				$user->setGender($gender);
+			if($role->hasAddress())
+				$user->setAddress($this->trimPostVar("address"));
+			if($role->hasResidence())
+				$user->setResidence($this->trimPostVar("residence"));
+			if($role->hasNationality())
+				$user->setNationality($this->trimPostVar("nationality"));
+			
 			$collabArea = (int) $this->postVar("collaborative-area");
 			$thematicArea = (int) $this->postVar("thematic-area");
 			if(!PaperGroup::isValue($collabArea))

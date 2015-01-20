@@ -9,6 +9,11 @@ class Researcher extends UserRole
 {
 	protected static $type = UserType::RESEARCHER;
 	
+	
+	public function getPapers()
+	{
+		return Paper::findByResearcher($this->user);	
+	}	
 	public function hasResidence()
 	{
 		return true;
@@ -25,6 +30,10 @@ class Researcher extends UserRole
 	{
 		return true;
 	}
+	public function hasAreaOfSpecialization()
+	{
+		return true;
+	}
 	public function hasAccessToPaper($paper)
 	{
 		return $this->user->is($paper->getResearcher());
@@ -36,5 +45,17 @@ class Researcher extends UserRole
 	public function canViewPaperAuthor()
 	{
 		return true;
+	}
+	public function canEditPaper()
+	{
+		return true;
+	}
+	public function canVetPaper()
+	{
+		return false;
+	}
+	public function canReviewPaper()
+	{
+		return false;
 	}
 }

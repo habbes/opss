@@ -95,6 +95,13 @@ abstract class UserRole
 	}
 	
 	/**
+	 * find all papers this role has access to
+	 * @return array(Paper)
+	 */
+	public abstract function getPapers();
+	
+	
+	/**
 	 * @return boolean
 	 */
 	public abstract function hasResidence();
@@ -110,6 +117,11 @@ abstract class UserRole
 	 * @return boolean
 	 */
 	public abstract function hasGender();
+	
+	/**
+	 * @return boolean
+	 */
+	public abstract function hasAreaOfSpecialization();
 	
 	/**
 	 * checks whether this role has access to the specified paper
@@ -129,4 +141,20 @@ abstract class UserRole
 	 * @return boolean
 	 */
 	public abstract function canViewPaperAuthor();
+	
+	/**
+	 * @return boolean
+	 */
+	public abstract function canEditPaper();
+
+	/**
+	 * @return boolean
+	 */
+	public abstract function canVetPaper();
+	
+	/**
+	 * @return boolean
+	 */
+	public abstract function canReviewPaper();
+	
 }

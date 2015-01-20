@@ -9,6 +9,11 @@ class Admin extends UserRole
 {
 	protected static $type = UserType::ADMIN;
 	
+	public function getPapers()
+	{
+		return Paper::findAll();
+	}
+	
 	public function hasResidence()
 	{
 		return false;
@@ -29,6 +34,11 @@ class Admin extends UserRole
 		return false;
 	}
 	
+	public function hasAreaOfSpecialization()
+	{
+		return false;
+	}
+	
 	public function hasAccessToPaper($paper)
 	{
 		return true;
@@ -42,6 +52,21 @@ class Admin extends UserRole
 	public function canViewPaperAuthor()
 	{
 		return true;
+	}
+	
+	public function canEditPaper()
+	{
+		return true;
+	}
+	
+	public function canVetPaper()
+	{
+		return true;
+	}
+	
+	public function canReviewPaper()
+	{
+		return false;
 	}
 	
 }
