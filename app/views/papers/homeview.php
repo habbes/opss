@@ -31,6 +31,12 @@ class HomeView extends PaperView
 				}
 				
 				break;
+			case Paper::STATUS_PENDING:
+				if($this->data->user->isAdmin()){
+					$this->addPaperPendingActionsAdmin();
+				}
+				
+				break;
 		}
 		
 		$this->setActivePaperNavLink("Home");
@@ -60,4 +66,15 @@ class HomeView extends PaperView
 	{
 		$this->addHomePageItem("paper-vetting-revision-notice-researcher");
 	}
+	
+	private function addPaperPendingActionsAdmin()
+	{
+		$this->addHomePageItem("paper-pending-actions-admin");
+	}
+	
+	private function addPaperPendingActionsResearcher()
+	{
+		$this->addHomePageItem("paper-pending-actions-researcher");
+	}
+	
 }
