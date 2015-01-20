@@ -2,6 +2,13 @@
 
 class InviteReviewerHandler extends PaperHandler
 {
+	private function redirectSuccess($message)
+	{
+		$this->session()->resultMessage = $message;
+		$this->session()->resultMessageType = "success";
+		$this->paperLocalRedirect();
+	}
+	
 	public function post()
 	{
 		try {
@@ -9,7 +16,7 @@ class InviteReviewerHandler extends PaperHandler
 			$confirmEmail = $this->trimPostVar("confirm-email");
 			$name = $this->trimPostVar("name");
 			if($email != $this->trimPostVar("confirm-email")){
-				throw new OperationError(["EmailsDontMatch"]);
+				throw new OperationException(["EmailsDontMatch"]);
 			}
 			
 			$user = User::findByEmail($email);
@@ -27,12 +34,18 @@ class InviteReviewerHandler extends PaperHandler
 					case "EmailsDontMatch":
 						$errors->set("confirm-email", "This does not match the specified email.");
 						break;
+					case "NameEmpty":
+						$errors->name = "You did not specify a name.";
+						break;
+					case "InvalidEmail":
+						$errors->email = "This email does not seem to be in the correct format";
+						break;
 				}
 			}
 			
 			$this->viewParams->inviteReviewerErrors = $errors;
 			$this->viewParams->inviteReviewerForm = new DataObject($_POST);
-			
+			$this->setResultMessage("Please correct highlighted errors.", "error");
 			$this->renderView("papers/Home");
 			
 		}
@@ -49,7 +62,20 @@ class InviteReviewerHandler extends PaperHandler
 	
 	public function inviteNewReviewer($name, $email)
 	{
+		$errors = [];
+		if(!$name){
+			$errors[] = "NameEmpty";
+		}
+		if(!User::isValidEmail($email)){
+			$errors[] = "InvalidEmail";
+		}
+		if(count($errors)>0){
+			throw new OperationException($errors);
+		}
 		$inv = RegInvitation::create($this->user, UserType::REVIEWER, $email);
+		$inv->setPaper($this->paper);
 		$inv->save();
+		NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
+		$this->redirectSuccess("Invitation sent successfully.");
 	}
 }

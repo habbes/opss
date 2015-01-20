@@ -46,7 +46,7 @@ class RegInvitation extends DBModel
 		$inv->user_type = $userType;
 		$validity = $validity? $validity : self::DEFAULT_VALIDITY;
 		$inv->expiry_date = Utils::dbDateFormat(time() + $validity * 604800);
-		$inv->registration_code = sha1(uniqid);
+		$inv->registration_code = sha1(uniqid());
 		$inv->status = self::PENDING;
 		
 		return $inv;
@@ -94,6 +94,17 @@ class RegInvitation extends DBModel
 			return;
 		$this->_paper = $paper;
 		$this->paper_id = $paper->getId();
+	}
+	
+	/**
+	 * 
+	 * @return Paper
+	 */
+	public function getPaper()
+	{
+		if(!$this->_paper)
+			$this->_paper = Paper::findById($this->paper_id);
+		return $this->_paper;
 	}
 	
 	/**
@@ -167,9 +178,9 @@ class RegInvitation extends DBModel
 	{
 		if(!UserType::isValue($this->getUserType()))
 			$errors[] = OperationError::USER_TYPE_INVALID;
-		if(!$this->isValid())
+		if($this->isInDb() && !$this->isValid())
 			$errors[] = OperationError::INVITATION_INVALID;
-		if($this->_user && ($this->_user->getType() != $this->getUserType()))
+		if($this->isInDb() && ($this->_user && ($this->_user->getType() != $this->getUserType())))
 			$errors[] = OperationError::USER_TYPE_INVALID;
 		
 		return true;

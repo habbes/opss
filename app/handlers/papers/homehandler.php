@@ -9,6 +9,13 @@ class HomeHandler extends PaperHandler
 			$vrs = VetReview::findByPaper($this->paper);
 			$this->viewParams->vetReview = array_pop($vrs);
 		}
+		
+		if($this->session()->resultMessage){
+			$this->setResultMessage($this->session()->resultMessage, $this->session()->resultMessageType);
+			$this->session()->deleteData("resultMessage");
+			$this->session()->deleteData("resultMessageType");
+		}
+		
 		$this->renderView("papers/Home");
 	}
 	
