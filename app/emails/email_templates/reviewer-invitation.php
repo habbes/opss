@@ -5,7 +5,7 @@ You have been invited by the AERC Secretariate to review the paper: <b>{{title}}
 Kindly find attached the actual paper document.
 </p>
 <p>
-Choose one of the following options:
+Please choose one of the following options:
 <ul>
 	<li><a href="{{acceptLink}}">Accept to review</a></li>
 	<li><a href="{{declineLink}}">Decline</a>
