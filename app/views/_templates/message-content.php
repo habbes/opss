@@ -1,6 +1,6 @@
 
 <div class="message-content">
-	<?= escape($data->message->getMessage())?>
+	<?= $data->message->getMessage()?>
 </div>
 <div class="message-time">
 	Sent on <?= Utils::siteDateTimeFormat($data->message->getDateSent())?>
