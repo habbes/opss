@@ -126,6 +126,24 @@ class Paper extends DBModel
 	
 	/**
 	 * 
+	 * @return string
+	 */
+	public function getAbsoluteUrl()
+	{
+		return sprintf("%s/papers/%s", URL_ROOT, $this->identifier);
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getRelativeUrl()
+	{
+		return sprintf("/papers/%s", $this->identitifer);
+	}
+	
+	/**
+	 * 
 	 * @param number $rev
 	 */
 	public function setRevision($rev)
