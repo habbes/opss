@@ -1,0 +1,1 @@
+You have accepted to review the paper "{{title}}" ({{identifier}}).

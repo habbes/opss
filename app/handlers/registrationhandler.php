@@ -2,8 +2,28 @@
 
 class RegistrationHandler extends LoggedOutHandler
 {
-	private function showRegPage()
+	
+	/**
+	 * 
+	 * @var RegInvitation
+	 */
+	private $invitation;
+	
+	private function checkInvitation()
 	{
+		$code = $this->getVar("invitation");
+		if($code){
+			$this->invitation = RegInvitation::findValidByCode($code);
+			if(!$this->invitation){
+				$this->setResultMessage("Invalid invitation code.", "error");
+				$this->showResearcherRegPage();
+			}
+		}
+	}
+	
+	private function showResearcherRegPage()
+	{
+		//check for invitation
 		$this->viewParams->countries = SysDataList::get("countries-en");
 		$this->viewParams->titles = SysDataList::get("titles-en");
 		$this->viewParams->languages = SysDataList::get("languages-en");
@@ -14,6 +34,31 @@ class RegistrationHandler extends LoggedOutHandler
 		$this->renderView("Registration");
 	}
 	
+	private function showAdminRegPage()
+	{
+		$this->viewParams->titles = SysDataList::get("titles-en");
+		$this->viewParams->formType = "admin";
+		$this->renderView("Registration");
+	}
+	
+	private function showRegPage()
+	{
+		if($this->invitation){
+			switch($this->invitation->getUserType()){
+				case UserType::RESEARCHER:
+					$this->showResearcherRegPage();
+					break;
+				case UserType::ADMIN:
+				case UserType::REVIEWER:
+					$this->showAdminRegPage();
+					break;
+			}
+		}
+		else {
+			$this->showResearcherRegPage();
+		}
+	}
+	
 	private function showPostRegPage()
 	{
 		$this->renderView("PostRegistration");
@@ -21,11 +66,13 @@ class RegistrationHandler extends LoggedOutHandler
 	
 	private function handleRegistration()
 	{
+		$this->checkInvitation();
 		$this->viewParams->form = new DataObject($_POST);
 		try {
 			$errors = [];
-				
-			$user = User::create(UserType::RESEARCHER);
+			
+			$userType = $this->invitation? $this->invitation->getUserType() : UserType::RESEARCHER;
+			$user = User::create($userType);
 			//properties common to all user types
 			$user->setTitle($this->trimPostVar("title"));
 			$user->setFirstName($this->trimPostVar("firstname"));
@@ -61,19 +108,23 @@ class RegistrationHandler extends LoggedOutHandler
 			if($role->hasNationality())
 				$user->setNationality($this->trimPostVar("nationality"));
 			
-			$collabArea = (int) $this->postVar("collaborative-area");
-			$thematicArea = (int) $this->postVar("thematic-area");
-			if(!PaperGroup::isValue($collabArea))
-				$errors[] = OperationError::COLLAB_AREA_INVALID;
-			if(!PaperGroup::isValue($thematicArea))
-				$errors[] = OperationError::THEMATIC_AREA_INVALID;
+			if($role->hasAreaOfSpecialization()){
+				$collabArea = (int) $this->postVar("collaborative-area");
+				$thematicArea = (int) $this->postVar("thematic-area");
+				if(!PaperGroup::isValue($collabArea))
+					$errors[] = OperationError::COLLAB_AREA_INVALID;
+				if(!PaperGroup::isValue($thematicArea))
+					$errors[] = OperationError::THEMATIC_AREA_INVALID;
 				
-			if(!empty($errors))
-				throw new OperationException($errors);
+				if(!empty($errors))
+					throw new OperationException($errors);
+				}
 			$user->save();
 			
-			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
-			$user->addThematicArea((int) $this->postVar("thematic-area"));
+			if($role->hasAreaOfSpecialization()){
+				$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
+				$user->addThematicArea((int) $this->postVar("thematic-area"));
+			}
 			
 			//send welcome message
 			$msg = WelcomeMessage::create($user);
@@ -90,7 +141,27 @@ class RegistrationHandler extends LoggedOutHandler
 			$ea = EmailActivation::create($user);
 			$ea->save();
 			$mail = WelcomeEmail::create($user, $ea->getCode());
-			$mail->send();			
+			$mail->send();
+			
+			if($this->invitation){
+				$this->invitation->register($user);
+			}
+			
+			//start paper review period
+			if($this->invitation && 
+					$this->invitation->getUserType() == UserType::REVIEWER && $this->invitation->getPaper()){
+				$paper = $this->invitation->getPaper();
+				$paper->sendForReview($user, $this->invitation->getAdmin());
+				
+				//notify reviewer
+				PaperSentForReviewMessage::create($user, $paper, $user)->send();
+				//notify researcher
+				PaperSentForReviewMessage::create($paper->getResearcher(), $paper, $user)->send();
+				//notify admins
+				foreach(Admin::findAll() as $admin){
+					PaperSentForReviewMessage::create($admin, $paper, $user)->send();
+				}
+			}
 			
 			Session::instance()->registeredUserId =  $user->getId();
 			$this->showPostRegPage();
@@ -186,6 +257,7 @@ class RegistrationHandler extends LoggedOutHandler
 	{
 		if(Session::instance()->registeredUserId)
 			unset(Session::instance()->registeredUserId);
+		$this->checkInvitation();
 		$this->showRegPage();
 	}
 	

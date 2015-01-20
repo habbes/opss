@@ -10,7 +10,9 @@ class RegistrationView extends BaseView
 			$this->data->errors = new DataObject();
 		$this->data->pageTitle = "Registration";
 		$this->data->pageHeading = "Registration";
-		$this->data->pageContent = $this->read("form-registration");
+		$formTemplate = $this->data->formType == "admin"? 
+			"admin-form-registration" : "form-registration";
+		$this->data->pageContent = $this->read($formTemplate);
 		$this->showBase();
 	}
 }

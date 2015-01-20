@@ -180,11 +180,13 @@ class RegInvitation extends DBModel
 	 */
 	public function register($user)
 	{
+		/*
 		$this->_user = $user;
 		$this->user_id = $user->getId();
-		$this->date_registered = User::dbDateFormat(time());
+		$this->date_registered = Utils::dbDateFormat(time());
 		$this->status = self::REGISTERED;
 		$this->update();
+		*/
 		$this->delete();
 	}
 	

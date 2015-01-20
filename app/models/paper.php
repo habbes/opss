@@ -495,6 +495,27 @@ class Paper extends DBModel
 	
 	/**
 	 * 
+	 * @param Reviewer $reviewer
+	 * @param Admin $admin
+	 */
+	public function sendForReview($reviewer, $admin)
+	{
+		$this->status = self::STATUS_REVIEW;
+		$review = Review::create($this, $reviewer, $admin);
+		$review->save();
+	}
+	
+	/**
+	 * 
+	 * @return Review
+	 */
+	public function getCurrentReview()
+	{
+		return Review::findCurrentByPaper($paper);
+	}
+	
+	/**
+	 * 
 	 * @param User $researcher
 	 * @return array(Paper)
 	 */

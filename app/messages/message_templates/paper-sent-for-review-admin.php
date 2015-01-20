@@ -1,0 +1,1 @@
+The paper "{{title}}" ({{identifier}}) has been sent to be reviewed by {{reviewerName}}.

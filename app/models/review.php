@@ -27,9 +27,37 @@ class Review extends DBModel
 	const DIR = "reviews";
 	
 	//status
-	const ONGOING = 1;
-	const COMPLETED = 2;
-	const OVERDUE = 3;
+	const STATUS_ONGOING = 1;
+	const STATUS_COMPLETED = 2;
+	const STATUS_OVERDUE = 3;
+	
+	//recommendations
+	const VERDICT_APPROVED = 1;
+	const VERDICT_REVISION_MIN = 2;
+	const VERDICT_REVISION_MAJ = 3;
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param Reviewer $reviewer
+	 * @param Admin $admin
+	 * @return Review
+	 */
+	public static function create($paper, $reviewer, $admin)
+	{
+		$r = new static();
+		$r->_paper = $paper;
+		$r->paper_id = $paper->getId();
+		$r->_reviewer = $reviewer;
+		$r->reviewer_id = $reviewer->getId();
+		$r->_admin = $admin;
+		$r->admin_id = $admin->getId();
+		$r->status = self::STATUS_ONGOING;
+		$r->data_submitted = Utils::dbDateFormat(time());
+		$r->posted = false;
+		
+		return $r;
+	}
 	
 	/**
 	 * the reviewer conducting the review
@@ -134,6 +162,38 @@ class Review extends DBModel
 	public function isOverdue()
 	{
 		return (!$this->isPermanent() && time() > $this->getDueDate());
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return array(Review)
+	 */
+	public static function findByPaper($paper)
+	{
+		return static::findAllByField("paper_id", $paper->getId());
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return Review
+	 */
+	public static function findCurrentByPaper($paper)
+	{
+		return static::findOne("status=? AND paper_id=?",
+				[Review::STATUS_ONGOING, $paper->getId()]);
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param Reviewer $reviewer
+	 * @return Review
+	 */
+	public static function findCurrentByPaperAndReviewer($paper, $reviewer){
+		return static::findOne("status=? AND paper_id=? AND reviewer_id=?",
+				[Review::STATUS_ONGOING, $paper->getId(), $paper->getReviewer()]);
 	}
 	
 	
