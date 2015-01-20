@@ -27,6 +27,7 @@ class RegInvitation extends DBModel
 	const PENDING = 1;
 	const EXPIRED = 2;
 	const REGISTRERED = 3;
+	const DECLINED = 4;
 	
 	const DEFAULT_VALIDITY = 7; //days
 	
@@ -45,7 +46,7 @@ class RegInvitation extends DBModel
 		$inv->admin_id = $admin->getId();
 		$inv->user_type = $userType;
 		$validity = $validity? $validity : self::DEFAULT_VALIDITY;
-		$inv->expiry_date = Utils::dbDateFormat(time() + $validity * 604800);
+		$inv->expiry_date = Utils::dbDateFormat(time() + $validity * 86400);
 		$inv->registration_code = sha1(uniqid());
 		$inv->status = self::PENDING;
 		
@@ -120,6 +121,15 @@ class RegInvitation extends DBModel
 	 * 
 	 * @return number timestamp
 	 */
+	public function getExpiryDate()
+	{
+		return strtotime($this->expiry_date);
+	}
+	
+	/**
+	 * 
+	 * @return number timestamp
+	 */
 	public function getDateRegistered()
 	{
 		return strtotime($this->date_registered);
@@ -150,7 +160,7 @@ class RegInvitation extends DBModel
 	public function isValid()
 	{
 		return $this->getStatus() == self::PENDING &&
-			time() < $this->registration_code;
+			time() < $this->getExpiryDate();
 	}
 	
 	/**
@@ -164,6 +174,16 @@ class RegInvitation extends DBModel
 		$this->user_id = $user->getId();
 		$this->date_registered = User::dbDateFormat(time());
 		$this->status = self::REGISTERED;
+		$this->update();
+		$this->delete();
+	}
+	
+	/**
+	 * decline the invitation
+	 */
+	public function decline()
+	{
+		$this->status = self::DECLINED;
 		$this->update();
 		$this->delete();
 	}
@@ -195,7 +215,7 @@ class RegInvitation extends DBModel
 	public static function findValidByCode($code)
 	{
 		$inv = static::findOne(
-				"registration_code=? AND status=?>",
+				"registration_code=? AND status=?",
 				[$code, self::PENDING]
 				);
 		if($inv && $inv->isValid())
