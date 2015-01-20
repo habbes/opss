@@ -45,6 +45,7 @@ class RegInvitation extends DBModel
 		$inv->_admin = $admin;
 		$inv->admin_id = $admin->getId();
 		$inv->user_type = $userType;
+		$inv->email = $email;
 		$validity = $validity? $validity : self::DEFAULT_VALIDITY;
 		$inv->expiry_date = Utils::dbDateFormat(time() + $validity * 86400);
 		$inv->registration_code = sha1(uniqid());
@@ -82,6 +83,15 @@ class RegInvitation extends DBModel
 	public function getUserType()
 	{
 		return (int) $this->user_type;
+	}
+	
+	/**
+	 * 
+	 * @param string $name
+	 */
+	public function setName($name)
+	{
+		$this->name = $name;
 	}
 	
 	/**
@@ -184,7 +194,6 @@ class RegInvitation extends DBModel
 	public function decline()
 	{
 		$this->status = self::DECLINED;
-		$this->update();
 		$this->delete();
 	}
 	

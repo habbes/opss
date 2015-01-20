@@ -12,7 +12,7 @@ class ReviewInvitationDeclinedMessage extends Message
 		$m = new static();
 		$m->setSubject("Review Invitation Declined");
 		$m->setUser($recipient);
-		$m->setMessageFromTemplate("review-invitation-declined"[
+		$m->setMessageFromTemplate("review-invitation-declined", [
 			"name" => $invitation->getName(),
 			"email" => $invitation->getEmail(),
 			"title" => $invitation->getPaper()->getTitle(),

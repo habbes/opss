@@ -73,9 +73,13 @@ class InviteReviewerHandler extends PaperHandler
 			throw new OperationException($errors);
 		}
 		$inv = RegInvitation::create($this->user, UserType::REVIEWER, $email);
+		$inv->setName($name);
 		$inv->setPaper($this->paper);
 		$inv->save();
 		NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
+		foreach(Admin::findAll() as $admin){
+			ReviewInvitationSentMessage::create($admin, $this->paper, $name, $email)->send();
+		}
 		$this->redirectSuccess("Invitation sent successfully.");
 	}
 }
