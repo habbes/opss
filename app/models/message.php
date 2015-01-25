@@ -316,7 +316,7 @@ class Message extends DBModel
 	{
 		if($this->_jsonLoaded || !$this->isInDb())
 			return;
-		$json = JsonObject::decode($this->json);
+		$json = JsonObject::decode($this->other_parts);
 		$this->_senderArgs = $json->senderArgs;
 		$this->_parts = $json->parts;
 		$this->_jsonLoaded = true;
