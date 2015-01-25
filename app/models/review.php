@@ -18,6 +18,7 @@ class Review extends DBModel
 	protected $due_date;
 	protected $posted;
 	protected $date_posted;
+	protected $date_initiated;
 	
 	private $_paper;
 	private $_reviewer;
@@ -32,9 +33,9 @@ class Review extends DBModel
 	const STATUS_OVERDUE = 3;
 	
 	//recommendations
-	const VERDICT_APPROVED = 1;
-	const VERDICT_REVISION_MIN = 2;
-	const VERDICT_REVISION_MAJ = 3;
+	const VERDICT_APPROVED = "approved";
+	const VERDICT_REVISION_MIN = "revisionMaj";
+	const VERDICT_REVISION_MAJ = "revisionMin";
 	
 	/**
 	 * 
@@ -53,7 +54,7 @@ class Review extends DBModel
 		$r->_admin = $admin;
 		$r->admin_id = $admin->getId();
 		$r->status = self::STATUS_ONGOING;
-		$r->data_submitted = Utils::dbDateFormat(time());
+		$r->data_initiated = Utils::dbDateFormat(time());
 		$r->posted = false;
 		
 		return $r;
@@ -103,6 +104,12 @@ class Review extends DBModel
 		return $this->_file;
 	}
 	
+	public function setFile($file)
+	{
+		$this->_file = $file;
+		$this->file_id = $file->getId();
+	}
+	
 	/**
 	 * comments file that the researcher is allowed to view
 	 * @return DBModel
@@ -114,6 +121,12 @@ class Review extends DBModel
 		return $this->_researcherFile;
 	}
 	
+	public function setResearcherFile($file)
+	{
+		$this->_researcherFile = $file;
+		$this->researcher_file_id = $file->getId();
+	}
+	
 	public function getDueDate()
 	{
 		return strtotime($this->due_date);
@@ -122,6 +135,11 @@ class Review extends DBModel
 	public function setDueDate($date)
 	{
 		$this->due_date = Utils::dbDateFormat($date);
+	}
+	
+	public function getDateInitiated()
+	{
+		return strtotime($this->date_initiated);
 	}
 	
 	public function isPosted()
@@ -162,6 +180,14 @@ class Review extends DBModel
 	public function isOverdue()
 	{
 		return (!$this->isPermanent() && time() > $this->getDueDate());
+	}
+	
+	public function submit($recommendation)
+	{
+		$this->status = Review::STATUS_COMPLETED;
+		$this->recommendation = $recommendation;
+		$this->date_submitted = Utils::dbDateFormat(time());
+		$this->save();
 	}
 	
 	/**
