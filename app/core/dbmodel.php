@@ -55,7 +55,7 @@ class DBModel extends Model
 	 * @param DBModel $other
 	 * @return boolean
 	 */
-	public function is(DBModel $other)
+	public function is($other)
 	{
 		return get_class($other) == get_called_class()
 			 && $this->_inDb && $other->_inDb

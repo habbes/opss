@@ -36,7 +36,9 @@ class Reviewer extends UserRole
 	}
 	public function hasAccessToPaper($paper)
 	{
-		return $this->user->is($paper->getResearcher());
+		if($review = $paper->getCurrentReviewer())
+			return $this->user->is($paper->getCurrentReviewer());
+		return false;
 	}
 	public function canViewPaperCover()
 	{
