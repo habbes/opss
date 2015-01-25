@@ -22,6 +22,7 @@ $routes = [
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
 		['^review\-invitation\-declined\/?$', "EmailReviewInvitationDeclined"],
+		['^papers\/all\/?$', "Papers"],
 		['^papers\/submit\/?$', "PaperSubmit"],
 		['^papers\/(\w+)\/?$', "papers/Home"],
 		['^papers\/(\w+)\/vet\/?$', "papers/Home@handleVetReview"],
