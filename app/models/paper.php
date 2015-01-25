@@ -49,9 +49,11 @@ class Paper extends DBModel
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
 	const STATMSG_RESUBMITTED_AFTER_VET_REVISION = "resubmittedAfterVetRevision";
+	const STATMSG_REVIEW_SUBMITTED = "new";
 	
 	//next actions
 	const ACTION_EXTERNAL_REVIEW = "externalReview";
+	const ACTION_WORKSHOP_QUEUE = "workshopQueue";
 	
 	
 	
@@ -493,6 +495,18 @@ class Paper extends DBModel
 		$this->save();
 	}
 	
+	public function reviewResubmit()
+	{
+		$this->status = self::STATUS_PENDING;
+		$this->editable = false;
+		$this->incrementRevision();
+		$this->resetNextActionsList();
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
+		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+		$this->resetStatusMessagesList();
+		$this->save();
+	}
+	
 	/**
 	 * 
 	 * @param Reviewer $reviewer
@@ -503,6 +517,7 @@ class Paper extends DBModel
 		$this->status = self::STATUS_REVIEW;
 		$review = Review::create($this, $reviewer, $admin);
 		$review->save();
+		$this->save();
 	}
 	
 	/**
@@ -511,7 +526,44 @@ class Paper extends DBModel
 	 */
 	public function getCurrentReview()
 	{
-		return Review::findCurrentByPaper($paper);
+		return Review::findCurrentByPaper($this);
+	}
+	
+	/**
+	 * 
+	 * @return Review
+	 */
+	public function getLatesReview()
+	{
+		$rvs = Review::findByPaper($this);
+		return array_pop($rvs);
+	}
+	
+	/**
+	 * @return User
+	 */
+	public function getCurrentReviewer()
+	{
+		if($review = $this->getCurrentReview()){
+			return $review->getReviewer();
+		}
+		return null;
+	}
+	
+	public function submitReview($recommendation)
+	{
+		$review = $this->getCurrentReview();
+		$review->submit($recommendation);
+		$this->status = self::STATUS_PENDING;
+		$this->resetNextActionsList();
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
+		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+		
+		$this->resetStatusMessagesList();
+		$this->addStatusMessage(self::STATMSG_REVIEW_SUBMITTED);
+		
+		$this->save();
+		
 	}
 	
 	/**
