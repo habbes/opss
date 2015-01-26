@@ -36,7 +36,7 @@ class EmailActivation extends DBModel
 		$ea->email = $email? $email : $user->getEmail();
 		$validity = $validity? $validity : self::DEFAULT_VALIDITY;
 		$ea->expiry_date = Utils::dbDateFormat(time() + $validity * 3600);
-		$ea->code = sha1(uniqid());
+		$ea->code = Utils::uniqueRandomCode();
 		return $ea;
 	}
 	

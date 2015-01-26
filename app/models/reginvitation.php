@@ -48,7 +48,7 @@ class RegInvitation extends DBModel
 		$inv->email = $email;
 		$validity = $validity? $validity : self::DEFAULT_VALIDITY;
 		$inv->expiry_date = Utils::dbDateFormat(time() + $validity * 86400);
-		$inv->registration_code = sha1(uniqid());
+		$inv->registration_code = Utils::uniqueRandomCode();
 		$inv->status = self::PENDING;
 		
 		return $inv;
