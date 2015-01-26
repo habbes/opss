@@ -128,6 +128,18 @@ class Utils
 	}
 	
 	/**
+	 * generates a random unique code
+	 * @param number $length the size of the string, should be an even number
+	 * @return string
+	 */
+	public static function randomUniqueCode($length = 16)
+	{
+		//the function accepts the length in bytes, 2 hex digits fit one byte
+		//hence the division
+		return bin2hex(openssl_random_pseudo_bytes($length/2));
+	}
+	
+	/**
 	 * send a json response to the user
 	 * @param JsonObject/String $json
 	 */
@@ -172,6 +184,8 @@ class Utils
 		readfile($path);
 		exit;
 	}
+	
+	
 }
 
 ?>
