@@ -132,7 +132,7 @@ class Utils
 	 * @param number $length the size of the string, should be an even number
 	 * @return string
 	 */
-	public static function randomUniqueCode($length = 16)
+	public static function randomUniqueCode($length = 32)
 	{
 		//the function accepts the length in bytes, 2 hex digits fit one byte
 		//hence the division
