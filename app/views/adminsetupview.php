@@ -2,13 +2,15 @@
 
 class AdminSetupView extends BaseView
 {
-	public function render($params)
+	public function render()
 	{
-		if(!$params->form)
-			$params->form = new DataObject();
-		if(!$params->errors)
-			$params->errors = new DataObject();
-		$this->data->loadData($params->toArray());
+		if(!$this->data->form)
+			$this->data->form = new DataObject();
+		if(!$this->data->errors)
+			$this->data->errors = new DataObject();
+		
+		$this->data->pageTitle = "Registration";
+		$this->data->pageHeading = "Registration";
 		$this->data->pageContent = $this->read("admin-form-registration");
 		$this->showBase();
 	}

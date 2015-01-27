@@ -1,5 +1,5 @@
 <?php
-class SubmitHandler extends RequestHandler
+class SubmitHandler extends ResearcherHandler
 {
 	public function show()
 	{

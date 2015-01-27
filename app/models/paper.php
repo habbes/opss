@@ -21,30 +21,62 @@ class Paper extends DBModel
 	protected $editable;
 	protected $recallable;
 	protected $end_recallable_date;
+	protected $other_parts;
 	
 	private $_researcher;
 	private $_file;
 	private $_cover;
-	private $_authors;
-	private $_authorsNames;
+	private $_authors = [];
+	private $_authorsNames = [];
 	private $_groups;
+	private $_jsonLoaded = false;
+	private $_nextActions = [];
+	private $_statusMessages = [];
+
 	
 	const DIR = "papers";
-	const GRACE_PERIOD = 2;
+	const GRACE_PERIOD = 2; //days
 	
 	//status
-	const PENDING = 1;
-	const VETTING = 2;
-	const REVIEW = 3;
-	const REWRITE_MAJ = 4;
-	const REWRITE_MIN = 5;
-	const ACCEPTED = 4;
+	const STATUS_GRACE_PERIOD = "grace";
+	const STATUS_PENDING = "pending";
+	const STATUS_VETTING = "vetting";
+	const STATUS_VETTING_REVISION = "vettingRewrite";
+	const STATUS_REVIEW = "review";
+	const STATUS_REVIEW_REVISION_MAJ = "reviewRevisionMaj";
+	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
+	
+	//status messages
+	const STATMSG_NEW_PAPER = "new";
+	const STATMSG_RESUBMITTED_AFTER_VET_REVISION = "resubmittedAfterVetRevision";
+	const STATMSG_REVIEW_SUBMITTED = "new";
+	
+	//next actions
+	const ACTION_EXTERNAL_REVIEW = "externalReview";
+	const ACTION_WORKSHOP_QUEUE = "workshopQueue";
 	
 	
 	
+	/**
+	 * 
+	 * @param User $researcher
+	 * @param int $grace_period
+	 * @return Paper
+	 */
 	public static function create($researcher, $grace_period = null)
 	{
+		$paper = new static();
+		$paper->_researcher = $researcher;
+		$paper->researcher_id = $researcher->getId();
+		$paper->status = Paper::STATUS_GRACE_PERIOD;
+		$paper->editable = true;
+		$paper->recallable = true;
+		$paper->level = PaperLevel::PROPOSAL;
+		$paper->revision = 1;
+		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
+		$paper->end_recallable_date = time() + $grace_period * 84600;
 		
+		return $paper;
 	}
 	
 	/**
@@ -69,11 +101,64 @@ class Paper extends DBModel
 	
 	/**
 	 * 
-	 * @return number
+	 * @return string
 	 */
 	public function getStatus()
 	{
-		return (int) $this->status;
+		return $this->status;
+	}
+	
+	/**
+	 * 
+	 * @return number
+	 */
+	public function getRevision()
+	{
+		return (int) $this->revision;
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getRevisionIdentifier()
+	{
+		return sprintf("%s-%d",$this->identifier, $this->getRevision());
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getAbsoluteUrl()
+	{
+		return sprintf("%s/papers/%s", URL_ROOT, $this->identifier);
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getRelativeUrl()
+	{
+		return sprintf("/papers/%s", $this->identitifer);
+	}
+	
+	/**
+	 * 
+	 * @param number $rev
+	 */
+	public function setRevision($rev)
+	{
+		$this->revision = $rev;
+	}
+	
+	/**
+	 * 
+	 */
+	public function incrementRevision()
+	{
+		$this->setRevision($this->getRevision() + 1);
 	}
 
 	/**
@@ -101,7 +186,7 @@ class Paper extends DBModel
 	 * @param string $sourcePath where the file is being copied/moved from
 	 * @param boolean $fromUpload whether the file comes from a user upload
 	 */
-	private function createFile($filename, $sourcePath, $fromUpload)
+	private function createFile($filename, $sourcePath, $fromUpload = true)
 	{
 		$ds = DIRECTORY_SEPARATOR;
 		$dir = self::DIR.$ds.$this->getResearcher()->getUsername();
@@ -126,7 +211,7 @@ class Paper extends DBModel
 	 * @param string $sourcePath
 	 * @param boolean $fromUpload
 	 */
-	public function setFile($filename, $sourcePath, $fromUpload)
+	public function setFile($filename, $sourcePath, $fromUpload = true)
 	{
 		$file = $this->createFile($filename, $sourcePath, $fromUpload);
 		$this->file_id = $file->getId();
@@ -150,11 +235,11 @@ class Paper extends DBModel
 	 * @param string $sourcePath
 	 * @param boolean $fromUpload
 	 */
-	public function setCover($filename, $sourcePath, $fromUpload)
+	public function setCover($filename, $sourcePath, $fromUpload = true)
 	{
 		$file = $this->createFile($filename, $sourcePath, $fromUpload);
-		$this->file_id = $file->getId();
-		$this->_file = $file;
+		$this->cover_id = $file->getId();
+		$this->_cover = $file;
 	}
 	
 	/**
@@ -238,6 +323,257 @@ class Paper extends DBModel
 		return true;
 	}
 	
+	/**
+	 * decode the json text containing other info such as nextActions
+	 * and set the values to the corresponding properties
+	 */
+	private function loadOtherParts()
+	{
+		if(!$this->_jsonLoaded){
+			if($this->other_parts){
+				$json = json_decode($this->other_parts);
+				$this->_nextActions = $json->nextActions? $json->nextActions : [];
+				$this->_statusMessages = $json->statusMessages? $json->statusMessages : [];
+			}
+			$this->_jsonLoaded = true;
+		}
+	}
+	
+	/**
+	 * encode and save additional info such as nextActions
+	 */
+	private function saveOtherParts()
+	{
+		$other_parts = [
+				"nextActions" => $this->_nextActions,
+				"statusMessages" => $this->_statusMessages
+		];
+		$this->other_parts = json_encode($other_parts);
+	}
+	
+	/**
+	 * returns a list of possible actions that can be taken on this paper if it is in
+	 * a pending state
+	 * @return array(string)
+	 */
+	public function getNextActions()
+	{
+		$this->loadOtherParts();
+		return $this->_nextActions;
+	}
+	
+	/**
+	 * add an action that can be performed next on this paper
+	 * @param string $action one of the ACTION_* constants
+	 */
+	public function addNextAction($action)
+	{
+		$this->loadOtherParts();
+		$this->_nextActions[] = $action;
+	}
+	
+	/**
+	 * add a list of actions that can be performed next on this paper
+	 * @param array $actions use the ACTION_* constants
+	 */
+	public function addNextActions($actions)
+	{
+		$this->loadOtherParts();
+		$this->_nextActions = array_merge($this->_nextActions, $actions);
+	}
+	
+	/**
+	 * remove of all actions currently in the nextActions list
+	 */
+	public function resetNextActionsList()
+	{
+		$this->loadOtherParts();
+		$this->_nextActions = [];
+	}
+	
+	/**
+	 * adds a message that is meant to be displayed on this paper's page
+	 * @param string $message use the STATMSG_* constants
+	 */
+	public function addStatusMessage($message)
+	{
+		$this->loadOtherParts();
+		$this->_statusMessages[] = $message;
+	}
+	
+	/**
+	 * 
+	 * @param array $messages use the STATMSG_* constants as elements of the array
+	 */
+	public function addStatusMessages($messages)
+	{
+		$this->loadOtherParts();
+		$this->_statusMessages = array_merge($this->_statusMessages, $messages);
+	}
+	
+	/**
+	 * 
+	 * @return array
+	 */
+	public function getStatusMessages()
+	{
+		$this->loadOtherParts();
+		return $this->_statusMessages;
+	}
+	
+	/**
+	 * delete the status message if it's in the list
+	 * @param string $message user the STATMSG_* constants
+	 */
+	public function deleteStatusMessage($message)
+	{
+		$this->loadOtherParts();
+		$i = array_search($message, $this->_statusMessages);
+		if($i !== false)
+			$this->_statusMessages = array_splice($this->_statusMessages, $i, 1);
+	}
+	
+	/**
+	 * removes all status messages
+	 */
+	public function resetStatusMessagesList()
+	{
+		$this->loadOtherParts();
+		$this->_statusMessages = [];
+	}
+	
+	/**
+	 * gets all history events for this paper
+	 * @return array(PaperChange)
+	 */
+	public function getChanges()
+	{
+		return PaperChange::findByPaper($this);
+	}
+	
+	protected function onInsert(&$errors)
+	{
+		$this->date_submitted = Utils::dbDateFormat(time());
+		return true;
+	}
+	
+	protected function validate(&$errors)
+	{
+		if(!$this->title)
+			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
+		if(!$this->language)
+			$errors[] = OperationError::PAPER_LANGUAGE_EMPTY;
+		if(!$this->country)
+			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
+		
+		//save other parts
+		$this->saveOtherParts();
+		
+		
+		return true;
+	}
+	
+	protected function afterInsert()
+	{
+		$date = getdate($this->getDateSubmitted());
+		$identifier = sprintf("%04d%02d%d",$date['year'],$date['mon'],$this->getId());
+		$this->identifier = $identifier;
+		$this->save();
+	}
+	
+	/**
+	 * send paper for vetting
+	 */
+	public function sendForVetting()
+	{
+		$this->status = self::STATUS_VETTING;
+		$this->editable = false;
+		$this->recallable = false;
+		$this->save();
+	}
+	
+	/**
+	 * resubmit paper for vetting (after revision)
+	 */
+	public function vettingResubmit()
+	{
+		$this->status = self::STATUS_VETTING;
+		$this->editable = false;
+		$this->incrementRevision();
+		$this->addStatusMessage(self::STATMSG_RESUBMITTED_AFTER_VET_REVISION);
+		$this->save();
+	}
+	
+	public function reviewResubmit()
+	{
+		$this->status = self::STATUS_PENDING;
+		$this->editable = false;
+		$this->incrementRevision();
+		$this->resetNextActionsList();
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
+		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+		$this->resetStatusMessagesList();
+		$this->save();
+	}
+	
+	/**
+	 * 
+	 * @param Reviewer $reviewer
+	 * @param Admin $admin
+	 */
+	public function sendForReview($reviewer, $admin)
+	{
+		$this->status = self::STATUS_REVIEW;
+		$review = Review::create($this, $reviewer, $admin);
+		$review->save();
+		$this->save();
+	}
+	
+	/**
+	 * 
+	 * @return Review
+	 */
+	public function getCurrentReview()
+	{
+		return Review::findCurrentByPaper($this);
+	}
+	
+	/**
+	 * 
+	 * @return Review
+	 */
+	public function getLatesReview()
+	{
+		$rvs = Review::findByPaper($this);
+		return array_pop($rvs);
+	}
+	
+	/**
+	 * @return User
+	 */
+	public function getCurrentReviewer()
+	{
+		if($review = $this->getCurrentReview()){
+			return $review->getReviewer();
+		}
+		return null;
+	}
+	
+	public function submitReview($recommendation)
+	{
+		$review = $this->getCurrentReview();
+		$review->submit($recommendation);
+		$this->status = self::STATUS_PENDING;
+		$this->resetNextActionsList();
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
+		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+		
+		$this->resetStatusMessagesList();
+		$this->addStatusMessage(self::STATMSG_REVIEW_SUBMITTED);
+		
+		$this->save();
+		
+	}
 	
 	/**
 	 * 

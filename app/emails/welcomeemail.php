@@ -21,6 +21,7 @@ class WelcomeEmail extends Email
 	{
 		$e = new static();
 		$e->user = $user;
+		$e->setSubject("Account Activation");
 		$e->setBodyFromTemplate("post-registration",
 				[
 					"name" => $user->getFullname(),

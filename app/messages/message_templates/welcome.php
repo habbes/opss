@@ -1,0 +1,1 @@
+Welcome {{name}} to the AERC OPSS. You have successfully registered an account as {{accountType}}.

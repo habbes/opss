@@ -55,10 +55,11 @@ abstract class RequestHandler
 		$ds = DIRECTORY_SEPARATOR;
 		$viewPath = str_replace("/", $ds, $viewPath);
 		include DIR_VIEWS.$ds.strtolower($viewPath).".php";
-		$view = new $class();
+		$view = new $class($this->viewParams);
 		$args = func_get_args();
 		
-		$view->render($this->viewParams);
+		$view->render();
+		
 		
 		exit;
 	}

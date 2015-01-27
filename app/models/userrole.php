@@ -10,7 +10,7 @@
 abstract class UserRole
 {
 	protected $user;
-	protected $type;
+	protected static $type;
 	
 	/**
 	 * 
@@ -53,7 +53,7 @@ abstract class UserRole
 	 */
 	public function getType()
 	{
-		return $this->type;
+		return static::$type;
 	}
 	
 	/**
@@ -86,6 +86,32 @@ abstract class UserRole
 	//ABSTRACT METHODS
 	
 	/**
+	 * find all users with this role
+	 * @return array(User)
+	 */
+	public static function findAll()
+	{
+		return User::findAllByField("type", static::$type);
+	}
+	
+	/**
+	 * find the user with this role with the given id
+	 * @param number $id
+	 * @return User
+	 */
+	public static function findById($id)
+	{
+		return User::findOne("id=? AND type=?", $id, static::$type);
+	}
+	
+	/**
+	 * find all papers this role has access to
+	 * @return array(Paper)
+	 */
+	public abstract function getPapers();
+	
+	
+	/**
 	 * @return boolean
 	 */
 	public abstract function hasResidence();
@@ -101,5 +127,44 @@ abstract class UserRole
 	 * @return boolean
 	 */
 	public abstract function hasGender();
+	
+	/**
+	 * @return boolean
+	 */
+	public abstract function hasAreaOfSpecialization();
+	
+	/**
+	 * checks whether this role has access to the specified paper
+	 * @param Paper $paper
+	 * @return boolean
+	 */
+	public abstract function hasAccessToPaper($paper);
+	
+	/**
+	 * checks whether this role can view the cover a paper the role has access to
+	 * @return boolean
+	 */
+	public abstract function canViewPaperCover();
+	
+	/**
+	 * checks whether this role can view the researcher/co-authors of a paper the role has access to
+	 * @return boolean
+	 */
+	public abstract function canViewPaperAuthor();
+	
+	/**
+	 * @return boolean
+	 */
+	public abstract function canEditPaper();
+
+	/**
+	 * @return boolean
+	 */
+	public abstract function canVetPaper();
+	
+	/**
+	 * @return boolean
+	 */
+	public abstract function canReviewPaper();
 	
 }

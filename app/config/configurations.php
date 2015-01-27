@@ -15,6 +15,6 @@ $config = [
 			"uname" => "haby_habbes@yahoo.com",
 			"pass" => "58sisnax13",
 			"from" => "haby_habbes@yahoo.com",
-			"from_name" => "AERC_OPSS"
+			"from_name" => "AERC OPSS"
 		]
 ];

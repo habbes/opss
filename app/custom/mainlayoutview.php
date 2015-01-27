@@ -10,6 +10,34 @@ class MainLayoutView extends BaseView
 	
 	protected $navLinks = array();
 	
+	public function __construct($data)
+	{
+		parent::__construct($data);
+		$this->setNavLinks();
+	}
+	
+	public function setNavLinks()
+	{
+		if(count($this->navLinks) == 0){
+			$user = $this->data->user;
+			$this->addNavGroup("Notifications","envelope");
+			$this->addNavLink("Notifications", "All Notifications", URL_ROOT."/messages/all");
+			$this->addNavLink("Notifications", "Unread", URL_ROOT."/messages/unread");
+			$this->addNavGroup("Papers","file");
+			if($user->isResearcher())
+				$this->addNavLink("Papers", "Submit", URL_ROOT."/papers/submit");
+			$this->addNavLink("Papers","All Papers",URL_ROOT."/papers/all");
+			
+			if($user->isAdmin()){
+				$this->addNavGroup("Users", "user");
+				$this->addNavLink("Users", "Invite User", URL_ROOT."/papers/users/invite");
+				$this->addNavLink("Users", "All Users", URL_ROOT."/papers/users/all");
+				$this->addNavLink("Users", "Researchers", URL_ROOT."/papers/users/researchers");
+					
+			}
+		}
+	}
+	
 	
 	/**
 	 * display the page on top of the mainlayout
@@ -17,31 +45,14 @@ class MainLayoutView extends BaseView
 	 * role of the logged-in user
 	 * @params DataObject $params params passed by the controller
 	 */
-	public function showBase($params)
+	public function showBase()
 	{
-		$user = $params->user;
-		$this->data->userName = $user->getFullName();
-		$role = $user->getRole();
-		
-		$this->addNavGroup("Notifications","envelope");
-		$this->addNavLink("Notifications", "All Notifications", URL_ROOT."/messages/all");
-		$this->addNavLink("Notifications", "Unread", URL_ROOT."/messages/unread");
-		$this->addNavGroup("Papers","file");
-		if($user->isResearcher())
-			$this->addNavLink("Papers", "Submit", URL_ROOT."/papers/submit");
-		$this->addNavLink("Papers","All Papers",URL_ROOT."/papers/all");
-		
-		if($user->isAdmin()){
-			$this->addNavGroup("Users", "user");
-			$this->addNavLink("Users", "Invite User", URL_ROOT."/papers/users/invite");
-			$this->addNavLink("Users", "All Users", URL_ROOT."/papers/users/all");
-			$this->addNavLink("Users", "Researchers", URL_ROOT."/papers/users/researchers");
-			
-		}
+		$this->data->userName = $this->data->user->getFullName();
+		$this->setNavLinks();
 		
 		$this->data->navLinks = $this->navLinks;
 		$this->data->pageNav = $this->read("nav");
-		parent::showBase($params);
+		parent::showBase();
 	}
 	
 	/**

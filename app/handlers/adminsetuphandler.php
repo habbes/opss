@@ -36,7 +36,11 @@ class AdminSetupHandler extends LoggedOutHandler
 				$erros[] = OperationError::USER_PASSWORDS_DONT_MATCH;
 			
 			$user->setPassword($this->postVar("password"));
+			$user->setEmailActivated(true);
 			$user->save();
+			//send welcome message
+			$msg = WelcomeMessage::create($user);
+			$msg->send();
 			
 			$this->login($user);
 			$this->localRedirect("");
@@ -71,6 +75,8 @@ class AdminSetupHandler extends LoggedOutHandler
 						$errors->set("password-confirm", "This does not match the entered password");
 						break;
 				}
+				
+				$this->setResultMessage("Please correct the indicated errors.", "error");
 			}
 			$this->viewParams->errors = $errors;
 		}

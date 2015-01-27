@@ -2,3 +2,6 @@
 .project
 .buildpath
 app/data/*
+*dwsync.xml
+*_notes*
+*_notes/.

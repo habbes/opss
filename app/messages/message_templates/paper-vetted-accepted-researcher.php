@@ -1,0 +1,1 @@
+Your paper "{{title}}" ({{identifier}}) has been vetted and has been accepted.

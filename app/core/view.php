@@ -15,16 +15,19 @@ abstract class View
 	 */
 	protected $data;
 	
-	public function __construct()
+	/**
+	 * 
+	 * @param DataObject $data
+	 */
+	public function __construct($data = null)
 	{
-		$this->data = new DataObject();
+		$this->data = $data? $data : new DataObject();
 	}
 	
 	/**
 	 * display the view
-	 * @param DataObject $params args passed from the calling RequestHandler
 	 */
-	public function render($params)
+	public function render()
 	{
 		
 	}
@@ -46,8 +49,9 @@ abstract class View
 	 */
 	public function show($template)
 	{
+		require_once DIR_CORE.DIRECTORY_SEPARATOR."viewfunctions.php";
 		$data = $this->data;
-		include $this->template($template);
+		require $this->template($template);
 	}
 	
 	/**
@@ -58,8 +62,9 @@ abstract class View
 	public function read($template)
 	{
 		ob_start();
+		require_once DIR_CORE.DIRECTORY_SEPARATOR."viewfunctions.php";
 		$data = $this->data;
-		include $this->template($template);
+		require $this->template($template);
 		return ob_get_clean();
 	}
 	

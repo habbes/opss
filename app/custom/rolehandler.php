@@ -5,7 +5,7 @@
  * @author Habbes
  *
  */
-abstract class RoleHandler extends LoginHandler
+abstract class RoleHandler extends LoggedInHandler
 {
 	/**
 	 * get the only Roles that this handler grants access to

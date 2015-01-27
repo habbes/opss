@@ -2,7 +2,7 @@
 
 class PostRegistrationView extends BaseView
 {
-	public function render($params)
+	public function render()
 	{
 		$this->data->pageTitle = "Post Registration";
 		$this->data->pageHeading = "Registration Successful";

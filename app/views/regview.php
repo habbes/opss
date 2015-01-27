@@ -2,9 +2,8 @@
 
 class RegView extends View
 {
-	public function render($params)
+	public function render()
 	{
-		$this->data->resultMessage = $params->resultMessage;
 		$this->show("regtest");
 	}
 }

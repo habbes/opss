@@ -2,11 +2,22 @@
 
 body {
 	font-size:14px;
-	font-family:segoe ui, calibri, sans-serif;
+	font-family:segoe ui,calibri,tahoma,sans-serif;
+	color:rgb(90,90,90);
 }
 
 .btn {
 	border-radius:2px;
+}
+
+.btn-default {
+	background-image:none;
+	color:#686868;
+	background-color:#f6f6f6;
+}
+
+.panel-default> .panel-heading {
+	background-image: none;
 }
 
 .page-header {
@@ -27,14 +38,12 @@ body {
 	background-color:#251c17;
 }
 
-
-
-.panel {
-	padding:20px;
-}
-
 .align-center {
 	text-align:center;
+}
+
+.font-bold {
+	font-weight:600;
 }
 
 #page-content {
@@ -54,6 +63,16 @@ body {
 	font-weight:normal;
 	font-size:1em;
 	font-variant:small-caps;
+}
+
+#result-message-container {
+	display:none;
+}
+
+#logo-image {
+	width:45px;
+	position:relative;
+	top:-15px;
 }
 
 /** sidebar nav **/
@@ -80,6 +99,10 @@ body {
 /** end sidebar nav **/
 
 /** forms **/
+.form-control {
+	border-radius:2px;
+}
+
 .form-group {
 	margin-bottom:5px;
 }
@@ -119,3 +142,35 @@ label {
 
 /** end forms **/
 
+/** tables **/
+#notifications-table .unread {
+	font-weight:600;
+}
+
+.table-hover td:hover {
+	cursor:pointer;
+}
+
+/** end tables **/
+
+/** message viewer **/
+.message-time {
+	font-size:0.8em;
+	padding-top:10px;
+}
+
+.modal-footer:empty {
+	display:none;
+}
+/** end message viewer **/
+
+#paper-body {
+	padding-top:20px;
+}
+
+/** paper sidebar **/
+#paper-sidebar {
+	border-left: 1px solid #f6f6f6;
+}
+
+/** end paper sidebar **/

@@ -2,8 +2,28 @@
 
 class RegistrationHandler extends LoggedOutHandler
 {
-	private function showRegPage()
+	
+	/**
+	 * 
+	 * @var RegInvitation
+	 */
+	private $invitation;
+	
+	private function checkInvitation()
 	{
+		$code = $this->getVar("invitation");
+		if($code){
+			$this->invitation = RegInvitation::findValidByCode($code);
+			if(!$this->invitation){
+				$this->setResultMessage("Invalid invitation code.", "error");
+				$this->showResearcherRegPage();
+			}
+		}
+	}
+	
+	private function showResearcherRegPage()
+	{
+		//check for invitation
 		$this->viewParams->countries = SysDataList::get("countries-en");
 		$this->viewParams->titles = SysDataList::get("titles-en");
 		$this->viewParams->languages = SysDataList::get("languages-en");
@@ -14,6 +34,31 @@ class RegistrationHandler extends LoggedOutHandler
 		$this->renderView("Registration");
 	}
 	
+	private function showAdminRegPage()
+	{
+		$this->viewParams->titles = SysDataList::get("titles-en");
+		$this->viewParams->formType = "admin";
+		$this->renderView("Registration");
+	}
+	
+	private function showRegPage()
+	{
+		if($this->invitation){
+			switch($this->invitation->getUserType()){
+				case UserType::RESEARCHER:
+					$this->showResearcherRegPage();
+					break;
+				case UserType::ADMIN:
+				case UserType::REVIEWER:
+					$this->showAdminRegPage();
+					break;
+			}
+		}
+		else {
+			$this->showResearcherRegPage();
+		}
+	}
+	
 	private function showPostRegPage()
 	{
 		$this->renderView("PostRegistration");
@@ -21,11 +66,13 @@ class RegistrationHandler extends LoggedOutHandler
 	
 	private function handleRegistration()
 	{
+		$this->checkInvitation();
 		$this->viewParams->form = new DataObject($_POST);
 		try {
 			$errors = [];
-				
-			$user = User::create(UserType::RESEARCHER);
+			
+			$userType = $this->invitation? $this->invitation->getUserType() : UserType::RESEARCHER;
+			$user = User::create($userType);
 			//properties common to all user types
 			$user->setTitle($this->trimPostVar("title"));
 			$user->setFirstName($this->trimPostVar("firstname"));
@@ -51,30 +98,72 @@ class RegistrationHandler extends LoggedOutHandler
 				default:
 					$gender = 0;
 			}
-			$user->setGender($gender);
-			$user->setAddress($this->trimPostVar("address"));
-			$user->setResidence($this->trimPostVar("residence"));
-			$user->setNationality($this->trimPostVar("nationality"));
-			$collabArea = (int) $this->postVar("collaborative-area");
-			$thematicArea = (int) $this->postVar("thematic-area");
-			if(!PaperGroup::isValue($collabArea))
-				$errors[] = OperationError::COLLAB_AREA_INVALID;
-			if(!PaperGroup::isValue($thematicArea))
-				$errors[] = OperationError::THEMATIC_AREA_INVALID;
+			$role = $user->getRole();
+			if($role->hasGender())
+				$user->setGender($gender);
+			if($role->hasAddress())
+				$user->setAddress($this->trimPostVar("address"));
+			if($role->hasResidence())
+				$user->setResidence($this->trimPostVar("residence"));
+			if($role->hasNationality())
+				$user->setNationality($this->trimPostVar("nationality"));
+			
+			if($role->hasAreaOfSpecialization()){
+				$collabArea = (int) $this->postVar("collaborative-area");
+				$thematicArea = (int) $this->postVar("thematic-area");
+				if(!PaperGroup::isValue($collabArea))
+					$errors[] = OperationError::COLLAB_AREA_INVALID;
+				if(!PaperGroup::isValue($thematicArea))
+					$errors[] = OperationError::THEMATIC_AREA_INVALID;
 				
-			if(!empty($errors))
-				throw new OperationException($errors);
+				if(!empty($errors))
+					throw new OperationException($errors);
+				}
 			$user->save();
-			$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
-			$user->addThematicArea((int) $this->postVar("thematic-area"));
-				
+			
+			if($role->hasAreaOfSpecialization()){
+				$user->addCollaborativeArea((int) $this->postVar("collaborative-area"));
+				$user->addThematicArea((int) $this->postVar("thematic-area"));
+			}
+			
+			//send welcome message
+			$msg = WelcomeMessage::create($user);
+			$msg->send();
+			
+			//notify admins
+			foreach(Admin::findAll() as $admin)
+			{
+				$msg = UserRegisteredMessage::create($user);
+				$msg->sendTo($admin);
+			}
+			
 			//send activation email
 			$ea = EmailActivation::create($user);
 			$ea->save();
 			$mail = WelcomeEmail::create($user, $ea->getCode());
 			$mail->send();
+			
+			if($this->invitation){
+				$this->invitation->register($user);
+			}
+			
+			//start paper review period
+			if($this->invitation && 
+					$this->invitation->getUserType() == UserType::REVIEWER && $this->invitation->getPaper()){
+				$paper = $this->invitation->getPaper();
+				$paper->sendForReview($user, $this->invitation->getAdmin());
 				
-			Session::instance()->registerdUserId =  $user->getId();
+				//notify reviewer
+				PaperSentForReviewMessage::create($user, $paper, $user)->send();
+				//notify researcher
+				PaperSentForReviewMessage::create($paper->getResearcher(), $paper, $user)->send();
+				//notify admins
+				foreach(Admin::findAll() as $admin){
+					PaperSentForReviewMessage::create($admin, $paper, $user)->send();
+				}
+			}
+			
+			Session::instance()->registeredUserId =  $user->getId();
 			$this->showPostRegPage();
 				
 		}
@@ -126,6 +215,8 @@ class RegistrationHandler extends LoggedOutHandler
 						$errors->set("password-confirm", "This does not match the entered password");
 						break;
 				}
+				
+				$this->setResultMessage("Please correct the indicated errors.", "error");
 			}
 		
 			$this->viewParams->errors = $errors;
@@ -139,22 +230,35 @@ class RegistrationHandler extends LoggedOutHandler
 	
 	private function resendActivation()
 	{
-		$user = User::findById(Session::instance()->registerdUserId);
-		//send activation email
-		$ea = EmailActivation::create($user);
-		$ea->save();
-		$mail = WelcomeEmail::create($user, $ea->getCode());
-		$mail->send();
+		try {
+			$user = User::findById(Session::instance()->registeredUserId);
+			if(!$user)
+				throw new OperationException(["UserNotFound"]);
+			//send activation email
+			$ea = EmailActivation::create($user);
+			$ea->save();
+			$mail = WelcomeEmail::create($user, $ea->getCode());
+			$mail->send();
+		}
+		catch(OperationException $e) {
+			foreach($e->getErrors() as $error){
+				switch($error){
+					case "UserNotFound":
+						$this->setResultMessage("Error occured while trying to send email. Email was not sent.","error");
+						break;
+				}
+			}
+		}
 		$this->showPostRegPage();
 		
 	}
 	
 	public function get()
 	{
-		if(!Session::instance()->registeredUserId)
-			$this->showRegPage();
-		else
-			$this->showPostRegPage();
+		if(Session::instance()->registeredUserId)
+			unset(Session::instance()->registeredUserId);
+		$this->checkInvitation();
+		$this->showRegPage();
 	}
 	
 	public function post()

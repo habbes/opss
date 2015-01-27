@@ -1,0 +1,1 @@
+The paper "{{title}}" ({{identifier}}) by {{author}} has been vetted and accepted.

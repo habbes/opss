@@ -1,0 +1,1 @@
+The review invitation sent to {{name}} ({{email}}) for the paper "{{title}}" ({{identifier}}) has been <strong>declined</strong>.

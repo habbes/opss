@@ -17,26 +17,26 @@ $formerror = $data->errors;
 	      					<?php foreach($data->titles as $title){	?>
 	      					<option value="<?=$title?>"
 	      					<?php if($title == $formdata->title) echo "selected"; ?>
-	      							><?= $title ?></option>	
+	      							><?= escape($title) ?></option>	
 	      					<?php }	?>
 	      				</select>
-	      				<span class="help-block text-danger form-error" id="title-error"><?= $formerror->title ?></span>
+	      				<span class="help-block text-danger form-error" id="title-error"><?= escape($formerror->title) ?></span>
 	      			</div>
 	      			
 	      			<!-- First name -->
 					<div class="col-sm-4 combined-fields-item" style="padding-left: 0px;padding-right:0px">
 						<input type="text" id="firstname"
-							name="firstname" value="<?=$formdata->firstname?>"
+							name="firstname" value="<?= escape($formdata->firstname)?>"
 							placeholder="First name" class="form-control">
-						<span class="help-block text-danger form-error" id="firstname-error"><?= $formerror->firstname ?></span>
+						<span class="help-block text-danger form-error" id="firstname-error"><?= escape($formerror->firstname) ?></span>
 					</div>
 					
 					<!-- Last name -->
 					<div class="col-sm-4 combined-fields-item" style="padding-left: 0px">
 						<input type="text" id="lastname" name="lastname"
-								value="<?=$formdata->lastname?>" 
+								value="<?= escape($formdata->lastname) ?>" 
 					        	placeholder="Last name" class="form-control">
-					    <span class="help-block text-danger form-error" id="lastname-error"><?= $formerror->lastname ?></span>
+					    <span class="help-block text-danger form-error" id="lastname-error"><?= escape($formerror->lastname) ?></span>
 					</div>
 				</div>
 				
@@ -47,7 +47,7 @@ $formerror = $data->errors;
 			      		<?php if($formdata->gender == "male") echo "checked"; ?> >Male</label>
 			      		<label class="radio-inline"><input type="radio" value="female" name="gender"
 			      		<?php if($formdata->gender == "female") echo "checked"; ?> >Female</label>
-			      		<span class="help-block text-danger form-error" id="gender-error"><?= $formerror->gender ?></span>
+			      		<span class="help-block text-danger form-error" id="gender-error"><?= escape($formerror->gender) ?></span>
 			      	</div>
 			    </div>
 			    
@@ -58,11 +58,11 @@ $formerror = $data->errors;
 	      					<option value="">Select Country of Nationality</option>
 	      					<?php foreach($data->countries as $country){ ?>
 	      						<option value="<?=$country?>"
-	      						<?php if($country == $formdata->nationality) echo "selected"; ?> ><?=$country?></option>
+	      						<?php if($country == $formdata->nationality) echo "selected"; ?> ><?= escape($country) ?></option>
 	      					<?php } ?>
 	      				</select>
 	      				<span class="help-block text-danger form-error" 
-	      					id="nationality-error"><?= $formerror->nationality ?></span>
+	      					id="nationality-error"><?= escape($formerror->nationality) ?></span>
 	      			</div>
 	    		</div>
 	    		
@@ -73,19 +73,19 @@ $formerror = $data->errors;
 	      					<option value="">Select Country of Residence</option>
 	      					<?php foreach($data->countries as $country){ ?>
 	      					<option value="<?=$country?>"
-	      						<?php if($country == $formdata->residence) echo "selected"; ?> ><?=$country?></option>
+	      						<?php if($country == $formdata->residence) echo "selected"; ?> ><?= escape($country) ?></option>
 	      					<?php } ?>
 	      				</select>
-	      				<span class="help-block text-danger form-error" id="residence-error"><?= $formerror->residence ?></span>
+	      				<span class="help-block text-danger form-error" id="residence-error"><?= escape($formerror->residence) ?></span>
 	      			</div>
 	    		</div>
 	    				
 				<div class="form-group">
 				<!-- Address -->
 					<div class="col-sm-10">
-						<input type="text" id="address" name="address" value="<?= $formdata->address ?>"
+						<input type="text" id="address" name="address" value="<?= escape($formdata->address) ?>"
 					        placeholder="Enter your Address" class="form-control">
-					    <span class="help-block text-danger form-error" id="address-error"><?= $formerror->address ?></span>
+					    <span class="help-block text-danger form-error" id="address-error"><?= escape($formerror->address) ?></span>
 					</div>
 				</div>
 			</fieldset>
@@ -101,11 +101,11 @@ $formerror = $data->errors;
 	      				<?php foreach($data->researchAreaValues as $area ){?>
 	      					<option value="<?=$area?>"
 	      						<?php if($area == $formdata->get("thematic-area")) echo "selected"; ?>
-	      							><?= $data->researchAreaNames[$area]?></option>
+	      							><?= escape($data->researchAreaNames[$area]) ?></option>
 	      					<?php } ?>
 	      				</select>
 	      				<span class="help-block text-danger form-error" 
-	      					id="thematic-area-error"><?= $formerror->get("thematic-area") ?></span>
+	      					id="thematic-area-error"><?= escape($formerror->get("thematic-area")) ?></span>
 	      			</div>
     			</div>
     			<div class="form-group">
@@ -116,11 +116,11 @@ $formerror = $data->errors;
 	      				<?php foreach($data->researchAreaValues as $area ){?>
 	      					<option value="<?=$area?>"
 	      					<?php if($area == $formdata->get("collaborative-area")) echo "selected"; ?>
-	      						><?= $data->researchAreaNames[$area]?></option>
+	      						><?= escape($data->researchAreaNames[$area]) ?></option>
 	      				<?php } ?>
 	      				</select>
 	      				<span class="help-block text-danger form-error" 
-	      					id="collaborative-area-error"><?= $formerror->get("collaborative-area") ?></span>
+	      					id="collaborative-area-error"><?= escape($formerror->get("collaborative-area")) ?></span>
 	      			</div>
     			</div>
 			</fieldset>
@@ -135,17 +135,17 @@ $formerror = $data->errors;
 				<div class="form-group">
 					<!-- username -->
 				    <div class="col-sm-10 col-sm-offset-2">
-				    	<input type="text" id="username" name="username" value="<?= $formdata->username; ?>"
+				    	<input type="text" id="username" name="username" value="<?= escape($formdata->username); ?>"
 				        placeholder="Enter your Username" class="form-control">
-				        <span class="help-block text-danger form-error" id="username-error"><?= $formerror->username ?></span>
+				        <span class="help-block text-danger form-error" id="username-error"><?= escape($formerror->username) ?></span>
 				    </div>
 				</div>
 				<div class="form-group">
 				      <!-- E-mail -->
 				    <div class="col-sm-10 col-sm-offset-2">
-				    	<input type="email" id="email" name="email" value="<?= $formdata->email ?>"
+				    	<input type="email" id="email" name="email" value="<?= escape($formdata->email) ?>"
 				        placeholder="Enter your Email address" class="form-control" >
-				        <span class="help-block text-danger form-error" id="email-error"><?= $formerror->email ?></span>
+				        <span class="help-block text-danger form-error" id="email-error"><?= escape($formerror->email) ?></span>
 					</div>
 				</div>
 				
@@ -153,7 +153,7 @@ $formerror = $data->errors;
 					<!-- password -->
 					<div class="col-sm-10 col-sm-offset-2">
 				        <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
-				        <span class="help-block text-danger form-error" id="password-error"><?= $formerror->password ?></span>
+				        <span class="help-block text-danger form-error" id="password-error"><?= escape($formerror->password) ?></span>
 					</div>
 				</div>
 		
@@ -163,7 +163,7 @@ $formerror = $data->errors;
 				    	<input type="password" id="password-confirm" name="password-confirm" class="form-control"
 				    		placeholder="Repeat Password">
 				        <span class="help-block text-danger form-error" 
-				        id="password-confirm-error"><?= $formerror->get("password-confirm") ?></span>
+				        id="password-confirm-error"><?= escape($formerror->get("password-confirm")) ?></span>
 				     </div>
 				</div>
 			</fieldset>
@@ -175,7 +175,7 @@ $formerror = $data->errors;
       		<!-- Button -->
       			<div class="align-center">
         			<input type="submit" class="btn btn-success inline" value="Proceed With Registration"/>
-        			<span>If you already have an account <a href="<?= URL_ROOT?>/login" class="link">sign in here</a></span>
+        			<div>If you already have an account <a href="<?= URL_ROOT?>/login" class="link">sign in here</a></div>
      			</div>
     		</div>
     	</fieldset>

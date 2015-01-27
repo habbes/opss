@@ -30,6 +30,18 @@ class OperationError
 	const PAPER_GROUP_INVALID = "PaperGroupInvalid";
 	const EMAIL_ACTIVATION_INVALID = "EmailActivationInvalid";
 	const INVITATION_INVALID = "InvitationInvalid";
+	const AUTHOR_NAME_EMPTY = "AuthorNameEmpty";
+	//paper errors
+	const PAPER_TITLE_EMPTY = "PaperTitleEmpty";
+	const PAPER_LANGUAGE_EMPTY = "PaperLanguageEmpty";
+	const PAPER_COUNTRY_EMPTY = "PaperCountryEmpty";
+	const PAPER_MAX_AUTHORS_REACHED = "PaperMaxAuthorsReached";
+	//vet review errors
+	const VET_INVALID_VERDICT = "VetInvalidVerdict";
+	const VET_COMMENTS_EMPTY = "VetCommentsEmpty";
+	//review request
+	const REVIEW_REQUEST_INVALID = "ReviewRequestInvalid";
+	
 	
 	
 	

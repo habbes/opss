@@ -80,6 +80,16 @@ class Utils
 		return strftime("%Y-%m-%d %H:%M:%S",$timestamp);
 	}
 	
+	public static function siteDateTimeFormat($timestamp)
+	{
+		return strftime("%a %d %b %Y at %H:%M", $timestamp);
+	}
+	
+	public static function siteDateFormat($timestamp)
+	{
+		return strftime("%a %d %b %Y", $timestamp);
+	}
+	
 	/**
 	 * hashes a password
 	 * @param string $password
@@ -115,6 +125,18 @@ class Utils
 		} while (file_exists($directory . $ds . $filename));
 		
 		return $filename;
+	}
+	
+	/**
+	 * generates a random unique code
+	 * @param number $length the size of the string, should be an even number
+	 * @return string
+	 */
+	public static function uniqueRandomCode($length = 32)
+	{
+		//the function accepts the length in bytes, 2 hex digits fit one byte
+		//hence the division
+		return bin2hex(openssl_random_pseudo_bytes($length/2));
 	}
 	
 	/**
@@ -162,6 +184,8 @@ class Utils
 		readfile($path);
 		exit;
 	}
+	
+	
 }
 
 ?>
