@@ -15,23 +15,41 @@ class InviteReviewerHandler extends PaperHandler
 		$this->renderView("papers/Home");
 	}
 	
-	public function post()
+	public function inviteNewReviewer()
 	{
+		$user = null;
 		try {
+			$errors = [];
 			$email = $this->trimPostVar("email");
 			$confirmEmail = $this->trimPostVar("confirm-email");
 			$name = $this->trimPostVar("name");
-			if($email != $this->trimPostVar("confirm-email")){
-				throw new OperationException(["EmailsDontMatch"]);
-			}
 			
+			if(!$name){
+				$errors[] = "NameEmpty";
+			}
+			if(!User::isValidEmail($email)){
+				$errors[] = "InvalidEmail";
+			}
+			if($email != $this->trimPostVar("confirm-email")){
+				$errors[] = "EmailsDontMatch";
+			}
 			$user = User::findByEmail($email);
 			if($user){
-				$this->inviteExistingReviewer($user);
+				$errors[] = "UserExists";
 			}
-			else {
-				$this->inviteNewReviewer($name, $email);
+			
+			if(count($errors)>0){
+				throw new OperationException($errors);
 			}
+			$inv = RegInvitation::create($this->user, UserType::REVIEWER, $email);
+			$inv->setName($name);
+			$inv->setPaper($this->paper);
+			$inv->save();
+			NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
+			foreach(Admin::findAll() as $admin){
+				ReviewInvitationSentMessage::create($admin, $this->paper, $name, $email)->send();
+			}
+			$this->redirectSuccess("Invitation sent successfully.");
 		}
 		catch (OperationException $e){
 			$errors = new DataObject();
@@ -46,6 +64,9 @@ class InviteReviewerHandler extends PaperHandler
 					case "InvalidEmail":
 						$errors->email = "This email does not seem to be in the correct format";
 						break;
+					case "UserExists":
+						$errors->email = sprintf("The specified email address has already been registered by %s (%s).",
+						$user->getFullName(), UserType::getString($user->getType()));
 				}
 			}
 			
@@ -66,26 +87,4 @@ class InviteReviewerHandler extends PaperHandler
 		
 	}
 	
-	public function inviteNewReviewer($name, $email)
-	{
-		$errors = [];
-		if(!$name){
-			$errors[] = "NameEmpty";
-		}
-		if(!User::isValidEmail($email)){
-			$errors[] = "InvalidEmail";
-		}
-		if(count($errors)>0){
-			throw new OperationException($errors);
-		}
-		$inv = RegInvitation::create($this->user, UserType::REVIEWER, $email);
-		$inv->setName($name);
-		$inv->setPaper($this->paper);
-		$inv->save();
-		NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
-		foreach(Admin::findAll() as $admin){
-			ReviewInvitationSentMessage::create($admin, $this->paper, $name, $email)->send();
-		}
-		$this->redirectSuccess("Invitation sent successfully.");
-	}
 }
