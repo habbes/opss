@@ -34,6 +34,8 @@ $routes = [
 		['^papers\/(\w+)\/edit\/add\-author\/?$', "papers/Edit@handleAddAuthor"],
 		['^papers\/(\w+)\/resubmit\/?$', "papers/Resubmit"],
 		['^papers\/(\w+)\/invite-reviewer\/?$', "papers/InviteReviewer@inviteNewReviewer"],
+		['^papers\/(\w+)\/review-request\/?$', "papers/InviteReviewer@sendReviewRequest"],
+		['^papers\/(\w+)\/history\/?$', "papers/History"],
 		['^papers\/(\w+)\/details', "papers/Details"],
 		['^papers\/(\w+)\/test\/?', "papers/Test"]
 		//this route is only used for initial setup to allow an inital admin to sign up

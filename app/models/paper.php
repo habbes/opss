@@ -442,6 +442,15 @@ class Paper extends DBModel
 		$this->_statusMessages = [];
 	}
 	
+	/**
+	 * gets all history events for this paper
+	 * @return array(PaperChange)
+	 */
+	public function getChanges()
+	{
+		return PaperChange::findByPaper($this);
+	}
+	
 	protected function onInsert(&$errors)
 	{
 		$this->date_submitted = Utils::dbDateFormat(time());

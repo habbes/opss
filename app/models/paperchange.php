@@ -173,7 +173,7 @@ class PaperChange extends DBModel
 	 */
 	public static function createResubmitted($paper)
 	{
-		$pc = static::create($paper, self::ACTION_SUBMITTED);
+		$pc = static::create($paper, self::ACTION_RESUBMITTED);
 		$pc->setArg("title", $paper->getTitle());
 		$pc->setArg("dateSubmitted", Utils::dbDateFormat($paper->getDateSubmitted()));
 		$pc->setArg("country", $paper->getCountry());
