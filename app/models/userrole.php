@@ -95,6 +95,16 @@ abstract class UserRole
 	}
 	
 	/**
+	 * find the user with this role with the given id
+	 * @param number $id
+	 * @return User
+	 */
+	public static function findById($id)
+	{
+		return User::findOne("id=? AND type=?", $id, static::$type);
+	}
+	
+	/**
 	 * find all papers this role has access to
 	 * @return array(Paper)
 	 */
