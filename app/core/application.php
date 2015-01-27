@@ -6,7 +6,7 @@
  */
 class Application
 {
-	
+
 	private $url;
 	private $routes;
 	private $handlerClass;
@@ -14,9 +14,9 @@ class Application
 	private $method;
 	private $args;
 	private $controller;
-	
+
 	/**
-	 * 
+	 *
 	 * @param string $url
 	 * @param array $routes url/Handler pairs mapping url to its request handler
 	 */
@@ -27,7 +27,7 @@ class Application
 		$this->findHandler() or die("Page not found!");
 		Session::getInstance();
 	}
-	
+
 	private function findHandler()
 	{
 		foreach($this->routes as $route){
@@ -42,10 +42,10 @@ class Application
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	public function start(){
 		require_once DIR_HANDLERS . DIRECTORY_SEPARATOR . $this->handlerPath;
 		$handler = new $this->handlerClass();
@@ -53,7 +53,7 @@ class Application
 		if($_SERVER['REQUEST_METHOD'] == 'POST'){
 			$method = "post";
 		}
-		
+
 		if(!method_exists($handler, $method)){
 			die("Page not found!");
 		}
@@ -62,5 +62,5 @@ class Application
 		//process the request using get() or post() method
 		call_user_func_array([$handler, $method], $this->args);
 	}
-	
+
 }
