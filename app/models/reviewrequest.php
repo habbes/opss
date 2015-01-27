@@ -71,12 +71,12 @@ class ReviewRequest extends DBModel
 	 */
 	private function checkValidity()
 	{
-		if($this->status != self::STATUS_CANCELLED)
-			return;
-		$date = $this->getExpiryDate();
-		if($date && $date >= time()){
-			$this->status == self::STATUS_INVALID;
-			$this->save();
+		if($this->status == self::PENDING && !$this->permanent){
+			$date = $this->getExpiryDate();
+			if($date && $date >= time()){
+				$this->status == self::STATUS_INVALID;
+				$this->save();
+			}
 		}
 	}
 	
@@ -202,6 +202,11 @@ class ReviewRequest extends DBModel
 		$this->status == self::STATUS_INVALID;
 	}
 	
+	/**
+	 * set response given by reviewer
+	 * @param number $response use a RESPONSE_* constant
+	 * @param string $text
+	 */
 	public function setResponse($response, $text = "")
 	{
 		$this->response = $response;
