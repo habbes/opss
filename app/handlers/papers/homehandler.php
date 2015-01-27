@@ -10,6 +10,16 @@ class HomeHandler extends PaperHandler
 			$this->viewParams->vetReview = array_pop($vrs);
 		}
 		
+		if($this->paper->getStatus() == Paper::STATUS_PENDING){
+			foreach($this->paper->getNextActions() as $action){
+				switch($action){
+					case Paper::ACTION_EXTERNAL_REVIEW:
+						$this->viewParams->reviewers = Reviewer::findAll();
+						break;
+				}
+			}
+		}
+		
 		if($this->session()->resultMessage){
 			$this->setResultMessage($this->session()->resultMessage, $this->session()->resultMessageType);
 			$this->session()->deleteData("resultMessage");

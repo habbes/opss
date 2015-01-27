@@ -2,13 +2,40 @@
 	<p>
 		Choose a course of action below.
 	</p>
-	<div class="panel-group" role="tablist" id="pending-actions-list">
+	<div class="" role="tablist" id="pending-actions-list">
 	<?php foreach($data->paper->getNextActions() as $action){
 		switch($action){
 		 case Paper::ACTION_EXTERNAL_REVIEW: 
+		 	
+		 	$formdata = $data->reviewRequestForm? $data->reviewRequestForm : new DataObject();
+		 	$formerror = $data->reviewRequestForm? $data->reviewRequestErrors : new DataObject();
+		 	?>
+		 	<div class="panel panel-default">
+		 		<div class="panel-heading">
+		 			<h4 class="panel-title">Invite existing reviewer to review paper</h4>
+		 		</div>
+		 		<div class="panel-body">
+		 			<form class="form" method="post" action="<?= $data->paperBaseUrl?>/review-request">
+		 				<div class="form-group">
+		 					<select class="form-control" name="reviewer">
+		 						<option value="">Select reviewer</option>
+		 						<?php foreach($this->data->reviewers as $reviewer){
+		 							$selected = $reviewer->getId() == $formdata->reviewer? "selected" : "";
+		 						?>
+		 						<option value="<?= $reviewer->getId()?>"?><?= $reviewer->getFullName()?></option>
+		 						<?php } ?>
+		 					</select>
+		 					<span class="formerror help-block"><?= $formerror->reviewer ?></span>
+		 				</div>
+		 				<div class="form-group">
+		 					<button class="btn btn-default" >Send Invitation</button>
+		 				</div>
+		 			</form>
+		 		</div>
+		 	</div>
+		 	<?php 
 		 	$formdata = $data->inviteReviewerForm? $data->inviteReviewerForm : new DataObject();
 		 	$formerror = $data->inviteReviewerErrors? $data->inviteReviewerErrors : new DataObject();
-		 	
 		 	?>
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -30,7 +57,7 @@
 							<span class="form-error help-block"><?= $formerror->name ?></span>
 						</div>
 						<div class="form-group">
-							<button class="btn btn-success">Invite Reviewer</button>
+							<button class="btn btn-default">Send Invitation</button>
 						</div>
 					</form>
 				</div>
