@@ -115,7 +115,7 @@ class ReviewRequest extends DBModel
 	
 	/**
 	 * sets whether this request never expires
-	 * @param unknown $p
+	 * @param boolean $p
 	 */
 	public function setPermanent($p)
 	{
@@ -124,7 +124,7 @@ class ReviewRequest extends DBModel
 	
 	/**
 	 * whether the request never expires
-	 * @return unknown
+	 * @return boolea
 	 */
 	public function isPermanent()
 	{
@@ -209,6 +209,9 @@ class ReviewRequest extends DBModel
 	 */
 	public function setResponse($response, $text = "")
 	{
+		if(!$this->isValid()){
+			throw new OperationException([OperationError::REVIEW_REQUEST_INVALID]);
+		}
 		$this->response = $response;
 		$this->response_text = $text;
 		$this->date_responded = time();

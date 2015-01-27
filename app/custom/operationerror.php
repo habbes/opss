@@ -39,6 +39,8 @@ class OperationError
 	//vet review errors
 	const VET_INVALID_VERDICT = "VetInvalidVerdict";
 	const VET_COMMENTS_EMPTY = "VetCommentsEmpty";
+	//review request
+	const REVIEW_REQUEST_INVALID = "ReviewRequestInvalid";
 	
 	
 	
