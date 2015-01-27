@@ -9,6 +9,12 @@ class InviteReviewerHandler extends PaperHandler
 		$this->paperLocalRedirect();
 	}
 	
+	private function showPage()
+	{
+		$this->viewParams->reviewers = Reviewer::findAll();
+		$this->renderView("papers/Home");
+	}
+	
 	public function post()
 	{
 		try {
@@ -46,7 +52,7 @@ class InviteReviewerHandler extends PaperHandler
 			$this->viewParams->inviteReviewerErrors = $errors;
 			$this->viewParams->inviteReviewerForm = new DataObject($_POST);
 			$this->setResultMessage("Please correct highlighted errors.", "error");
-			$this->renderView("papers/Home");
+			$this->showPage();
 			
 		}
 	}
