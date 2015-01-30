@@ -54,6 +54,7 @@ class Message extends DBModel
 	
 	const PART_USER = "user";
 	const PART_PAPER = "paper";
+	const PART_REVIEW_REQUEST = "reviewRequest";
 	
 	/**
 	 * 
@@ -330,6 +331,10 @@ class Message extends DBModel
 	 */
 	public function attachUser($user)
 	{
+		/*
+		 * although the id is enough to determine the user, I added redundant info (username)
+		 * just in case the database gets messed up, there is a chance to recover some info
+		 */
 		$this->addPart(self::PART_USER, ["id"=>$user->getId(), "username"=>$user->getUsername()]);
 	}
 	
@@ -340,6 +345,16 @@ class Message extends DBModel
 	public function attachPaper($paper)
 	{
 		$this->addPart(self::PART_PAPER,["id"=>$paper->getId(), "identifier"=>$paper->getIdentifier()]);
+	}
+	
+	
+	/**
+	 * attach review request to this message
+	 * @param ReviewRequest $request
+	 */
+	public function attachReviewRequest($request)
+	{
+		$this->addPart(self::PART_REVIEW_REQUEST,["id" => $request->getId()	]);
 	}
 	
 	/**
