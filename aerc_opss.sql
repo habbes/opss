@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 07, 2015 at 09:08 AM
+-- Generation Time: Jan 30, 2015 at 02:10 PM
 -- Server version: 5.6.11
 -- PHP Version: 5.5.1
 
@@ -25,6 +25,20 @@ USE `aerc_opss`;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `co_authors`
+--
+
+CREATE TABLE IF NOT EXISTS `co_authors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `date_added` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `email_activation`
 --
 
@@ -37,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `email_activation` (
   `email` varchar(255) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=25 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
 
 -- --------------------------------------------------------
 
@@ -52,7 +66,7 @@ CREATE TABLE IF NOT EXISTS `files` (
   `filetype` varchar(255) DEFAULT NULL,
   `directory` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
 
 -- --------------------------------------------------------
 
@@ -70,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `message` text,
   `other_parts` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=101 ;
 
 -- --------------------------------------------------------
 
@@ -83,7 +97,63 @@ CREATE TABLE IF NOT EXISTS `message_boxes` (
   `user_id` int(11) DEFAULT NULL,
   `last_query_time` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=91 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=108 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `papers`
+--
+
+CREATE TABLE IF NOT EXISTS `papers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(100) DEFAULT NULL,
+  `revision` int(11) DEFAULT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `date_submitted` datetime DEFAULT NULL,
+  `country` varchar(255) DEFAULT NULL,
+  `language` varchar(255) DEFAULT NULL,
+  `file_id` int(11) DEFAULT NULL,
+  `cover_id` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `editable` tinyint(4) DEFAULT NULL,
+  `recallable` tinyint(4) DEFAULT NULL,
+  `end_recallable_date` datetime DEFAULT NULL,
+  `researcher_id` int(11) DEFAULT NULL,
+  `other_parts` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paper_authors`
+--
+
+CREATE TABLE IF NOT EXISTS `paper_authors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `paper_id` int(11) DEFAULT NULL,
+  `author_id` int(11) DEFAULT NULL,
+  `date_added` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paper_changes`
+--
+
+CREATE TABLE IF NOT EXISTS `paper_changes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  `revision` int(11) DEFAULT NULL,
+  `args` text,
+  `paper_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 -- --------------------------------------------------------
 
@@ -105,7 +175,33 @@ CREATE TABLE IF NOT EXISTS `reg_invitations` (
   `status` int(11) DEFAULT NULL,
   `registration_code` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=17 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reviews`
+--
+
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `paper_id` int(11) DEFAULT NULL,
+  `reviewer_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `recommendation` varchar(100) DEFAULT NULL,
+  `comments` text,
+  `researcher_comments` text,
+  `file_id` int(11) DEFAULT NULL,
+  `researcher_file_id` int(11) DEFAULT NULL,
+  `date_submitted` datetime DEFAULT NULL,
+  `permanent` tinyint(4) DEFAULT NULL,
+  `due_date` datetime DEFAULT NULL,
+  `posted` tinyint(4) DEFAULT NULL,
+  `date_posted` datetime DEFAULT NULL,
+  `date_initiated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -129,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `gender` tinyint(4) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=53 ;
 
 -- --------------------------------------------------------
 
@@ -143,7 +239,25 @@ CREATE TABLE IF NOT EXISTS `user_research_areas` (
   `paper_group` int(11) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vet_reviews`
+--
+
+CREATE TABLE IF NOT EXISTS `vet_reviews` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `paper_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `date_initiated` datetime DEFAULT NULL,
+  `date_submitted` datetime DEFAULT NULL,
+  `comments` text,
+  `verdict` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=18 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
