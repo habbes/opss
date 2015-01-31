@@ -92,9 +92,13 @@ class InviteReviewerHandler extends PaperHandler
 			$request = ReviewRequest::create($this->user, $reviewer, $this->paper);
 			$request->save();
 			
-			//notify reviewer
-			ReviewRequestSentMessage::create($review, $request)->send();
+			//send reviewer email
+			ReviewRequestEmail::create($reviewer, $request)->send();
 			
+			//notify reviewer
+			ReviewRequestSentMessage::create($reviewer, $request)->send();
+			
+			//notify admins
 			$message = null;
 			foreach(Admin::findAll() as $admin){
 				if(!$message){
