@@ -101,7 +101,7 @@ abstract class UserRole
 	 */
 	public static function findById($id)
 	{
-		return User::findOne("id=? AND type=?", $id, static::$type);
+		return User::findOne("id=? AND type=?", [$id, static::$type]);
 	}
 	
 	/**

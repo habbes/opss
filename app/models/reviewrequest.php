@@ -25,12 +25,17 @@ class ReviewRequest extends DBModel
 	private $_reviewer;
 	private $_paper;
 	
-	const STATUS_PENDING = 'pending';
-	const STATUS_INVALID = 'invalid';
-	const STATUS_RESPONDED = 'responded';
+	//status
+	const STATUS_PENDING = "pending";
+	const STATUS_EXPIRED = "invalid";
+	const STATUS_CANCELLED = "cancelled";
+	const STATUS_RESPONDED = "responded";
 	
-	const RESPONSE_ACCEPTED = 'accepted';
-	const RESPONSE_REJECTED = 'rejected';
+	//response
+	const RESPONSE_ACCEPTED = "accepted";
+	const RESPONSE_REJECTED = "rejected";
+	
+	const DEFAULT_VALIDITY  = 0;
 	
 	/**
 	 * 
@@ -53,18 +58,6 @@ class ReviewRequest extends DBModel
 		$r->code = Utils::uniqueRandomCode();
 		return $r;
 	}
-	
-	//status
-	const STATUS_PENDING = "pending";
-	const STATUS_EXPIRED = "invalid";
-	const STATUS_CANCELLED = "cancelled";
-	const STATUS_RESPONDED = "responded";
-	
-	//response
-	const RESPONSE_ACCEPTED = "accepted";
-	const RESPONSE_REJECTED = "rejected";
-	
-	const DEFAULT_VALIDITY  = 0;
 	
 	/**
 	 * checks whether the request is still valid
