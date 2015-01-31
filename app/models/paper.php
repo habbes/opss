@@ -451,6 +451,16 @@ class Paper extends DBModel
 		return PaperChange::findByPaper($this);
 	}
 	
+	/**
+	 * 
+	 * @param number $id
+	 * @return PaperChange
+	 */
+	public function getChangeById($id)
+	{
+		return PaperChange::findByPaperAndId($this, $id);
+	}
+	
 	protected function onInsert(&$errors)
 	{
 		$this->date_submitted = Utils::dbDateFormat(time());
