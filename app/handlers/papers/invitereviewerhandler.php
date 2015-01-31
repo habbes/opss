@@ -82,9 +82,44 @@ class InviteReviewerHandler extends PaperHandler
 	 * 
 	 * @param User $reviewer
 	 */
-	private function inviteExisitingReviewer($reviewer)
+	public function sendReviewRequest($reviewer)
 	{
-		
+		try {
+			$id = (int) $this->trimPostVar("reviewer");
+			$reviewer = Reviewer::findById($id);
+			if(!$reviewer)
+				throw new OperationException(["ReviewerNotFound"]);
+			$request = ReviewRequest::create($this->user, $reviewer, $this->paper);
+			$request->save();
+			
+			//notify reviewer
+			ReviewRequestSentMessage::create($review, $request)->send();
+			
+			$message = null;
+			foreach(Admin::findAll() as $admin){
+				if(!$message){
+					$message = ReviewRequestSentMessage::create($admin);
+				}
+				//recycle the same message, just change the user
+				$message->setUser($admin);
+				$message->send();
+			}
+			
+		}
+		catch(OperationException $e){
+			$errors = new DataObject();
+			foreach($errors as $error){
+				switch($error){
+					case "RevewerNotFound":
+						$errors->reviewer = "The specified reviewer was not found.";
+						break;
+				}
+			}
+			$this->viewParams->reviewRequestErrors = $errors;
+			$this->viewParams->reviewRequestForm = new DataObject($_POST);
+			$this->setResultMessage("Please correct highlighted errors.", "error");
+			$this->showPage();
+		}
 	}
 	
 }
