@@ -1,0 +1,1 @@
+The request sent to you to review the paper "{{title}}" ({{identifier}}) has been cancelled.

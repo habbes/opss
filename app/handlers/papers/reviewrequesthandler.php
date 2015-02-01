@@ -39,6 +39,19 @@ class ReviewRequestHandler extends PaperHandler
 	{
 		$this->request->cancel();
 		$this->request->save();
+		//notify reviewer
+		ReviewRequestCancelledMessage::create($this->request->getReviewer(), $this->request)->send();
+		
+		//notify admins
+		$msg = null;
+		foreach(Admin::findAll() as $admin){
+			if(!$msg)
+				$msg = ReviewRequestCancelledMessage::create($admin, $this->request);
+			else 
+				$msg->setUser($admin);
+			$msg->send();
+		}
+		
 		$this->saveResultMessage("The review request was cancelled successfully.", "success");
 		$this->paperLocalRedirect();
 	}
