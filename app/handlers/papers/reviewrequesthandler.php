@@ -56,8 +56,11 @@ class ReviewRequestHandler extends PaperHandler
 		$this->paperLocalRedirect();
 	}
 	
-	private function sendReminder($request)
+	private function sendReminder()
 	{
 		$reviewer = $this->request->getReviewer();
+		ReviewRequestReminderMessage::create($reviewer, $this->request)->send();
+		$this->saveResultMessage("Reminder sent to {$reviewer->getFullName()} successfully.", "success");
+		$this->paperLocalRedirect();
 	}
 }
