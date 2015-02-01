@@ -54,6 +54,10 @@ class ReviewRequest extends DBModel
 		$r->_paper = $paper;
 		$r->date_sent = Utils::dbDateFormat(time());
 		$r->status = self::STATUS_PENDING;
+		if(self::DEFAULT_VALIDITY > 0)
+			$this->expiry_date = Utils::dbDateFormat(time() + self::DEFAULT_VALIDITY * 24 * 3600);
+		else
+			$this->permanent = true;
 		return $r;
 	}
 	
