@@ -21,8 +21,8 @@ class ReviewRequestEmail extends Email
 		$e->attachFile($request->getPaper()->getFile());
 		$e->setBodyFromTemplate("review-request", [
 			"name" => $reviewer->getFullName(),
-			"title" => $paper->getTitle(),
-			"identifier" => $paper->getIdentifier(),
+			"title" => $request->getPaper()->getTitle(),
+			"identifier" => $request->getPaper()->getIdentifier(),
 			"acceptLink" => URL_ROOT."/review-request-response?request={$request->getId()}&response=accept",
 			"declineLink" => URL_ROOT."/review-request-response?request={$request->getId()}&response=decline"
 		]);
