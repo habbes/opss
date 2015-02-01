@@ -278,7 +278,7 @@ class ReviewRequest extends DBModel
 	 * find the valid request for the given paper with the given id
 	 * @param number $id
 	 * @param Paper $paper
-	 * @return array(ReviewRequest)
+	 * @return ReviewRequest
 	 */
 	public static function findValidByIdAndPaper($id, $paper)
 	{
@@ -302,7 +302,7 @@ class ReviewRequest extends DBModel
 	 * 
 	 * @param number $id
 	 * @param Reviewer $reviewer
-	 * @return array(ReviewRequest)
+	 * @return ReviewRequest
 	 */
 	public static function findValidByIdAndReviewer($id, $reviewer)
 	{

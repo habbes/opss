@@ -450,6 +450,25 @@ class Paper extends DBModel
 	{
 		return PaperChange::findByPaper($this);
 	}
+
+	/**
+	 * 
+	 * @return array(ReviewRequest)
+	 */
+	public function getValidReviewRequests()
+	{
+		return ReviewRequest::findValidByPaper($this);
+	}
+	
+	/**
+	 * 
+	 * @param number $id
+	 * @return ReviewRequest
+	 */
+	public function getValidReviewRequestById($id)
+	{
+		return ReviewRequest::findValidByIdAndPaper($id, $this);
+	}
 	
 	protected function onInsert(&$errors)
 	{
