@@ -102,7 +102,7 @@ class InviteReviewerHandler extends PaperHandler
 			$message = null;
 			foreach(Admin::findAll() as $admin){
 				if(!$message){
-					$message = ReviewRequestSentMessage::create($admin);
+					$message = ReviewRequestSentMessage::create($admin, $request);
 				}
 				//recycle the same message, just change the user
 				$message->setUser($admin);
