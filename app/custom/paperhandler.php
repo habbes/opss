@@ -5,7 +5,7 @@
  * @author Habbes
  *
  */
-abstract class PaperHandler extends LoggedInHandler
+abstract class PaperHandler extends RoleHandler
 {
 	
 	/**
@@ -13,6 +13,13 @@ abstract class PaperHandler extends LoggedInHandler
 	 * @var Paper
 	 */
 	protected $paper;
+	
+	protected function getAllowedRoles()
+	{
+		//by default, a paper page is accessible to any role who has access to the paper
+		//restriction on role may be enforced by overriding this method
+		return [UserType::ADMIN, UserType::REVIEWER, UserType::RESEARCHER];
+	}
 	
 	/**
 	 * indicates whether this particular sub-page of the paper dashboard should be visible,
