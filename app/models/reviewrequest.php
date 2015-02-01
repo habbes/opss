@@ -237,6 +237,19 @@ class ReviewRequest extends DBModel
 	}
 	
 	/**
+	 * filters a list of review requests and returns only valid ones
+	 * @param array(ReviewRequest) $requests
+	 * @return array(ReviewRequest)
+	 */
+	private static function filterValid($requests)
+	{
+		return array_filter($requests, function($request){
+			return $request->isValid();
+		});
+	}
+	
+	
+	/**
 	 * find the valid request with the given id
 	 * @param number $code
 	 * @return ReviewRequest
@@ -250,18 +263,53 @@ class ReviewRequest extends DBModel
 	}
 	
 	/**
-	 * find a valid request for the given paper with the given id
+	 * 
+	 * @param Paper $paper
+	 * @return array(ReviewRequest)
+	 */
+	public static function findValidByPaper($paper)
+	{
+		$reqs = static::findByField("paper_id", $paper->getId());
+		return static::filterValid($reqs);
+	}
+	
+	
+	/**
+	 * find the valid request for the given paper with the given id
 	 * @param number $id
 	 * @param Paper $paper
-	 * @return ReviewRequest
+	 * @return array(ReviewRequest)
 	 */
 	public static function findValidByIdAndPaper($id, $paper)
 	{
 		$req = static::findOne("id=? AND paper_id=?",
 				[$id, $paper->getId()]);
-		if($req && $req->isValid())
-			return $req;
-		return null;		
+		return $req && $req->isValid()? $req : null;
 	}
+	
+	/**
+	 * 
+	 * @param Reviewer $reviewer
+	 * @return array(ReviewRequest)
+	 */
+	public static function findValidByReviewer($reviewer)
+	{
+		$reqs = static::findByField("reviewer_id", $reviewer);
+		return static::filterValid($reqs);		
+	}
+	
+	/**
+	 * 
+	 * @param number $id
+	 * @param Reviewer $reviewer
+	 * @return array(ReviewRequest)
+	 */
+	public static function findValidByIdAndReviewer($id, $reviewer)
+	{
+		$req = static::findAll("id=? AND reviewer_id=?",
+				[$id, $paper->getId()]);
+		return $req && $req->isValid()? $req : null;
+	}
+	
 	
 }
