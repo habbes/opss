@@ -41,6 +41,7 @@ class OperationError
 	const VET_COMMENTS_EMPTY = "VetCommentsEmpty";
 	//review request
 	const REVIEW_REQUEST_INVALID = "ReviewRequestInvalid";
+	const REVIEW_REQUEST_DUPLICATE_PENDING = "ReviewRequestDuplicatePending";
 	
 	
 	
