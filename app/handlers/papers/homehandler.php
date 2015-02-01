@@ -15,6 +15,7 @@ class HomeHandler extends PaperHandler
 				switch($action){
 					case Paper::ACTION_EXTERNAL_REVIEW:
 						$this->viewParams->reviewers = Reviewer::findAll();
+						$this->viewParams->reviewRequests = $this->paper->getValidReviewRequests();
 						break;
 				}
 			}

@@ -6,7 +6,35 @@
 	<?php foreach($data->paper->getNextActions() as $action){
 		switch($action){
 		 case Paper::ACTION_EXTERNAL_REVIEW: 
-		 	
+		 	?>
+		 	<?php if($reviewRequests = $data->reviewRequests){?>
+		 	<div class="panel panel-default">
+		 		<div class="panel-heading">
+		 			<h4 class="panel-title">Pending review requests</h4>
+		 		</div>
+		 		<div class="panel-body">
+		 			<ul class="list-group">
+		 				<?php foreach($reviewRequests as $request){?>
+		 				<li class="list-group-item">
+		 					<b>Sent to:</b> <?= escape($request->getReviewer()->getFullName()) ?><br>
+		 					<b>Sent on:</b> <?= Utils::siteDateTimeFormat($request->getDateSent())?><br>
+		 					<form class="form" method="post" action="<?= $data->paperBaseUrl?>/manage-review-request">
+		 						<input type="hidden" name="request" value="<?= $request->getId()?>" >
+		 						<div class="form-group">
+		 							<button class="btn btn-default" name="cancel" >Cancel Request
+		 							<span class="glyphicon glyphicon-remove text-danger"></span></button>
+		 							<button class="btn btn-default" name="reminder">Send Reminder</button>
+		 						</div>
+		 					</form>
+		 				</li>
+		 				<?php } ?>
+		 			</ul>
+		 			
+		 		
+		 		</div>
+		 	</div>
+		 	<?php } ?>
+		 	<?php
 		 	$formdata = $data->reviewRequestForm? $data->reviewRequestForm : new DataObject();
 		 	$formerror = $data->reviewRequestErrors? $data->reviewRequestErrors : new DataObject();
 
