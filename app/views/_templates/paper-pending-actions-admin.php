@@ -51,7 +51,7 @@
 		 						<?php foreach($this->data->reviewers as $reviewer){
 		 							$selected = $reviewer->getId() == $formdata->reviewer? "selected" : "";
 		 						?>
-		 						<option value="<?= $reviewer->getId()?>"><?= $reviewer->getFullName()?>
+		 						<option value="<?= $reviewer->getId()?>" <?= $selected ?>><?= $reviewer->getFullName()?>
 		 						(currently reviewing <?= $reviewer->getRole()->countPapers() ?> papers)</option>
 		 						<?php } ?>
 		 					</select>
