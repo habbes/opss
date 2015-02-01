@@ -55,11 +55,11 @@ class ReviewRequest extends DBModel
 		$r->date_sent = Utils::dbDateFormat(time());
 		$r->status = self::STATUS_PENDING;
 		if(self::DEFAULT_VALIDITY > 0){
-			$this->expiry_date = Utils::dbDateFormat(time() + self::DEFAULT_VALIDITY * 24 * 3600);
-			$this->permanent = false;
+			$r->expiry_date = Utils::dbDateFormat(time() + self::DEFAULT_VALIDITY * 24 * 3600);
+			$r->permanent = false;
 		}
 		else {
-			$this->permanent = true;
+			$r->permanent = true;
 		}
 		return $r;
 	}
@@ -197,7 +197,7 @@ class ReviewRequest extends DBModel
 	 */
 	public function cancel()
 	{
-		$this->status == self::STATUS_INVALID;
+		$this->status = self::STATUS_CANCELLED;
 	}
 	
 	/**
