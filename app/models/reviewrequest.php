@@ -255,7 +255,7 @@ class ReviewRequest extends DBModel
 	 * @param Paper $paper
 	 * @return ReviewRequest
 	 */
-	public static function findValidByCodeAndPaper($id, $paper)
+	public static function findValidByIdAndPaper($id, $paper)
 	{
 		$req = static::findOne("id=? AND paper_id=?",
 				[$id, $paper->getId()]);
