@@ -12,6 +12,7 @@ class InviteReviewerHandler extends PaperHandler
 	private function showPage()
 	{
 		$this->viewParams->reviewers = Reviewer::findAll();
+		$this->viewParams->reviewRequests = $this->paper->getValidReviewRequests();
 		$this->renderView("papers/Home");
 	}
 	
@@ -116,6 +117,9 @@ class InviteReviewerHandler extends PaperHandler
 			$errors = new DataObject();
 			foreach($e->getErrors() as $error){
 				switch($error){
+					case OperationError::REVIEW_REQUEST_DUPLICATE_PENDING:
+						$errors->reviewer = "The specified reviewer already has a pending request for this paper.";
+						break;
 					case "ReviewerNotFound":
 						$errors->reviewer = "The specified reviewer was not found.";
 						break;

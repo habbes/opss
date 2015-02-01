@@ -243,6 +243,17 @@ class ReviewRequest extends DBModel
 		return $this->status == self::STATUS_RESPONDED && $this->response = self::RESPONSE_REJECTED;
 	}
 	
+	protected function onInsert(&$errors)
+	{
+		//do not allow send a review request for a paper to reviewer who has a pending request
+		//for the same paper
+		if(static::findValidByPaperAndReviewer($this->getPaper(), $this->getReviewer())){
+			$errors[] = OperationError::REVIEW_REQUEST_DUPLICATE_PENDING;
+		}
+		
+		return true;
+	}
+	
 	/**
 	 * filters a list of review requests and returns only valid ones
 	 * @param array(ReviewRequest) $requests
@@ -316,6 +327,21 @@ class ReviewRequest extends DBModel
 		$req = static::findOne("id=? AND reviewer_id=?",
 				[$id, $paper->getId()]);
 		return $req && $req->isValid()? $req : null;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param Reviewer $reviewer
+	 * @return array(ReviewRequest)
+	 */
+	public static function findValidByPaperAndReviewer($paper, $reviewer)
+	{
+		$reqs = static::findAll("paper_id=? AND reviewer_id=?",[
+				$paper->getId(), $reviewer->getId()
+		]);
+		
+		return static::filterValid($reqs);
 	}
 	
 	
