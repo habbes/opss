@@ -8,7 +8,8 @@
 		 case Paper::ACTION_EXTERNAL_REVIEW: 
 		 	
 		 	$formdata = $data->reviewRequestForm? $data->reviewRequestForm : new DataObject();
-		 	$formerror = $data->reviewRequestForm? $data->reviewRequestErrors : new DataObject();
+		 	$formerror = $data->reviewRequestErrors? $data->reviewRequestErrors : new DataObject();
+
 		 	?>
 		 	<div class="panel panel-default">
 		 		<div class="panel-heading">
@@ -17,7 +18,7 @@
 		 		<div class="panel-body">
 		 			<form class="form" method="post" action="<?= $data->paperBaseUrl?>/review-request">
 		 				<div class="form-group">
-		 					<select class="form-control" name="reviewer">
+		 					<select class="form-control" name="reviewer" required>
 		 						<option value="">Select reviewer</option>
 		 						<?php foreach($this->data->reviewers as $reviewer){
 		 							$selected = $reviewer->getId() == $formdata->reviewer? "selected" : "";
@@ -26,7 +27,7 @@
 		 						(currently reviewing <?= $reviewer->getRole()->countPapers() ?> papers)</option>
 		 						<?php } ?>
 		 					</select>
-		 					<span class="formerror help-block"><?= $formerror->reviewer ?></span>
+		 					<span class="form-error help-block"><?= $formerror->reviewer ?></span>
 		 				</div>
 		 				<div class="form-group">
 		 					<button class="btn btn-default" >Send Invitation</button>

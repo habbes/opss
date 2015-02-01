@@ -109,12 +109,14 @@ class InviteReviewerHandler extends PaperHandler
 				$message->send();
 			}
 			
+			$this->redirectSuccess("Request sent successfully.");
+			
 		}
 		catch(OperationException $e){
 			$errors = new DataObject();
-			foreach($errors as $error){
+			foreach($e->getErrors() as $error){
 				switch($error){
-					case "RevewerNotFound":
+					case "ReviewerNotFound":
 						$errors->reviewer = "The specified reviewer was not found.";
 						break;
 				}
