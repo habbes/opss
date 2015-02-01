@@ -62,7 +62,7 @@ class ReviewRequest extends DBModel
 	 */
 	private function checkValidity()
 	{
-		if($this->status == self::PENDING && !$this->permanent){
+		if($this->status == self::STATUS_PENDING && !$this->permanent){
 			$date = $this->getExpiryDate();
 			if($date && $date >= time()){
 				$this->status == self::STATUS_INVALID;
@@ -269,7 +269,7 @@ class ReviewRequest extends DBModel
 	 */
 	public static function findValidByPaper($paper)
 	{
-		$reqs = static::findByField("paper_id", $paper->getId());
+		$reqs = static::findAllByField("paper_id", $paper->getId());
 		return static::filterValid($reqs);
 	}
 	
@@ -294,7 +294,7 @@ class ReviewRequest extends DBModel
 	 */
 	public static function findValidByReviewer($reviewer)
 	{
-		$reqs = static::findByField("reviewer_id", $reviewer);
+		$reqs = static::findAllByField("reviewer_id", $reviewer);
 		return static::filterValid($reqs);		
 	}
 	
@@ -306,7 +306,7 @@ class ReviewRequest extends DBModel
 	 */
 	public static function findValidByIdAndReviewer($id, $reviewer)
 	{
-		$req = static::findAll("id=? AND reviewer_id=?",
+		$req = static::findOne("id=? AND reviewer_id=?",
 				[$id, $paper->getId()]);
 		return $req && $req->isValid()? $req : null;
 	}
