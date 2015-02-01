@@ -16,7 +16,6 @@ class ReviewRequest extends DBModel
 	protected $status;
 	protected $permanent;
 	protected $expiry_date;
-	protected $code;
 	protected $response;
 	protected $response_text;
 	protected $request_text;
@@ -55,7 +54,6 @@ class ReviewRequest extends DBModel
 		$r->_paper = $paper;
 		$r->date_sent = Utils::dbDateFormat(time());
 		$r->status = self::STATUS_PENDING;
-		$r->code = Utils::uniqueRandomCode();
 		return $r;
 	}
 	
@@ -239,28 +237,28 @@ class ReviewRequest extends DBModel
 	}
 	
 	/**
-	 * find the valid request with the given code
-	 * @param string $code
+	 * find the valid request with the given id
+	 * @param number $code
 	 * @return ReviewRequest
 	 */
-	public static function findValidByCode($code)
+	public static function findValidById($id)
 	{
-		$req = static::findOne("code", $code);
+		$req = static::findById($id);
 		if($req && $req->isValid())
 			return $req;
 		return null;
 	}
 	
 	/**
-	 * find a valid request for the given paper with the given code
-	 * @param string $code
+	 * find a valid request for the given paper with the given id
+	 * @param number $id
 	 * @param Paper $paper
 	 * @return ReviewRequest
 	 */
-	public static function findValidByCodeAndPaper($code, $paper)
+	public static function findValidByCodeAndPaper($id, $paper)
 	{
-		$req = static::findOne("code=? AND paper_id=?",
-				[$code, $paper->getId()]);
+		$req = static::findOne("id=? AND paper_id=?",
+				[$id, $paper->getId()]);
 		if($req && $req->isValid())
 			return $req;
 		return null;		
