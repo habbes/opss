@@ -325,7 +325,7 @@ class ReviewRequest extends DBModel
 	public static function findValidByIdAndReviewer($id, $reviewer)
 	{
 		$req = static::findOne("id=? AND reviewer_id=?",
-				[$id, $paper->getId()]);
+				[$id, $reviewer->getId()]);
 		return $req && $req->isValid()? $req : null;
 	}
 	
