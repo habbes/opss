@@ -211,8 +211,8 @@ class ReviewRequest extends DBModel
 			throw new OperationException([OperationError::REVIEW_REQUEST_INVALID]);
 		}
 		$this->response = $response;
-		$this->response_text = $text;
-		$this->date_responded = time();
+		if($text) $this->response_text = $text;
+		$this->date_responded = Utils::dbDateFormat(time());
 		$this->status = self::STATUS_RESPONDED;
 	}
 	
