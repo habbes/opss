@@ -312,7 +312,7 @@ class ReviewRequest extends DBModel
 	 */
 	public static function findValidByReviewer($reviewer)
 	{
-		$reqs = static::findAllByField("reviewer_id", $reviewer);
+		$reqs = static::findAllByField("reviewer_id", $reviewer->getId());
 		return static::filterValid($reqs);		
 	}
 	
