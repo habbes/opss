@@ -17,10 +17,10 @@ class ReviewRequestResponseEmail extends Email
 		
 		$e->setBodyFromTemplate($template, [
 				"reviewer" => $request->getReviewer()->getFullName(),
-				"title" = $request->getPaper()->getTitle(),
-				"identifier" = $request->getPaper()->getIdentifier(),
-				"paperLink" = $request->getPaper()->getAbsoluteUrl(),
-				"comments" = $request->getResponseText()
+				"title" => $request->getPaper()->getTitle(),
+				"identifier" => $request->getPaper()->getIdentifier(),
+				"paperLink" => $request->getPaper()->getAbsoluteUrl(),
+				"comments" => $request->getResponseText()
 		]);
 		
 		return $e;
