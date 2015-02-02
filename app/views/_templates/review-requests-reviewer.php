@@ -1,4 +1,11 @@
+<?php 
+$formdata = $data->form? $data->form : new DataObject();
+$formerror = $data->errors? $data->errors : new DataObject();
+?>
 <div>
+	<?php if(count($data->requests) == 0) { ?>
+	<p>No pending requests found.</p>
+	<?php } else {?>
 	<div class="panel-group" id="request-list" role="tablist" aria-multiselectable="true">
 		<?php foreach($data->requests as $request) { 
 			$requestId = "request-".$request->getId();
@@ -19,8 +26,9 @@
 				<div class="panel-body">
 					<span>Sent on <?= Utils::siteDateTimeFormat($request->getDateSent())?></span><br>
 					<a class="link"><span class="glyphicon glyphicon-download"></span> Download Paper</a><br>
-					<form method="post" action="<?URL_PAPERS?>/review-requests/<?= $request->getId()?>">
-						<input type="hidden" name="request" value="<?= $request->getId()?>"/>
+					
+					<form method="post" action="<?=URL_PAPERS?>/review-requests/<?= $request->getId()?>">
+						<span class="form-error help-block"><?= $selected? $formerror->action : ""?></span>
 						<div class="form-group">
 							<button class="btn btn-default" name="accept">Accept Request
 							<span class="glyphicon glyphicon-ok text-success"></span>
@@ -28,6 +36,10 @@
 							<button class="btn btn-default" name="decline">Decline
 							<span class="glyphicon glyphicon-remove text-danger"></span>
 							</button>
+						</div>
+						<div class="form-group">
+							<textarea class="form-control" cols="" rows="5" placeholder="Comments" 
+							name="comments"><?= $selected? $formdata->comments : ""?></textarea>
 						</div>
 						
 					</form>
@@ -37,4 +49,5 @@
 		</div>
 		<?php } ?>
 	</div>
+	<?php } ?>
 </div>
