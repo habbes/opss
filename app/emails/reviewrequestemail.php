@@ -23,8 +23,7 @@ class ReviewRequestEmail extends Email
 			"name" => $reviewer->getFullName(),
 			"title" => $request->getPaper()->getTitle(),
 			"identifier" => $request->getPaper()->getIdentifier(),
-			"acceptLink" => URL_ROOT."/review-request-response?request={$request->getId()}&response=accept",
-			"declineLink" => URL_ROOT."/review-request-response?request={$request->getId()}&response=decline"
+			"requestLink" => URL_PAPERS."/review-requests/".$request->getId()
 		]);
 		
 		return $e;
