@@ -54,7 +54,7 @@ class ReviewRequestsHandler extends ReviewerHandler
 				$this->selectedRequest->accept();
 				$this->selectedRequest->save();
 				ReviewRequestAcceptedMessage::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
-				
+				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				//send paper for review
 				$paper = $this->selectedRequest->getPaper();
 				$paper->sendForReview($this->user, $this->selectedRequest->getAdmin());
@@ -80,6 +80,7 @@ class ReviewRequestsHandler extends ReviewerHandler
 				$this->selectedRequest->reject();
 				$this->selectedRequest->save();
 				ReviewRequestDeclinedMessage::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				$this->saveResultMessage("Review request declined successfully.", "success");
 				$this->localRedirect("papers/review-requests");
 			}
