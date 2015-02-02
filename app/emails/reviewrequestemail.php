@@ -18,7 +18,6 @@ class ReviewRequestEmail extends Email
 		$e = new static();
 		$e->addUser($reviewer);
 		$e->setSubject("Request to review paper");		
-		$e->attachFile($request->getPaper()->getFile());
 		$e->setBodyFromTemplate("review-request", [
 			"name" => $reviewer->getFullName(),
 			"title" => $request->getPaper()->getTitle(),
