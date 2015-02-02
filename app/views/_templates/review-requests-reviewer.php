@@ -2,7 +2,7 @@
 	<div class="panel-group" id="request-list" role="tablist" aria-multiselectable="true">
 		<?php foreach($data->requests as $request) { 
 			$requestId = "request-".$request->getId();
-			$selected = $request->getId() == $data->selectedRequest;
+			$selected = $data->selectedRequest? $request->getId() == $data->selectedRequest->getId() : false;
 		?>
 		<div class="panel panel-default id="<?= $requestId?>">
 			<div class="panel-heading" role="tab" id="<?=$requestId?>-heading">
