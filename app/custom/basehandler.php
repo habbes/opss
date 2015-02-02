@@ -38,7 +38,7 @@ class BaseHandler extends RequestHandler
 		$msg = $this->session()->resultMessage;
 		if(!$msg) return;
 		$type = $this->session()->resultMessageType;
-		$this->setResultMessage($message, $type);
+		$this->setResultMessage($msg, $type);
 		if(!$keep){
 			unset($this->session()->resultMessage);
 			unset($this->session()->resultMessageType);
