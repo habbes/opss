@@ -1,0 +1,1 @@
+{{reviewer}} has accepted to review the paper "{{title}}" ({{identifier}}).

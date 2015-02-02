@@ -53,6 +53,7 @@ class ReviewRequestsHandler extends ReviewerHandler
 			if(isset($_POST['accept'])){
 				$this->selectedRequest->accept();
 				$this->selectedRequest->save();
+				ReviewRequestAcceptedMessage::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				
 				//send paper for review
 				$paper = $this->selectedRequest->getPaper();
@@ -78,6 +79,7 @@ class ReviewRequestsHandler extends ReviewerHandler
 			else if(isset($_POST['decline'])){
 				$this->selectedRequest->reject();
 				$this->selectedRequest->save();
+				ReviewRequestDeclinedMessage::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				$this->saveResultMessage("Review request declined successfully.", "success");
 				$this->localRedirect("papers/review-requests");
 			}
