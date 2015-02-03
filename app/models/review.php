@@ -104,6 +104,10 @@ class Review extends DBModel
 		return $this->_file;
 	}
 	
+	/**
+	 * set file containing elaborate comments
+	 * @param File $file
+	 */
 	public function setFile($file)
 	{
 		$this->_file = $file;
@@ -121,52 +125,92 @@ class Review extends DBModel
 		return $this->_researcherFile;
 	}
 	
+	/**
+	 * 
+	 * @param File $file
+	 */
 	public function setResearcherFile($file)
 	{
 		$this->_researcherFile = $file;
 		$this->researcher_file_id = $file->getId();
 	}
 	
+	/**
+	 * 
+	 * @return number timestamp
+	 */
 	public function getDueDate()
 	{
 		return strtotime($this->due_date);
 	}
 	
+	/**
+	 * 
+	 * @param number $date timestamp
+	 */
 	public function setDueDate($date)
 	{
 		$this->due_date = Utils::dbDateFormat($date);
 	}
 	
+	/**
+	 * 
+	 * @return number timestamp
+	 */
 	public function getDateInitiated()
 	{
 		return strtotime($this->date_initiated);
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function isPosted()
 	{
 		return (boolean) $this->posted;
 	}
 	
+	/**
+	 * 
+	 * @return number timestamp
+	 */
 	public function getDatePosted()
 	{
 		return strtotime($this->date_posted);
 	}
 	
+	/**
+	 * 
+	 * @param number $date timestamp
+	 */
 	public function setDatePosted($date)
 	{
 		$this->date_posted = Utils::dbDateFormat($date);
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function isPermanent()
 	{
 		return (boolean) $this->permanent;
 	}
 	
+	/**
+	 * 
+	 * @return number values are STATUS_* constants
+	 */
 	public function getStatus()
 	{
 		return (int) $this->status;
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function isOngoing()
 	{
 		return $this->getStatus() == self::ONGOING;
@@ -177,17 +221,24 @@ class Review extends DBModel
 		return $this->getStatus() == self::COMPLETED;
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function isOverdue()
 	{
 		return (!$this->isPermanent() && time() > $this->getDueDate());
 	}
 	
+	/**
+	 * submit reviewer recommendation and comments
+	 * @param int $recommendation value from VERDICT_* constants
+	 */
 	public function submit($recommendation)
 	{
 		$this->status = Review::STATUS_COMPLETED;
 		$this->recommendation = $recommendation;
 		$this->date_submitted = Utils::dbDateFormat(time());
-		$this->save();
 	}
 	
 	
