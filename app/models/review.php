@@ -9,10 +9,12 @@ class Review extends DBModel
 	protected $admin_id;
 	protected $status;
 	protected $recommendation;
-	protected $comments;
-	protected $researcher_comments;
-	protected $file_id;
-	protected $researcher_file_id;
+	protected $comments_to_admin;
+	protected $comments_to_author;
+	protected $file_to_admin_id;
+	protected $file_to_author_id;
+	protected $admin_comments;
+	protected $admin_file_id;
 	protected $date_submitted;
 	protected $permanent = true;
 	protected $due_date;
@@ -22,8 +24,9 @@ class Review extends DBModel
 	
 	private $_paper;
 	private $_reviewer;
-	private $_file;
-	private $_researcherFile;
+	private $_fileToAdmin;
+	private $_fileToAuthor;
+	private $_adminFile;
 	
 	const DIR = "reviews";
 	
@@ -94,46 +97,120 @@ class Review extends DBModel
 	}
 	
 	/**
+	 * stores a file in this paper's review directories
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
+	 * @return File
+	 */
+	private function createFile($filename, $sourcePath, $fromUpload = true)
+	{
+		$ds = DIRECTORY_SEPARATOR;
+		$dir = self::DIR.$ds.$this->getPaper()->getIdentifier();
+		$f = File::create($filename, $dir, $sourcePath, $fromUpload);
+		return $f->save();
+	}
+	
+	/**
 	 * a file containing elaborate comments
 	 * @return File
 	 */
 	public function getFile()
 	{
-		if(!$this->_file)
-			$this->_file = File::findById($this->file_id);
-		return $this->_file;
+		if(!$this->_fileToAdmin)
+			$this->_fileToAdmin = File::findById($this->file_to_admin_id);
+		return $this->_fileToAdmin;
 	}
 	
 	/**
-	 * set file containing elaborate comments
-	 * @param File $file
+	 * checks whether this review has general file containing elaborate comments
+	 * @return boolean
 	 */
-	public function setFile($file)
+	public function hasFileToAdmin()
 	{
-		$this->_file = $file;
-		$this->file_id = $file->getId();
-	}
-	
-	/**
-	 * comments file that the researcher is allowed to view
-	 * @return DBModel
-	 */
-	public function getResearcherFile()
-	{
-		if(!$this->_researcherFile)
-			$this->_researcherFile = File::findById($this->file_id);
-		return $this->_researcherFile;
+		return $this->file_to_admin_id? true : false;
 	}
 	
 	/**
 	 * 
-	 * @param File $file
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
 	 */
-	public function setResearcherFile($file)
+	public function setFileToAdmin($filename, $sourcePath, $fromUpload = true)
 	{
-		$this->_researcherFile = $file;
-		$this->researcher_file_id = $file->getId();
+		$file = $this->createFile($filename, $sourcePath, $fromUpload);
+		$this->file_to_admin_id = $file->getId();
+		$this->_fileToAdmin = $file;
 	}
+	
+	/**
+	 * comments file that the researcher is allowed to view
+	 * @return File
+	 */
+	public function getFileToAuthor()
+	{
+		if(!$this->_fileToAuthor)
+			$this->_fileToAuthor = File::findById($this->file_to_author_id);
+		return $this->_fileToAuthor;
+	}
+	
+	/**
+	 * checks whether this review has file containing elaborate comments meant
+	 * for the researcher
+	 * @return boolean
+	 */
+	public function hasFileToAuthor()
+	{
+		return $this->file_to_author_id? true : false;
+	}
+	
+	/**
+	 * 
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
+	 */
+	public function setFileToAuthor($filename, $sourcePath, $fromUpload = true)
+	{
+		$file = $this->createFile($filename, $sourcePath, $fromUpload);
+		$this->file_to_author_id = $file->getId();
+		$this->_fileToAuthor = $file;
+	}
+	
+	/**
+	 * comments file written by admin
+	 * @return File
+	 */
+	public function getAdminFile()
+	{
+		if(!$this->_adminFile)
+			$this->_adminFile = File::findById($this->admin_file_id);
+		return $this->_adminFile;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function hasAdminFile()
+	{
+		return $this->admin_file_id? true : false;
+	}
+	
+	/**
+	 * set comments file written by admin
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
+	 */
+	public function setAdminFile($filename, $sourcePath, $fromUpload = true)
+	{
+		$file = $this->createFile($filename, $sourcePath, $fromUpload);
+		$this->admin_file_id = $file->getId();
+		$this->_adminFile = $file;
+	}
+	
 	
 	/**
 	 * 
