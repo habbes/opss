@@ -37,6 +37,19 @@ class HomeView extends PaperView
 				}
 				
 				break;
+			
+			case Paper::STATUS_REVIEW:
+				if($this->data->user->isAdmin()){
+					$this->data->reviewer = $this->data->paper->getCurrentReviewer();
+					$this->data->review = $this->data->paper->getCurrentReview();
+					$this->addHomePageItem("paper-review-notice-admin");
+				}
+				if($this->data->user->isResearcher()){
+					$this->addHomePageItem("paper-review-notice-researcher");
+				}
+				if($this->data->user->isReviewer()){
+					$this->addHomePageItem("paper-review-form");
+				}
 		}
 		
 		$this->setActivePaperNavLink("Home");
