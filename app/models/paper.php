@@ -45,6 +45,7 @@ class Paper extends DBModel
 	const STATUS_REVIEW = "review";
 	const STATUS_REVIEW_REVISION_MAJ = "reviewRevisionMaj";
 	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
+	const STATUS_REVIEW_SUBMITTED = "reviewSubmitted";
 	
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
@@ -578,18 +579,15 @@ class Paper extends DBModel
 		return null;
 	}
 	
+	/**
+	 * submit the ongoing review
+	 * @param number $recommendation values are Review::VERDICT_* constants
+	 */
 	public function submitReview($recommendation)
 	{
 		$review = $this->getCurrentReview();
 		$review->submit($recommendation);
-		$this->status = self::STATUS_PENDING;
-		$this->resetNextActionsList();
-		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
-		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
-		
-		$this->resetStatusMessagesList();
-		$this->addStatusMessage(self::STATMSG_REVIEW_SUBMITTED);
-		
+		$this->status = self::STATUS_REVIEW_SUBMITTED;		
 		$this->save();
 		
 	}
