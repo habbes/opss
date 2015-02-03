@@ -1,3 +1,7 @@
+<?php 
+$formdata = $data->form? $data->form : new DataObject();
+$formerror = $data->errors? $data->errors: new DataObject();
+?>
 <div>
 	<p>
 	You can <a href="<?= $data->paperBaseUrl?>/download">download the paper here</a>. Use the form below
@@ -14,14 +18,16 @@
 					<span class="help-block">These comments will not be visible to the author</span>
 					<div class="form-group">
 						<label>Comments for the secretariate</label>
-						<textarea class="form-control" name="comments" rows="7" placeholder="These comments will not be visible to the author"></textarea>
-						<span class="form-error help-block"></span>
+						<textarea class="form-control" name="comments" rows="7" placeholder="These comments will not be visible to the author"><?php 
+							escape($formdata->comments)
+						?></textarea>
+						<span class="form-error help-block"><?= $formerror->comments ?></span>
 					</div>
 					or
 					<div class="form-group">
-						<label>Upload detailed comments (visible to author)</label>
+						<label>Upload detailed comments (not visible to author)</label>
 						<input type="file" name="file">
-						<span class="form-error help-block"></span>
+						<span class="form-error help-block"><?= $formerror->file ?></span>
 					</div>
 				</fieldset>
 				
@@ -29,14 +35,16 @@
 					<legend>Comments for researcher</legend>
 					<span class="help-block">These comments will be visible to the author</span>
 					<div class="form-group">
-						<textarea class="form-control" name="researcher-comments" rows="7" placeholder="Enter comments"></textarea>
-						<span class="form-error help-block"></span>
+						<textarea class="form-control" name="author-comments" rows="7" placeholder="Enter comments"><?=
+							escape($formdata->get("author-comments"));
+						?></textarea>
+						<span class="form-error help-block"><?= $formerror->get("author-comments")?></span>
 					</div>
 					or
 					<div class="form-group">
-						<label>Upload detailed comments (not visible to author)</label>
-						<input type="file" name="researcher-file">
-						<span class="form-error help-block"></span>
+						<label>Upload detailed comments (visible to author)</label>
+						<input type="file" name="author-file">
+						<span class="form-error help-block"><?= $formerror->get("author-file")?></span>
 					</div>
 				</fieldset>
 				
@@ -50,12 +58,15 @@
 							Review::VERDICT_REVISION_MAJ => "Major Revision"
 							];
 						?>
-						<select class="form-control">
+						<select name="recommendation" class="form-control" required>
 							<option value="">Select Recommendation Option</option>
-							<?php foreach($options as $option => $value){?>
-							<option value="<?=$option?>"><?= $value ?></option>
+							<?php foreach($options as $option => $value){
+								$selected = $formdata->recommendation == $option? "selected" : "";
+								?>
+							<option value="<?=$option?>" <?=$selected?>><?= $value ?></option>
 							<?php }?>
 						</select>
+						<span class="form-error help-block"><?= $formerror->recommendation ?></span>
 					</div>
 				</fieldset>
 				
