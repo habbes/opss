@@ -22,6 +22,7 @@ class Paper extends DBModel
 	protected $recallable;
 	protected $end_recallable_date;
 	protected $other_parts;
+	protected $thematic_area;
 	
 	private $_researcher;
 	private $_file;
@@ -107,6 +108,16 @@ class Paper extends DBModel
 	public function getStatus()
 	{
 		return $this->status;
+	}
+	
+	public function getThematicArea()
+	{
+		return $this->thematic_area;
+	}
+	
+	public function setThematicArea($area)
+	{
+		$this->thematic_area = $area;
 	}
 	
 	/**
@@ -485,6 +496,8 @@ class Paper extends DBModel
 			$errors[] = OperationError::PAPER_LANGUAGE_EMPTY;
 		if(!$this->country)
 			$errors[] = OperationError::PAPER_COUNTRY_EMPTY;
+		if($this->thematic_area && !PaperGroup::isValue($this->thematic_area))
+			$errors[] = OperationError::PAPER_THEMATIC_AREA_INVALID;
 		
 		//save other parts
 		$this->saveOtherParts();
@@ -591,7 +604,7 @@ class Paper extends DBModel
 		$review->save();
 		$this->status = self::STATUS_REVIEW_SUBMITTED;		
 		$this->save();
-		return $review
+		return $review;
 	}
 	
 	/**
