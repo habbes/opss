@@ -55,7 +55,7 @@ class HomeHandler extends PaperHandler
 			}
 			
 			$vet->submit($this->user, $verdict);
-			PaperChange::createVetted($this->paper, $vet);
+			PaperChange::createVetted($this->paper, $vet)->save();
 			//notify researcher
 			PaperVettedMessage::create($this->paper, $vet->getVerdict(), $this->paper->getResearcher())->send();
 			

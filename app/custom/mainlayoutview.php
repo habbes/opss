@@ -25,15 +25,15 @@ class MainLayoutView extends BaseView
 			$this->addNavLink("Notifications", "Unread", URL_ROOT."/messages/unread");
 			$this->addNavGroup("Papers","file");
 			if($user->isResearcher())
-				$this->addNavLink("Papers", "Submit", URL_ROOT."/papers/submit");
+				$this->addNavLink("Papers", "Paper Submission", URL_ROOT."/papers/submit");
 			$this->addNavLink("Papers","All Papers",URL_ROOT."/papers/all");
 			if($user->isReviewer())
 				$this->addNavLink("Papers", "Pending Requests", URL_ROOT."/papers/review-requests");
 			
 			if($user->isAdmin()){
 				$this->addNavGroup("Users", "user");
-				$this->addNavLink("Users", "Invite User", URL_ROOT."/papers/users/invite");
-				$this->addNavLink("Users", "All Users", URL_ROOT."/papers/users/all");
+				$this->addNavLink("Users", "Admins", URL_ROOT."/papers/users/admins");
+				$this->addNavLink("Users", "Reviewers", URL_ROOT."/papers/users/reviewers");
 				$this->addNavLink("Users", "Researchers", URL_ROOT."/papers/users/researchers");
 					
 			}

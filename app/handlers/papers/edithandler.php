@@ -152,7 +152,7 @@ class EditHandler extends PaperHandler
 				throw new OperationException(["reasonsEmpty"]);
 			$this->paper->addAuthor($name, $email);
 			$this->paper->save();
-			PaperChange::createAuthorAdded($this->paper, $name, $email);
+			PaperChange::createAuthorAdded($this->paper, $name, $email)->save();
 			$this->redirectSuccess();
 		}
 		catch(OperationException $e){
