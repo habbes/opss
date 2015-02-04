@@ -1,6 +1,6 @@
 <?php 
-$formdata = $data->form? $data->form : new DataObject();
-$formerror = $data->errors? $data->errors: new DataObject();
+$formdata = $data->reviewForm? $data->reviewForm : new DataObject();
+$formerror = $data->reviewErrors? $data->reviewErrors: new DataObject();
 ?>
 <div>
 	<p>
@@ -12,7 +12,7 @@ $formerror = $data->errors? $data->errors: new DataObject();
 			<h4 class="panel-title">Review Paper</h4>
 		</div>
 		<div class="panel-body">
-			<form class="form-vertical" method="post" action="<?= $data->paperBaseUrl ?>/review">
+			<form class="form-vertical" method="post" action="<?= $data->paperBaseUrl ?>/review" enctype="multipart/form-data">
 				<fieldset>
 					<legend>Comments for secretariate</legend>
 					<span class="help-block">These comments will not be visible to the author</span>

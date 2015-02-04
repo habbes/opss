@@ -97,6 +97,42 @@ class Review extends DBModel
 	}
 	
 	/**
+	 * 
+	 * @return string
+	 */
+	public function getCommentsToAdmin()
+	{
+		return $this->comments_to_admin;
+	}
+	
+	/**
+	 * 
+	 * @param string $comments
+	 */
+	public function setCommentsToAdmin($comments)
+	{
+		$this->comments_to_admin = $comments;
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getCommentsToAuthor()
+	{
+		return $this->comments_to_author;
+	}
+	
+	/**
+	 * 
+	 * @param string $comments
+	 */
+	public function setCommentsToAuthor($comments)
+	{
+		$this->comments_to_author = $comments;
+	}
+	
+	/**
 	 * stores a file in this paper's review directories
 	 * @param string $filename
 	 * @param string $sourcePath
@@ -115,7 +151,7 @@ class Review extends DBModel
 	 * a file containing elaborate comments
 	 * @return File
 	 */
-	public function getFile()
+	public function getFileToAdmin()
 	{
 		if(!$this->_fileToAdmin)
 			$this->_fileToAdmin = File::findById($this->file_to_admin_id);
@@ -316,6 +352,16 @@ class Review extends DBModel
 		$this->status = Review::STATUS_COMPLETED;
 		$this->recommendation = $recommendation;
 		$this->date_submitted = Utils::dbDateFormat(time());
+	}
+	
+	/**
+	 * 
+	 * @param number $verdict VERDICT_* constants
+	 * @return boolean
+	 */
+	public static function isValidVerdict($verdict)
+	{
+		return in_array($verdict, [self::VERDICT_APPROVED, self::VERDICT_REVISION_MAJ, self::VERDICT_REVISION_MIN]);
 	}
 	
 	
