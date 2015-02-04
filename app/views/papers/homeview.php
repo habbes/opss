@@ -35,6 +35,9 @@ class HomeView extends PaperView
 				if($this->data->user->isAdmin()){
 					$this->addPaperPendingActionsAdmin();
 				}
+				if($this->data->user->isResearcher()){
+					$this->addPaperPendingNoticeResearcher();
+				}
 				
 				break;
 			
@@ -85,9 +88,9 @@ class HomeView extends PaperView
 		$this->addHomePageItem("paper-pending-actions-admin");
 	}
 	
-	private function addPaperPendingActionsResearcher()
+	private function addPaperPendingNoticeResearcher()
 	{
-		$this->addHomePageItem("paper-pending-actions-researcher");
+		$this->addHomePageItem("paper-pending-notice-researcher");
 	}
 	
 }
