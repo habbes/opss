@@ -28,6 +28,8 @@ $routes = [
 		['^papers\/(\w+)\/vet\/?$', "papers/Home@handleVetReview"],
 		['^papers\/(\w+)\/download\/?$', "papers/Download"],
 		['^papers\/(\w+)\/download\/cover\/?$', "papers/Download@downloadCover"],
+		['^papers\/(\w+)\/download\/version\/(\d+)\/?$', "papers/Download@downloadPaperVersion"],
+		['^papers\/(\w+)\/download\/cover\/version\/(\d+)\/?$', "papers/Download@downloadCoverVersion"],
 		['^papers\/(\w+)\/edit\/?$', "papers/Edit"],
 		['^papers\/(\w+)\/edit\/details\/?$', "papers/Edit@handleDetailsChanges"],
 		['^papers\/(\w+)\/edit\/files\/?$', "papers/Edit@handleFileChanges"],

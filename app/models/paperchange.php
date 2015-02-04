@@ -103,7 +103,7 @@ class PaperChange extends DBModel
 	public function getArgs()
 	{
 		if(!$this->_args)
-			$this->_args = json_decode($this->args);
+			$this->_args = (array) json_decode($this->args);
 		return $this->_args;
 	}
 	
@@ -305,6 +305,19 @@ class PaperChange extends DBModel
 	public static function findByPaper($paper)
 	{
 		return static::findAllByField("paper_id", $paper->getId());
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param number $id
+	 * @return PaperChange
+	 */
+	public static function findByPaperAndId($paper, $id)
+	{
+		return static::findOne("paper_id=? AND id=?",[
+				$paper->getId(), $id
+		]);
 	}
 	
 	

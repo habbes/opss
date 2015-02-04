@@ -54,8 +54,9 @@ abstract class PaperHandler extends RoleHandler
 		}
 	}
 	
-	public function onCreate($identifier)
+	public function onCreate()
 	{
+		$identifier = func_get_arg(0);
 		$paper = Paper::findByIdentifier($identifier);
 		if(!$paper)
 			$this->localRedirect("papers/all?not-found=true");

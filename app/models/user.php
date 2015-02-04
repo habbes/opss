@@ -318,7 +318,7 @@ class User extends DBModel
 		$this->_messageBox = $mb->save();
 	}
 	
-	protected function validate(array &$errors)
+	protected function validate(&$errors)
 	{
 		if(!self::isValidUsername($this->username)){
 			$errors[] = OperationError::USER_USERNAME_INVALID;
