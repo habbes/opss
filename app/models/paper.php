@@ -582,6 +582,7 @@ class Paper extends DBModel
 	/**
 	 * submit the ongoing review and saves
 	 * @param number $recommendation values are Review::VERDICT_* constants
+	 * @return Review the submitted review
 	 */
 	public function submitReview($recommendation)
 	{
@@ -590,7 +591,7 @@ class Paper extends DBModel
 		$review->save();
 		$this->status = self::STATUS_REVIEW_SUBMITTED;		
 		$this->save();
-		
+		return $review
 	}
 	
 	/**

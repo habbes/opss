@@ -37,8 +37,8 @@ class Review extends DBModel
 	
 	//recommendations
 	const VERDICT_APPROVED = "approved";
-	const VERDICT_REVISION_MIN = "revisionMaj";
-	const VERDICT_REVISION_MAJ = "revisionMin";
+	const VERDICT_REVISION_MIN = "revisionMin";
+	const VERDICT_REVISION_MAJ = "revisionMaj";
 	
 	/**
 	 * 
@@ -57,8 +57,9 @@ class Review extends DBModel
 		$r->_admin = $admin;
 		$r->admin_id = $admin->getId();
 		$r->status = self::STATUS_ONGOING;
-		$r->data_initiated = Utils::dbDateFormat(time());
+		$r->date_initiated = Utils::dbDateFormat(time());
 		$r->posted = false;
+		
 		
 		return $r;
 	}
@@ -356,6 +357,16 @@ class Review extends DBModel
 	
 	/**
 	 * 
+	 * @return array(string)
+	 */
+	public static function getVerdicts()
+	{
+		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
+				self::VERDICT_REVISION_MAJ];
+	}
+	
+	/**
+	 * 
 	 * @param string $verdict
 	 * @return string
 	 */
@@ -364,15 +375,12 @@ class Review extends DBModel
 		switch($verdict){
 			case self::VERDICT_APPROVED:
 				return "Approved";
-				break;
 			
 			case self::VERDICT_REVISION_MAJ:
 				return "Major Revision";
-				break;
-				
+			
 			case self::VERDICT_REVISION_MIN:
 				return "Minor Revision";
-				break;
 		}
 	}
 	
@@ -383,7 +391,7 @@ class Review extends DBModel
 	 */
 	public static function isValidVerdict($verdict)
 	{
-		return in_array($verdict, [self::VERDICT_APPROVED, self::VERDICT_REVISION_MAJ, self::VERDICT_REVISION_MIN]);
+		return in_array($verdict, self::getVerdicts());
 	}
 	
 	

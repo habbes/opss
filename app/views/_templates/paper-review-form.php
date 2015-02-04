@@ -52,11 +52,10 @@ $formerror = $data->reviewErrors? $data->reviewErrors: new DataObject();
 					<legend>Recommendation</legend>
 					<div class="form-group">
 						<?php 
-						$options = [
-							Review::VERDICT_APPROVED => "Approved",
-							Review::VERDICT_REVISION_MIN => "Minor Revision",
-							Review::VERDICT_REVISION_MAJ => "Major Revision"
-							];
+						$options = [];
+						foreach(Review::getVerdicts() as $option){
+							$options[$option] = Review::getVerdictString($option);
+						}
 						?>
 						<select name="recommendation" class="form-control" required>
 							<option value="">Select Recommendation Option</option>
