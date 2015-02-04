@@ -1,9 +1,6 @@
 <?php
 class LoginHandler extends LoggedOutHandler
 {
-	public function redirect($handler){
-		header("Location:");
-	}
 	public function get(){
 		if($code = $this->getVar("eactivation")){
 			$ea = EmailActivation::findByCode($code);
@@ -123,4 +120,5 @@ class LoginHandler extends LoggedOutHandler
 	{
 		$ea = EmailActivation::findByCode($activationCode);
 	}
+
 }

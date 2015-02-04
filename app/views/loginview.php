@@ -1,4 +1,5 @@
 <?php
+
 class LoginView extends BaseView
 {
 	public function render()
