@@ -61,8 +61,16 @@ class ReviewHandler extends PaperHandler
 			if($fileToAuthor->tmp_name)
 				$review->setFileToAuthor($fileToAuthor->name, $fileToAuthor->tmp_name);
 		
-			$review->save();
-			$this->paper->submitReview($this->postVar("recommendation"));
+			$this->paper->submitReview($recommendation);
+			
+			//notify reviewer
+			ReviewSubmittedMessage::create($review->getReviewer(), $review)->send();
+			
+			//notify admin
+			ReviewSubmittedMessage::create($review->getAdmin(), $review)->send();
+			
+			//email admin
+			ReviewSubmittedEmail::create($review->getAdmin(), $review)->send();
 			$this->redirectSuccess();
 		}
 		catch(OperationException $e){

@@ -356,6 +356,28 @@ class Review extends DBModel
 	
 	/**
 	 * 
+	 * @param string $verdict
+	 * @return string
+	 */
+	public static function getVerdictString($verdict)
+	{
+		switch($verdict){
+			case self::VERDICT_APPROVED:
+				return "Approved";
+				break;
+			
+			case self::VERDICT_REVISION_MAJ:
+				return "Major Revision";
+				break;
+				
+			case self::VERDICT_REVISION_MIN:
+				return "Minor Revision";
+				break;
+		}
+	}
+	
+	/**
+	 * 
 	 * @param number $verdict VERDICT_* constants
 	 * @return boolean
 	 */

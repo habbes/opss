@@ -5,6 +5,7 @@ class MessageHandler extends LoggedInHandler
 	
 	private function showPage()
 	{
+		$this->setSavedResultMessage();
 		$this->renderView("Messages");
 	}
 	
