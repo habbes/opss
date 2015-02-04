@@ -42,6 +42,10 @@ class OperationError
 	//review request
 	const REVIEW_REQUEST_INVALID = "ReviewRequestInvalid";
 	const REVIEW_REQUEST_DUPLICATE_PENDING = "ReviewRequestDuplicatePending";
+	//review
+	const REVIEW_VERDICT_INVALID = "ReviewVerdictInvalid";
+	const REVIEW_COMMENTS_TO_ADMIN_EMPTY = "ReviewCommentsToAdminEmpty";
+	const REVIEW_COMMENTS_TO_RESEARCHER_EMPTY = "ReviewCommentsToResearcherEmpty";
 	
 	
 	
