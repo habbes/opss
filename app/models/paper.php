@@ -532,7 +532,6 @@ class Paper extends DBModel
 	{
 		$this->status = self::STATUS_VETTING;
 		$this->editable = false;
-		$this->incrementRevision();
 		$this->addStatusMessage(self::STATMSG_RESUBMITTED_AFTER_VET_REVISION);
 		$this->save();
 	}
