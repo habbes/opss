@@ -6,9 +6,8 @@
 		<?php } else { ?>
 		<thead>
 			<tr>
-				<th style="width:80%">Name</th>
+				<th>Name</th>
 				<th>Email</th>
-				<th>Gender</th>
 				<th>Currently Reviewing</th>
 			</tr>
 		</thead>
@@ -17,7 +16,7 @@
 			<tr data-id="<?= $reviewer->getId() ?>">
 				<td><?= escape($reviewer->getFullName()) ?></td>
 				<td><?= escape($reviewer->getEmail())?></td>
-				<td><?= count($reviewer->getCurrentReviews())?></td>
+				<td><?= count(Review::findCurrentByReviewer($reviewer))?></td>
 			</tr>
 			<?php } //end foreach ?>
 		</tbody>

@@ -515,7 +515,18 @@ class Review extends DBModel
 	 */
 	public static function findCurrentByPaperAndReviewer($paper, $reviewer){
 		return static::findOne("status=? AND paper_id=? AND reviewer_id=?",
-				[Review::STATUS_ONGOING, $paper->getId(), $paper->getReviewer()]);
+				[Review::STATUS_ONGOING, $paper->getId(), $reviewer->getId()]);
+	}
+	
+	/**
+	 *
+	 * @param Paper $paper
+	 * @param Reviewer $reviewer
+	 * @return Review
+	 */
+	public static function findCurrentByReviewer($reviewer){
+		return static::findOne("status=? AND reviewer_id=?",
+				[Review::STATUS_ONGOING, $reviewer->getId()]);
 	}
 	
 	/**

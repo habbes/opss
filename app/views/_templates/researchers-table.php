@@ -8,7 +8,6 @@
 			<tr>
 				<th style="">Name</th>
 				<th>Email</th>
-				<th>Gender</th>
 				<th>Country of Nationality</th>
 				<th>Country of residence</th>
 			</tr>
@@ -18,7 +17,6 @@
 			<tr data-id="<?= $researcher->getId() ?>">
 				<td><?= escape($researcher->getFullName()) ?></td>
 				<td><?= escape($researcher->getEmail())?></td>
-				<td><?= $researcher->getGender()?UserGender::getString($researcher->getGender()):""?></td>
 				<td><?= escape($researcher->getNationality())?></td>
 				<td><?= escape($researcher->getResidence())?></td>
 			</tr>
