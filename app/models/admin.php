@@ -69,7 +69,17 @@ class Admin extends UserRole
 		return false;
 	}
 	
-	public function canViewReview($review)
+	public function canViewReviewCommentsToAuthor($review)
+	{
+		return true;
+	}
+	
+	public function canViewReviewCommentsToAdmin($review)
+	{
+		return true;
+	}
+	
+	public function canViewReviewAdminComments($review)
 	{
 		return true;
 	}

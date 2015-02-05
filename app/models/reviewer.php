@@ -69,8 +69,15 @@ class Reviewer extends UserRole
 	{
 		return true;
 	}
-	
-	public function canViewReview()
+	public function canViewReviewCommentsToAuthor($review)
+	{
+		return $this->is($review->getReviewer());
+	}
+	public function canViewReviewCommentsToAdmin($review)
+	{
+		return true;
+	}
+	public function canViewReviewAdminComments($review)
 	{
 		return true;
 	}
