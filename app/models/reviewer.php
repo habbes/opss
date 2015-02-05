@@ -69,4 +69,9 @@ class Reviewer extends UserRole
 	{
 		return true;
 	}
+	
+	public function canViewReview()
+	{
+		return true;
+	}
 }

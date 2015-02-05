@@ -66,6 +66,16 @@ class DataObject
 	}
 	
 	/**
+	 * checks whether this object has the specified attribute
+	 * @param string $name
+	 * @return boolean
+	 */
+	public function has($name)
+	{
+		return array_key_exists($name, $this->data);
+	}
+	
+	/**
 	 * returns all the data in this object in a dictionary array
 	 * @return array
 	 */

@@ -15,6 +15,7 @@ class Review extends DBModel
 	protected $file_to_author_id;
 	protected $admin_comments;
 	protected $admin_file_id;
+	protected $admin_verdict;
 	protected $date_submitted;
 	protected $permanent = true;
 	protected $due_date;
@@ -39,6 +40,7 @@ class Review extends DBModel
 	const VERDICT_APPROVED = "approved";
 	const VERDICT_REVISION_MIN = "revisionMin";
 	const VERDICT_REVISION_MAJ = "revisionMaj";
+	const VERDICT_REJECTED = "rejected";
 	
 	/**
 	 * 
@@ -236,6 +238,15 @@ class Review extends DBModel
 	}
 	
 	/**
+	 * 
+	 * @param string $comments
+	 */
+	public function setAdminComment($comments)
+	{
+		$this->admin_comments = $comments;
+	}
+	
+	/**
 	 * set comments file written by admin
 	 * @param string $filename
 	 * @param string $sourcePath
@@ -283,6 +294,12 @@ class Review extends DBModel
 	public function isPosted()
 	{
 		return (boolean) $this->posted;
+	}
+	
+	public function setPosted($posted)
+	{
+		$this->posted = $posted;
+		$this->date_posted = Utils::dbDateFormat(time());
 	}
 	
 	/**
@@ -357,12 +374,27 @@ class Review extends DBModel
 	
 	/**
 	 * 
+	 * @param string $verdict
+	 */
+	public function submitAdminReview($verdict)
+	{
+		$this->admin_verdict = $verdict;
+	}
+	
+	/**
+	 * 
 	 * @return array(string)
 	 */
 	public static function getVerdicts()
 	{
 		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
 				self::VERDICT_REVISION_MAJ];
+	}
+	
+	public static function getAdminVerdicts()
+	{
+		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
+				self::VERDICT_REVISION_MAJ, self::VERDICT_REJECTED];
 	}
 	
 	/**
@@ -381,17 +413,30 @@ class Review extends DBModel
 			
 			case self::VERDICT_REVISION_MIN:
 				return "Minor Revision";
+			
+			case self::VERDICT_REJECTED:
+				return "Rejected";
 		}
 	}
 	
 	/**
 	 * 
-	 * @param number $verdict VERDICT_* constants
+	 * @param string $verdict VERDICT_* constants
 	 * @return boolean
 	 */
 	public static function isValidVerdict($verdict)
 	{
 		return in_array($verdict, self::getVerdicts());
+	}
+	
+	/**
+	 * 
+	 * @param string $verdict
+	 * @return boolean
+	 */
+	public static function isValidAdminVerdict($verdict)
+	{
+		return in_array($verdict, self::getAdminVerdicts());
 	}
 	
 	
@@ -425,6 +470,17 @@ class Review extends DBModel
 	public static function findCurrentByPaperAndReviewer($paper, $reviewer){
 		return static::findOne("status=? AND paper_id=? AND reviewer_id=?",
 				[Review::STATUS_ONGOING, $paper->getId(), $paper->getReviewer()]);
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return Review
+	 */
+	public static function findRecentlySubmittedByPaper($paper){
+		return static::findOne("status=? AND paper_id=? ORDER BY date_submitted ASC LIMIT 1",[
+				Review::STATUS_COMPLETED, $paper->getId()
+		]);
 	}
 	
 	

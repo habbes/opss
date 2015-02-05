@@ -167,4 +167,11 @@ abstract class UserRole
 	 */
 	public abstract function canReviewPaper();
 	
+	/**
+	 * checks whether this role can view the review comments and recommendation
+	 * given by the reviewer for a particular view
+	 * @param Review $review
+	 */
+	public abstract function canViewReview($review);
+	
 }

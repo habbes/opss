@@ -47,6 +47,7 @@ class Paper extends DBModel
 	const STATUS_REVIEW_REVISION_MAJ = "reviewRevisionMaj";
 	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
 	const STATUS_REVIEW_SUBMITTED = "reviewSubmitted";
+	const STATUS_REJECTED = "rejected";
 	
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
@@ -602,6 +603,15 @@ class Paper extends DBModel
 	}
 	
 	/**
+	 * 
+	 * @return Review
+	 */
+	public function getRecentlySubmittedReview()
+	{
+		return Review::findRecentlySubmittedByPaper($this);
+	}
+	
+	/**
 	 * submit the ongoing review and saves
 	 * @param number $recommendation values are Review::VERDICT_* constants
 	 * @return Review the submitted review
@@ -612,6 +622,42 @@ class Paper extends DBModel
 		$review->submit($recommendation);
 		$review->save();
 		$this->status = self::STATUS_REVIEW_SUBMITTED;		
+		$this->save();
+		return $review;
+	}
+	
+	/**
+	 * 
+	 * @param string $verdict
+	 * @throws OperationException
+	 * @return Review the submitted review
+	 */
+	public function submitAdminReview($verdict)
+	{
+		$review = $this->getRecentlySubmittedReview();
+		$review->submitAdminReview($verdict);
+		$review->save();
+		switch($verdict){
+			case Review::VERDICT_APPROVED:
+				$this->status  = self::STATUS_PENDING;
+				$this->resetNextActionsList();
+				$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
+				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				break;
+			case Review::VERDICT_REVISION_MAJ:
+				$this->status = self::STATUS_REVIEW_REVISION_MAJ;
+				break;
+			case Review::VERDICT_REVISION_MIN:
+				$this->status = self::STATUS_REVIEW_REVISION_MIN;
+				break;
+			case Review::VERDICT_REJECTED:
+				$this->status = self::STATUS_REJECTED;
+				break;
+			default:
+				throw new OperationException([OperationError::REVIEW_VERDICT_INVALID]);
+				
+		}
+		
 		$this->save();
 		return $review;
 	}

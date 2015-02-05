@@ -58,4 +58,9 @@ class Researcher extends UserRole
 	{
 		return false;
 	}
+	public function canViewReview($review)
+	{
+		return $this->user->is($review->getPaper()->getResearcher()) &&
+			$review->isPosted();
+	}
 }
