@@ -172,6 +172,6 @@ abstract class UserRole
 	 * given by the reviewer for a particular view
 	 * @param Review $review
 	 */
-	public abstract function canViewReview($review);
+
 	
 }

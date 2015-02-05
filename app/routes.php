@@ -47,10 +47,12 @@ $routes = [
 		['^papers\/(\w+)\/test\/?', "papers/Test"],
 		['^papers\/review-requests\/?$', "ReviewRequests"],
 		['^papers\/review-requests\/(\d+)\/?$', "ReviewRequests"],
+		['^admins\/?$','Users@getAdmins'],
+		['^reviewers\/?$','Users@getReviewers'],
+		['^researchers\/?$','Users@getResearchers'],
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
 		['^setup\/admin\/?$', "AdminSetup"],
-		
 		
 		
 		
