@@ -50,10 +50,8 @@ class LoginHandler extends LoggedOutHandler
 		catch(OperationException $e) {
 			switch($e->getErrors()[0]){
 				case OperationError::USER_NOT_FOUND:
-					$message = "Username or email not found.";
-					break;
 				case OperationError::USER_PASSWORD_INCORRECT:
-					$message = "Incorrect password.";
+					$message = "Incorrect username or password. Please check your spelling and try again.";
 					break;
 				case OperationError::USER_EMAIL_NOT_ACTIVATED;
 				$message = "You have not activated your account by email.";
