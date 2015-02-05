@@ -2,43 +2,67 @@
 	<?php if(count($data->reviews) == 0) { ?>
 	<p>No reviews found.</p>
 	<?php } else {?>
-	<div class="panel-group" id="request-list" role="tablist" aria-multiselectable="true">
-		<?php foreach($data->requests as $request) { 
-			$requestId = "request-".$request->getId();
-			$selected = $data->selectedRequest? $request->getId() == $data->selectedRequest->getId() : false;
+	<div class="panel-group" id="review-list" role="tablist" aria-multiselectable="true">
+		<?php foreach($data->reviews as $review) { 
+			$reviewId = "review-".$review->getId();
+			$selected = $data->selectedReview? $review->getId() == $data->selectedReview->getId() : false;
 		?>
-		<div class="panel panel-default id="<?= $requestId?>">
-			<div class="panel-heading" role="tab" id="<?=$requestId?>-heading">
+		<div class="panel panel-default" id="<?=$reviewId?>">
+			<div class="panel-heading" role="tab" id="<?=$reviewId?>-heading">
 				<h4 class="panel-title">
-					<a class="<?= $selected? "":"collapsed"?>" data-toggle="collapse" data-parent="#request-list" 
-					href="<?="#". $requestId?>-body"
-						aria-expanded="true" aria-controls="<?= $requestId?>-body">
-					<?= $request->getPaper()->getTitle() ?> (<?= $request->getPaper()->getIdentifier()?>)
+					<a class="<?= $selected? "":"collapsed"?>" data-toggle="collapse" data-parent="#review-list" 
+					href="<?="#". $reviewId?>-body"
+						aria-expanded="true" aria-controls="<?= $reviewId?>-body">
+					<?= Utils::siteDateFormat($review->getDateSubmitted()) ?>
 					</a>
 				</h4>
 			</div>
-			<div id="<?= $requestId?>-body" class="panel-collapse collapse <?= $selected? "in" : ""?>" 
-				role="tabpanel" aria-labelledby="<?=$requestId?>-heading">
+			<div id="<?= $reviewId?>-body" class="panel-collapse collapse <?= $selected? "in" : ""?>" 
+				role="tabpanel" aria-labelledby="<?=$reviewId?>-heading">
 				<div class="panel-body">
-					<span>Sent on <?= Utils::siteDateTimeFormat($request->getDateSent())?></span><br>
-					<a class="link"><span class="glyphicon glyphicon-download"></span> Download Paper</a><br>
+					<?php if($data->role->isAdmin()) {?>
+					<div>Reviewed by <?= $review->getReviewer()->getFullName()?></div>
+					<?php } ?>
+					<?php if($data->role->canViewReviewCommentsToAdmin($review)){?>
+					<div>
+						<h5 class="font-bold">Comments to Secretariate</h5>
+						<?php if($review->hasFileToAdmin()){?>
+						<div><i>
+							More comments were provided in
+							<a class="link" href="<?= $data->paperBaseUrl?>/reviews/<?= $review->getId()?>/file-admin">this file</a>.
+							</i>
+						</div>
+						<?php } ?>
+						<p><?= $review->getCommentsToAdmin()?></p>
+					</div>
+					<?php } ?>
+					<?php if($data->role->canViewReviewCommentsToAuthor($review)){?>
+					<div>
+						<h5 class="font-bold">Comments to Author</h5>
+						<?php if($review->hasFileToAuthor()){?>
+						<div><i>
+							More comments were provided in
+							<a class="link" href="<?= $data->paperBaseUrl?>/reviews/<?= $review->getId()?>/file-author">this file</a>.
+							</i>
+						</div>
+						<?php } ?>
+						<p><?= $review->getCommentsToAuthor()?></p>
+					</div>
+					<?php } ?>
+					<?php if($data->role->canViewReviewAdminComments($review)){?>
+					<div>
+						<h5 class="font-bold">Comments from Secretariate</h5>
+						<?php if($review->hasAdminFile()){?>
+						<div><i>
+							More comments were provided in
+							<a class="link" href="<?= $data->paperBaseUrl?>/reviews/<?= $review->getId()?>/admin-file">this file</a>.
+							</i>
+						</div>
+						<?php } ?>
+						<p><?= $review->getAdminComments()?></p>
+					</div>
+					<?php } ?>
 					
-					<form method="post" action="<?=URL_PAPERS?>/review-requests/<?= $request->getId()?>">
-						<span class="form-error help-block"><?= $selected? $formerror->action : ""?></span>
-						<div class="form-group">
-							<button class="btn btn-default" name="accept">Accept Request
-							<span class="glyphicon glyphicon-ok text-success"></span>
-							</button>
-							<button class="btn btn-default" name="decline">Decline
-							<span class="glyphicon glyphicon-remove text-danger"></span>
-							</button>
-						</div>
-						<div class="form-group">
-							<textarea class="form-control" cols="" rows="5" placeholder="Comments" 
-							name="comments"><?= $selected? $formdata->comments : ""?></textarea>
-						</div>
-						
-					</form>
 				</div>
 			</div>
 			

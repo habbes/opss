@@ -24,7 +24,7 @@ class ReviewSubmittedResearcherEmail extends Email
 			"title"	=> $paper->getTitle(),
 			"identifier" => $paper->getIdentifier(),
 			"paperLink" => $paper->getAbsoluteUrl(),
-			"reviewLink" => $paper->getAbsoluteUrl()."/reviews",
+			"reviewLink" => $paper->getAbsoluteUrl()."/reviews/".$review->getId(),
 			"verdict" => Review::getVerdictString($review->getAdminVerdict())
 		]);
 		return $e;

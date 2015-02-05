@@ -11,7 +11,7 @@ $formerror = $data->errors? $data->errors : new DataObject();
 			$requestId = "request-".$request->getId();
 			$selected = $data->selectedRequest? $request->getId() == $data->selectedRequest->getId() : false;
 		?>
-		<div class="panel panel-default id="<?= $requestId?>">
+		<div class="panel panel-default" id="<?= $requestId?>">
 			<div class="panel-heading" role="tab" id="<?=$requestId?>-heading">
 				<h4 class="panel-title">
 					<a class="<?= $selected? "":"collapsed"?>" data-toggle="collapse" data-parent="#request-list" 

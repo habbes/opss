@@ -322,6 +322,15 @@ class Review extends DBModel
 	
 	/**
 	 * 
+	 * @return number timestamp
+	 */
+	public function getDateSubmitted()
+	{
+		return strtotime($this->date_submitted);
+	}
+	
+	/**
+	 * 
 	 * @return boolean
 	 */
 	public function isPermanent()
@@ -448,6 +457,43 @@ class Review extends DBModel
 	public static function findByPaper($paper)
 	{
 		return static::findAllByField("paper_id", $paper->getId());
+	}
+	
+	/**
+	 * 
+	 * @param number $id
+	 * @param Paper $paper
+	 * @return Review
+	 */
+	public static function findByIdAndPaper($id, $paper)
+	{
+		return static::findOne("id=? AND paper_id=?",[
+				$id, $paper->getId()
+		]);
+	}
+	
+	/**
+	 * @param Paper $paper
+	 * @return array(Review)
+	 */
+	public static function findCompletedByPaper($paper)
+	{
+		return static::findAll("status=? AND paper_id=?",[
+				self::STATUS_COMPLETED, $paper->getId()
+		]);
+	}
+	
+	/**
+	 * 
+	 * @param number $id
+	 * @param Paper $paper
+	 * @return DBModel
+	 */
+	public static function findCompletedByIdAndPaper($id, $paper)
+	{
+		return static::findOne("id=? AND status=? AND paper_id=?",[
+				$id, Review::STATUS_COMPLETED, $paper->getId()
+		]);
 	}
 	
 	/**
