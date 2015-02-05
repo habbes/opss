@@ -172,7 +172,7 @@ abstract class UserRole
 	 * @param Review $review
 	 */
 	public abstract function canViewReviewCommentsToAuthor($review);
-	
+
 	/**
 	 * checks whether this role can view review comments sent to admin
 	 * @param Review $review
