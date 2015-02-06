@@ -93,7 +93,34 @@
 				</div>
 			</div>
 	
-		<?php break;?>
+		<?php break;
+		case Paper::ACTION_WORKSHOP_QUEUE:
+			$formdata = $data->scheduleWorkshopForm or $formdata = new DataObject();
+			$formerror = $data->scheduleWorkshopErrors or $formerror = new DataObject();
+		?>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">Add paper to presentation pipeline</h4>
+				</div>
+				<div class="panel-body">
+					<form method="post" action="<?= $data->paperBaseUrl?>/schedule-workshop">
+						<div class="form-group">
+							<select class="form-control" name="workshop" required>
+								<option  value="">Select scheduled workshop</option>
+								<?php foreach($data->workshops as $workshop){ 
+									$selected = $workshop->getId() == $formdata->workshop? "selected" : "";
+								?>
+								<option value="<?= $workshop->getId()?>" <?= $selected ?>><?= $workshop->toString() ?></option>
+								<?php } ?>
+							</select>
+						</div>
+						<div class="form-group">
+							<button class="btn btn-default">Add to Presentation Pipeline</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			
 		
 	<?php } 
 	}?>

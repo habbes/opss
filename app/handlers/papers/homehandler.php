@@ -17,6 +17,10 @@ class HomeHandler extends PaperHandler
 						$this->viewParams->reviewers = Reviewer::findAll();
 						$this->viewParams->reviewRequests = $this->paper->getValidReviewRequests();
 						break;
+					
+					case Paper::ACTION_WORKSHOP_QUEUE:
+						$this->viewParams->workshops = Workshop::findAll();
+						break;
 				}
 			}
 		}

@@ -23,6 +23,7 @@ class Paper extends DBModel
 	protected $end_recallable_date;
 	protected $other_parts;
 	protected $thematic_area;
+	protected $workshop_id;
 	
 	private $_researcher;
 	private $_file;
@@ -30,6 +31,7 @@ class Paper extends DBModel
 	private $_authors = [];
 	private $_authorsNames = [];
 	private $_groups;
+	private $_workshop;
 	private $_jsonLoaded = false;
 	private $_nextActions = [];
 	private $_statusMessages = [];
@@ -48,6 +50,7 @@ class Paper extends DBModel
 	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
 	const STATUS_REVIEW_SUBMITTED = "reviewSubmitted";
 	const STATUS_REJECTED = "rejected";
+	const STATUS_WORKSHOP_QUEUE = "workhopQueue";
 	
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
@@ -334,6 +337,25 @@ class Paper extends DBModel
 		$pAuthor->delete();
 		
 		return true;
+	}
+	
+	/**
+	 * 
+	 * @param Workshop $workshop
+	 */
+	public function addToWorkshopQueue($workshop)
+	{
+		//TODO: error checks
+		$this->workshop_id = $workshop->getId();
+		$this->_workshop = $workshop;
+		$this->status = Paper::STATUS_WORKSHOP_QUEUE;
+	}
+	
+	public function getWorkshop()
+	{
+		if(!$this->_workshop)
+			$this->_workshop = Workshop::findById($this->workshop_id);
+		return $this->_workshop;
 	}
 	
 	/**
