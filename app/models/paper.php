@@ -180,7 +180,7 @@ class Paper extends DBModel
 	 */
 	public function isEditable()
 	{
-		return (boolean) $this->editable();
+		return (boolean) $this->editable;
 	}
 	
 	/**
@@ -645,9 +645,11 @@ class Paper extends DBModel
 				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				break;
 			case Review::VERDICT_REVISION_MAJ:
+				$this->editable = true;
 				$this->status = self::STATUS_REVIEW_REVISION_MAJ;
 				break;
 			case Review::VERDICT_REVISION_MIN:
+				$this->editable = true;
 				$this->status = self::STATUS_REVIEW_REVISION_MIN;
 				break;
 			case Review::VERDICT_REJECTED:
