@@ -156,14 +156,14 @@ class File extends DBModel
 	}
 	
 	
-	protected function onDelete()
+	protected function onDelete(&$errors)
 	{
 		//deletes the actual file before the entry is removed from the database
 		unlink($this->getFilepath());
 		return true;
 	}
 	
-	protected function validate(array &$errors)
+	protected function validate(&$errors)
 	{
 		if(!file_exists($this->getFilepath()))
 			return false;

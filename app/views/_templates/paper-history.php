@@ -7,7 +7,7 @@
 				case PaperChange::ACTION_SUBMITTED:
 					$authors = "";
 					foreach ($change->getArg('authors',[]) as $author){
-						$authors .= "{$author['name']} ({$author['email']})<br>";
+						$authors .= "{$author->name} ({$author->email})<br>";
 					}
 					if(!$authors)
 						$authors = "<i>none</i>";
