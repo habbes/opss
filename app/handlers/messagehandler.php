@@ -12,14 +12,15 @@ class MessageHandler extends LoggedInHandler
 	public function get()
 	{
 		$this->viewParams->scope = "all";
-		$this->viewParams->messages = $this->user->getMessageBox()->getAll();
+		//TODO: use order by in model to return in descending order
+		$this->viewParams->messages = array_reverse($this->user->getMessageBox()->getAll());
 		$this->showPage();
 	}
 	
 	public function getUnread()
 	{
 		$this->viewParams->scope = "unread";
-		$this->viewParams->messages = $this->user->getMessageBox()->getUnread();
+		$this->viewParams->messages = array_reverse($this->user->getMessageBox()->getUnread());
 		$this->showPage();
 	}
 	
