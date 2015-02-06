@@ -25,12 +25,17 @@ class Workshop extends DBModel
 	
 	public function getAbsoluteUrl()
 	{
-		return URL_ROOT."/workshops/".static::getMonthString($this->month)."-".static::getYear();
+		return URL_ROOT."/workshops/".$this->getStringId();
 	}
 	
 	public function toString()
 	{
 		return self::getMonthString($this->month). " " . $this->getYear();
+	}
+	
+	public function getStringId()
+	{
+		return self::getMonthString($this->month). "-" . $this->getYear();
 	}
 	
 	/**

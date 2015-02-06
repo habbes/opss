@@ -55,23 +55,15 @@
 			<span class="font-bold">Level</span><br>
 			<span><?= PaperLevel::getString($data->paper->getLevel())?></span>
 		</div>
+		<?php if($data->paper->getThematicArea()){?>
+		<div>
+			<span class="font-bold">Thematic Area</span><br>
+			<span><?= PaperGroup::getString($data->paper->getThematicArea())?></span>
+		</div>
+		<?php } ?>
 		<div>
 			<span class="font-bold">Status</span><br>
-			<span><?php switch($data->paper->getStatus()){
-				case Paper::STATUS_PENDING:
-					echo "Pending";
-					break;				
-				case Paper::STATUS_VETTING:
-					echo "Vetting process";
-					break;
-				case Paper::STATUS_REVIEW:
-					echo "Review process";
-					break;
-				case Paper::STATUS_VETTING_REVISION:
-					echo "Revision by researcher";
-					break;
-				
-			}?></span>
+			<span><?= $data->paper->getStatusString() ?></span>
 		</div>
 		<div>
 			<span class="font-bold">Date Submitted</span><br>

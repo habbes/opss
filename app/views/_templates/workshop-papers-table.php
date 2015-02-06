@@ -1,7 +1,7 @@
 <div class="table-responsive">
 	<table class="table table-striped table-hover records-table" id="workshop-papers-table">
 		<?php if(count($data->workshop->getPapers()) == 0 ) {?>
-			No reviewers found.
+			No papers found.
 		</table>
 		<?php } else { ?>
 		<thead>

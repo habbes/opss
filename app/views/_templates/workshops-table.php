@@ -14,7 +14,7 @@
 			<?php foreach($data->workshops as $workshop) { ?>
 			<tr data-id="<?= $workshop->getId() ?>">
 				<td><a class="link" href="<?= $workshop->getAbsoluteUrl()?>"><?= $workshop->toString()?></a></td>
-				<td>0</td>
+				<td><?= count($workshop->getPapers())?></td>
 			</tr>
 			<?php } //end foreach ?>
 		</tbody>

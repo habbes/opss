@@ -11,6 +11,7 @@ class WorkshopPapersHandler extends AdminHandler
 	
 	private function showPage()
 	{
+		$this->setSavedResultMessage();
 		$this->viewParams->workshop = $this->workshop;
 		$this->renderView("WorkshopPapers");
 	}

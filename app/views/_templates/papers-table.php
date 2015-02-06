@@ -20,7 +20,7 @@
 				<td><a class="link" href="<?=URL_PAPERS?>/<?=$paper->getIdentifier()?>"><?= escape($paper->getTitle()) ?></a></td>
 				<td><?= escape($paper->getResearcher()->getFullName())?></td>
 				<td><?= PaperLevel::getString($paper->getLevel())?></td>
-				<td><?= $paper->getStatus()?></td>
+				<td><?= $paper->getStatusString()?></td>
 				<td><?= Utils::siteDateFormat($paper->getDateSubmitted()) ?></td>
 			</tr>
 			<?php } //end foreach ?>

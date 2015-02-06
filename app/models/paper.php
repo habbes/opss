@@ -50,7 +50,7 @@ class Paper extends DBModel
 	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
 	const STATUS_REVIEW_SUBMITTED = "reviewSubmitted";
 	const STATUS_REJECTED = "rejected";
-	const STATUS_WORKSHOP_QUEUE = "workhopQueue";
+	const STATUS_WORKSHOP_QUEUE = "workshopQueue";
 	
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
