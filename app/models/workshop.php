@@ -28,6 +28,11 @@ class Workshop extends DBModel
 		return URL_ROOT."/workshops/".static::getMonthString($this->month)."-".static::getYear();
 	}
 	
+	public function toString()
+	{
+		return self::getMonthString($this->month). " " . $this->getYear();
+	}
+	
 	public function onInsert(&$errors)
 	{
 		if(!$this->month)

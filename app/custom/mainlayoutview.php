@@ -40,7 +40,7 @@ class MainLayoutView extends BaseView
 			if($user->isAdmin()){
 				$this->addNavGroup("Workshops", "user");
 				$this->addNavLink("Workshops", "Schedule Workshop", URL_ROOT."/workshops/schedule");
-				$this->addNavLink("Workshops", "All Workshops", URL_ROOT."/all");
+				$this->addNavLink("Workshops", "All Workshops", URL_ROOT."/workshops/all");
 				
 					
 			}

@@ -23,6 +23,7 @@ $routes = [
 		['^logout\/?$',"Logout"],
 		['^review\-invitation\-declined\/?$', "EmailReviewInvitationDeclined"],
 		['^papers\/all\/?$', "Papers"],
+		['^papers\/?$', "Papers"],
 		['^papers\/submit\/?$', "PaperSubmit"],
 		['^papers\/(\w+)\/?$', "papers/Home"],
 		['^papers\/(\w+)\/vet\/?$', "papers/Home@handleVetReview"],
@@ -56,6 +57,8 @@ $routes = [
 		['^reviewers\/?$','Users@getReviewers'],
 		['^researchers\/?$','Users@getResearchers'],
 		['^workshops\/schedule\/?$', "ScheduleWorkshop"],
+		['^workshops\/all\/?$', "AllWorkshops"],
+		['^workshops\/?$', "AllWorkshops"],
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
 		['^setup\/admin\/?$', "AdminSetup"],
