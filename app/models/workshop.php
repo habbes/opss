@@ -33,6 +33,15 @@ class Workshop extends DBModel
 		return self::getMonthString($this->month). " " . $this->getYear();
 	}
 	
+	/**
+	 * 
+	 * @return array(Paper)
+	 */
+	public function getPapers()
+	{
+		return paper::findByWorkshop($this);
+	}
+	
 	public function onInsert(&$errors)
 	{
 		if(!$this->month)

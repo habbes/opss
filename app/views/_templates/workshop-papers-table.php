@@ -1,20 +1,20 @@
 <div class="table-responsive">
-	<table class="table table-striped table-hover records-table" id="reviewers-table">
+	<table class="table table-striped table-hover records-table" id="workshop-papers-table">
 		<?php if(count($data->workshop->getPapers()) == 0 ) {?>
 			No reviewers found.
 		</table>
 		<?php } else { ?>
 		<thead>
 			<tr>
-				<th>Date</th>
-				<th>Papers in pipeline</th>
+				<th>Paper</th>
+				<th>Status</th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($data->workshops as $workshop) { ?>
-			<tr data-id="<?= $workshop->getId() ?>">
-				<td><a class="link" href="<?= $workshop->getAbsoluteUrl()?>"><?= $workshop->toString()?></a></td>
-				<td>0</td>
+			<?php foreach($data->workshop->getPapers() as $paper) { ?>
+			<tr>
+				<td><a class="link" href="<?= $paper->getAbsoluteUrl()?>"><?= $paper->getTitle()?> (<?= $paper->getRevisionIdentifier()?>)</a></td>
+				<td><?= $paper->getStatusString()?></td>
 			</tr>
 			<?php } //end foreach ?>
 		</tbody>

@@ -114,6 +114,32 @@ class Paper extends DBModel
 		return $this->status;
 	}
 	
+	public function getStatusString()
+	{
+		switch($this->status){
+			case Paper::STATUS_GRACE_PERIOD:
+				return "Grace Period";
+			case Paper::STATUS_PENDING:
+				return "Pending";
+			case Paper::STATUS_REJECTED:
+				return "Rejected";
+			case Paper::STATUS_REVIEW:
+				return "Ongoing review by external reviewer";
+			case paper::STATUS_VETTING:
+				return "Vetting in progress";
+			case Paper::STATUS_REVIEW_REVISION_MAJ:
+				return "Major revision in progress";
+			case Paper::STATUS_REVIEW_REVISION_MIN:
+				return "Minor revision in progress";
+			case Paper::STATUS_REVIEW_SUBMITTED:
+				return "Review submitted by external reviewer";
+			case Paper::STATUS_VETTING_REVISION:
+				return "Revision in progress after vetting";
+			case Paper::STATUS_WORKSHOP_QUEUE:
+				return "In queue for workshop review";
+		}
+	}
+	
 	public function getThematicArea()
 	{
 		return $this->thematic_area;
@@ -704,6 +730,18 @@ class Paper extends DBModel
 	public static function findByIdentifier($identifier)
 	{
 		return static::findOneByField("identifier", $identifier);
+	}
+	
+	/**
+	 * 
+	 * @param Workshop $workshop
+	 * @return array(Paper)
+	 */
+	public static function findByWorkshop($workshop)
+	{
+		return static::findAll("workshop_id=? AND (status=?)",[
+				$workshop->getId(), Paper::STATUS_WORKSHOP_QUEUE
+		]);
 	}
 	
 }

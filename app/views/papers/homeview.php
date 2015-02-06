@@ -53,6 +53,7 @@ class HomeView extends PaperView
 				if($this->data->user->isReviewer()){
 					$this->addHomePageItem("paper-review-form");
 				}
+				break;
 			case Paper::STATUS_REVIEW_SUBMITTED:
 				if($this->data->user->isAdmin()){
 					$this->data->review = $this->data->paper->getRecentlySubmittedReview();
@@ -63,7 +64,7 @@ class HomeView extends PaperView
 				if($this->data->user->isResearcher()){
 					$this->addPaperPendingNoticeResearcher();
 				}
-			
+				break;
 			case Paper::STATUS_REVIEW_REVISION_MAJ:
 			case Paper::STATUS_REVIEW_REVISION_MIN:
 				if($this->data->user->isAdmin()){
@@ -74,6 +75,17 @@ class HomeView extends PaperView
 					$this->data->review = $this->data->paper->getRecentlySubmittedReview();
 					$this->addHomePageItem("paper-review-revision-researcher");
 				}
+				break;
+			case Paper::STATUS_WORKSHOP_QUEUE:
+				if($this->data->user->isAdmin()){
+					$this->data->workshop = $this->data->paper->getWorkshop();
+					$this->addHomePageItem("paper-workshop-queue-admin");
+				}
+				if($this->data->user->isResearcher()){
+					$this->data->workshop = $this->data->paper->getWorkshop();
+					$this->addHomePageItem("paper-workshop-queue-notice-researcher");
+				}
+				break;
 		}
 		
 		$this->setActivePaperNavLink("Home");
