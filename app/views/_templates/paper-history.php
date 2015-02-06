@@ -2,9 +2,9 @@
 	<div class="history-list">
 	<?php 
 	foreach ($this->data->paper->getChanges() as $change){
+			$time = Utils::siteDateTimeFormat($change->getDate());
 			switch($change->getAction()){
 				case PaperChange::ACTION_SUBMITTED:
-					$time = Utils::siteDateTimeFormat($change->getDate());
 					$authors = "";
 					foreach ($change->getArg('authors',[]) as $author){
 						$authors .= "{$author['name']} ({$author['email']})<br>";
@@ -26,23 +26,11 @@
 						<span class="glyphicon glyphicon-download"></span>
 								<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/version/{$change->getId()}">Download Paper</a>
 DETAILS;
-					?>
-		<div class="panel panel-default history-item">
-			<div class="panel-heading">
-				<span class="history-date"><?= $time?></span> -
-				<span class="history-title font-bold"><?= $changeTitle?></span>
-			</div>
-			<div class="panel-body">
-				<?= $changeDetails ?>
-			</div>
-		</div>
-					<?php break; ?>	
-			<?php 				
+			break; 			
 			case PaperChange::ACTION_RESUBMITTED:
-					$time = Utils::siteDateTimeFormat($change->getDate());
 					$authors = "";
 					foreach ($change->getArg('authors',[]) as $author){
-						$authors .= "{$author['name']} ({$author['email']})<br>";
+						$authors .= "{$author->name} ({$author->email})<br>";
 					}
 					if(!$authors)
 						$authors = "<i>none</i>";
@@ -64,20 +52,9 @@ DETAILS;
 						<span class="glyphicon glyphicon-download"></span>
 							<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/cover/version/{$change->getId()}">Download Cover</a>
 DETAILS;
-					?>
-		<div class="panel panel-default history-item">
-			<div class="panel-heading">
-				<span class="history-date"><?= $time?></span> -
-				<span class="history-title font-bold"><?= $changeTitle?></span>
-			</div>
-			<div class="panel-body">
-				<?= $changeDetails ?>
-			</div>
-		</div>
-				<?php break; ?>			
-		<?php
+		
+			break;
 		case PaperChange::ACTION_VETTED:
-			$time = Utils::siteDateTimeFormat($change->getDate());
 			$changeTitle = "Vetted";
 			$vetReview = VetReview::findById($change->getArg("vetReviewId"));
 			$changeDetails =<<<DETAILS
@@ -88,20 +65,8 @@ DETAILS;
 						{$vetReview->getComments()}
 						</p>
 DETAILS;
-								?>
-				<div class="panel panel-default history-item">
-					<div class="panel-heading">
-						<span class="history-date"><?= $time?></span> -
-						<span class="history-title font-bold"><?= $changeTitle?></span>
-					</div>
-					<div class="panel-body">
-						<?= $changeDetails ?>
-					</div>
-				</div>
-							<?php break; ?>
-		<?php 
+			break; 
 		case PaperChange::ACTION_TITLE_CHANGED:
-			$time = Utils::siteDateTimeFormat($change->getDate());
 			$changeTitle = "Title changed";
 			$changeDetails =<<<DETAILS
 					<b>From</b><br>
@@ -109,18 +74,61 @@ DETAILS;
 					<b>To</b><br>
 						{$change->getArg('to')}<br>
 DETAILS;
-								?>
-				<div class="panel panel-default history-item">
-					<div class="panel-heading">
-						<span class="history-date"><?= $time?></span> -
+			 break;
+		case PaperChange::ACTION_LANGUAGE_CHANGED:
+			$changeTitle = "Language changed";
+			$changeDetails =<<<DETAILS
+				<b>From</b><br>
+					{$change->getArg('from')}<br>
+				<b>To</b><br>
+					{$change->getArg('to')}<br>
+DETAILS;
+			break;
+		case PaperChange::ACTION_COUNTRY_CHANGED:
+			$changeTitle = "Country changed";
+			$changeDetails =<<<DETAILS
+				<b>From</b><br>
+					{$change->getArg('from')}<br>
+				<b>To</b><br>
+					{$change->getArg('to')}<br>
+DETAILS;
+										break;
+		case PaperChange::ACTION_AUTHOR_ADDED:
+			$changeTitle = "Author Added";
+			$changeDetails =<<<DETAILS
+				<b>Name</b><br>
+					{$change->getArg('name')} ({$change->getArg('email')})<br>
+				<b>Reasons</b><br>
+					{$change->getArg('reasons')}<br>
+DETAILS;
+										break;
+		case PaperChange::ACTION_FILE_CHANGED:
+			$changeTitle = "Document Changed";
+			$changeDetails =<<<DETAILS
+			<span class="glyphicon glyphicon-download"></span>
+			<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/version/{$change->getId()}">Download Paper</a>
+DETAILS;
+		case PaperChange::ACTION_FILE_CHANGED:
+			$changeTitle = "Cover Changed";
+			$changeDetails =<<<DETAILS
+			<span class="glyphicon glyphicon-download"></span>
+			<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/cover/version/{$change->getId()}">Download Paper</a>
+DETAILS;
+		default:
+			$changeTitle = $change->getAction();
+			$changeDetails = "";
+						
+		}?>
+		<div class="panel panel-default history-item">
+		<div class="panel-heading">
+		<span class="history-date"><?= $time?></span> -
 						<span class="history-title font-bold"><?= $changeTitle?></span>
 					</div>
 					<div class="panel-body">
 						<?= $changeDetails ?>
 					</div>
 				</div>
-							<?php break; ?>	
-		<?php } 
-			} ?>
+	<?php } ?>
+		
 	</div>
 </div>
