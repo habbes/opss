@@ -55,6 +55,7 @@ $routes = [
 		['^admins\/?$','Users@getAdmins'],
 		['^reviewers\/?$','Users@getReviewers'],
 		['^researchers\/?$','Users@getResearchers'],
+		['^workshops\/schedule\/?$', "ScheduleWorkshop"],
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
 		['^setup\/admin\/?$', "AdminSetup"],

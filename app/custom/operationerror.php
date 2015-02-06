@@ -47,6 +47,11 @@ class OperationError
 	const REVIEW_VERDICT_INVALID = "ReviewVerdictInvalid";
 	const REVIEW_COMMENTS_TO_ADMIN_EMPTY = "ReviewCommentsToAdminEmpty";
 	const REVIEW_COMMENTS_TO_RESEARCHER_EMPTY = "ReviewCommentsToResearcherEmpty";
+	//workshop
+	const WORKSHOP_MONTH_EMPTY = "WorkshopMonthEmpty";
+	const WORKSHOP_MONTH_INVALID = "WorkshopMonthInvalid";
+	const WORKSHOP_YEAR_EMPTY = "WorkshopYearEmpty";
+	const WORKSHOP_EXISTS = "WorkshopExists";
 	
 	
 	
