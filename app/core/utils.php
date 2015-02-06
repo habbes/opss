@@ -149,7 +149,7 @@ class Utils
 			$json = $json->encode();
 		
 		header('Content-Type: text/json');
-		header('Content-Length: ' . count($json));
+		header('Content-Length: ' . strlen($json));
 		echo $json;
 		exit;
 	}
