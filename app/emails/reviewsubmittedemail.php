@@ -14,6 +14,7 @@ class ReviewSubmittedEmail extends Email
 		$e->addUser($recipient);
 		$e->setSubject("Review Submitted");
 		$e->setBodyFromTemplate("review-submitted", [
+				"name" => $recipient->getFullName(),
 				"reviewer" => $review->getReviewer()->getFullName(),
 				"title" => $review->getPaper()->getTitle(),
 				"identifier" => $review->getPaper()->getIdentifier(),

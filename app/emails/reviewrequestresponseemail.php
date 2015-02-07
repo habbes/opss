@@ -13,9 +13,17 @@ class ReviewRequestResponseEmail extends Email
 		$e = new static();
 		$e->addUser($recipient);
 		$reviewer = $request->getReviewer()->getFullName();
-		$template = $request->isAccepted()? "review-request-accepted" : "review-request-declined";
+		if($request->isAccepted()){
+			$template = "review-request-accepted";
+			$e->setSubject("Review Request Accepted");
+		}
+		else {
+			$template = "review-request-declined";
+			$e->setSubject("Review Request Declined");
+		}
 		
 		$e->setBodyFromTemplate($template, [
+				"name" => $recipient->getFullName(),
 				"reviewer" => $request->getReviewer()->getFullName(),
 				"title" => $request->getPaper()->getTitle(),
 				"identifier" => $request->getPaper()->getIdentifier(),
