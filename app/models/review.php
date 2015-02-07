@@ -535,7 +535,7 @@ class Review extends DBModel
 	 * @return Review
 	 */
 	public static function findRecentlySubmittedByPaper($paper){
-		return static::findOne("status=? AND paper_id=? ORDER BY date_submitted ASC LIMIT 1",[
+		return static::findOne("status=? AND paper_id=? ORDER BY date_submitted DESC LIMIT 1",[
 				Review::STATUS_COMPLETED, $paper->getId()
 		]);
 	}
