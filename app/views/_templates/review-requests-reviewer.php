@@ -25,7 +25,7 @@ $formerror = $data->errors? $data->errors : new DataObject();
 				role="tabpanel" aria-labelledby="<?=$requestId?>-heading">
 				<div class="panel-body">
 					<span>Sent on <?= Utils::siteDateTimeFormat($request->getDateSent())?></span><br>
-					<a class="link"><span class="glyphicon glyphicon-download"></span> Download Paper</a><br>
+					<a class="link" href="<?= $request->getAbsoluteUrl()."/download-paper"?>" ><span class="glyphicon glyphicon-download"></span> Download Paper</a><br>
 					
 					<form method="post" action="<?=URL_PAPERS?>/review-requests/<?= $request->getId()?>">
 						<span class="form-error help-block"><?= $selected? $formerror->action : ""?></span>

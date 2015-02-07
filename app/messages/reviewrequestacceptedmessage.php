@@ -16,7 +16,7 @@ class ReviewRequestAcceptedMessage extends Message
 	{
 		$m = new static();
 		$m->setUser($recipient);
-		$m->setSubject("Review Request Declined");
+		$m->setSubject("Review Request Accepted");
 		$m->attachPaper($request->getPaper());
 		$m->setMessageFromTemplate('review-request-accepted',[
 				"reviewer" => $request->getReviewer()->getFullName(),

@@ -26,14 +26,12 @@ class ReviewRequestsHandler extends ReviewerHandler
 		}
 	}
 	
-	private function accept()
+	public function downloadPaper($requestId)
 	{
-		
-	}
-	
-	private function decline()
-	{
-		
+		$this->checkSelectedRequest($requestId);
+		if($this->selectedRequest){
+			$this->selectedRequest->getPaper()->getFile()->sendResponse();
+		}
 	}
 	
 	public function get($requestId = null)

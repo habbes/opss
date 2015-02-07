@@ -54,6 +54,7 @@ $routes = [
 		['^papers\/(\w+)\/test\/?', "papers/Test"],
 		['^papers\/review-requests\/?$', "ReviewRequests"],
 		['^papers\/review-requests\/(\d+)\/?$', "ReviewRequests"],
+		['^papers\/review-requests\/(\d+)\/download-paper\/?$', "ReviewRequests@downloadPaper"],
 		['^admins\/?$','Users@getAdmins'],
 		['^reviewers\/?$','Users@getReviewers'],
 		['^researchers\/?$','Users@getResearchers'],
