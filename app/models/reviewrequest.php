@@ -243,6 +243,11 @@ class ReviewRequest extends DBModel
 		return $this->status == self::STATUS_RESPONDED && $this->response = self::RESPONSE_REJECTED;
 	}
 	
+	public function getAbsoluteUrl()
+	{
+		return URL_PAPERS."/review-requests/".$this->getId();
+	}
+	
 	protected function onInsert(&$errors)
 	{
 		//do not allow send a review request for a paper to reviewer who has a pending request
