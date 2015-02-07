@@ -25,6 +25,12 @@
 					<?php } ?>
 					<?php if($data->role->canViewReviewCommentsToAdmin($review)){?>
 					<div>
+						<h5>Recommendation from reviewer</h5>
+						<div>
+						<?= Review::getVerdictString($review->getRecommendation())?>
+						</div>
+					</div>
+					<div>
 						<h5 class="font-bold">Comments to Secretariate</h5>
 						<?php if($review->hasFileToAdmin()){?>
 						<div><i>
@@ -50,6 +56,12 @@
 					</div>
 					<?php } ?>
 					<?php if($data->role->canViewReviewAdminComments($review)){?>
+					<div>
+						<h5 class="font-bold">Conclusion from Secretariate</h5>
+						<div>
+							<?= Review::getVerdictString($review->getAdminVerdict())?>
+						</div>
+					</div>
 					<div>
 						<h5 class="font-bold">Comments from Secretariate</h5>
 						<?php if($review->hasAdminFile()){?>
