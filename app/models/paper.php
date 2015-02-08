@@ -371,7 +371,14 @@ class Paper extends DBModel
 	 */
 	public function addToWorkshopQueue($workshop)
 	{
-		//TODO: error checks
+		$errors = [];
+		if($this->status == Paper::STATUS_WORKSHOP_QUEUE)
+			$errors[] = OperationError::PAPER_ALREADY_IN_WORKSHOP;
+		else if($this->status != Paper::STATUS_PENDING)
+			$errors[] = OperationError::PAPER_NOT_PENDING;
+		
+		if(!empty($errors))
+			throw new OperationException($errors);
 		$this->workshop_id = $workshop->getId();
 		$this->_workshop = $workshop;
 		$this->status = Paper::STATUS_WORKSHOP_QUEUE;
@@ -382,6 +389,11 @@ class Paper extends DBModel
 	 */
 	public function removeFromWorkshopQueue()
 	{
+		$errors = [];
+		if(!$this->getWorkshop() || $this->status != self::STATUS_WORKSHOP_QUEUE)
+			$errors[] = OperationError::PAPER_NOT_IN_WORKSHOP;
+		if(!empty($errors))
+			throw new OperationException($errors);
 		$this->workshop_id = null;
 		$this->_workshop = null;
 		$this->status = Paper::STATUS_PENDING;

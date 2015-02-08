@@ -37,6 +37,9 @@ class OperationError
 	const PAPER_COUNTRY_EMPTY = "PaperCountryEmpty";
 	const PAPER_MAX_AUTHORS_REACHED = "PaperMaxAuthorsReached";
 	const PAPER_THEMATIC_AREA_INVALID = "PaperThematicAreaInvalid";
+	const PAPER_NOT_IN_WORKSHOP = "PaperNotInWorkshop";
+	const PAPER_NOT_PENDING = "PaperNotPending";
+	const PAPER_ALREADY_IN_WORKSHOP = "PaperAlreadyInWorkshop";
 	//vet review errors
 	const VET_INVALID_VERDICT = "VetInvalidVerdict";
 	const VET_COMMENTS_EMPTY = "VetCommentsEmpty";
