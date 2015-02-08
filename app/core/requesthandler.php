@@ -75,8 +75,7 @@ abstract class RequestHandler
 		
 		if(substr($url, 0, 1) != "/")
 			$url = "/".$url;
-		
-		$this->redirect("Location: ".URL_ROOT.$url);
+		$this->redirect(URL_ROOT.$url);
 	
 	}
 	

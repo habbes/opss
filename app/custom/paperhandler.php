@@ -37,7 +37,7 @@ abstract class PaperHandler extends RoleHandler
 	 */
 	protected function paperLocalRedirect($url = "")
 	{
-		if($url[0] != "/") $url = "/$url";
+		if(substr($url, 0, 1) != "/") $url = "/$url";
 		$this->localRedirect("papers/".$this->paper->getIdentifier().$url);
 	}
 	
