@@ -81,6 +81,14 @@ abstract class RequestHandler
 	}
 	
 	/**
+	 * redirects back to the current page
+	 */
+	public function reloadPage()
+	{
+		$this->localRedirect($_SERVER['REQUEST_URI']);
+	}
+	
+	/**
 	 * gets a GET variable with the given name if the variable is set
 	 * @param string $name the name of the variable to retriev
 	 * @param mixed $default value returned when the variable is not set
