@@ -76,7 +76,17 @@ abstract class RequestHandler
 		if(substr($url, 0, 1) != "/")
 			$url = "/".$url;
 		
-		header("Location: ".URL_ROOT.$url);
+		$this->redirect("Location: ".URL_ROOT.$url);
+	
+	}
+	
+	/**
+	 * rediects to the specified absolute url
+	 * @param string $url
+	 */
+	public function redirect($url)
+	{
+		header("Location: ".$url);
 		exit;
 	}
 	
