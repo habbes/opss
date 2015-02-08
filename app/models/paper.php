@@ -377,6 +377,19 @@ class Paper extends DBModel
 		$this->status = Paper::STATUS_WORKSHOP_QUEUE;
 	}
 	
+	/**
+	 * remove paper from biannual workshop queue and return to pending status
+	 */
+	public function removeFromWorkshopQueue()
+	{
+		$this->workshop_id = null;
+		$this->_workshop = null;
+		$this->status = Paper::STATUS_PENDING;
+		$this->resetNextActionsList();
+		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
+	}
+	
 	public function getWorkshop()
 	{
 		if(!$this->_workshop)
@@ -601,8 +614,8 @@ class Paper extends DBModel
 		$this->editable = false;
 		$this->incrementRevision();
 		$this->resetNextActionsList();
-		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 		$this->resetStatusMessagesList();
 		$this->save();
 	}
