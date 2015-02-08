@@ -8,6 +8,7 @@ $formerror = $data->workshopReviewErrors or $formerror = new DataObject();
 	<a class="link" href="<?=$data->workshop->getAbsoluteUrl()?>"><?= $data->workshop->toString()?></a>.
 	</p>
 	
+	
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">Enter workshop review comments</h4>
@@ -36,6 +37,16 @@ $formerror = $data->workshopReviewErrors or $formerror = new DataObject();
 					<button class="btn btn-default">Submit Review</button>
 				</div>
 			
+			</form>
+		</div>
+	</div>
+	
+	<div class="panel panel-default">
+		<div class="panel-body">
+			<form method="post" action="<?= $data->paper->getAbsoluteUrl()?>/remove-from-workshop" >
+				<div class="form-group" method="post">
+					<button class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Remove paper from queue</button>
+				</div>
 			</form>
 		</div>
 	</div>

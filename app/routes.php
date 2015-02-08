@@ -49,6 +49,7 @@ $routes = [
 		['^papers\/(\w+)\/review-submitted\/file-admin\/?$', "papers/ReviewSubmitted@downloadFileToAdmin"],
 		['^papers\/(\w+)\/review-submitted\/file-author\/?$', "papers/ReviewSubmitted@downloadFileToAuthor"],
 		['^papers\/(\w+)\/schedule-workshop\/?$', "papers/ScheduleWorkshop"],
+		['^papers\/(\w+)\/remove-from-workshop\/?$', "papers/Workshop@removeFromQueue"],
 		['^papers\/(\w+)\/history\/?$', "papers/History"],
 		['^papers\/(\w+)\/details', "papers/Details"],
 		['^papers\/(\w+)\/test\/?', "papers/Test"],
