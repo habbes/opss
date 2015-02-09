@@ -14,12 +14,12 @@ $formerror = $data->workshopReviewErrors or $formerror = new DataObject();
 			<h4 class="panel-title">Enter workshop review comments</h4>
 		</div>
 		<div class="panel-body">
-			<form enctype="multipart/form-data">
+			<form enctype="multipart/form-data" method="post" action="<?= $data->paperBaseUrl?>/workshop-review" >
 				<div class="form-group">
 					<select class="form-control" name="verdict">
 						<option value="">Select conclusion</option>
-						<?php foreach(Review::getAdminVerdicts() as $verdict){?>
-						<option value="<?= $verdict?>"><?= Review::getVerdictString($verdict)?></option>
+						<?php foreach(WorkshopReview::getVerdicts() as $verdict){?>
+						<option value="<?= $verdict?>"><?= WorkshopReview::getVerdictString($verdict)?></option>
 						<?php } ?>
 					</select>
 					<span class="form-error help-block"><?= $formerror->verdict?></span>

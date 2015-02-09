@@ -13,6 +13,9 @@ class ResubmitHandler extends PaperHandler
 			case Paper::STATUS_REVIEW_REVISION_MIN:
 				$this->reviewResubmit();
 				break;
+			case Paper::STATUS_POST_WORKSHOP_REVISION_MIN:
+				$this->workshopReviewResubmitMin();
+				break;
 				
 		}
 	}
@@ -31,7 +34,16 @@ class ResubmitHandler extends PaperHandler
 		$this->paper->reviewResubmit();
 		PaperChange::createResubmitted($this->paper)->save();
 		//TODO: send notifications
-		$this->saveResultMessage("Paper resubmitted successfully.", "admin");
+		$this->saveResultMessage("Paper resubmitted successfully.", "success");
+		$this->paperLocalRedirect();
+	}
+	
+	public function workshopReviewResubmitMin()
+	{
+		$this->paper->workshopReviewResubmitMin();
+		PaperChange::createResubmitted($this->paper)->save();
+		//TODO: send notification messages & emails
+		$this->saveResultMessage("Paper resubmitted successfully.", "success");
 		$this->paperLocalRedirect();
 	}
 }

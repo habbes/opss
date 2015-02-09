@@ -51,6 +51,10 @@ class Paper extends DBModel
 	const STATUS_REVIEW_SUBMITTED = "reviewSubmitted";
 	const STATUS_REJECTED = "rejected";
 	const STATUS_WORKSHOP_QUEUE = "workshopQueue";
+	const STATUS_POST_WORKSHOP_REVISION_MIN = "postWorkshopRevisionMin";
+	const STATUS_POST_WORKSHOP_REVISION_MAJ = "postWorkshopRevisionMaj";
+	const STATUS_POST_WORKSHOP_REVIEW_MIN = "postWorkshopReviewMin";
+	
 	
 	//status messages
 	const STATMSG_NEW_PAPER = "new";
@@ -137,6 +141,8 @@ class Paper extends DBModel
 				return "Revision in progress after vetting";
 			case Paper::STATUS_WORKSHOP_QUEUE:
 				return "In queue for workshop review";
+			default:
+				return $this->status;
 		}
 	}
 	
@@ -598,6 +604,37 @@ class Paper extends DBModel
 		$this->save();
 	}
 	
+	public function advanceLevel()
+	{
+		switch($this->level){
+			case PaperLevel::PROPOSAL:
+			case PaperLevel::R_PROPOSAL:
+				$this->level = PaperLevel::WIP;
+				break;
+			case PaperLevel::WIP:
+			case PaperLevel::R_WIP:
+				$this->level = PaperLevel::FINAL_REPORT;
+				break;
+		}
+	}
+	
+	public function setToRevisedLevel()
+	{
+		switch($this->level){
+			case PaperLevel::PROPOSAL:
+			case PaperLevel::R_PROPOSAL:
+				$this->level = PaperLevel::R_PROPOSAL;
+				break;
+			case PaperLevel::WIP:
+			case PaperLevel::R_WIP:
+				$this->level = PaperLevel::R_WIP;
+				break;
+			case PaperLevel::FINAL_REPORT:
+			case PaperLevel::R_FINAL_REPORT:
+				$this->level = PaperLevel::R_FINAL_REPORT;
+		}
+	}
+	
 	/**
 	 * send paper for vetting
 	 */
@@ -735,6 +772,51 @@ class Paper extends DBModel
 		
 		$this->save();
 		return $review;
+	}
+	
+	/**
+	 * 
+	 * @return WorkshopReview
+	 */
+	public function findRecentlySubmittedWorkshopReview()
+	{
+		return WorkshopReview::findRecentlySubmittedByPaper($this);
+	}
+	
+	public function submitWorkshopReview($verdict)
+	{
+		$review = WorkshopReview::findCurrentByPaper($this);
+		
+		$review->submit($verdict);
+		$review->save();
+		switch($verdict){
+			case WorkshopReview::VERDICT_APPROVED:
+				$this->advanceLevel();
+				$this->status = self::STATUS_PENDING;
+				$this->resetNextActionsList();
+				if($this->level != PaperLevel::FINAL_REPORT && $this->level != PaperLevel::R_FINAL_REPORT)
+					$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				break;
+			case WorkshopReview::VERDICT_REVISION_MIN:
+				$this->status = self::STATUS_POST_WORKSHOP_REVISION_MIN;
+				$this->editable = true;
+				break;
+			case WorkshopReview::VERDICT_REVISION_MAJ:
+				$this->setToRevisedLevel();
+				break;
+				
+		}
+		
+		$this->save();
+		return $review;
+	}
+	
+	public function workshopReviewResubmitMin()
+	{
+		$this->status = self::STATUS_POST_WORKSHOP_REVIEW_MIN;
+		$this->editable = false;
+		$this->incrementRevision();
+		$this->save();
 	}
 	
 	/**

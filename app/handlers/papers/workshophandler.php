@@ -26,6 +26,27 @@ class WorkshopHandler extends PaperHandler
 		
 		$this->redirect($dest);
 		
-		
+	}
+	
+	public function post()
+	{
+		try {
+			//check errors
+			$verdict = $this->trimPostVar("verdict");
+			$comments = $this->trimPostVar("comments");
+			$file = $this->fileVar("file");
+			
+			$wreview = WorkshopReview::create($this->paper, $this->paper->getWorkshop(), $this->user);
+			$wreview->setComments($comments);
+			if($file->tmp_name)
+				$wreview->setFile($file->name, $file->tmp_name);
+			$wreview->save();
+			$wreview = $this->paper->submitWorkshopReview($verdict);
+			$this->saveResultMessage("Review submitted successfully.", "success");
+			$this->paperLocalRedirect();
+		}
+		catch(OperationException $e){
+			
+		}
 	}
 }

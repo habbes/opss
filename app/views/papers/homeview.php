@@ -86,6 +86,13 @@ class HomeView extends PaperView
 					$this->addHomePageItem("paper-workshop-queue-notice-researcher");
 				}
 				break;
+			case Paper::STATUS_POST_WORKSHOP_REVISION_MIN:
+				if($this->data->user->isAdmin()){
+					$this->addHomePageItem("paper-post-workshop-revision-min-notice-admin");
+				}
+				if($this->data->user->isResearcher()){
+					$this->addHomePageItem("paper-post-workshop-revision-min-researcher");
+				}
 		}
 		
 		$this->setActivePaperNavLink("Home");

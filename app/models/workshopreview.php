@@ -22,8 +22,10 @@ class WorkshopReview extends DBModel
 	private $_file;
 	private $_admin;
 	
+	const DIR = "workshop_reviews";
+	
 	//verdict
-	const VERDICT_ACCEPTED = "accepted";
+	const VERDICT_APPROVED = "approved";
 	const VERDICT_REJECTED = "rejected";
 	const VERDICT_REVISION_MIN = "revisionMin";
 	const VERDICT_REVISION_MAJ = "revisionMaj";
@@ -86,6 +88,34 @@ class WorkshopReview extends DBModel
 		return $this->comments;
 	}
 	
+	/**
+	 * stores a file in this paper's workshop review directories
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
+	 * @return File
+	 */
+	private function createFile($filename, $sourcePath, $fromUpload = true)
+	{
+		$ds = DIRECTORY_SEPARATOR;
+		$dir = self::DIR.$ds.$this->getPaper()->getIdentifier();
+		$f = File::create($filename, $dir, $sourcePath, $fromUpload);
+		return $f->save();
+	}
+	
+	/**
+	 *
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
+	 */
+	public function setFile($filename, $sourcePath, $fromUpload = true)
+	{
+		$file = $this->createFile($filename, $sourcePath, $fromUpload);
+		$this->file_id = $file->getId();
+		$this->_file = $file;
+	}
+	
 	public function getFile()
 	{
 		if(!$this->_file)
@@ -108,6 +138,51 @@ class WorkshopReview extends DBModel
 		return $this->status;
 	}
 	
+	public function submit($verdict)
+	{
+		$this->verdict = $verdict;
+		$this->date_submitted = Utils::dbDateFormat(time());
+		$this->status = self::STATUS_COMPLETED;
+	}
+	
+	public static function getVerdicts()
+	{
+		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
+				self::VERDICT_REVISION_MAJ, self::VERDICT_REJECTED];
+	}
+	
+	/**
+	 *
+	 * @param string $verdict
+	 * @return string
+	 */
+	public static function getVerdictString($verdict)
+	{
+		switch($verdict){
+			case self::VERDICT_APPROVED:
+				return "Approved";
+					
+			case self::VERDICT_REVISION_MAJ:
+				return "Major Revision";
+					
+			case self::VERDICT_REVISION_MIN:
+				return "Minor Revision";
+					
+			case self::VERDICT_REJECTED:
+				return "Rejected";
+		}
+	}
+	
+	/**
+	 *
+	 * @param string $verdict VERDICT_* constants
+	 * @return boolean
+	 */
+	public static function isValidVerdict($verdict)
+	{
+		return in_array($verdict, self::getVerdicts());
+	}
+	
 	public static function findByWorkshop($workshop)
 	{
 		return static::findAllByField("workshop_id", $workshop->getId());
@@ -122,6 +197,30 @@ class WorkshopReview extends DBModel
 	{
 		return static::findOne("workshop_id=? AND paper_id=?",[
 				$workshop->getId(), $paper->getId()
+		]);
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return WorkshopReview
+	 */
+	public static function findCurrentByPaper($paper)
+	{
+		return static::findOne("paper_id=? AND status=?",[
+				$paper->getId(), self::STATUS_ONGOING
+		]);
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return WorkshopReview
+	 */
+	public static function findRecentlySubmittedByPaper($paper)
+	{
+		return static::findOne("paper_id=? AND status=? ORDER BY date_submitted DESC LIMIT 1",[
+				$paper->getId(), self::STATUS_COMPLETED,
 		]);
 	}
 }
