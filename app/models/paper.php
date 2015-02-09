@@ -54,6 +54,8 @@ class Paper extends DBModel
 	const STATUS_POST_WORKSHOP_REVISION_MIN = "postWorkshopRevisionMin";
 	const STATUS_POST_WORKSHOP_REVISION_MAJ = "postWorkshopRevisionMaj";
 	const STATUS_POST_WORKSHOP_REVIEW_MIN = "postWorkshopReviewMin";
+	const STATUS_ACCEPTED = "accepted";
+	const STATUS_COMMUNICATIONS = "communications";
 	
 	
 	//status messages
@@ -141,6 +143,16 @@ class Paper extends DBModel
 				return "Revision in progress after vetting";
 			case Paper::STATUS_WORKSHOP_QUEUE:
 				return "In queue for workshop review";
+			case Paper::STATUS_POST_WORKSHOP_REVIEW_MIN:
+				return "Post workshop review";
+			case Paper::STATUS_POST_WORKSHOP_REVISION_MAJ:
+				return "Major revision in progress";
+			case Paper::STATUS_POST_WORKSHOP_REVISION_MIN:
+				return "Minor revision in progress";
+			case Paper::STATUS_ACCEPTED:
+				return "Accepted";
+			case Paper::STATUS_COMMUNICATIONS:
+				return "Sent to communications";
 			default:
 				return $this->status;
 		}
@@ -615,6 +627,9 @@ class Paper extends DBModel
 			case PaperLevel::R_WIP:
 				$this->level = PaperLevel::FINAL_REPORT;
 				break;
+			case PaperLevel::FINAL_REPORT;
+			case PaperLevel::R_FINAL_REPORT:
+				$this->status = self::STATUS_ACCEPTED;
 		}
 	}
 	
@@ -791,8 +806,8 @@ class Paper extends DBModel
 		$review->save();
 		switch($verdict){
 			case WorkshopReview::VERDICT_APPROVED:
-				$this->advanceLevel();
 				$this->status = self::STATUS_PENDING;
+				$this->advanceLevel();				
 				$this->resetNextActionsList();
 				if($this->level != PaperLevel::FINAL_REPORT && $this->level != PaperLevel::R_FINAL_REPORT)
 					$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
@@ -804,9 +819,36 @@ class Paper extends DBModel
 			case WorkshopReview::VERDICT_REVISION_MAJ:
 				$this->setToRevisedLevel();
 				break;
+			
+			case WorkshopReview::VERDICT_REJECTED:
+				$this->stauts = self::STATUS_REJECTED;
+				break;
 				
 		}
 		
+		$this->save();
+		return $review;
+	}
+	
+	public function submitPostWorkshopReviewMin($verdict)
+	{
+		$review = PostWorkshopReviewMin::findCurrentByPaper($this);
+		$review->submit($verdict);
+		$review->save();
+		switch($verdict){
+			case PostWorkshopReviewMin::VERDICT_APPROVED:
+				
+				$this->status = self::STATUS_PENDING;
+				$this->resetNextActionsList();
+				$this->advanceLevel();
+				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				
+				break;
+			case PostWorkshopReviewMin::VERDICT_REJECTED:
+				$this->status = self::STATUS_POST_WORKSHOP_REVISION_MIN;
+				$this->editable = true;
+				break;
+		}
 		$this->save();
 		return $review;
 	}
@@ -817,6 +859,11 @@ class Paper extends DBModel
 		$this->editable = false;
 		$this->incrementRevision();
 		$this->save();
+	}
+	
+	public function sendToCommunications()
+	{
+		$this->status = self::STATUS_COMMUNICATIONS;
 	}
 	
 	/**

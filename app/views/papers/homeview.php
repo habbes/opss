@@ -93,6 +93,32 @@ class HomeView extends PaperView
 				if($this->data->user->isResearcher()){
 					$this->addHomePageItem("paper-post-workshop-revision-min-researcher");
 				}
+				break;
+			case Paper::STATUS_POST_WORKSHOP_REVIEW_MIN:
+				if($this->data->user->isAdmin()){
+					$this->addHomePageItem("paper-post-workshop-review-min-admin");
+				}
+				if($this->data->user->isResearcher()){
+					$this->addHomePageItem("paper-post-workshop-review-min-notice-researcher");
+				}
+				break;
+			case Paper::STATUS_ACCEPTED:
+				if($this->data->user->isAdmin()){
+					$this->addHomePageItem("paper-accepted-admin");
+				}
+				if($this->data->user->isResearcher()){
+					$this->addHomePageItem("paper-accepted-notice-researcher");
+				}
+				break;
+			case Paper::STATUS_COMMUNICATIONS:
+				if($this->data->user->isAdmin()){
+					$this->addHomePageItem("paper-comms-notice-admin");
+				}
+				if($this->data->user->isResearcher()){
+					$this->addHomePageItem("paper-comms-notice-researcher");
+				}
+				break;
+				
 		}
 		
 		$this->setActivePaperNavLink("Home");

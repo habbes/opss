@@ -64,6 +64,21 @@ class PostWorkshopReviewMin extends DBModel
 	}
 	
 	/**
+	 * stores a file in this paper's post workshop review directories
+	 * @param string $filename
+	 * @param string $sourcePath
+	 * @param boolean $fromUpload
+	 * @return File
+	 */
+	private function createFile($filename, $sourcePath, $fromUpload = true)
+	{
+		$ds = DIRECTORY_SEPARATOR;
+		$dir = self::DIR.$ds.$this->getPaper()->getIdentifier();
+		$f = File::create($filename, $dir, $sourcePath, $fromUpload);
+		return $f->save();
+	}
+	
+	/**
 	 *
 	 * @param string $filename
 	 * @param string $sourcePath
@@ -125,7 +140,7 @@ class PostWorkshopReviewMin extends DBModel
 	public static function findCurrentByPaper($paper)
 	{
 		return static::findOne("paper_id=? AND status=?",[
-				$paper->getId(), self::STATUS_COMPLETED
+				$paper->getId(), self::STATUS_ONGOING
 		]);
 	}
 }

@@ -18,12 +18,6 @@
 		<a class="link" href="<?= $request->getAbsoluteUrl()?>">View Request</a>
 	<?php 
 			break;
-		case Message::PART_USER:
-			$user = User::findById($part["args"]["id"]) or $user = new DataObject();
-	?>
-	<a class="link" href="<?= $user->getAbsoluteUrl()?>">View User: <?= $user->getFullName()?></a>
-	<?php 
-			break;
 		}
 	?>
 	

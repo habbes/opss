@@ -51,6 +51,8 @@ $routes = [
 		['^papers\/(\w+)\/schedule-workshop\/?$', "papers/ScheduleWorkshop"],
 		['^papers\/(\w+)\/workshop-review\/?$', "papers/Workshop"],
 		['^papers\/(\w+)\/remove-from-workshop\/?$', "papers/Workshop@removeFromQueue"],
+		['^papers\/(\w+)\/post-workshop-review-min\/?$', "papers/PostWorkshopReviewMin"],
+		['^papers\/(\w+)\/send-to-comms\/?$', "papers/SendToComms"],
 		['^papers\/(\w+)\/history\/?$', "papers/History"],
 		['^papers\/(\w+)\/details', "papers/Details"],
 		['^papers\/(\w+)\/test\/?', "papers/Test"],
