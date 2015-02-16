@@ -4,30 +4,13 @@
 	foreach ($this->data->paper->getChanges() as $change){
 			$time = Utils::siteDateTimeFormat($change->getDate());
 			switch($change->getAction()){
-				case PaperChange::ACTION_SUBMITTED:
-					$authors = "";
-					foreach ($change->getArg('authors',[]) as $author){
-						$authors .= "{$author->name} ({$author->email})<br>";
-					}
-					if(!$authors)
-						$authors = "<i>none</i>";
-					
-					$changeTitle = "Submitted to OPSS";
-					$changeDetails =<<<DETAILS
-					<b>Title</b><br>
-						{$change->getArg('title')}<br>
-					<b>Language of paper</b><br>
-						{$change->getArg('language')}<br>
-					<b>Country of research</b><br>
-						{$change->getArg('country')}<br>
-					<b>Co-authors</b><br>
-						$authors<br>
-					<b>Paper</b><br>
-						<span class="glyphicon glyphicon-download"></span>
-								<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/version/{$change->getId()}">Download Paper</a>
-DETAILS;
-			break; 			
+							
+			case PaperChange::ACTION_SUBMITTED:
 			case PaperChange::ACTION_RESUBMITTED:
+					if($change->getAction() == PaperChange::ACTION_SUBMITTED)
+						$changeTitle = "Submitted to OPSS";
+					else
+						$changeTitle = "Resubmitted after Revision";
 					$authors = "";
 					foreach ($change->getArg('authors',[]) as $author){
 						$authors .= "{$author->name} ({$author->email})<br>";
@@ -35,7 +18,6 @@ DETAILS;
 					if(!$authors)
 						$authors = "<i>none</i>";
 					
-					$changeTitle = "Resubmitted to OPSS";
 					$changeDetails =<<<DETAILS
 					<b>Title</b><br>
 						{$change->getArg('title')}<br>
@@ -67,6 +49,15 @@ DETAILS;
 DETAILS;
 			break; 
 		case PaperChange::ACTION_TITLE_CHANGED:
+		case PaperChange::ACTION_LANGUAGE_CHANGED:
+		case PaperChange::ACTION_COUNTRY_CHANGED:
+			$action = $change->getAction();
+			if($action == PaperChange::ACTION_TITLE_CHANGED)
+				$changeTitle = "Title Changed";
+			else if($action == PaperChange::ACTION_LANGUAGE_CHANGED)
+				$changeTitle = "Language Changed";
+			else
+				$changeTitle = "Country Changed";
 			$changeTitle = "Title changed";
 			$changeDetails =<<<DETAILS
 					<b>From</b><br>
@@ -75,24 +66,6 @@ DETAILS;
 						{$change->getArg('to')}<br>
 DETAILS;
 			 break;
-		case PaperChange::ACTION_LANGUAGE_CHANGED:
-			$changeTitle = "Language changed";
-			$changeDetails =<<<DETAILS
-				<b>From</b><br>
-					{$change->getArg('from')}<br>
-				<b>To</b><br>
-					{$change->getArg('to')}<br>
-DETAILS;
-			break;
-		case PaperChange::ACTION_COUNTRY_CHANGED:
-			$changeTitle = "Country changed";
-			$changeDetails =<<<DETAILS
-				<b>From</b><br>
-					{$change->getArg('from')}<br>
-				<b>To</b><br>
-					{$change->getArg('to')}<br>
-DETAILS;
-										break;
 		case PaperChange::ACTION_AUTHOR_ADDED:
 			$changeTitle = "Author Added";
 			$changeDetails =<<<DETAILS
@@ -101,19 +74,21 @@ DETAILS;
 				<b>Reasons</b><br>
 					{$change->getArg('reasons')}<br>
 DETAILS;
-										break;
+			break;
 		case PaperChange::ACTION_FILE_CHANGED:
 			$changeTitle = "Document Changed";
 			$changeDetails =<<<DETAILS
 			<span class="glyphicon glyphicon-download"></span>
 			<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/version/{$change->getId()}">Download Paper</a>
 DETAILS;
-		case PaperChange::ACTION_FILE_CHANGED:
+			break;
+		case PaperChange::ACTION_COVER_CHANGED:
 			$changeTitle = "Cover Changed";
 			$changeDetails =<<<DETAILS
 			<span class="glyphicon glyphicon-download"></span>
-			<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/cover/version/{$change->getId()}">Download Paper</a>
+			<a class="link" role="button" href="{$data->paper->getAbsoluteUrl()}/download/cover/version/{$change->getId()}">Download Cover</a>
 DETAILS;
+			break;
 		default:
 			$changeTitle = $change->getAction();
 			$changeDetails = "";
