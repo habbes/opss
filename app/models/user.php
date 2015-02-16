@@ -394,6 +394,24 @@ class User extends DBModel
 		return Review::findCurrentByReviewer($this);
 	}
 	
+	/**
+	 * get all completed reviews by this reviewer
+	 * @return array(Review)
+	 */
+	public function getCompletedReviews()
+	{
+		return Review::findCompletedByReviewer($this);
+	}
+	
+	/**
+	 * get all reviews by this reviewer
+	 * @return array(Review)
+	 */
+	public function getReviews()
+	{
+		return Review::findByReviewer($this);
+	}
+	
 	
 	/**
 	 * finds the user with the given username or email

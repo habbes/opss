@@ -353,12 +353,12 @@ class Review extends DBModel
 	 */
 	public function isOngoing()
 	{
-		return $this->getStatus() == self::ONGOING;
+		return $this->getStatus() == self::STATUS_ONGOING;
 	}
 	
 	public function isCompleted()
 	{
-		return $this->getStatus() == self::COMPLETED;
+		return $this->getStatus() == self::STATUS_COMPLETED;
 	}
 	
 	/**
@@ -428,6 +428,18 @@ class Review extends DBModel
 		}
 	}
 	
+	public static function getStatusString($status)
+	{
+		switch($status){
+			case self::STATUS_COMPLETED:
+				return "Completed";
+			case self::STATUS_ONGOING:
+				return "Ongoing";
+			case self::STATUS_OVERDUE:
+				return "Overdue";
+		}
+	}
+	
 	/**
 	 * 
 	 * @param string $verdict VERDICT_* constants
@@ -461,6 +473,16 @@ class Review extends DBModel
 	
 	/**
 	 * 
+	 * @param User $reviewer
+	 * @return array(Review)
+	 */
+	public static function findByReviewer($reviewer)
+	{
+		return static::findAllByField("reviewer_id", $reviewer->getId());
+	}
+	
+	/**
+	 * 
 	 * @param number $id
 	 * @param Paper $paper
 	 * @return Review
@@ -482,6 +504,20 @@ class Review extends DBModel
 				self::STATUS_COMPLETED, $paper->getId()
 		]);
 	}
+	
+	/**
+	 * 
+	 * @param User $reviewer
+	 * @return array(Review)
+	 */
+	public static function findCompletedByReviewer($reviewer)
+	{
+		return static::findAll("status=? AND reviewer_id=?",[
+				self::STATUS_COMPLETED, $reviewer->getId()
+		]);
+	}
+	
+	
 	
 	/**
 	 * 
