@@ -385,6 +385,15 @@ class User extends DBModel
 		return $this->getRole()->getPapers();
 	}
 	
+	/**
+	 * get all ongoing reviews by this reviewer
+	 * @return array(Review)
+	 */
+	public function getCurrentReviews()
+	{
+		return Review::findCurrentByReviewer($this);
+	}
+	
 	
 	/**
 	 * finds the user with the given username or email
