@@ -27,9 +27,9 @@ $reviews = $data->reviews;
 				<td><a class="link" href="<?= $link ?>"><?= $paper->getTitle()?> (<?= $paper->getIdentifier() ?>)</a></td>
 				<td><?= Review::getStatusString($review->getStatus())?></td>
 				<td><?= Utils::siteDateFormat($review->getDateInitiated())?></td>
-				<td><?= $completed? Utils::siteDateFormat($review->getDateSubmitted()) : "N/A" ?></td>
-				<td><?= $completed? Review::getVerdictString($review->getRecommendation()) : "N/A" ?></td>
-				<td><?= $completed? Review::getVerdictString($review->getAdminVerdict()) : "N/A" ?></td>
+				<td><?= $completed? Utils::siteDateFormat($review->getDateSubmitted()) : "" ?></td>
+				<td><?= $completed? Review::getVerdictString($review->getRecommendation()) : "" ?></td>
+				<td><?= $completed? Review::getVerdictString($review->getAdminVerdict()) : "" ?></td>
 			</tr>
 			<?php } ?>
 		</tbody>
