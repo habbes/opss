@@ -420,6 +420,10 @@ class Paper extends DBModel
 		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 	}
 	
+	/**
+	 * get workshop for which this paper has been scheduled for review
+	 * @return Workshop
+	 */
 	public function getWorkshop()
 	{
 		if(!$this->_workshop)
@@ -616,6 +620,9 @@ class Paper extends DBModel
 		$this->save();
 	}
 	
+	/**
+	 * advance paper to the next level
+	 */
 	public function advanceLevel()
 	{
 		switch($this->level){
@@ -630,9 +637,13 @@ class Paper extends DBModel
 			case PaperLevel::FINAL_REPORT;
 			case PaperLevel::R_FINAL_REPORT:
 				$this->status = self::STATUS_ACCEPTED;
+				break;
 		}
 	}
 	
+	/**
+	 * set this paper to the revised version of it's current level
+	 */
 	public function setToRevisedLevel()
 	{
 		switch($this->level){
@@ -648,6 +659,87 @@ class Paper extends DBModel
 			case PaperLevel::R_FINAL_REPORT:
 				$this->level = PaperLevel::R_FINAL_REPORT;
 		}
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isProposal()
+	{
+		return $this->level == PaperLevel::PROPOSAL;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isRevisedProposal()
+	{
+		return $this->level == PaperLevel::R_PROPOSAL;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function isProposalOrRevised()
+	{
+		return $this->isProposal() || $this->isRevisedProposal();
+	}
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isWip()
+	{
+		return $this->level == PaperLevel::WIP;
+	}
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isRevisedWip()
+	{
+		return $this->level == PaperLevel::R_WIP;
+	}
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isWipOrRevised()
+	{
+		return $this->isWip() || $this->isRevisedWip();
+	}
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isFinalReport()
+	{
+		return $this->level == PaperLevel::FINAL_REPORT;
+	}
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isRevisedFinalReport()
+	{
+		return $this->level == PaperLevel::R_FINAL_REPORT;
+	}
+	
+	/**
+	 *
+	 * @return boolean
+	 */
+	public function isFinalReportOrRevised()
+	{
+		return $this->isFinalReport() || $this->isRevisedFinalReport();
 	}
 	
 	/**
@@ -807,9 +899,12 @@ class Paper extends DBModel
 		switch($verdict){
 			case WorkshopReview::VERDICT_APPROVED:
 				$this->status = self::STATUS_PENDING;
+				//do not allow to workshop queue if we're approving a final report
+				//because it goes into accepted state where it can be sent to comms
+				$allowAddToQueue = !$this->isFinalReportOrRevised();
 				$this->advanceLevel();				
 				$this->resetNextActionsList();
-				if($this->level != PaperLevel::FINAL_REPORT && $this->level != PaperLevel::R_FINAL_REPORT)
+				if($allowAddToQueue)
 					$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				break;
 			case WorkshopReview::VERDICT_REVISION_MIN:
@@ -837,11 +932,14 @@ class Paper extends DBModel
 		$review->save();
 		switch($verdict){
 			case PostWorkshopReviewMin::VERDICT_APPROVED:
-				
+				//do not allow to workshop queue if we're approving a final report
+				//because it goes into accepted state where it can be sent to comms
+				$allowAddToQueue = !$this->isFinalReportOrRevised();
 				$this->status = self::STATUS_PENDING;
 				$this->resetNextActionsList();
 				$this->advanceLevel();
-				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				if($allowAddToQueue)
+					$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				
 				break;
 			case PostWorkshopReviewMin::VERDICT_REJECTED:

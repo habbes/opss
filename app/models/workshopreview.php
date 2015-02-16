@@ -57,6 +57,10 @@ class WorkshopReview extends DBModel
 		return $w;
 	}
 	
+	/**
+	 * 
+	 * @return Paper
+	 */
 	public function getPaper()
 	{
 		if(!$this->_paper)
@@ -64,6 +68,10 @@ class WorkshopReview extends DBModel
 		return $this->_paper;
 	}
 	
+	/**
+	 * 
+	 * @return Workshop
+	 */
 	public function getWorkshop()
 	{
 		if(!$this->_workshop)
@@ -71,6 +79,10 @@ class WorkshopReview extends DBModel
 		return $this->_workshop;
 	}
 	
+	/**
+	 * 
+	 * @return User
+	 */
 	public function getAdmin()
 	{
 		if(!$this->_admin)
@@ -78,11 +90,19 @@ class WorkshopReview extends DBModel
 		return $this->_admin;
 	}
 	
+	/**
+	 * 
+	 * @param string $comments
+	 */
 	public function setComments($comments)
 	{
 		$this->comments = $comments;
 	}
 	
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getComments()
 	{
 		return $this->comments;
@@ -116,6 +136,10 @@ class WorkshopReview extends DBModel
 		$this->_file = $file;
 	}
 	
+	/**
+	 * 
+	 * @return File
+	 */
 	public function getFile()
 	{
 		if(!$this->_file)
@@ -123,21 +147,36 @@ class WorkshopReview extends DBModel
 		return $this->_file;
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function hasFile()
 	{
 		return $this->file_id? true : false;
 	}
 	
+	/**
+	 * @return string
+	 */
 	public function getVerdict()
 	{
 		return $this->verdict;
 	}
 	
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getStatus()
 	{
 		return $this->status;
 	}
 	
+	/**
+	 * 
+	 * @param string $verdict VERDICT_* constant
+	 */
 	public function submit($verdict)
 	{
 		$this->verdict = $verdict;
@@ -145,6 +184,10 @@ class WorkshopReview extends DBModel
 		$this->status = self::STATUS_COMPLETED;
 	}
 	
+	/**
+	 * 
+	 * @return array(string)
+	 */
 	public static function getVerdicts()
 	{
 		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
@@ -183,16 +226,32 @@ class WorkshopReview extends DBModel
 		return in_array($verdict, self::getVerdicts());
 	}
 	
+	/**
+	 * 
+	 * @param Workshop $workshop
+	 * @return array(WorkshopReview)
+	 */
 	public static function findByWorkshop($workshop)
 	{
 		return static::findAllByField("workshop_id", $workshop->getId());
 	}
 	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return array(WorkshopReview)
+	 */
 	public static function findByPaper($paper)
 	{
 		return static::findAllByField("paper_id", $paper->getId());
 	}
 	
+	/**
+	 * 
+	 * @param Workshop $workshop
+	 * @param Paper $paper
+	 * @return WorkshopReview
+	 */
 	public static function findByWorkshopAndPaper($workshop, $paper)
 	{
 		return static::findOne("workshop_id=? AND paper_id=?",[

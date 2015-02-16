@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * review done by admin on a paper resubmitted after minor revision after workshop review
+ * @author Habbes
+ *
+ */
 class PostWorkshopReviewMin extends DBModel
 {
 	protected $paper_id;
@@ -44,6 +49,10 @@ class PostWorkshopReviewMin extends DBModel
 		return $p;
 	}
 	
+	/**
+	 * 
+	 * @return Paper
+	 */
 	public function getPaper()
 	{
 		if(!$this->_paper)
@@ -51,6 +60,10 @@ class PostWorkshopReviewMin extends DBModel
 		return $this->_paper;
 	}
 	
+	/**
+	 * 
+	 * @return User
+	 */
 	public function getAdmin()
 	{
 		if(!$this->_admin)
@@ -58,6 +71,10 @@ class PostWorkshopReviewMin extends DBModel
 		return $this->_admin;
 	}
 	
+	/**
+	 * 
+	 * @param string $comments
+	 */
 	public function setComments($comments)
 	{
 		$this->comments = $comments;
@@ -98,11 +115,19 @@ class PostWorkshopReviewMin extends DBModel
 		return $this->_file;
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function hasFile()
 	{
 		return $this->file_id? true : false;
 	}
 	
+	/**
+	 * 
+	 * @param string $verdict VERDICT_* constants
+	 */
 	public function submit($verdict)
 	{
 		$this->verdict = $verdict;
@@ -110,6 +135,10 @@ class PostWorkshopReviewMin extends DBModel
 		$this->status = self::STATUS_COMPLETED;
 	}
 	
+	/**
+	 * 
+	 * @return array(string)
+	 */
 	public static function getVerdicts()
 	{
 		return [self::VERDICT_APPROVED, self::VERDICT_REJECTED];
