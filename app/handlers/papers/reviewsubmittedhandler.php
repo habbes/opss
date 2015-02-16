@@ -39,7 +39,7 @@ class ReviewSubmittedHandler extends PaperHandler
 		try {
 			$errors = [];
 			$verdict = $this->trimPostVar("verdict");
-			if(!Review::isValidAdminVerdict($verdict))
+			if(!Review::isValidAdminVerdict($verdict, $this->paper))
 				$errors[] = OperationError::REVIEW_VERDICT_INVALID;
 			
 			$review = $this->getReview();

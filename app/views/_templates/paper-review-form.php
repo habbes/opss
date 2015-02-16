@@ -53,7 +53,7 @@ $formerror = $data->reviewErrors? $data->reviewErrors: new DataObject();
 					<div class="form-group">
 						<?php 
 						$options = [];
-						foreach(Review::getVerdicts() as $option){
+						foreach(Review::getVerdicts($data->paper) as $option){
 							$options[$option] = Review::getVerdictString($option);
 						}
 						?>

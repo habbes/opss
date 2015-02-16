@@ -42,6 +42,9 @@ class Review extends DBModel
 	const VERDICT_REVISION_MIN = "revisionMin";
 	const VERDICT_REVISION_MAJ = "revisionMaj";
 	const VERDICT_REJECTED = "rejected";
+	const VERDICT_PIPELINE_APPROVED = "pipelineApproved";
+	const VERDICT_PIPELINE_REVISION = "pipelineRevision";
+	const VERDICT_PIPELINE_REJECTED = "pipelineRejected";
 	
 	/**
 	 * 
@@ -392,19 +395,31 @@ class Review extends DBModel
 	}
 	
 	/**
-	 * 
+	 * @param Paper $paper
 	 * @return array(string)
 	 */
-	public static function getVerdicts()
+	public static function getVerdicts($paper)
 	{
-		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
+		if(!$paper->isInPipeline())
+			return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
 				self::VERDICT_REVISION_MAJ];
+		else
+			return [self::VERDICT_PIPELINE_APPROVED, self::VERDICT_PIPELINE_REVISION];
 	}
 	
-	public static function getAdminVerdicts()
+	/**
+	 * @param Paper $paper
+	 * @return array(string)
+	 */
+	public static function getAdminVerdicts($paper)
 	{
-		return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
+		if(!$paper->isInPipeline())
+			return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
 				self::VERDICT_REVISION_MAJ, self::VERDICT_REJECTED];
+		else 
+			return [self::VERDICT_PIPELINE_APPROVED, self::VERDICT_PIPELINE_REVISION,
+					self::VERDICT_PIPELINE_REJECTED
+			];
 	}
 	
 	/**
@@ -416,6 +431,7 @@ class Review extends DBModel
 	{
 		switch($verdict){
 			case self::VERDICT_APPROVED:
+			case self::VERDICT_PIPELINE_APPROVED:
 				return "Approved";
 			
 			case self::VERDICT_REVISION_MAJ:
@@ -424,7 +440,11 @@ class Review extends DBModel
 			case self::VERDICT_REVISION_MIN:
 				return "Minor Revision";
 			
+			case self::VERDICT_PIPELINE_REVISION:
+				return "Revision";
+							
 			case self::VERDICT_REJECTED:
+			case self::VERDICT_PIPELINE_REJECTED:
 				return "Rejected";
 		}
 	}
@@ -442,23 +462,25 @@ class Review extends DBModel
 	}
 	
 	/**
-	 * 
+	 *
 	 * @param string $verdict VERDICT_* constants
+	 * @param Paper $paper
 	 * @return boolean
 	 */
-	public static function isValidVerdict($verdict)
+	public static function isValidVerdict($verdict, $paper)
 	{
-		return in_array($verdict, self::getVerdicts());
+		return in_array($verdict, self::getVerdicts($paper));
 	}
 	
 	/**
 	 * 
 	 * @param string $verdict
+	 * @param Paper $paper
 	 * @return boolean
 	 */
-	public static function isValidAdminVerdict($verdict)
+	public static function isValidAdminVerdict($verdict, $paper)
 	{
-		return in_array($verdict, self::getAdminVerdicts());
+		return in_array($verdict, self::getAdminVerdicts($paper));
 	}
 	
 	

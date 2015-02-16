@@ -147,6 +147,7 @@ class Paper extends DBModel
 				return "In queue for workshop review";
 			case Paper::STATUS_POST_WORKSHOP_REVIEW_MIN:
 				return "Post workshop review";
+			
 			case Paper::STATUS_POST_WORKSHOP_REVISION_MAJ:
 				return "Major revision in progress";
 			case Paper::STATUS_POST_WORKSHOP_REVISION_MIN:
@@ -875,15 +876,25 @@ class Paper extends DBModel
 				$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				break;
+			case Review::VERDICT_PIPELINE_APPROVED:
+				$this->status = self::STATUS_PENDING;
+				$this->resetNextActionsList();
+				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				break;
 			case Review::VERDICT_REVISION_MAJ:
 				$this->editable = true;
 				$this->status = self::STATUS_REVIEW_REVISION_MAJ;
+				break;
+			case Review::VERDICT_PIPELINE_REVISION:
+				$this->editable = true;
+				$this->status = self::STATUS_POST_WORKSHOP_REVISION_MAJ;
 				break;
 			case Review::VERDICT_REVISION_MIN:
 				$this->editable = true;
 				$this->status = self::STATUS_REVIEW_REVISION_MIN;
 				break;
 			case Review::VERDICT_REJECTED:
+			case Review::VERDICT_PIPELINE_REJECTED;
 				$this->status = self::STATUS_REJECTED;
 				break;
 			default:
@@ -927,6 +938,8 @@ class Paper extends DBModel
 				break;
 			case WorkshopReview::VERDICT_REVISION_MAJ:
 				$this->setToRevisedLevel();
+				$this->status = self::STATUS_POST_WORKSHOP_REVISION_MAJ;
+				$this->editable = true;
 				break;
 			
 			case WorkshopReview::VERDICT_REJECTED:
@@ -968,6 +981,16 @@ class Paper extends DBModel
 	public function workshopReviewResubmitMin()
 	{
 		$this->status = self::STATUS_POST_WORKSHOP_REVIEW_MIN;
+		$this->editable = false;
+		$this->incrementRevision();
+		$this->save();
+	}
+	
+	public function workshopReviewResubmitMaj()
+	{
+		$this->status = self::STATUS_PENDING;
+		$this->resetNextActionsList();
+		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 		$this->editable = false;
 		$this->incrementRevision();
 		$this->save();

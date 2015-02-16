@@ -88,7 +88,6 @@ class PaperSubmitHandler extends ResearcherHandler
 				else 
 					$msg->setUser($admin);
 				$msg->send();
-				PaperSubmittedMessage::create($admin, $paper)->send();
 			}
 			
 			//TODO notify admin by email

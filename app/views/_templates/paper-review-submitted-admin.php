@@ -46,7 +46,7 @@ $formerror = $data->reviewSubmittedErrors or $formerror = new DataObject();
 				<div class="form-group">
 					<?php 
 					$options = [];
-					foreach(Review::getAdminVerdicts() as $option){
+					foreach(Review::getAdminVerdicts($data->paper) as $option){
 						$options[$option] = Review::getVerdictString($option);
 					}
 					

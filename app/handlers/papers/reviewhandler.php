@@ -32,7 +32,7 @@ class ReviewHandler extends PaperHandler
 			if(!$review)
 				throw new OperationException(["ReviewNotFound"]);
 			$recommendation = $this->trimPostVar("recommendation");
-			if(!Review::isValidVerdict($recommendation))
+			if(!Review::isValidVerdict($recommendation, $this->paper))
 				$errors[] = OperationError::REVIEW_VERDICT_INVALID;
 			
 			$fileToAdmin = $this->fileVar("file");
