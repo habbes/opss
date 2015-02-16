@@ -28,6 +28,7 @@ class Review extends DBModel
 	private $_fileToAdmin;
 	private $_fileToAuthor;
 	private $_adminFile;
+	private $_admin;
 	
 	const DIR = "reviews";
 	
@@ -523,7 +524,7 @@ class Review extends DBModel
 	 * 
 	 * @param number $id
 	 * @param Paper $paper
-	 * @return DBModel
+	 * @return Review
 	 */
 	public static function findCompletedByIdAndPaper($id, $paper)
 	{
@@ -546,7 +547,7 @@ class Review extends DBModel
 	/**
 	 * 
 	 * @param Paper $paper
-	 * @param Reviewer $reviewer
+	 * @param User $reviewer
 	 * @return Review
 	 */
 	public static function findCurrentByPaperAndReviewer($paper, $reviewer){
@@ -555,13 +556,11 @@ class Review extends DBModel
 	}
 	
 	/**
-	 *
-	 * @param Paper $paper
-	 * @param Reviewer $reviewer
-	 * @return Review
+	 * @param User $reviewer
+	 * @return array(Review)
 	 */
 	public static function findCurrentByReviewer($reviewer){
-		return static::findOne("status=? AND reviewer_id=?",
+		return static::findAll("status=? AND reviewer_id=?",
 				[Review::STATUS_ONGOING, $reviewer->getId()]);
 	}
 	

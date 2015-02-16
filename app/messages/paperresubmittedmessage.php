@@ -18,8 +18,8 @@ class PaperResubmittedMessage extends Message
 		$m = new static();
 		$m->setSubject("Paper Resubmitted");
 		$m->attachPaper($paper);
-		$m->setUser($user);
-		switch($user->getType()){
+		$m->setUser($recipient);
+		switch($recipient->getType()){
 			case UserType::ADMIN:
 				$m->setMessageFromTemplate("paper-resubmitted-admin",[
 					"title" => $paper->getTitle(),

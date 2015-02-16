@@ -93,8 +93,7 @@ class InviteReviewerHandler extends PaperHandler
 			$request = ReviewRequest::create($this->user, $reviewer, $this->paper);
 			$request->save();
 			
-			//send reviewer email
-			ReviewRequestEmail::create($reviewer, $request)->send();
+			
 			
 			//notify reviewer
 			ReviewRequestSentMessage::create($reviewer, $request)->send();
@@ -110,6 +109,8 @@ class InviteReviewerHandler extends PaperHandler
 				$message->send();
 			}
 			
+			//send reviewer email
+			ReviewRequestEmail::create($reviewer, $request)->send();
 			$this->redirectSuccess("Request sent successfully.");
 			
 		}

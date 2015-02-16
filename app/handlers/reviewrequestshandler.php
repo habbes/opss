@@ -51,11 +51,25 @@ class ReviewRequestsHandler extends ReviewerHandler
 			if(isset($_POST['accept'])){
 				$this->selectedRequest->accept();
 				$this->selectedRequest->save();
-				ReviewRequestAcceptedMessage::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
-				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				
 				//send paper for review
 				$paper = $this->selectedRequest->getPaper();
 				$paper->sendForReview($this->user, $this->selectedRequest->getAdmin());
+				
+				
+				//notify admins of accepted request
+				$msg = null;
+				foreach(Admin::findAll() as $admin){
+					if(!$msg){
+						$msg = ReviewRequestAcceptedMessage::create($admin, $this->selectedRequest);
+					}
+					else {
+						$msg->setUser($admin);
+					}
+					$msg->send();
+				}
+				
+				
 				//notify reviewer
 				PaperSentForReviewMessage::create($this->user, $paper, $this->user)->send();
 				//notify researcher
@@ -71,6 +85,10 @@ class ReviewRequestsHandler extends ReviewerHandler
 					}
 					$msg->send();
 				}
+				
+				//TODO should email be sent to all admins?
+				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				
 				$this->saveResultMessage("Review request accepted. You may start reviewing the paper.", "success");
 				$this->localRedirect("papers/".$this->selectedRequest->getPaper()->getIdentifier());
 			}
@@ -92,7 +110,8 @@ class ReviewRequestsHandler extends ReviewerHandler
 				}
 				
 				//TODO: should email be sent to all admins?
-				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				//TODO: email caused crash, investigate
+				//ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				
 				$this->saveResultMessage("Review request declined successfully.", "success");
 				$this->localRedirect("papers/review-requests");

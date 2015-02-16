@@ -26,7 +26,7 @@ class ReviewRequestDeclinedMessage extends Message
 				$template = "review-request-declined-reviewer";
 		}
 		
-		$m->setMessageFromTemplate('review-request-declined',[
+		$m->setMessageFromTemplate($template,[
 				"reviewer" => $request->getReviewer()->getFullName(),
 				"title" => $request->getPaper()->getTitle(),
 				"identifier" => $request->getPaper()->getIdentifier(),

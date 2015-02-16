@@ -5,13 +5,12 @@ $reviews = $data->reviews;
 <div>
 	<?php if(empty($reviews)){?>
 	<p>No papers found.</p>
-	<?php } else { ?>
+	<?php } else {?>
 	<table class="table table-responsive">
 		<thead>
 			<tr>
 				<th>Paper</th>
 				<th>Level</th>
-				<th>Status</th>
 				<th>Reviewing Since</th>
 			</tr>
 		</thead>
@@ -23,7 +22,6 @@ $reviews = $data->reviews;
 				<td><a class="link" href="<?= $paper->getAbsoluteUrl() ?>"><?= $paper->getTitle() ?>
 					(<?= $paper->getIdentifier()?>)</a></td>
 				<td><?= PaperLevel::getString($paper->getLevel())?></td>
-				<td><?= $paper->getStatusString() ?></td>
 				<td><?= Utils::siteDateFormat($review->getDateInitiated())?></td>
 			</tr>
 			<?php } ?>

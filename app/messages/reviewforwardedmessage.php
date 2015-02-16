@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * message sent to admin and researcher when admin forwards a review to the researcher
+ * @author Habbes
+ *
+ */
 class ReviewForwardedMessage extends Message
 {
 	/**
@@ -11,6 +15,7 @@ class ReviewForwardedMessage extends Message
 	public static function create($recipient, $review)
 	{
 		$m  = new static();
+		$m->setUser($recipient);
 		$paper = $review->getPaper();
 		$verdict = Review::getVerdictString($review->getAdminVerdict());
 		switch($recipient->getType()){
@@ -30,6 +35,7 @@ class ReviewForwardedMessage extends Message
 					"verdict" => $verdict,
 					"researcher" => $paper->getResearcher()->getFullName()
 				]);
+				break;
 		}
 		
 		return $m;

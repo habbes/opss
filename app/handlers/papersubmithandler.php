@@ -79,7 +79,7 @@ class PaperSubmitHandler extends ResearcherHandler
 			$paper->sendForVetting();
 			
 			
-			//no
+			//notify admins
 			$msg = null;
 			foreach(Admin::findAll() as $admin)
 			{
@@ -88,8 +88,10 @@ class PaperSubmitHandler extends ResearcherHandler
 				else 
 					$msg->setUser($admin);
 				$msg->send();
-				PaperSubmittedEmail::create($recipient, $paper)->send();
+				PaperSubmittedMessage::create($admin, $paper)->send();
 			}
+			
+			//TODO notify admin by email
 			
 			//notify researcher
 			$msg = PaperSubmittedMessage::create($paper, $this->user);
