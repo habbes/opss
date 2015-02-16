@@ -2,7 +2,7 @@
 $user = $data->selectedUser;
 $role = $user->getRole();
  ?>
-<div class="details-grid">
+<div class="details-vertical">
 	<div class="details-item">
 		<span class="font-bold details-name">Name</span>
 		<span class="details-value"><?= $user->getFullName() ?></span>
