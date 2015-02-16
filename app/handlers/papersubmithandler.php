@@ -74,16 +74,21 @@ class PaperSubmitHandler extends ResearcherHandler
 			PaperChange::createSubmitted($paper)->save();
 			
 			//send for vetting
-			//TODO: this should be deferred until grace period is over and should be ran
+			//TODO this should be deferred until grace period is over and should be ran
 			//by a scheduled Task Runner
 			$paper->sendForVetting();
 			
 			
-			//notify all admins
+			//no
+			$msg = null;
 			foreach(Admin::findAll() as $admin)
 			{
-				$msg = PaperSubmittedMessage::create($paper, $admin);
+				if(!$msg)
+					$msg = PaperSubmittedMessage::create($paper, $admin);
+				else 
+					$msg->setUser($admin);
 				$msg->send();
+				PaperSubmittedEmail::create($recipient, $paper)->send();
 			}
 			
 			//notify researcher

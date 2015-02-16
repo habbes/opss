@@ -20,11 +20,31 @@ class ResubmitHandler extends PaperHandler
 		}
 	}
 	
+	private function sendNotificationMessages()
+	{
+		//notify reseracher
+		PaperResubmittedMessage::create($this->paper, $this->paper->getResearcher())->send();
+		
+		//notify admins
+		$msg = null;
+		foreach(Admin::findAll() as $admin){
+			if(!$msg)
+				$msg = PaperResubmittedMessage::create($this->paper, $admin);
+			else
+				$msg->setUser($admin);
+			$msg->send();
+		}
+	}
+	
 	public function vettingResubmit()
 	{
 		$this->paper->vettingResubmit();
 		PaperChange::createResubmitted($this->paper)->save();
-		//TODO: send notification messages & emails
+		
+		//notification messages
+		$this->sendNotificationMessages();
+		//TODO send notification emails
+		
 		$this->saveResultMessage("Paper resubmitted successfully.", "success");
 		$this->paperLocalRedirect();
 	}
@@ -33,7 +53,11 @@ class ResubmitHandler extends PaperHandler
 	{
 		$this->paper->reviewResubmit();
 		PaperChange::createResubmitted($this->paper)->save();
-		//TODO: send notifications
+		
+		//notification messages
+		$this->sendNotificationMessages();
+		//TODO send notification emails
+		
 		$this->saveResultMessage("Paper resubmitted successfully.", "success");
 		$this->paperLocalRedirect();
 	}
@@ -42,7 +66,11 @@ class ResubmitHandler extends PaperHandler
 	{
 		$this->paper->workshopReviewResubmitMin();
 		PaperChange::createResubmitted($this->paper)->save();
-		//TODO: send notification messages & emails
+		
+		//notification messages
+		$this->sendNotificationMessages();
+		//TODO send notification emails
+		
 		$this->saveResultMessage("Paper resubmitted successfully.", "success");
 		$this->paperLocalRedirect();
 	}

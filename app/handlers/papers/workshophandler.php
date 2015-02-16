@@ -9,7 +9,7 @@ class WorkshopHandler extends PaperHandler
 		try {
 			$this->paper->removeFromWorkshopQueue();
 			$this->paper->save();
-			//TODO: notification that paper removed from queue
+			//TODO notification that paper removed from queue
 			$this->saveResultMessage("Paper successfully removed from workshop review queue.", "success");
 		}
 		catch(OperationException $e){

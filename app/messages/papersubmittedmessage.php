@@ -24,14 +24,16 @@ class PaperSubmittedMessage extends Message
 				$m->setMessageFromTemplate("paper-submitted-admin",
 					[
 						"author" => $paper->getResearcher()->getFullName(),
-						"title" => $paper->getTitle()
+						"title" => $paper->getTitle(),
+						"identifier" => $paper->getIdentifier()
 					]
 				);
 				break;
 			case UserType::RESEARCHER:
 				$m->setMessageFromTemplate("paper-submitted-researcher",
 					[
-						"title" => $paper->getTitle()
+						"title" => $paper->getTitle(),
+						"identifier" => $paper->getIdentifier()
 					]
 				);
 				break;

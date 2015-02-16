@@ -17,7 +17,15 @@ class ReviewRequestDeclinedMessage extends Message
 		$m = new static();
 		$m->setUser($recipient);
 		$m->setSubject("Review Request Declined");
-		$m->attachPaper($request->getPaper());
+		switch($recipient->getType()){
+			case UserType::ADMIN:
+				$m->attachPaper($request->getPaper());
+				$template = "review-request-declined-admin";
+				break;
+			case UserType::REVIEWER:
+				$template = "review-request-declined-reviewer";
+		}
+		
 		$m->setMessageFromTemplate('review-request-declined',[
 				"reviewer" => $request->getReviewer()->getFullName(),
 				"title" => $request->getPaper()->getTitle(),

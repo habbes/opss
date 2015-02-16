@@ -77,8 +77,23 @@ class ReviewRequestsHandler extends ReviewerHandler
 			else if(isset($_POST['decline'])){
 				$this->selectedRequest->reject();
 				$this->selectedRequest->save();
-				ReviewRequestDeclinedMessage::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				
+				//notify reviewer
+				ReviewRequestDeclinedMessage::create($this->selectedRequest->getReviewer(), $this->selectedRequest)->send();
+				
+				//notify admins
+				$msg = null;
+				foreach(Admin::findAll() as $admin){
+					if(!$msg)
+						$msg = ReviewRequestDeclinedMessage::create($admin, $this->selectedRequest);
+					else
+						$msg->setUser($admin);
+					$msg->send();
+				}
+				
+				//TODO: should email be sent to all admins?
 				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				
 				$this->saveResultMessage("Review request declined successfully.", "success");
 				$this->localRedirect("papers/review-requests");
 			}

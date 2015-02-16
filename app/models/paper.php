@@ -371,7 +371,7 @@ class Paper extends DBModel
 			}
 		}
 		if(!$pAuthor){
-			//TODO: throw exception instead
+			//TODO throw exception instead
 			return false;
 		}
 		

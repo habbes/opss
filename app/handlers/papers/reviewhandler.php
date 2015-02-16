@@ -67,9 +67,17 @@ class ReviewHandler extends PaperHandler
 			//notify reviewer
 			ReviewSubmittedMessage::create($review->getReviewer(), $review)->send();
 			
-			//notify admin
-			ReviewSubmittedMessage::create($review->getAdmin(), $review)->send();
+			//notify admins
+			$msg = null;
+			foreach(Admin::findAll() as $admin){
+				if(!$msg)
+					$msg = ReviewSubmittedMessage::create($admin, $review);
+				else 
+					$msg->setUser($admin);
+				$msg->send();
+			}
 			
+			//TODO: should email be sent to all admins?
 			//email admin
 			ReviewSubmittedEmail::create($review->getAdmin(), $review)->send();
 			$this->redirectSuccess();

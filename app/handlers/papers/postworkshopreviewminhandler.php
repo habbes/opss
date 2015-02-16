@@ -8,7 +8,7 @@ class PostWorkshopReviewMinHandler extends PaperHandler
 			$comments = $this->trimPostVar("comments");
 			$file = $this->fileVar("file");
 			$verdict = $this->trimPostVar("verdict");
-			//TODO: check for errors
+			//TODO check for errors
 			$pwreview = PostWorkshopReviewMin::create($this->paper, $this->user);
 			$pwreview->setComments($comments);
 			if($file->tmp_name)
@@ -17,7 +17,7 @@ class PostWorkshopReviewMinHandler extends PaperHandler
 			
 			$pwreview = $this->paper->submitPostWorkshopReviewMin($verdict);
 			
-			//TODO: send notifications and emails
+			//TODO send notifications and emails
 			$this->saveResultMessage("Review submitted successfully.", "success");
 			$this->paperLocalRedirect();
 			

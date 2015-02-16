@@ -12,7 +12,7 @@ class MessageHandler extends LoggedInHandler
 	public function get()
 	{
 		$this->viewParams->scope = "all";
-		//TODO: use order by in model to return in descending order
+		//TODO use order by in model to return in descending order
 		$this->viewParams->messages = array_reverse($this->user->getMessageBox()->getAll());
 		$this->showPage();
 	}

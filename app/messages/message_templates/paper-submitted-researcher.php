@@ -1,1 +1,1 @@
-Your paper "{{title}}" has been submitted.
+Your paper "{{title}}" ({{identifier}}) has been submitted.

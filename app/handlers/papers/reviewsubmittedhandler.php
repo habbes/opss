@@ -67,8 +67,17 @@ class ReviewSubmittedHandler extends PaperHandler
 			
 			//notify researcher
 			ReviewSubmittedMessage::create($this->paper->getResearcher(), $review);
-			//notify admin
-			ReviewSubmittedMessage::create($this->user, $review);
+			//notify admins
+			$msg = null;
+			foreach(Admin::findAll() as $admin){
+				if(!$msg)
+					$msg = ReviewSubmittedMessage::create($admin, $review);
+				else
+					$msg->setUser($admin);
+				$msg->send();
+			}
+			
+			
 			//email researcher
 			ReviewSubmittedResearcherEmail::create($this->paper->getResearcher(), $review);
 			

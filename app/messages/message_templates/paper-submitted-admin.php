@@ -1,1 +1,1 @@
-{{author}} has submitted a paper: "{{title}}".
+{{author}} has submitted a new paper: "{{title}}" ({{identifier}}).

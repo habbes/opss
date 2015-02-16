@@ -1,0 +1,1 @@
+{{author}} has resubmitted the paper "{{title}}" ({{identifier}}) by {{author}} after revision.

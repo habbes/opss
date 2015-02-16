@@ -5,7 +5,7 @@ class HomeHandler extends PaperHandler
 	private function showPage()
 	{
 		if($this->paper->getStatus() == Paper::STATUS_VETTING_REVISION){
-			//TODO: create a method to get latest vetReview from paper: $paper->findLatestVetReview
+			//TODO create a method to get latest vetReview from paper: $paper->findLatestVetReview
 			$vrs = VetReview::findByPaper($this->paper);
 			$this->viewParams->vetReview = array_pop($vrs);
 		}
@@ -63,9 +63,16 @@ class HomeHandler extends PaperHandler
 			//notify researcher
 			PaperVettedMessage::create($this->paper, $vet->getVerdict(), $this->paper->getResearcher())->send();
 			
+			//TODO send email notification to researcher
+			
 			//notify admins
+			$msg = null;
 			foreach(Admin::findAll() as $admin){
-				PaperVettedMessage::create($this->paper, $vet->getVerdict(), $admin)->send();
+				if(!$msg)
+					$msg = PaperVettedMessage::create($this->paper, $vet->getVerdict(), $admin);
+				else
+					$msg->setUser($admin);
+				$msg->send();
 			}
 			
 			//redirect to paper home

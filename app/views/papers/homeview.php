@@ -15,10 +15,10 @@ class HomeView extends PaperView
 		
 		switch($this->data->paper->getStatus()){
 			case Paper::STATUS_VETTING:
-				//TODO: instead of using isAdmin() create method in Role@canVetPaper($paper)
+				//TODO instead of using isAdmin() create method in Role@canVetPaper($paper)
 				if($this->data->user->isAdmin())
 					$this->addVetReviewForm();
-				//TODO: consider createing method in Role@isAuthor($paper) instead
+				//TODO consider createing method in Role@isAuthor($paper) instead
 				if($this->data->user->isResearcher())
 					$this->addVettingNoticeForResearcher();
 				break;

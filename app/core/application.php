@@ -73,7 +73,7 @@ class Application
 				$method = $this->handlerMethod;
 			}
 			else {
-				//TODO: create mechanism for handling error responses
+				//TODO create mechanism for handling error responses
 				header("HTTP/1.1 404 Not Found");
 				die("Pafe not found!");
 			}

@@ -30,7 +30,7 @@ class DBModel extends Model
 		if(isset(static::$table) && static::$table){
 			return static::$table;
 		}
-		//TODO: find a way to cache the table name
+		//TODO find a way to cache the table name
 		return Utils::camelToDelimitedCasePlural(get_called_class());
 		
 	}
@@ -77,7 +77,7 @@ class DBModel extends Model
 	 */
 	protected static function getDbFields()
 	{
-		//TODO: find a way to cache this value for the child class
+		//TODO find a way to cache this value for the child class
 		if(true){
 			static::$dbFields = array();
 			$class = new ReflectionClass(get_called_class());
@@ -310,7 +310,7 @@ class DBModel extends Model
 	public static function find($q = "", array $values = null, array $options = array())
 	{
 		/*
-		 * TODO: use options to set sorting, range of result set
+		 * TODO use options to set sorting, range of result set
 		 */
 		$query = "SELECT * FROM " . static::table();
 		
@@ -343,7 +343,7 @@ class DBModel extends Model
 	 */
 	public static function findOne($query = "", array $values = null, array $options = array())
 	{
-		//TODO: use stmt->fetch() instead
+		//TODO use stmt->fetch() instead
 		$stmt = static::find($query, $values, $options);
 		
 		$res = $stmt->fetch();
@@ -427,7 +427,7 @@ class DBModel extends Model
 	public static function findLast($query = "", array $values = null, array $options=array())
 	{
 		/**
-		 * TODO: implement this method
+		 * TODO implement this method
 		 */
 		
 	}
