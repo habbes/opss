@@ -313,6 +313,7 @@ class User extends DBModel
 		return URL_ROOT ."/users/".$this->username;
 	}
 	
+	
 	protected function onInsert(&$errors = NULL)
 	{
 		
@@ -373,6 +374,15 @@ class User extends DBModel
 		
 		return true;
 		
+	}
+	
+	/**
+	 * get all papers this user has access to
+	 * @return array(Paper)
+	 */
+	public function getPapers()
+	{
+		return $this->getRole()->getPapers();
 	}
 	
 	

@@ -63,6 +63,7 @@ $routes = [
 		['^reviewers\/?$','Users@getReviewers'],
 		['^researchers\/?$','Users@getResearchers'],
 		['^users\/(\w+)\/?$', 'users/Home'],
+		['^users\/(\w+)\/papers-submitted\/?$', 'users/PapersSubmitted'],
 		['^workshops\/schedule\/?$', "ScheduleWorkshop"],
 		['^workshops\/all\/?$', "AllWorkshops"],
 		['^workshops\/?$', "AllWorkshops"],
