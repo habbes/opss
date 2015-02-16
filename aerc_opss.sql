@@ -30,7 +30,7 @@ CREATE TABLE `co_authors` (
   `email` varchar(255) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +66,7 @@ CREATE TABLE `files` (
   `filetype` varchar(255) DEFAULT NULL,
   `directory` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=134 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -101,7 +101,7 @@ CREATE TABLE `messages` (
   `message` text,
   `other_parts` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=370 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `paper_authors` (
   `author_id` int(11) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -135,7 +135,7 @@ CREATE TABLE `paper_changes` (
   `args` text,
   `paper_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,15 +156,38 @@ CREATE TABLE `papers` (
   `file_id` int(11) DEFAULT NULL,
   `cover_id` int(11) DEFAULT NULL,
   `status` varchar(100) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
+  `level` varchar(100) DEFAULT NULL,
   `editable` tinyint(4) DEFAULT NULL,
   `recallable` tinyint(4) DEFAULT NULL,
   `end_recallable_date` datetime DEFAULT NULL,
   `researcher_id` int(11) DEFAULT NULL,
   `other_parts` text,
   `thematic_area` int(11) DEFAULT NULL,
+  `workshop_id` int(11) DEFAULT NULL,
+  `in_pipeline` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `post_workshop_review_mins`
+--
+
+DROP TABLE IF EXISTS `post_workshop_review_mins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `post_workshop_review_mins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `paper_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `verdict` varchar(100) DEFAULT NULL,
+  `comments` text,
+  `file_id` int(11) DEFAULT NULL,
+  `date_initiated` datetime DEFAULT NULL,
+  `date_submitted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +235,7 @@ CREATE TABLE `review_requests` (
   `response_text` text,
   `request_text` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -241,8 +264,9 @@ CREATE TABLE `reviews` (
   `date_initiated` datetime DEFAULT NULL,
   `admin_comments` text,
   `admin_file_id` int(11) DEFAULT NULL,
+  `admin_verdict` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -304,7 +328,44 @@ CREATE TABLE `vet_reviews` (
   `comments` text,
   `verdict` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `workshop_reviews`
+--
+
+DROP TABLE IF EXISTS `workshop_reviews`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `workshop_reviews` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `paper_id` int(11) DEFAULT NULL,
+  `workshop_id` int(11) DEFAULT NULL,
+  `admin_id` int(11) DEFAULT NULL,
+  `comments` text,
+  `file_id` int(11) DEFAULT NULL,
+  `verdict` varchar(100) DEFAULT NULL,
+  `status` varchar(100) DEFAULT NULL,
+  `date_initiated` datetime DEFAULT NULL,
+  `date_submitted` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `workshops`
+--
+
+DROP TABLE IF EXISTS `workshops`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `workshops` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `year` int(11) DEFAULT NULL,
+  `month` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -316,4 +377,4 @@ CREATE TABLE `vet_reviews` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-04 23:28:18
+-- Dump completed on 2015-02-16 22:03:39
