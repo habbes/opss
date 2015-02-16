@@ -13,7 +13,7 @@
 		<tbody>
 			<?php foreach($data->admins as $admin) { ?>
 			<tr data-id="<?= $admin->getId() ?>">
-				<td><?= escape($admin->getFullName())?></td>
+				<td><a class="link" href="<?=$admin->getAbsoluteUrl()?>"><?= escape($admin->getFullName())?></a></td>
 				<td><?= escape($admin->getEmail())?></td>
 			</tr>
 			<?php } //end foreach ?>

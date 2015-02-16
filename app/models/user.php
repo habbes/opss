@@ -112,7 +112,7 @@ class User extends DBModel
 	 */
 	public function getGender()
 	{
-		return (int) $this->gender();
+		return (int) $this->gender;
 	}
 	
 	/**
@@ -302,6 +302,15 @@ class User extends DBModel
 	{
 		$email->addUser($this);
 		return $email->send();
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
+	public function getAbsoluteUrl()
+	{
+		return URL_ROOT ."/users/".$this->username;
 	}
 	
 	protected function onInsert(&$errors = NULL)

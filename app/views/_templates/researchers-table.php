@@ -15,7 +15,7 @@
 		<tbody>
 			<?php foreach($data->researchers as $researcher) { ?>
 			<tr data-id="<?= $researcher->getId() ?>">
-				<td><?= escape($researcher->getFullName()) ?></td>
+				<td><a class="link" href="<?=$researcher->getAbsoluteUrl()?>"><?= escape($researcher->getFullName()) ?></a></td>
 				<td><?= escape($researcher->getEmail())?></td>
 				<td><?= escape($researcher->getNationality())?></td>
 				<td><?= escape($researcher->getResidence())?></td>

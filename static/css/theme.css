@@ -164,7 +164,7 @@ label {
 }
 /** end message viewer **/
 
-#paper-body {
+#paper-body, #user-body {
 	padding-top:20px;
 }
 
@@ -174,3 +174,33 @@ label {
 }
 
 /** end paper sidebar **/
+
+/** details grid/vertical view **/
+.details-grid {
+	display:table;
+}
+.details-grid .details-item {
+	display:table-row;
+}
+
+.details-grid .details-name, .details-grid .details-value {
+	display:table-cell;
+	padding-top:5px;
+	padding-left:5px;
+}
+
+
+.details-vertical .details-item {
+	display:block;
+	margin-bottom:5px;
+}
+
+.details-vertical .details-name, details-vertical .details-value{
+	display:block;
+}
+
+.details-name {
+	font-weight:600;
+}
+
+/** end details grid/vertical view **/

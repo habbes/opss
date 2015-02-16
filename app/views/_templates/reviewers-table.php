@@ -14,7 +14,7 @@
 		<tbody>
 			<?php foreach($data->reviewers as $reviewer) { ?>
 			<tr data-id="<?= $reviewer->getId() ?>">
-				<td><?= escape($reviewer->getFullName()) ?></td>
+				<td><a class="link" href="<?=$reviewer->getAbsoluteUrl()?>"><?= escape($reviewer->getFullName()) ?></a></td>
 				<td><?= escape($reviewer->getEmail())?></td>
 				<td><?= count(Review::findCurrentByReviewer($reviewer))?></td>
 			</tr>
