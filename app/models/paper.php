@@ -24,6 +24,7 @@ class Paper extends DBModel
 	protected $other_parts;
 	protected $thematic_area;
 	protected $workshop_id;
+	protected $in_pipeline;
 	
 	private $_researcher;
 	private $_file;
@@ -85,6 +86,7 @@ class Paper extends DBModel
 		$paper->recallable = true;
 		$paper->level = PaperLevel::PROPOSAL;
 		$paper->revision = 1;
+		$paper->in_pipeline = false;
 		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
 		$paper->end_recallable_date = time() + $grace_period * 84600;
 		
@@ -237,6 +239,15 @@ class Paper extends DBModel
 	public function isRecallable()
 	{
 		return (boolean) $this->recallable();
+	}
+	
+	/**
+	 * whether the paper is in the presentation pipeline
+	 * @return boolean
+	 */
+	public function isInPipeline()
+	{
+		return (boolean) $this->in_pipeline;
 	}
 	
 	/**
@@ -400,6 +411,9 @@ class Paper extends DBModel
 		$this->workshop_id = $workshop->getId();
 		$this->_workshop = $workshop;
 		$this->status = Paper::STATUS_WORKSHOP_QUEUE;
+		//add paper to presentation pipeline
+		if(!$this->in_pipeline)
+			$this->in_pipeline = true;
 	}
 	
 	/**
