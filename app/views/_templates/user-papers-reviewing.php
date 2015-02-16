@@ -21,7 +21,7 @@ $reviews = $data->reviews;
 			?>
 			<tr data-id="<?= $paper->getId()?>">
 				<td><a class="link" href="<?= $paper->getAbsoluteUrl() ?>"><?= $paper->getTitle() ?>
-					(<?= $paper->getRevisionIdentifier()?>)</a></td>
+					(<?= $paper->getIdentifier()?>)</a></td>
 				<td><?= PaperLevel::getString($paper->getLevel())?></td>
 				<td><?= $paper->getStatusString() ?></td>
 				<td><?= Utils::siteDateFormat($review->getDateInitiated())?></td>
