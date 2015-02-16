@@ -17,6 +17,7 @@ class ReviewForwardedMessage extends Message
 		$m  = new static();
 		$m->setUser($recipient);
 		$paper = $review->getPaper();
+		$m->attachPaper($paper);
 		$verdict = Review::getVerdictString($review->getAdminVerdict());
 		switch($recipient->getType()){
 			case UserType::RESEARCHER:
