@@ -14,6 +14,7 @@ class NewMessagesAjaxView extends View
 			];
 		}
 		$resp->messages = $msgs;
+		$resp->unreadCount = $this->data->unreadCount;
 		$resp->sendResponse();
 	}
 }

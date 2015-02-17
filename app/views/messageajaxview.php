@@ -7,6 +7,7 @@ class MessageAjaxView extends View
 		$response = new JsonObject();
 		$response->subject = $this->data->message->getSubject();
 		$response->body = $this->read("message-content");
+		$response->unreadCount = $this->data->unreadCount;
 		$response->sendResponse();
 	}
 }

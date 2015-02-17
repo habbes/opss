@@ -26,7 +26,8 @@ class MessageHandler extends LoggedInHandler
 	
 	public function ajaxRead($id)
 	{
-		$message = $this->user->getMessageBox()->getById($id);
+		$box = $this->user->getMessageBox();
+		$message = $box->getById($id);
 		if(!$message){
 			header("HTTP/1.1 404 Not found");
 			die("Error");
@@ -34,6 +35,7 @@ class MessageHandler extends LoggedInHandler
 		$message->setRead(true);
 		$message->save();
 		$this->viewParams->message = $message;
+		$this->viewParams->unreadCount = $box->countUnread();
 		$this->renderView("MessageAjax");
 	}
 	
@@ -51,12 +53,14 @@ class MessageHandler extends LoggedInHandler
 			$messages = $box->getNew();
 			if(count($messages) > 0){
 				$this->viewParams->messages = $messages;
+				$this->viewParams->unreadCount = $box->countUnread();
 				$this->renderView("NewMessagesAjax");
 				exit;
 			}
 			sleep(1);
 		}
 		$this->viewParams->messages = [];
+		$this->viewParams->unreadCount = $box->countUnread();
 		$this->renderView("NewMessagesAjax");
 	}
 }
