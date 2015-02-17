@@ -25,6 +25,7 @@ class Paper extends DBModel
 	protected $thematic_area;
 	protected $workshop_id;
 	protected $in_pipeline;
+	protected $viewed_by_admin;
 	
 	private $_researcher;
 	private $_file;
@@ -87,6 +88,7 @@ class Paper extends DBModel
 		$paper->level = PaperLevel::PROPOSAL;
 		$paper->revision = 1;
 		$paper->in_pipeline = false;
+		$paper->viewed_by_admin = false;
 		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
 		$paper->end_recallable_date = time() + $grace_period * 84600;
 		
@@ -122,6 +124,28 @@ class Paper extends DBModel
 		return $this->status;
 	}
 	
+	/**
+	 * 
+	 * @param boolean $v
+	 */
+	public function setViewedByAdmin($v)
+	{
+		$this->viewed_by_admin = $v;
+	}
+	
+	/**
+	 * 
+	 * @return boolean
+	 */
+	public function hasBeenViewedByAdmin()
+	{
+		return $this->viewed_by_admin;
+	}
+	
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getStatusString()
 	{
 		switch($this->status){
@@ -1031,6 +1055,24 @@ class Paper extends DBModel
 		return static::findAll("workshop_id=? AND (status=?)",[
 				$workshop->getId(), Paper::STATUS_WORKSHOP_QUEUE
 		]);
+	}
+	
+	/**
+	 * find all papers not viewed by admin
+	 * @return array(Paper)
+	 */
+	public static function findUnread()
+	{
+		return static::findAllByField("viewed_by_admin", false);
+	}
+	
+	/**
+	 * counts the number of papers not viewed by admin
+	 * @return number
+	 */
+	public static function countUnread()
+	{
+		return static::countByField("viewed_by_admin", false);
 	}
 	
 }

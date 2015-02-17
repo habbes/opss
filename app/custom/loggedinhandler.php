@@ -42,5 +42,9 @@ class LoggedInHandler extends BaseHandler
 	public function onCreate()
 	{
 		$this->assertLogin();
+		//get badge values for unread counts
+		if($this->user->isAdmin()){
+			$this->viewParams->badgeUnreadPapers = Paper::countUnread();
+		}
 	}
 }

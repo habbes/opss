@@ -65,6 +65,15 @@ abstract class PaperHandler extends RoleHandler
 		$this->assertPaperAccess();
 		$this->viewParams->paper = $paper;
 		$this->viewParams->paperBaseUrl = URL_PAPERS . "/" . $this->paper->getIdentifier();
+		//mark as read if admin is accessing page
+		if($this->user->isAdmin() && !$this->paper->hasBeenViewedByAdmin()){
+			if(!$this->paper->hasBeenViewedByAdmin()){
+				$this->paper->setViewedByAdmin(true);
+				$this->paper->save();
+			}
+			//update unread count
+			$this->viewParams->badgeUnreadPapers -= 1;
+		}
 		
 	}
 }

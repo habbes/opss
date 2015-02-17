@@ -24,7 +24,7 @@ abstract class RoleHandler extends LoggedInHandler
 	
 	public function onCreate()
 	{
-		$this->assertLogin();
+		parent::onCreate();
 		$this->assertRole();
 	}
 }

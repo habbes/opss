@@ -143,7 +143,7 @@ label {
 /** end forms **/
 
 /** tables **/
-#notifications-table .unread {
+.records-table .unread {
 	font-weight:600;
 }
 

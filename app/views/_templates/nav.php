@@ -7,8 +7,14 @@
 <ul class="nav nav-sidebar nav-list-group">
 	<?php foreach($group['links'] as $link){
 		$active = $link->active? "active" : "";
+		$badge = "";
+		if($group["name"] == "Papers" && $link->name == "All Papers"){
+			if($data->badgeUnreadPapers > 0){
+				$badge = ' <span class="badge" id="unread-papers-badge">'.$data->badgeUnreadPapers.'</span>';
+			}
+		}
 		?>
-	<li class="nav-item <?= $active ?>"><a href="<?= $link->url ?>"><?= $link->name ?></a></li>
+	<li class="nav-item <?= $active ?>"><a href="<?= $link->url ?>"><?= $link->name ?><?= $badge ?></a></li>
 	
 	<?php } ?>
 </ul>

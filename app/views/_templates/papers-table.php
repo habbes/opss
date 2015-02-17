@@ -15,8 +15,10 @@
 			</tr>
 		</thead>
 		<tbody>
-			<?php foreach($data->papers as $paper) { ?>
-			<tr>
+			<?php foreach($data->papers as $paper) {
+				$unread = $paper->hasBeenViewedByAdmin()? "" : "unread info";
+				?>
+			<tr class="<?= $unread ?>">
 				<td><a class="link" href="<?=URL_PAPERS?>/<?=$paper->getIdentifier()?>"><?= escape($paper->getTitle()) ?></a></td>
 				<td><?= escape($paper->getResearcher()->getFullName())?></td>
 				<td><?= PaperLevel::getString($paper->getLevel())?></td>
