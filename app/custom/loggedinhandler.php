@@ -46,5 +46,11 @@ class LoggedInHandler extends BaseHandler
 		if($this->user->isAdmin()){
 			$this->viewParams->badgeUnreadPapers = Paper::countUnread();
 		}
+		if($this->user->isReviewer()){
+			$this->viewParams->badgePendingRequests = ReviewRequest::countValidByReviewer($this->user);
+		}
+		//TODO: find most effective way of displaying new message count without conflicting with running alerts, if necessary
+		//$this->viewParams->badgeNewNotifications = $this->user->getMessageBox()->countNew();
+		$this->viewParams->badgeUnreadNotifications = $this->user->getMessageBox()->countUnread();
 	}
 }

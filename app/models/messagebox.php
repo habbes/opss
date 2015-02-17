@@ -101,6 +101,20 @@ class MessageBox extends DBModel
 	}
 	
 	/**
+	 * count all messages in this message box using given query filters
+	 * @param string $query
+	 * @param array $vals
+	 * @param array $options
+	 * @return number
+	 */
+	public function countByQuery($query, $vals, $options = [])
+	{
+		$query = "user_id=? AND $query";
+		array_unshift($vals, $this->user_id);
+		return Message::count($query, $vals, $options);
+	}
+	
+	/**
 	 * get all messages with the given sender type
 	 * @param string $type
 	 * @return array(Message)
@@ -122,6 +136,17 @@ class MessageBox extends DBModel
 	}
 	
 	/**
+	 * 
+	 * @return number
+	 */
+	public function countUnread()
+	{
+		$count = $this->countByQuery("is_read=?", [false]);
+		//do not update query time so that one can still count new queries
+		return $count;
+	}
+	
+	/**
 	 * get all unread messages with the given sender type in this message
 	 * @param string $type
 	 * @return array(Message)
@@ -140,6 +165,17 @@ class MessageBox extends DBModel
 		$msgs =  $this->getAllByQuery("date_sent >= ?", [$this->last_query_time]);
 		$this->updateQueryTime();
 		return $msgs;
+	}
+	
+	/**
+	 *
+	 * @return number
+	 */
+	public function countNew()
+	{
+		$count = $this->countByQuery("date_sent >= ?", [$this->last_query_time]);
+		$this->updateQueryTime();
+		return $count;
 	}
 	
 	

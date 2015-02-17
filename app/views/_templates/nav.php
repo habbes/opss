@@ -8,9 +8,11 @@
 	<?php foreach($group['links'] as $link){
 		$active = $link->active? "active" : "";
 		$badge = "";
-		if($group["name"] == "Papers" && $link->name == "All Papers"){
-			if($data->badgeUnreadPapers > 0){
-				$badge = ' <span class="badge" id="unread-papers-badge">'.$data->badgeUnreadPapers.'</span>';
+		if($link->badgeName){
+			$badgeData = $this->data->get("badge".$link->badgeName);
+			$badgeId = $link->badgeId? 'id="'."{$link->badgeId}-nav-badge".'"' : "";
+			if($badgeData > 0){
+				$badge =  sprintf(' <span class="badge" %s>%s</span>', $badgeId, $badgeData);
 			}
 		}
 		?>

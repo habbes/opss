@@ -21,14 +21,14 @@ class MainLayoutView extends BaseView
 		if(count($this->navLinks) == 0){
 			$user = $this->data->user;
 			$this->addNavGroup("Notifications","envelope");
-			$this->addNavLink("Notifications", "All Notifications", URL_ROOT."/messages/all");
-			$this->addNavLink("Notifications", "Unread", URL_ROOT."/messages/unread");
+			$this->addNavLink("Notifications", "All Notifications", URL_ROOT."/messages/all","NewNotifications","new-notifications");
+			$this->addNavLink("Notifications", "Unread", URL_ROOT."/messages/unread", "UnreadNotifications","unread-notifications");
 			$this->addNavGroup("Papers","file");
 			if($user->isResearcher())
 				$this->addNavLink("Papers", "Paper Submission", URL_ROOT."/papers/submit");
-			$this->addNavLink("Papers","All Papers",URL_ROOT."/papers/all");
+			$this->addNavLink("Papers","All Papers",URL_ROOT."/papers/all", "UnreadPapers");
 			if($user->isReviewer())
-				$this->addNavLink("Papers", "Pending Requests", URL_ROOT."/papers/review-requests");
+				$this->addNavLink("Papers", "Pending Requests", URL_ROOT."/papers/review-requests", "PendingRequests");
 			
 			if($user->isAdmin()){
 				$this->addNavGroup("Users", "user");
@@ -79,14 +79,17 @@ class MainLayoutView extends BaseView
 	 * @param string $groupName the subgroup under which to place the link
 	 * @param string $name displayed name of the link
 	 * @param string $url
+	 * @param string $badge the name used to get the badge from the data object ($data->badge<name>)
+	 * @param string $badgeId the id of the badge displayed on the page
 	 */
-	protected function addNavLink($groupName, $name, $url)
+	protected function addNavLink($groupName, $name, $url, $badgeName = null, $badgeId = null)
 	{
 		$count = count($this->navLinks);
 		for($i = 0;$i < $count;  $i++)
 		{
 			if($this->navLinks[$i]["name"] == $groupName){
-				$this->navLinks[$i]["links"][] = new DataObject(["name"=>$name, "url"=>$url, "active"=>false]);
+				$this->navLinks[$i]["links"][] = new DataObject(
+						["name"=>$name, "url"=>$url, "active"=>false, "badgeName"=>$badgeName, "badgeId"=>$badgeId]);
 				break;
 			}
 		}

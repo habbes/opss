@@ -323,6 +323,18 @@ class ReviewRequest extends DBModel
 	
 	/**
 	 * 
+	 * @param Reviewer $reviewer
+	 * @return number
+	 */
+	public static function countValidByReviewer($reviewer)
+	{
+		//impractical to use static::count*() if filtering is done
+		//locally
+		return count(static::findValidByReviewer($reviewer));
+	}
+	
+	/**
+	 * 
 	 * @param number $id
 	 * @param Reviewer $reviewer
 	 * @return ReviewRequest
