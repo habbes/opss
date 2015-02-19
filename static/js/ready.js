@@ -4,4 +4,8 @@ $(function(){
 		$("#unread-notifications-nav-badge").text(response.unreadCount);
 	};
 	Message.startPoll();
+	
+	$("#papers-search-field").keyup(function(){
+		PaperSearcher.search($(this).val());
+	});
 });

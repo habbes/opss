@@ -58,3 +58,25 @@ var Message = {
 			clearTimeout(Message.pollTimeout);
 		},
 	}
+
+var Searcher = {
+		
+		url : "",
+		searchXHR : null,
+		target : null,
+		searchCallback : null,
+		
+		search : function(query)
+		{
+			$(Searcher.target).load(URL_ROOT + "/" + Searcher.url, "q=" + query);
+			
+		},
+}
+
+var PaperSearcher = {
+		search : function(query){
+			Searcher.target = $("#papers-table-container");
+			Searcher.url = "papers/search";
+			Searcher.search(query);
+		}
+}

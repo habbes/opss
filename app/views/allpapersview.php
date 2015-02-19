@@ -7,6 +7,8 @@ class AllPapersView extends LoggedInView
 		$this->data->pageTitle = "All Papers";
 		$this->data->pageHeading = "All Papers";
 		$this->setActiveNavLink("Papers", "All");
+		$this->data->searchFieldId = "papers-search-field";
+		$this->data->tableContainerId = "papers-table-container";
 		$this->data->recordsTable = $this->read("papers-table");
 		$this->data->pageContent = $this->read("records-table-container");
 		$this->showBase();

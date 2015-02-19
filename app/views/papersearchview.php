@@ -1,12 +1,11 @@
 <?php
 
-class PaperSearcAjaxView extends View
+class PaperSearchView extends View
 {
 	public function render()
 	{
-		$response = new JsonObject();
-		$response->recordsTable =$this->read("papers-table");
-		$response->sendResponse();
+		 $this->show("papers-table");
+		
 	}
 	
 }
