@@ -19,7 +19,10 @@ class ScheduleWorkshopHandler extends AdminHandler
 			
 			$month = (int) $this->trimPostVar("month");
 			$year = (int) $this->trimPostVar("year");
+			$name = $this->trimPostVar("name");
 			$workshop = Workshop::create($year, $month);
+			if($name)
+				$workshop->setName($name);
 			$workshop->save();
 			$this->saveResultMessage("Workshop scheduled successfully.", "success");
 			$this->localRedirect("workshops/".$workshop->getStringId());

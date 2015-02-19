@@ -7,6 +7,10 @@ $formerror = $data->errors or $formerror = new DataObject();
 <div>
 	<form method="post">
 		<div class="form-group">
+			<input class="form-control" type="text" name="name" value="<?= $formdata->name ?>" placeholder="Workshop Name" />
+			<span class="form-error help-block"></span>
+		</div>
+		<div class="form-group">
 			<select name="month" class="form-control" required>
 				<option value="">Select Month</option>
 				<?php foreach($data->months as $month => $string){ 

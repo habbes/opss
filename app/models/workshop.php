@@ -4,6 +4,7 @@ class Workshop extends DBModel
 {
 	protected $year;
 	protected $month;
+	protected $name;
 	
 	public static function create($year, $month)
 	{
@@ -13,14 +14,34 @@ class Workshop extends DBModel
 		return $w;
 	}
 	
+	public function setName($name)
+	{
+		$this->name = $name;
+	}
+	
+	public function getName()
+	{
+		return $this->name;
+	}
+	
 	public function getYear()
 	{
 		return $this->year;
 	}
 	
+	public function setYear($year)
+	{
+		$this->year = $year;
+	}
+	
 	public function getMonth()
 	{
 		return $this->month;
+	}
+	
+	public function setMonth($month)
+	{
+		$this->month = $month;
 	}
 	
 	public function getAbsoluteUrl()
@@ -30,7 +51,9 @@ class Workshop extends DBModel
 	
 	public function toString()
 	{
-		return self::getMonthString($this->month). " " . $this->getYear();
+	
+		$time = self::getMonthString($this->month). " " . $this->getYear();
+		return $this->name? $this->name." ($time)" : $time;
 	}
 	
 	public function getStringId()
@@ -47,6 +70,13 @@ class Workshop extends DBModel
 		return paper::findByWorkshop($this);
 	}
 	
+	public function validate(&$errors)
+	{
+		if(static::findByMonthAndYear($this->month, $this->year))
+			$errors[] = OperationError::WORKSHOP_EXISTS;
+		return true;
+	}
+	
 	public function onInsert(&$errors)
 	{
 		if(!$this->month)
@@ -55,8 +85,7 @@ class Workshop extends DBModel
 			$errors[] = OperationError::WORKSHOP_MONTH_INVALID;
 		if(!$this->year)
 			$errors[] = OperationError::WORKSHOP_YEAR_EMPTY;
-		if(static::findByMonthAndYear($this->month, $this->year))
-			$errors[] = OperationError::WORKSHOP_EXISTS;
+		
 		return true;
 	}
 	
