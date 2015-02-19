@@ -14,55 +14,88 @@ class Workshop extends DBModel
 		return $w;
 	}
 	
+	/**
+	 * 
+	 * @param string $name
+	 */
 	public function setName($name)
 	{
 		$this->name = $name;
 	}
 	
+	/**
+	 * 
+	 * @return string
+	 */
 	public function getName()
 	{
 		return $this->name;
 	}
 	
+	/**
+	 * @return int
+	 */
 	public function getYear()
 	{
 		return $this->year;
 	}
 	
+	/**
+	 * 
+	 * @param int $year
+	 */
 	public function setYear($year)
 	{
 		$this->year = $year;
 	}
 	
+	/**
+	 * @return int
+	 */
 	public function getMonth()
 	{
 		return $this->month;
 	}
 	
+	/**
+	 * 
+	 * @param int $month
+	 */
 	public function setMonth($month)
 	{
 		$this->month = $month;
 	}
 	
+	/**
+	 * absolute url of the workshop's start page
+	 * @return string
+	 */
 	public function getAbsoluteUrl()
 	{
 		return URL_ROOT."/workshops/".$this->getStringId();
 	}
 	
+	/**
+	 * string description of this workshop
+	 * @return string
+	 */
 	public function toString()
 	{
-	
 		$time = self::getMonthString($this->month). " " . $this->getYear();
 		return $this->name? $this->name." ($time)" : $time;
 	}
 	
+	/**
+	 * month-year string that uniquely identifies this workshop
+	 * @return string
+	 */
 	public function getStringId()
 	{
 		return self::getMonthString($this->month). "-" . $this->getYear();
 	}
 	
 	/**
-	 * 
+	 * papers set for this workshop
 	 * @return array(Paper)
 	 */
 	public function getPapers()
@@ -89,6 +122,10 @@ class Workshop extends DBModel
 		return true;
 	}
 	
+	/**
+	 * 
+	 * @return array(string)
+	 */
 	public static function getMonthStrings()
 	{
 		return [
@@ -107,11 +144,21 @@ class Workshop extends DBModel
 		];
 	}
 	
+	/**
+	 * 
+	 * @param int $month
+	 * @return string
+	 */
 	public static function getMonthString($month)
 	{
 		return static::getMonthStrings()[$month];
 	}
 	
+	/**
+	 * 
+	 * @param string $month
+	 * @return int
+	 */
 	public static function getMonthNumber($month)
 	{
 		foreach(self::getMonthStrings() as $num => $string){
@@ -121,7 +168,12 @@ class Workshop extends DBModel
 	}
 	
 	
-	
+	/**
+	 * 
+	 * @param int $month
+	 * @param int $year
+	 * @return Workshop
+	 */
 	public static function findByMonthAndYear($month, $year)
 	{
 		return static::findOne("month=? AND year=?", [$month, $year]);

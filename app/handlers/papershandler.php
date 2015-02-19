@@ -17,4 +17,10 @@ class PapersHandler extends RoleHandler
 	{
 		$this->showPage();
 	}
+	
+	public function searchPaper($query)
+	{
+		$this->viewParams->papers = Paper::findAll("title like '%?%'",[$query]);
+		$this->renderView("PaperSearch");
+	}
 }

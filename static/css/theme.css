@@ -142,6 +142,12 @@ label {
 
 /** end forms **/
 
+/** table-search wrapper **/
+.records-group-container .records-search-container {
+	margin-bottom:20px;
+}
+/** end table-search wrapper **/
+
 /** tables **/
 .records-table .unread {
 	font-weight:600;
