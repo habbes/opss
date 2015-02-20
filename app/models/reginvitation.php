@@ -233,5 +233,19 @@ class RegInvitation extends DBModel
 			return $inv;
 	}
 	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return array(RegInvitation)
+	 */
+	public static function findValidByPaper($paper)
+	{
+		$invs = static::findAllByField("paper_id", $paper->getId());
+		$invs = array_filter($invs, function($inv){
+			return $inv->isValid();
+		});
+		return $invs;
+	}
+	
 	
 }

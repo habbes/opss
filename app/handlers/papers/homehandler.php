@@ -16,6 +16,7 @@ class HomeHandler extends PaperHandler
 					case Paper::ACTION_EXTERNAL_REVIEW:
 						$this->viewParams->reviewers = Reviewer::findAll();
 						$this->viewParams->reviewRequests = $this->paper->getValidReviewRequests();
+						$this->viewParams->reviewInvitations = RegInvitation::findValidByPaper($this->paper);
 						break;
 					
 					case Paper::ACTION_WORKSHOP_QUEUE:

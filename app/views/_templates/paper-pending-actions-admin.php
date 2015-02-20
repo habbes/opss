@@ -7,6 +7,24 @@
 		switch($action){
 		 case Paper::ACTION_EXTERNAL_REVIEW: 
 		 	?>
+		 	<?php if($reviewInvitations = $data->reviewInvitations) {?>
+		 	<div class="panel panel-default">
+		 		<div class="panel-heading">
+		 			<h4 class="panel-title">Pending reviewer email invitations</h4>
+		 		</div>
+		 		<div class="panel-body">
+		 			<ul class="list-group">
+		 				<?php foreach($reviewInvitations as $invitation){?>
+		 				<li class="list-group-item">
+		 					<b>Sent to:</b> <?= escape($invitation->getName())?>, <?= escape($invitation->getEmail()) ?><br>
+		 					<b>Sent on:</b> <?= Utils::siteDateTimeFormat($invitation->getDateSent())?><br>
+		 				</li>
+		 				<?php } ?>
+		 			</ul>
+		 		</div>
+		 	</div>
+		 	<?php } ?>
+		 	
 		 	<?php if($reviewRequests = $data->reviewRequests){?>
 		 	<div class="panel panel-default">
 		 		<div class="panel-heading">
