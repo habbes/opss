@@ -171,6 +171,24 @@ CREATE TABLE `papers` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `password_recovery`
+--
+
+DROP TABLE IF EXISTS `password_recovery`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `password_recovery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(255) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `expiry_date` datetime DEFAULT NULL,
+  `date_sent` datetime DEFAULT NULL,
+  `recovered` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `post_workshop_review_mins`
 --
 
@@ -379,4 +397,4 @@ CREATE TABLE `workshops` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-20  0:20:14
+-- Dump completed on 2015-02-20  7:41:30
