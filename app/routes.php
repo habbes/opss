@@ -6,7 +6,7 @@
 $routes = [
 		['^submit\/(\d+)$',"Submit"],
 		['^submit\/?$',"Submit"],
-                ['^form\/?$',"Test"],
+        ['^form\/?$',"Test"],
 		['^form\/(\d+)$',"Form"],
 		['^test\/?$', "Test"],
 		['^test\/(\d+)$', "Test"],
@@ -22,6 +22,7 @@ $routes = [
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
 		['^forgot-password\/?$',"password-recovery/ForgotPassword"],
+		['^password-reset\/?$',"password-recovery/PasswordReset"],
 		['^review\-invitation\-declined\/?$', "EmailReviewInvitationDeclined"],
 		['^papers\/all\/?$', "Papers"],
 		['^papers\/?$', "Papers"],

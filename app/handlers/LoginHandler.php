@@ -2,6 +2,7 @@
 class LoginHandler extends LoggedOutHandler
 {
 	public function get(){
+		$this->setSavedResultMessage();
 		if($code = $this->getVar("eactivation")){
 			$ea = EmailActivation::findByCode($code);
 			if($ea && $ea->isValid()){
