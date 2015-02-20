@@ -55,6 +55,8 @@ class OperationError
 	const WORKSHOP_MONTH_INVALID = "WorkshopMonthInvalid";
 	const WORKSHOP_YEAR_EMPTY = "WorkshopYearEmpty";
 	const WORKSHOP_EXISTS = "WorkshopExists";
+	//password recovery
+	const PASS_RECOVERY_INVALID = "PassRecoveryInvalid";
 	
 	
 	
