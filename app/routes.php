@@ -21,6 +21,7 @@ $routes = [
 		['^registration\/?$', "Registration"],
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
+		['^forgot-password\/?$',"password-recovery/ForgotPassword"],
 		['^review\-invitation\-declined\/?$', "EmailReviewInvitationDeclined"],
 		['^papers\/all\/?$', "Papers"],
 		['^papers\/?$', "Papers"],

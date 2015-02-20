@@ -11,6 +11,10 @@ class PasswordRecovery extends DBModel
 	protected $date_sent;
 	protected $recovered = false;
 	
+	/**
+	 * 
+	 * @var User
+	 */
 	private $_user;
 	
 	const DEFAULT_VALIDITY = 2; //hours
@@ -63,16 +67,29 @@ class PasswordRecovery extends DBModel
 		return strtotime($this->date_sent);
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function isRecovered()
 	{
 		return (boolean) $this->recovered;
 	}
 	
+	/**
+	 * 
+	 * @return boolean
+	 */
 	public function isValid()
 	{
-		return !$this->isActivated() && time() < $this->getExpiryDate();
+		return !$this->isRecovered() && time() < $this->getExpiryDate();
 	}
 	
+	/**
+	 * 
+	 * @param string $newpass new password
+	 * @throws OperationException
+	 */
 	public function recover($newpass)
 	{
 		if(!$this->isValid())

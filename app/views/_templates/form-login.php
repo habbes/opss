@@ -14,7 +14,7 @@
 	      	<button type="submit" class="btn btn-success btn-block">Sign In</button>	
 	      	<span class="help-block">
 	      			New User? <a href="registration">Register here</a><br>
-	      			Forgot Password? <a href="#">Click Here</a>
+	      			Forgot Password? <a href="forgot-password">Click Here</a>
 			</span>		
 		</form>
 		<?php if($data->showActivationOption) { ?>
