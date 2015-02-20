@@ -179,7 +179,7 @@ class ReviewRequest extends DBModel
 	 */
 	public function setRequestText($text)
 	{
-		$this->response_text = $text;
+		$this->request_text = $text;
 	}
 	
 	/**
