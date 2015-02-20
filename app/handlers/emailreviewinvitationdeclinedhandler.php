@@ -6,7 +6,7 @@ class EmailReviewInvitationDeclinedHandler extends BaseHandler
 	{
 		$inv = RegInvitation::findValidByCode($this->getVar("reg-code"));
 		if(!$inv){
-			//TODO should show invalid code error page
+			$this->saveResultMessage("Invalid invitation code.", "error");
 			$this->localRedirect("");
 		}
 		
@@ -14,6 +14,7 @@ class EmailReviewInvitationDeclinedHandler extends BaseHandler
 		
 		if(!$paper){
 			//TODO should show invalid code error page
+			$this->saveResultMessage("Invalid invitation code.", "error");
 			$this->localRedirect("");
 		}
 		
@@ -26,7 +27,6 @@ class EmailReviewInvitationDeclinedHandler extends BaseHandler
 		$admin = $inv->getAdmin();
 		ReviewInvitationDeclinedEmail::create($admin, $inv)->send();
 		
-		//TODO create a view to display message
-		$this->localRedirect("");
+		$this->renderView("ReviewInvitationDeclined");
 	}
 }
