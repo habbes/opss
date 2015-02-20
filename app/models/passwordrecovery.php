@@ -34,7 +34,7 @@ class PasswordRecovery extends DBModel
 		$pr->expiry_date = Utils::dbDateFormat(time() + $validity * 3600);
 		$pr->code = Utils::uniqueRandomCode();
 		$pr->recovered = false;
-		$pr->date_sent = Utls::dbDateFormat(time());
+		$pr->date_sent = Utils::dbDateFormat(time());
 		return $pr;
 	}
 	
@@ -65,6 +65,14 @@ class PasswordRecovery extends DBModel
 	public function getDateSent()
 	{
 		return strtotime($this->date_sent);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function getCode()
+	{
+		return $this->code;
 	}
 	
 	/**
@@ -111,6 +119,21 @@ class PasswordRecovery extends DBModel
 		$pr = static::findOneByField("code", $code);
 		if($pr && $pr->isValid())
 			return $pr;
+		return null;
+	}
+	
+	/**
+	 * 
+	 * @param User $user
+	 * @return PasswordRecovery
+	 */
+	public static function findValidByUser($user)
+	{
+		$prs = static::findAllByField("user_id", $user->getId());
+		foreach($prs as $pr){
+			if ($pr->isValid())
+				return $pr;
+		}
 		return null;
 	}
 	

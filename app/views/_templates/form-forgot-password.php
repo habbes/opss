@@ -1,9 +1,12 @@
+<?php 
+$formdata = $data->form or $formdata = new DataObject();
+?>
 <div class="col-sm-4 col-sm-offset-4 panel panel-default" >
 	<div class="panel-body">
 	    <form method="post" class="form-signin" role="form" >
 	       	<div class="form-group">
 				<label for="form-username">Username or Email</label>
-	         	<input type="text" class="form-control" name="username" value="<?= htmlspecialchars($data->username) ?>" 
+	         	<input type="text" class="form-control" name="username" value="<?= escape($formdata->username) ?>" 
 	         		id="form-username" placeholder="" required>
 	      	</div>
 	      	<button type="submit" class="btn btn-success btn-block">Send Recovery Email</button>	
