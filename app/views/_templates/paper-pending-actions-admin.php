@@ -18,6 +18,14 @@
 		 				<li class="list-group-item">
 		 					<b>Sent to:</b> <?= escape($invitation->getName())?>, <?= escape($invitation->getEmail()) ?><br>
 		 					<b>Sent on:</b> <?= Utils::siteDateTimeFormat($invitation->getDateSent())?><br>
+		 					<form class="form" method="post" action="<?= $data->paperBaseUrl?>/manage-review-request">
+		 						<input type="hidden" name="invitation" value="<?= $invitation->getId()?>" >
+		 						<div class="form-group">
+		 							<button class="btn btn-default" name="cancel" >Cancel Invitation
+		 							<span class="glyphicon glyphicon-remove text-danger"></span></button>
+		 							<button class="btn btn-default" name="resend">Resend Email</button>
+		 						</div>
+		 					</form>
 		 				</li>
 		 				<?php } ?>
 		 			</ul>

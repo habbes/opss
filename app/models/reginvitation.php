@@ -28,6 +28,7 @@ class RegInvitation extends DBModel
 	const EXPIRED = 2;
 	const REGISTRERED = 3;
 	const DECLINED = 4;
+	const CANCELLED = 5;
 	
 	const DEFAULT_VALIDITY = 7; //days
 	
@@ -52,6 +53,33 @@ class RegInvitation extends DBModel
 		$inv->status = self::PENDING;
 		
 		return $inv;
+	}
+	
+	/**
+	 * checks whether the invitation is supposed to be expired
+	 * and saves the status if necessary
+	 */
+	private function checkValidity()
+	{
+		if($this->status == self::PENDING){
+			$date = $this->getExpiryDate();
+			if($this->getExpiryDate() >= time()){
+				$this->status == self::EXPIRED;
+				$this->save();
+			}
+		}
+	}
+	
+	/**
+	 * filters a list of invitationsand returns only valid ones
+	 * @param array(RegInvitation) $invs
+	 * @return array(RegInvitation)
+	 */
+	private static function filterValid($invs)
+	{
+		return array_filter($invs, function($inv){
+			return $inv->isValid();
+		});
 	}
 	
 	/**
@@ -169,8 +197,8 @@ class RegInvitation extends DBModel
 	 */
 	public function isValid()
 	{
-		return $this->getStatus() == self::PENDING &&
-			time() < $this->getExpiryDate();
+		$this->checkValidity();
+		return $this->status == self::PENDING;
 	}
 	
 	/**
@@ -196,6 +224,17 @@ class RegInvitation extends DBModel
 	public function decline()
 	{
 		$this->status = self::DECLINED;
+		$this->save();
+		$this->delete();
+	}
+	
+	/**
+	 * cancels and deletes the invitation
+	 */
+	public function cancel()
+	{
+		$this->status = self::CANCELLED;
+		$this->save();
 		$this->delete();
 	}
 	
@@ -241,10 +280,23 @@ class RegInvitation extends DBModel
 	public static function findValidByPaper($paper)
 	{
 		$invs = static::findAllByField("paper_id", $paper->getId());
-		$invs = array_filter($invs, function($inv){
-			return $inv->isValid();
-		});
-		return $invs;
+		return static::filterValid($invs);
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param int $id
+	 * @return RegInvitation
+	 */
+	public static function findValidByPaperAndId($paper, $id)
+	{
+		$inv = static::findOne("id=? AND paper_id=? AND status=?",[
+				$id, $paper->getId(), self::PENDING
+		]);
+		if($inv && $inv->isValid())
+			return $inv;
+		return null;
 	}
 	
 	
