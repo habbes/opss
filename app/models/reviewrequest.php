@@ -71,7 +71,7 @@ class ReviewRequest extends DBModel
 	{
 		if($this->status == self::STATUS_PENDING && !$this->permanent){
 			$date = $this->getExpiryDate();
-			if($date && $date >= time()){
+			if($date && time() >= $date){
 				$this->status == self::STATUS_INVALID;
 				$this->delete();
 			}
