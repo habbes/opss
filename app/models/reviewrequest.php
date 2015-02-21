@@ -73,7 +73,7 @@ class ReviewRequest extends DBModel
 			$date = $this->getExpiryDate();
 			if($date && $date >= time()){
 				$this->status == self::STATUS_INVALID;
-				$this->save();
+				$this->delete();
 			}
 		}
 	}

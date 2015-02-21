@@ -65,7 +65,7 @@ class RegInvitation extends DBModel
 			$date = $this->getExpiryDate();
 			if($this->getExpiryDate() >= time()){
 				$this->status == self::EXPIRED;
-				$this->save();
+				$this->delete();
 			}
 		}
 	}
