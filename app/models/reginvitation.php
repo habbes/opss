@@ -77,6 +77,7 @@ class RegInvitation extends DBModel
 	 */
 	private static function filterValid($invs)
 	{
+		
 		return array_filter($invs, function($inv){
 			return $inv->isValid();
 		});
@@ -248,8 +249,6 @@ class RegInvitation extends DBModel
 	{
 		if(!UserType::isValue($this->getUserType()))
 			$errors[] = OperationError::USER_TYPE_INVALID;
-		if($this->isInDb() && !$this->isValid())
-			$errors[] = OperationError::INVITATION_INVALID;
 		if($this->isInDb() && ($this->_user && ($this->_user->getType() != $this->getUserType())))
 			$errors[] = OperationError::USER_TYPE_INVALID;
 		
@@ -281,6 +280,7 @@ class RegInvitation extends DBModel
 	{
 		$invs = static::findAllByField("paper_id", $paper->getId());
 		return static::filterValid($invs);
+		return $invs;
 	}
 	
 	/**
