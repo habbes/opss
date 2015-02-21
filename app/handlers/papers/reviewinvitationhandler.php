@@ -44,8 +44,15 @@ class ReviewInvitationHandler extends PaperHandler
 	private function cancel()
 	{
 		$this->invitation->cancel();
-		//TODO: create and send message
-		//ReviewInvitationCancelledMessage::create(admin,send);
+		$name = $this->invitation->getName();
+		$email = $this->invitation->getEmail();
+		
+		//notify admins
+		foreach(Admin::findAll() as $admin){
+			ReviewInvitationCancelledMessage::create($admin, $this->paper, $name, $email)->send();
+		}
+		//send email to invitee
+		NewReviewerInvitationCancelledEmail::create($name, $email, $this->paper)->send();
 		
 		$this->saveResultMessage("The invitation was cancelled successfully.", "success");
 		$this->paperLocalRedirect();
@@ -63,13 +70,13 @@ class ReviewInvitationHandler extends PaperHandler
 		$inv->save();
 		//delete current invitation
 		$this->invitation->delete();
-		//send email
-		NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
+		
 		//notify admins
 		foreach(Admin::findAll() as $admin){
 			ReviewInvitationSentMessage::create($admin, $this->paper, $name, $email)->send();
 		}
-		
+		//send email
+		NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
 		$this->saveResultMessage("The invitation has been resent.", "success");
 		$this->paperLocalRedirect();
 	}
