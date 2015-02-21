@@ -18,7 +18,7 @@ class ReviewRequestSentMessage extends Message
 		$m = new static();
 		$m->setUser($recipient);
 		$m->setSubject("Review Request Sent");
-		$m->attachReviewRequest($request);
+		
 		$paper = $request->getPaper();
 		switch($recipient->getType()){
 			case UserType::ADMIN:
@@ -29,6 +29,7 @@ class ReviewRequestSentMessage extends Message
 					"identifier" => $paper->getIdentifier(),
 					"author" => $paper->getResearcher()->getFullName(),
 				]);
+				$m->attachPaper($paper);
 				break;
 			case UserType::REVIEWER:
 				$m->setSubject("Review Request");
@@ -36,6 +37,7 @@ class ReviewRequestSentMessage extends Message
 						"title" => $paper->getTitle(),
 						"identifier" => $paper->getIdentifier()
 				]);
+				$m->attachReviewRequest($request);
 				break;
 		}
 		
