@@ -235,12 +235,12 @@ class ReviewRequest extends DBModel
 	
 	public function isAccepted()
 	{
-		return $this->status == self::STATUS_RESPONDED && $this->response = self::RESPONSE_ACCEPTED;
+		return $this->status == self::STATUS_RESPONDED && $this->response == self::RESPONSE_ACCEPTED;
 	}
 	
 	public function isRejected()
 	{
-		return $this->status == self::STATUS_RESPONDED && $this->response = self::RESPONSE_REJECTED;
+		return $this->status == self::STATUS_RESPONDED && $this->response == self::RESPONSE_REJECTED;
 	}
 	
 	public function getAbsoluteUrl()

@@ -38,7 +38,7 @@ $formerror = $data->errors? $data->errors : new DataObject();
 							</button>
 						</div>
 						<div class="form-group">
-							<textarea class="form-control" cols="" rows="5" placeholder="Comments" 
+							<textarea class="form-control" cols="" rows="5" placeholder="Enter comments if you decline" 
 							name="comments"><?= $selected? $formdata->comments : ""?></textarea>
 						</div>
 						

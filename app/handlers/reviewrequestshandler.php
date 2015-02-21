@@ -88,8 +88,7 @@ class ReviewRequestsHandler extends ReviewerHandler
 				
 				//TODO should email be sent to all admins?
 				//TODO sending email causes crash, investigate
-				//ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
-				
+				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				$this->saveResultMessage("Review request accepted. You may start reviewing the paper.", "success");
 				$this->localRedirect("papers/".$this->selectedRequest->getPaper()->getIdentifier());
 			}
@@ -112,7 +111,7 @@ class ReviewRequestsHandler extends ReviewerHandler
 				
 				//TODO: should email be sent to all admins?
 				//TODO: email caused crash, investigate
-				//ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
+				ReviewRequestResponseEmail::create($this->selectedRequest->getAdmin(), $this->selectedRequest)->send();
 				
 				$this->saveResultMessage("Review request declined successfully.", "success");
 				$this->localRedirect("papers/review-requests");
