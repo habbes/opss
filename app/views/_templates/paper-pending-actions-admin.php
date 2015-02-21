@@ -18,7 +18,7 @@
 		 				<li class="list-group-item">
 		 					<b>Sent to:</b> <?= escape($invitation->getName())?>, <?= escape($invitation->getEmail()) ?><br>
 		 					<b>Sent on:</b> <?= Utils::siteDateTimeFormat($invitation->getDateSent())?><br>
-		 					<form class="form" method="post" action="<?= $data->paperBaseUrl?>/manage-review-request">
+		 					<form class="form" method="post" action="<?= $data->paperBaseUrl?>/manage-review-invitation">
 		 						<input type="hidden" name="invitation" value="<?= $invitation->getId()?>" >
 		 						<div class="form-group">
 		 							<button class="btn btn-default" name="cancel" >Cancel Invitation

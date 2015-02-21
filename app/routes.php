@@ -42,6 +42,7 @@ $routes = [
 		['^papers\/(\w+)\/invite-reviewer\/?$', "papers/InviteReviewer@inviteNewReviewer"],
 		['^papers\/(\w+)\/review-request\/?$', "papers/InviteReviewer@sendReviewRequest"],
 		['^papers\/(\w+)\/manage-review-request\/?$', "papers/ReviewRequest"],
+		['^papers\/(\w+)\/manage-review-invitation\/?$', "papers/ReviewInvitation"],
 		['^papers\/(\w+)\/reviews\/?$', "papers/Reviews"],
 		['^papers\/(\w+)\/reviews\/(\d+)\/?$', "papers/Reviews"],
 		['^papers\/(\w+)\/reviews\/(\d+)\/file-admin\/?$', "papers/Reviews@downloadFileToAdmin"],
