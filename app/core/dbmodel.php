@@ -318,6 +318,11 @@ class DBModel extends Model
 			$query .= " WHERE " . $q;
 		}
 		
+		if($options){
+			$options = new DataObject($options);
+			$query .= " ORDER BY " . $options->get('orderBy','id ASC');
+		}
+		
 		
 		if(!empty($values)){
 			$stmt = self::database()->prepare($query);

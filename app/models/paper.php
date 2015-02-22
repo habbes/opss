@@ -1026,13 +1026,28 @@ class Paper extends DBModel
 	}
 	
 	/**
+	 * find all papers, first those not viewed by admin then in reverse
+	 * chronological order
+	 * @param string $q
+	 * @param string $values
+	 * @param array $options
+	 * @return array(Paper)
+	 */
+	public static function findAll($q = "", $values = null, $options = array())
+	{
+		if(!$options)
+			$options = ["orderBy"=>"viewed_by_admin, date_submitted DESC"];
+		return parent::findAll($q, $values, $options);
+	}
+
+	/**
 	 * 
 	 * @param User $researcher
 	 * @return array(Paper)
 	 */
 	public static function findByResearcher($researcher)
 	{
-		return static::findAllByField("researcher_id", $researcher->getId());
+		return static::findAllByField("researcher_id", $researcher->getId(), ["orderBy"=>"date_submitted DESC"]);
 	}
 	
 	/**
