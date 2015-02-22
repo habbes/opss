@@ -1,7 +1,14 @@
 <?php 
 $user = $data->user;
 $role = $user->getRole();
+$activated = $user->isEmailActivated();
  ?>
+<?php if(!$activated){?>
+<p class="bg-danger">
+This account has not been activated. You will not be able to sign in again until you have
+activated your email address.
+</p>
+<?php } ?>
 <div class="details-grid user-details">
 	<div class="details-item">
 		<span class="font-bold details-name">Name</span>
@@ -13,7 +20,11 @@ $role = $user->getRole();
 	</div>
 	<div class="details-item">
 		<span class="font-bold details-name">Email</span>
-		<span class="details-value"><?= $user->getEmail() ?></span>
+		<span class="details-value"><?= $user->getEmail() ?>
+		<?php if($activated){?>
+		<span style="color:green" class="glyphicon glyphicon-ok"></span>
+		<?php }?>
+		</span>
 	</div>
 	<div class="details-item">
 		<span class="font-bold details-name">Username</span>

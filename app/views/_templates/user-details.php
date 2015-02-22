@@ -1,7 +1,12 @@
 <?php 
 $user = $data->selectedUser;
 $role = $user->getRole();
- ?>
+$activated = $user->isEmailActivated();
+?>
+<?php if(!$activated){?>
+<p class="bg-danger">
+The account holder needs to activate the account via email.
+</p>
 <div class="details-grid user-details">
 	<div class="details-item">
 		<span class="font-bold details-name">Name</span>
