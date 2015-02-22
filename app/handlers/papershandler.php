@@ -9,6 +9,7 @@ class PapersHandler extends RoleHandler
 	
 	private function showPage()
 	{
+		$this->setSavedResultMessage();
 		$this->viewParams->papers = $this->role->getPapers();
 		$this->renderView("AllPapers");
 	}

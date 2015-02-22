@@ -58,8 +58,10 @@ abstract class PaperHandler extends RoleHandler
 	{
 		$identifier = func_get_arg(0);
 		$paper = Paper::findByIdentifier($identifier);
-		if(!$paper)
-			$this->localRedirect("papers/all?not-found=true");
+		if(!$paper){
+			$this->saveResultMessage("The specified paper could not be found.", "error");
+			$this->localRedirect("papers/all");
+		}
 		$this->paper = $paper;
 		parent::onCreate();
 		$this->assertPaperAccess();
