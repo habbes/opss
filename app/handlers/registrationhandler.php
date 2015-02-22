@@ -115,10 +115,10 @@ class RegistrationHandler extends LoggedOutHandler
 					$errors[] = OperationError::COLLAB_AREA_INVALID;
 				if(!PaperGroup::isValue($thematicArea))
 					$errors[] = OperationError::THEMATIC_AREA_INVALID;
-				
-				if(!empty($errors))
-					throw new OperationException($errors);
-				}
+			}				
+			if(!empty($errors))
+				throw new OperationException($errors);
+			
 			$user->save();
 			
 			if($role->hasAreaOfSpecialization()){

@@ -22,6 +22,7 @@ $routes = [
 		['^login\/?$',"Login"],
 		['^logout\/?$',"Logout"],
 		['^profile\/?$',"profile/Details"],
+		['^profile\/edit\/?$',"profile/Edit"],
 		['^forgot-password\/?$',"password-recovery/ForgotPassword"],
 		['^password-reset\/?$',"password-recovery/PasswordReset"],
 		['^review\-invitation\-declined\/?$', "EmailReviewInvitationDeclined"],

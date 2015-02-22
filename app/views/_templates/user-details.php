@@ -7,6 +7,7 @@ $activated = $user->isEmailActivated();
 <p class="bg-danger">
 The account holder needs to activate the account via email.
 </p>
+<?php } ?>
 <div class="details-grid user-details">
 	<div class="details-item">
 		<span class="font-bold details-name">Name</span>

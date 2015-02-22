@@ -86,6 +86,7 @@ class User extends DBModel
 	{
 		$this->email = $email;
 		$this->_newEmail = true;
+		$this->email_activated = false;
 	}
 	
 	/**
@@ -169,6 +170,18 @@ class User extends DBModel
 	}
 	
 	/**
+	 * remove all research areas from this user's list of areas of
+	 * thematic research
+	 */
+	public function deleteAllThematicAreas()
+	{
+		foreach(UserResearchArea::findThematicByUser($this) as $area){
+			$area->delete();
+		}
+		$this->_thematicAreas = [];
+	}
+	
+	/**
 	 * get all the areas of research for thematic papers for this
 	 * user
 	 * @return array(int) elements are from PaperGroup
@@ -197,6 +210,18 @@ class User extends DBModel
 			UserResearchArea::createCollaborative($this, $area);
 			array_push($this->_collaborativeAreas, $area);
 		}
+	}
+	
+	/**
+	 * remove all research areas from this user's list of areas of
+	 * collaborative research
+	 */
+	public function deleteAllCollaborativeAreas()
+	{
+		foreach(UserResearchArea::findCollaborativeByUser($this) as $area){
+			$area->delete();
+		}
+		$this->_collaborativeAreas = [];
 	}
 	
 	/**
