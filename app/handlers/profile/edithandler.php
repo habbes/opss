@@ -120,6 +120,9 @@ class EditHandler extends LoggedInHandler
 				$newCollabArea = (int) $this->postVar("collaborative-area", $curCollabArea);
 				$curThematicArea = $user->getThematicAreas()[0];
 				$newThematicArea = (int) $this->postVar("thematic-area", $curThematicArea);
+				
+				$form->set("collaborative-area", $newCollabArea);
+				$form->set("thematic-area", $newThematicArea);
 				if(!PaperGroup::isValue($newCollabArea))
 					$errors[] = OperationError::COLLAB_AREA_INVALID;
 				if(!PaperGroup::isValue($newThematicArea))
