@@ -21,7 +21,7 @@ $formerror = $data->errors;
 			<!-- Main Document -->
 				<div class="col-sm-10">
 					<label for="document">Main Document</label>
-					<input type="file" id="document" name="document" placeholder="Main Document" class="form-control" required>
+					<input type="file" id="document" name="document" placeholder="Main Document" required>
 					<span class="help-block text-danger form-error" id="document-error"><?= escape($formerror->document) ?></span>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ $formerror = $data->errors;
 			<!-- Cover -->
 				<div class="col-sm-10">
 					<label for="cover">Document Cover</label>
-					<input type="file" id="cover" name="cover" placeholder="Document Cover" class="form-control" required>
+					<input type="file" id="cover" name="cover" placeholder="Document Cover" required>
 					<span class="help-block text-danger form-error" id="cover-error"><?= escape($formerror->cover) ?></span>
 				</div>
 			</div>
