@@ -31,8 +31,8 @@
 			}
 		}
 		?>
-		<div id="result-message-container" role="alert" class="alert alert-dismissble <?=$alertType?>" <?= $alertStyle?> >
-			<button type="button" class="close" data-dismiss="alert" 
+		<div id="result-message-container" role="alert" class="alert <?=$alertType?>" <?= $alertStyle?> >
+			<button type="button" class="close" 
 				aria-label="Close"><span aria-hidden="true" >&times;</span></button>
 			<span id="result-message"><?= $this->data->resultMessage ?></span>
 		</div>

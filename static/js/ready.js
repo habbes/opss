@@ -1,4 +1,8 @@
 $(function(){
+	$("#result-message-container .close").click(function(){
+		$(this).parent().hide();
+	})
+	
 	Message.pollCallback = function(response){
 		console.log(response);
 		$("#unread-notifications-nav-badge").text(response.unreadCount);
