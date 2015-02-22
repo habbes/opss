@@ -80,21 +80,21 @@ class PaperSubmitHandler extends ResearcherHandler
 			
 			
 			//notify admins
-			$msg = null;
-			foreach(Admin::findAll() as $admin)
-			{
-				if(!$msg)
-					$msg = PaperSubmittedMessage::create($paper, $admin);
-				else 
-					$msg->setUser($admin);
-				$msg->send();
+			$admins = Admin::findAll();
+			foreach($admins as $admin){
+				PaperSubmittedMessage::create($paper, $admin)->send();
 			}
 			
-			//TODO notify admin by email
 			
 			//notify researcher
 			$msg = PaperSubmittedMessage::create($paper, $this->user);
 			$msg->send();
+			
+			//TODO notify admin by email
+			foreach($admins as $admin){
+				
+				PaperSubmittedEmail::create($admin, $paper)->send();
+			}
 			
 			//redirect to paper
 			$this->localRedirect("/papers/".$paper->getIdentifier());
