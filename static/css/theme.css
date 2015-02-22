@@ -184,6 +184,7 @@ label {
 /** details grid/vertical view **/
 .details-grid {
 	display:table;
+	margin-bottom:10px;
 }
 .details-grid .details-item {
 	display:table-row;

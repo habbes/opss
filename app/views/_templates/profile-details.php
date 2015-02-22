@@ -1,5 +1,5 @@
 <?php 
-$user = $data->selectedUser;
+$user = $data->user;
 $role = $user->getRole();
  ?>
 <div class="details-grid user-details">
@@ -66,4 +66,7 @@ $role = $user->getRole();
 	</div>
 	<?php } ?>
 	
+</div>
+<div>
+	<a href="<?= URL_ROOT?>/profile/edit" class="btn btn-default" >Edit Details <span class="glyphicon glyphicon-edit"></span></a>
 </div>
