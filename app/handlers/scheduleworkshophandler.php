@@ -5,7 +5,8 @@ class ScheduleWorkshopHandler extends AdminHandler
 	private function showPage()
 	{
 		$this->viewParams->months = Workshop::getMonthStrings();
-		$this->viewParams->years = [2015, 2016, 2017, 2018];
+		$year = getdate(time())["year"];
+		$this->viewParams->years = [$year, $year+1,$year+2,$year+3];
 		$this->renderView("ScheduleWorkshop");
 	}
 	public function get()
