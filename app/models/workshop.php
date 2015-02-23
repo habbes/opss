@@ -178,4 +178,11 @@ class Workshop extends DBModel
 	{
 		return static::findOne("month=? AND year=?", [$month, $year]);
 	}
+	
+	public static function findAll($q = "", $values = null, $options = array())
+	{
+		if(empty($options))
+			$options["orderBy"] = "year, month, name";
+		return parent::findAll($q, $values, $options);
+	}
 }
