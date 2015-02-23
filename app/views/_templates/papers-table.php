@@ -7,7 +7,7 @@
 		<?php } else { ?>
 		<thead>
 			<tr>
-				<th style="width:40%">Title</th>
+				<th style="width:30%">Title</th>
 				<th>Researcher</th>
 				<th>Level</th>
 				<th>Status</th>
