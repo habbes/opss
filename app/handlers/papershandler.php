@@ -21,15 +21,22 @@ class PapersHandler extends RoleHandler
 	
 	public function searchPaper()
 	{
-		//restrict search to admins
-		//TODO: filter search results for different roles in advanced Searcher
-		if(!$this->user->isAdmin())
-			return;
+		
 		$query = $this->trimGetVar("q");
-		if($query)
+		if($query){
+			$role = $this->role;
 			$papers = Paper::findAll("title like ? OR identifier like ?",["%$query%", "%$query%"]);
-		else
-			$papers = Paper::findAll();
+			if(!$role->isAdmin()){
+				//TODO: this is inefficient, implement role filtering in advanced searcher
+				$papers = array_filter($papers, function($paper) use ($role){
+					return $role->hasAccessToPaper($paper);
+				});
+			}
+			
+		}
+		else {
+			$papers = $this->role->getPapers();
+		}
 		$this->viewParams->papers = $papers;
 		$this->renderView("PaperSearch");
 	}
