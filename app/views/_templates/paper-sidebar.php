@@ -24,7 +24,12 @@
 	<div class="panel-body">
 		<div>
 			<span class="font-bold">Principal Researcher</span><br>
+			<?php if($data->user->isAdmin()){?>
+			<span><a href="<?=$data->paper->getResearcher()->getAbsoluteUrl()?>" 
+				class="link"><?= $data->paper->getResearcher()->getFullName() ?></a></span>
+			<?php } else { ?>
 			<span><?= $data->paper->getResearcher()->getFullName() ?></span>
+			<?php } ?>
 		</div>
 		<?php if($data->paper->getAuthors()) {?>
 		<div>
