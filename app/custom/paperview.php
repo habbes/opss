@@ -34,6 +34,7 @@ class PaperView extends LoggedInView
 			$this->paperNavLinks[] = (object) ["name"=>"Edit","url"=>"edit","active"=>false];
 		}
 		$this->paperNavLinks[] = (object) ["name"=>"Reviews","url"=>"reviews","active"=>false];
+		$this->paperNavLinks[] = (object) ["name"=>"Workshop Reviews","url"=>"workshop-reviews","active"=>false];
 		$this->paperNavLinks[] = (object) ["name"=>"History","url"=>"history","active"=>false];
 	}
 	

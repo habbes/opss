@@ -109,6 +109,24 @@ class WorkshopReview extends DBModel
 	}
 	
 	/**
+	 * 
+	 * @return number timestamp
+	 */
+	public function getDateSubmitted()
+	{
+		return strtotime($this->date_submitted);
+	}
+	
+	/**
+	 * 
+	 * @return number timestamp
+	 */
+	public function getDateInitiated()
+	{
+		return strtotime($this->data_inititated);
+	}
+	
+	/**
 	 * stores a file in this paper's workshop review directories
 	 * @param string $filename
 	 * @param string $sourcePath
@@ -268,6 +286,30 @@ class WorkshopReview extends DBModel
 	{
 		return static::findOne("paper_id=? AND status=?",[
 				$paper->getId(), self::STATUS_ONGOING
+		]);
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @return array(WorkshopReview)
+	 */
+	public static function findCompletedByPaper($paper)
+	{
+		return static::findAll("paper_id=? AND status=?",[
+				$paper->getId(), self::STATUS_COMPLETED
+		]);
+	}
+	
+	/**
+	 * @param number $id
+	 * @param Paper $paper
+	 * @return WorkshopReview
+	 */
+	public static function findCompletedByIdAndPaper($id, $paper)
+	{
+		return static::findOne("id=? AND paper_id=? AND status=?",[
+				$id, $paper->getId(), self::STATUS_COMPLETED
 		]);
 	}
 	
