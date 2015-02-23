@@ -12,11 +12,13 @@
 					else
 						$changeTitle = "Resubmitted after Revision";
 					$authors = "";
-					foreach ($change->getArg('authors',[]) as $author){
-						$authors .= "{$author->name} ({$author->email})<br>";
+					if($data->user->getRole()->canViewPaperAuthor()){
+						foreach ($change->getArg('authors',[]) as $author){
+							$authors .= "{$author->name} ({$author->email})<br>";
+						}
+						if(!$authors)
+							$authors = "<i>none</i>";
 					}
-					if(!$authors)
-						$authors = "<i>none</i>";
 					
 					$changeDetails =<<<DETAILS
 					<b>Title</b><br>
@@ -67,13 +69,15 @@ DETAILS;
 DETAILS;
 			 break;
 		case PaperChange::ACTION_AUTHOR_ADDED:
-			$changeTitle = "Author Added";
-			$changeDetails =<<<DETAILS
-				<b>Name</b><br>
-					{$change->getArg('name')} ({$change->getArg('email')})<br>
-				<b>Reasons</b><br>
-					{$change->getArg('reasons')}<br>
+			if($data->user->getRole()->canViewPaperAuthor()){
+				$changeTitle = "Author Added";
+				$changeDetails =<<<DETAILS
+					<b>Name</b><br>
+						{$change->getArg('name')} ({$change->getArg('email')})<br>
+					<b>Reasons</b><br>
+						{$change->getArg('reasons')}<br>
 DETAILS;
+			}
 			break;
 		case PaperChange::ACTION_FILE_CHANGED:
 			$changeTitle = "Document Changed";
