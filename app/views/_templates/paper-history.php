@@ -12,6 +12,7 @@
 					else
 						$changeTitle = "Resubmitted after Revision";
 					$authors = "";
+					//TODO: hiding author details needs to be refactored, see also AUTHOR_ADDED event
 					if($data->user->getRole()->canViewPaperAuthor()){
 						foreach ($change->getArg('authors',[]) as $author){
 							$authors .= "{$author->name} ({$author->email})<br>";
