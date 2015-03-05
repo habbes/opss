@@ -501,7 +501,7 @@ class Review extends DBModel
 	 */
 	public static function findByReviewer($reviewer)
 	{
-		return static::findAllByField("reviewer_id", $reviewer->getId());
+		return static::findAll("reviewer_id=?", [$reviewer->getId()]);
 	}
 	
 	/**
@@ -538,6 +538,13 @@ class Review extends DBModel
 		return static::findAll("status=? AND reviewer_id=?",[
 				self::STATUS_COMPLETED, $reviewer->getId()
 		]);
+	}
+	
+	public static function findAll($q = "", $values = null, $options = array())
+	{
+		if(!$options)
+			$options = ["orderBy"=>"date_initiated DESC"];
+		return parent::findAll($q, $values, $options);
 	}
 	
 	
