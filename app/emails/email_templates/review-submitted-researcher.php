@@ -1,7 +1,15 @@
 <p>
-Dear {{name}},<br>
-
-The review for your paper <a href="{{paperLink}}">{{title}} ({{identifier}})</a> has been submitted.
-The conclusion was: <b>{{verdict}}</b>.<br>
-Open the following link for more details: <a href="{{reviewLink}}">{{reviewLink}}</a>
+Dear Dr. {{name}},
+</p>
+<p>
+Open the link below for comments from your resource person on your revised research proposal, 
+<a href="{{paperLink}}"><b>"{{title}}"</b></a>:<br>
+<a href="{{reviewLink}}">{{reviewLink}}</a>
+</p>
+<p>
+The conclusion was: {{verdict}}
+</p>
+<p>
+{{adminName}}<br>
+<b>Director of Research</b>
 </p>

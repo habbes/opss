@@ -21,6 +21,7 @@ class ReviewSubmittedResearcherEmail extends Email
 		$paper = $review->getPaper();
 		$e->setBodyFromTemplate("review-submitted-researcher",[
 			"name" => $recipient->getFullname(),
+			"adminName" => $review->getAdmin()->getFullName(), //get current user instead
 			"title"	=> $paper->getTitle(),
 			"identifier" => $paper->getIdentifier(),
 			"paperLink" => $paper->getAbsoluteUrl(),
