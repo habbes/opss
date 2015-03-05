@@ -16,6 +16,7 @@ class User extends DBModel
 	protected $type;
 	protected $date_added;
 	protected $email_activated;
+	protected $timezone;
 	
 	protected $address;
 	protected $residence;
