@@ -58,6 +58,10 @@ class Application
 	}
 	
 	public function start(){
+		
+		//set app default timezone to utc
+		date_default_timezone_set("UTC");
+		
 		require_once DIR_HANDLERS . DIRECTORY_SEPARATOR . $this->handlerPath;
 		$handler = new $this->handlerClass();
 		
