@@ -18,26 +18,16 @@ class InviteReviewerHandler extends PaperHandler
 	
 	public function inviteNewReviewer()
 	{
-		$user = null;
 		try {
 			$errors = [];
 			$email = $this->trimPostVar("email");
 			$confirmEmail = $this->trimPostVar("confirm-email");
 			$name = $this->trimPostVar("name");
 			
-			if(!$name){
-				$errors[] = "NameEmpty";
-			}
-			if(!User::isValidEmail($email)){
-				$errors[] = "InvalidEmail";
-			}
 			if($email != $this->trimPostVar("confirm-email")){
 				$errors[] = "EmailsDontMatch";
 			}
-			$user = User::findByEmail($email);
-			if($user){
-				$errors[] = "UserExists";
-			}
+			
 			
 			if(count($errors)>0){
 				throw new OperationException($errors);
@@ -59,15 +49,19 @@ class InviteReviewerHandler extends PaperHandler
 					case "EmailsDontMatch":
 						$errors->set("confirm-email", "This does not match the specified email.");
 						break;
-					case "NameEmpty":
+					case OperationError::INVITATION_NAME_EMPTY:
 						$errors->name = "You did not specify a name.";
 						break;
-					case "InvalidEmail":
+					case OperationError::USER_EMAIL_INVALID:
 						$errors->email = "This email does not seem to be in the correct format";
 						break;
-					case "UserExists":
-						$errors->email = sprintf("The specified email address has already been registered by %s (%s).",
-						$user->getFullName(), UserType::getString($user->getType()));
+					case OperationError::USER_EMAIL_UNAVAILABLE:
+						$errors->email = "The specified email address has already been registered.";
+						break;
+					case OperationError::INVITATION_EXISTS:
+						$errors->email = "A pending invitation has already been sent to the specified address";
+						break;
+					
 				}
 			}
 			

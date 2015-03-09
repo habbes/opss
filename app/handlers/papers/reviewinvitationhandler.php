@@ -67,9 +67,10 @@ class ReviewInvitationHandler extends PaperHandler
 		$inv = RegInvitation::create($this->user, UserType::REVIEWER, $email);
 		$inv->setName($name);
 		$inv->setPaper($this->paper);
-		$inv->save();
 		//delete current invitation
 		$this->invitation->delete();
+		$inv->save();
+		
 		
 		//notify admins
 		foreach(Admin::findAll() as $admin){

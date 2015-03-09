@@ -3,7 +3,7 @@ $formdata = $data->form or $formdata = new DataObject();
 $formerror = $data->errors or $formerror = new DataObject();
 ?>
 <div>
-	<div class="col-sm-6">
+	<div class="col-sm-8">
 		<h4>Invite User</h4>
 		<form class="form-vertical" method="post" >
 			<div class="form-group">
@@ -35,7 +35,29 @@ $formerror = $data->errors or $formerror = new DataObject();
 			</div>
 		</form>
 	</div>
-	<div class="col-sm-6">
+	<div class="col-sm-4">
 		<h4>Pending Invitations</h4>
+		<?php if(count($data->invitations) == 0){?>
+		<p>No pending invitations found.</p>
+		<?php } else {?>
+		<ul class="list-group">
+			<?php foreach($data->invitations as $invitation){?>
+				<li class="list-group-item">
+ 					<b>Sent to:</b> <?= escape($invitation->getName())?>, <?= escape($invitation->getEmail()) ?><br>
+ 					<b>Sent on:</b> <?= Utils::siteDateTimeFormat($invitation->getDateSent())?><br>
+ 					<b>Expires:</b> <?= Utils::siteDateTimeFormat($invitation->getExpiryDate())?><br>
+ 					<form class="form" method="post" action="<?=URL_ROOT?>/invitations/manage">
+ 						<input type="hidden" name="invitation" value="<?= $invitation->getId()?>" >
+ 						<div class="form-group">
+ 							<button class="btn btn-default" name="cancel" >Cancel Invitation
+ 							<span class="glyphicon glyphicon-remove text-danger"></span></button>
+ 							<button class="btn btn-default" name="resend">Resend Email</button>
+ 						</div>
+ 					</form>
+ 				</li>
+			<?php } ?>
+		</ul>
+		<?php } ?>
 	</div>
+	<span class="clearfix"></span>
 </div>
