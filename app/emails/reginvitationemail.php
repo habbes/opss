@@ -17,8 +17,8 @@ class RegInvitationEmail extends Email
 			[
 				"name" => $name,
 				"email" => $email,
-				"accountType" => $accountType,
-				"link" => URL_REGISTRATION."/invitation=$regCode"
+				"accountType" => UserType::getString($accountType),
+				"link" => URL_ROOT."/registration?invitation=$regCode"
 			]
 		);
 		$e->addRecipient($email, $name);

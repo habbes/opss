@@ -251,9 +251,26 @@ class RegInvitation extends DBModel
 			$errors[] = OperationError::USER_TYPE_INVALID;
 		if($this->isInDb() && ($this->_user && ($this->_user->getType() != $this->getUserType())))
 			$errors[] = OperationError::USER_TYPE_INVALID;
+		if(!$this->name)
+			$errors[] = OperationError::INVITATION_NAME_EMPTY;
+		if(!User::isValidEmail($this->email))
+			$errors[] = OperationError::USER_EMAIL_INVALID;
+		if(!$this->isInDb() && static::findValidByEmail($this->email))
+			$errors[] = OperationError::INVITATION_EXISTS;
+		if(User::findByEmail($this->email))
+			$errors[] = OperationError::USER_EMAIL_UNAVAILABLE;
 		
 		return true;
 		
+	}
+	
+	/**
+	 * returns all valid registration invitations
+	 * @return array(RegInvitation)
+	 */
+	public static function findValid()
+	{
+		return static::filterValid(static::findAll("",null,["orderBy"=>"date_sent DESC"]));
 	}
 	
 	/**
@@ -269,6 +286,28 @@ class RegInvitation extends DBModel
 				);
 		if($inv && $inv->isValid())
 			return $inv;
+	}
+	
+	/**
+	 * 
+	 * @param int $id
+	 * @return RegInvitation
+	 */
+	public static function findValidById($id)
+	{
+		$inv = static::findById($id);
+		return $inv && $inv->isValid()? $inv : null;
+	}
+	
+	/**
+	 * 
+	 * @param string $email
+	 * @return RegInvitation
+	 */
+	public static function findValidByEmail($email)
+	{
+		$inv = static::findOneByField("email", $email);
+		return $inv && $inv->isValid()? $inv : null;
 	}
 	
 	/**
