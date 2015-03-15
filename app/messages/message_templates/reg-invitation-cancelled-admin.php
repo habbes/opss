@@ -1,0 +1,1 @@
+The invitation sent {{name}} ({{email}}) to register as {{type}} has been cancelled.

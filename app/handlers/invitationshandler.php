@@ -47,7 +47,7 @@ class InvitationsHandler extends AdminHandler
 			$inv->save();
 			
 			
-			RegInvitationEmail::create($name, $email, $type, $inv->getRegistrationCode())->send();
+			RegInvitationEmail::create($inv)->send();
 			
 			foreach(Admin::findAll() as $admin){
 				RegInvitationSentMessage::create($admin, $inv)->send();
@@ -138,13 +138,14 @@ class InvitationsHandler extends AdminHandler
 		
 		//TODO: send messages
 		//notify admins
-		/*
+		
 		foreach(Admin::findAll() as $admin){
-			ReviewInvitationCancelledMessage::create($admin, $this->paper, $name, $email)->send();
+			RegInvitationCancelledMessage::create($admin, $this->invitation)->send();
 		}
 		//send email to invitee
-		NewReviewerInvitationCancelledEmail::create($name, $email, $this->paper)->send();
-		*/
+		
+		RegInvitationCancelledEmail::create($this->invitation)->send();
+		
 		$this->saveResultMessage("The invitation was cancelled successfully.", "success");
 		$this->redirectInvitations();
 	}

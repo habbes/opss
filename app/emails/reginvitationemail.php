@@ -9,19 +9,25 @@ class RegInvitationEmail extends Email
 {
 	protected $user;
 	
-	public static function create($name, $email, $accountType, $regCode)
+	/**
+	 * 
+	 * @param RegInvitation $inv
+	 * @return RegInvitationEmail
+	 */
+	public static function create($inv)
 	{
 		$e = new static();
 		$e->setSubject("Invitation to register");
 		$e->setBodyFromTemplate("registration-invitation",
 			[
-				"name" => $name,
-				"email" => $email,
-				"accountType" => UserType::getString($accountType),
-				"link" => URL_ROOT."/registration?invitation=$regCode"
+				"name" => $inv->getName(),
+				"email" => $inv->getEmail(),
+				"accountType" => UserType::getString($inv->getUserType()),
+				"acceptLink" => URL_ROOT."/registration?invitation=".$inv->getRegistrationCode(),
+				"declineLink" => URL_ROOT."/invitation-declined?reg-code=".$inv->getRegistrationCode()
 			]
 		);
-		$e->addRecipient($email, $name);
+		$e->addRecipient($inv->getEmail(), $inv->getName());
 		return $e;
 					
 	}

@@ -17,7 +17,7 @@ class NewReviewerInvitationEmail extends Email
 			"name" => $name,
 			"title" => $paper->getTitle(),
 			"acceptLink" => URL_ROOT."/registration?invitation=".$regInvitation->getRegistrationCode(),
-			"declineLink" => URL_ROOT."/review-invitation-declined?reg-code=".$regInvitation->getRegistrationCode()
+			"declineLink" => URL_ROOT."/invitation-declined?reg-code=".$regInvitation->getRegistrationCode()
 		]);
 		
 		$e->innerMsg->addTo($email, $name);
