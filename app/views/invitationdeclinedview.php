@@ -1,6 +1,6 @@
 <?php
 
-class ReviewInvitationDeclinedView extends BaseView
+class InvitationDeclinedView extends BaseView
 {
 	public function render()
 	{

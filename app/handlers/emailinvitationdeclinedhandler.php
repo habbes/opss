@@ -1,6 +1,6 @@
 <?php
 
-class EmailReviewInvitationDeclinedHandler extends BaseHandler
+class EmailInvitationDeclinedHandler extends BaseHandler
 {
 	public function get()
 	{

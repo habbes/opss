@@ -1,1 +1,1 @@
-An invitation has been sent to <b>{{name}} ({{email}})</b> to register as <b>{{type}}</b>.
+An invitation has been sent to {{name}} ({{email}}) to register as {{type}}.

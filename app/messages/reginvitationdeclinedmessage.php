@@ -21,7 +21,7 @@ class RegInvitationDeclinedMessage extends Message
 		$m->setMessageFromTemplate("reg-invitation-declined-admin",[
 				"name" => $inv->getName(),
 				"email" => $inv->getEmail(),
-				"type" => UserType::getString($inv->getType())
+				"type" => UserType::getString($inv->getUserType())
 		]);
 		return $m;
 	}
