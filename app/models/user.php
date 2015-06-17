@@ -124,8 +124,6 @@ class User extends DBModel
 	 */
 	public function setPassword($password)
 	{
-		if($this->isInDb())
-			return false;
 		$this->_plainPassword = $password;
 		$this->password = Utils::hashPassword($password);
 		return true;

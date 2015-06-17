@@ -48,7 +48,7 @@ class PasswordResetHandler extends LoggedOutHandler
 			$errors = [];
 			$recovery = $this->recovery;
 			$user = $this->recovery->getUser();
-			if($username != $user->getUsername() && $username != $user->getPassword()){
+			if($username != $user->getUsername() && $username != $user->getEmail()){
 				$errors[] = OperationError::USER_NOT_FOUND;
 			}
 			if(!User::isValidPassword($password)){
