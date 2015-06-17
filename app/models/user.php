@@ -1,4 +1,6 @@
 <?php
+use Intervention\Image\ImageManagerStatic as Image;
+Image::configure(['driver'=>'imagick']);
 
 /**
  * represents a user
@@ -23,6 +25,9 @@ class User extends DBModel
 	protected $nationality;
 	protected $gender;
 	
+	protected $photo_id;
+	
+	private $_photo;
 	private $_messageBox;
 	private $_thematicAreas;
 	private $_collaborativeAreas;
@@ -33,6 +38,8 @@ class User extends DBModel
 	//used to check whether the username is being updated when the user is saved
 	private $_newUsername = false;
 	private $_newEmail = false;
+	
+	const PHOTO_DIR = "profile_pics";
 	
 	/**
 	 * createa user of the given type/role
@@ -238,6 +245,39 @@ class User extends DBModel
 		}
 		
 		return $this->_collaborativeAreas;
+	}
+	
+	/**
+	 * gets the profile picture of the user
+	 * @return File
+	 */
+	public function getPhoto()
+	{
+		if(!$this->_photo){
+			$this->_photo = File::findById($this->photo_id);
+		}
+		return $this->_photo;
+	}
+	
+	/**
+	 * Set the profile picture of this user
+	 * @param string $sourceFile
+	 */
+	public function setPhoto($sourceFile)
+	{
+		$image = Image::make($sourceFile)->resize(100,100)->encode("jpg");
+		if($photo = $this->getPhoto()){
+			$photo->overwriteFromContent((string) $image);
+		}
+		else {
+			$ds = DIRECTORY_SEPARATOR;
+			$dir = self::PHOTO_DIR.$ds.$this->getUsername();
+			$file = File::createFromContent($dir, (string) $image);
+			$file->setFilename("profile-pic.jpg");
+			$file->save();
+			$this->photo_id = $file->getId();
+			$this->_photo = $file;
+		}
 	}
 	
 	/**
