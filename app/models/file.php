@@ -89,6 +89,52 @@ class File extends DBModel
 	}
 	
 	/**
+	 * Overwrite the data of this file with the content at the specified source
+	 * @param string $sourceFile
+	 * @param string $fromUpload
+	 * @return File
+	 */
+	public function overwrite($sourceFile, $fromUpload = true)
+	{
+		//get mime file type
+		$finfo = new finfo(FILEINFO_MIME_TYPE);
+		$this->filetype = $finfo->file($sourcePath);
+		
+		//move or copy depending on whether or not the file is from upload
+		if($fromUpload){
+			$result = move_uploaded_file($sourcePath, $this->getFilepath());
+		} else {
+			$result = copy($sourcepath, $this->getFilepath());
+		}
+		
+		if(!$result) return null;
+		
+		return $this->save();
+	}
+	
+	/**
+	 * Overwrite the data of this file with the specified uploaded file
+	 * @param string $sourceFile
+	 * @return File
+	 */
+	public function overwriteFromUpload($sourceFile)
+	{
+		return $this->overwrite($sourceFile, true);
+	}
+	
+	/**
+	 * Overwrite the data of this file with the specified content
+	 * @param string $content
+	 * @return File
+	 */
+	public function overwriteFromContent($content)
+	{
+		$this->filetype = "";
+		file_put_contents($this->getFilePath(), $content);
+		return $this->save();
+	}
+	
+	/**
 	 * creates this file's directory if it does not exist
 	 */
 	private function ensureDirectoryExists()
