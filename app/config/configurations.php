@@ -16,5 +16,9 @@ $config = [
 			"pass" => "blackphantom",
 			"from" => "nderitukelvin19@yahoo.com",
 			"from_name" => "AERC OPSS"
+		],
+		
+		"date" => [
+			"timezone" => "Africa/Nairobi"
 		]
 ];

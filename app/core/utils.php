@@ -80,14 +80,28 @@ class Utils
 		return strftime("%Y-%m-%d %H:%M:%S",$timestamp);
 	}
 	
+	/**
+	 * returns the date-time in a format suitable for the front-end
+	 * @param int $timestamp
+	 * @return string
+	 */
 	public static function siteDateTimeFormat($timestamp)
 	{
-		return strftime("%a %d %b %Y at %H:%M", $timestamp);
+		$dt = new DateTime("@".$timestamp);
+		$dt->setTimeZone(new DateTimeZone(Config::date('timezone')));
+		return $dt->format("D d M Y H:i");
 	}
 	
+	/**
+	 * returns the date in a format suitable for the front-end
+	 * @param int $timestamp
+	 * @return string
+	 */
 	public static function siteDateFormat($timestamp)
 	{
-		return strftime("%a %d %b %Y", $timestamp);
+		$dt = new DateTime("@".$timestamp);
+		$dt->setTimeZone(new DateTimeZone(Config::date('timezone')));
+		return $dt->format("D d M Y");
 	}
 	
 	/**
