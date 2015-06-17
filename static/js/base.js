@@ -5,7 +5,7 @@ function showAlertMessage(message, type)
 {
 	if(type == "error") type = "danger";
 	if(type == "normal") type = "info";
-	$("#result-message").text(message);
+	$("#result-message").empty().append(message);
 	$("#result-message-container").removeClass("alert-danger")
 		.removeClass("alert-info")
 		.removeClass("alert-success")
@@ -37,7 +37,9 @@ var Message = {
 				Message.pollXHR = $.getJSON(URL_ROOT + "/messages/ajax/new", function(response, status){
 					var count = response.messages.length;
 					if(count > 0){
-						showAlertMessage("You have " + count + " new message" + (count>1?"s":"") + ".", "normal");
+						var msg = $("<a></a>").text("You have " + count + " new message" + (count>1?"s":"") + ".")
+							.attr("href", URL_ROOT + "/messages/unread");
+						showAlertMessage(msg, "normal");
 						
 						if(Message.pollCallback){
 							Message.pollCallback(response);
