@@ -1,6 +1,6 @@
 <?php
 use Intervention\Image\ImageManagerStatic as Image;
-Image::configure(['driver'=>'imagick']);
+Image::configure(['driver'=>'gd']);
 
 /**
  * represents a user
@@ -277,6 +277,31 @@ class User extends DBModel
 			$file->save();
 			$this->photo_id = $file->getId();
 			$this->_photo = $file;
+		}
+	}
+	
+	/**
+	 * gets the absolute url of the profile picture
+	 * @return string
+	 */
+	public function getPhotoUrl()
+	{
+		return URL_ROOT ."/photo/".$this->username;
+	}
+	
+	/**
+	 * Outputs the profile photo to the browser
+	 */
+	public function sendPhotoResponse()
+	{
+		if($photo = $this->getPhoto()){
+			header('Content-Type: image/jpg');
+			header('Content-Length: '.$this->getPhoto()->getSize());
+			echo $photo->getContent();
+			exit;
+		}
+		else {
+			die("");
 		}
 	}
 	

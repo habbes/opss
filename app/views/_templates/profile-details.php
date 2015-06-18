@@ -9,7 +9,13 @@ This account has not been activated. Check you email inbox (<?= $user->getEmail(
 activated your email address.
 </p>
 <?php } ?>
+<?php if($user->getPhoto()){?>
+<div>
+	<img src="<?= $user->getPhotoUrl()?>" height="100">
+</div>
+<?php } ?>
 <div class="details-grid user-details">
+	
 	<div class="details-item">
 		<span class="font-bold details-name">Name</span>
 		<span class="details-value"><?= $user->getFullName() ?></span>

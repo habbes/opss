@@ -58,6 +58,7 @@ class MainLayoutView extends BaseView
 	public function showBase()
 	{
 		$this->data->userName = $this->data->user->getFullName();
+		$this->data->userPhoto = $this->data->user->getPhotoUrl();
 		$this->setNavLinks();
 		
 		$this->data->navLinks = $this->navLinks;

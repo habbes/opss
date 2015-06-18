@@ -8,6 +8,11 @@ $activated = $user->isEmailActivated();
 The account holder needs to activate the account via email.
 </p>
 <?php } ?>
+<?php if($user->getPhoto()){?>
+<div>
+	<img src="<?= $user->getPhotoUrl()?>" height="100">
+</div>
+<?php } ?>
 <div class="details-grid user-details">
 	<div class="details-item">
 		<span class="font-bold details-name">Name</span>

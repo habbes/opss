@@ -4,12 +4,20 @@ $formerror = $data->errors or $formerror = new DataObject();
 ?>
 
 <div class="form row">
-	<form class="form-horizontal" method="post" role="form">
+	<form class="form-horizontal" method="post"  enctype="multipart/form-data" role="form">
 		<input type="hidden" name="action" value="registration"/>
 		<!-- first col -->
 		<div class="col-sm-6 col-xs-12">
 			<fieldset>
 				<legend>Personal Info</legend>
+				<div class="form-group">
+					<!-- Profile Pic -->
+					<div class="col-sm-10">
+						<label>Profile Photo</label>
+						<input type="file" name="photo" title="Profile Photo">
+						<span class="help-block text-danger form-error" id="photo-error"><?= escape($formerror->photo)?></span>
+					</div>
+				</div>
 				<div class="form-group row combined-fields">
 					<div class="col-sm-2 combined-fields-item" style="padding-right:0px">
 	      				<select class="form-control" name="title" placeholder="Title">

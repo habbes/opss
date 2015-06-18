@@ -7,4 +7,5 @@ class DetailsHandler extends LoggedInHandler
 		$this->setSavedResultMessage();
 		$this->renderView("profile/Details");
 	}
+	
 }

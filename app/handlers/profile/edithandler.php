@@ -48,6 +48,17 @@ class EditHandler extends LoggedInHandler
 			$user = $this->user;
 			$role = $user->getRole();
 			
+			$photo = $this->fileVar("photo");
+			if($photo->name){
+				try {
+					$user->setPhoto($photo->tmp_name);
+				}
+				catch(Exception $e){
+					$errors[] = "PhotoError";
+				}
+				
+			}
+			
 			$curEmail = $user->getEmail();
 			$newEmail = $this->trimPostVar("email", $curEmail);
 			$form->email = $newEmail;
@@ -201,6 +212,9 @@ class EditHandler extends LoggedInHandler
 						break;
 					case OperationError::USER_PASSWORD_INCORRECT:
 						$errors->set("current-password", "This password is incorrect.");
+						break;
+					case "PhotoError":
+						$errors->photo = "Error loading image. Please try a different image.";
 						break;
 					
 				}//end switch
