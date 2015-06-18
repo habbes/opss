@@ -16,15 +16,15 @@ class EmailInvitationDeclinedHandler extends BaseHandler
 		
 		if($paper){
 			//the invitation was for a reviewer to review a paper
-			foreach(Admin::findAll() as $admin){
-				ReviewInvitationDeclinedMessage::create($admin, $inv)->send();
+			foreach(Admin::findAll() as $a){
+				ReviewInvitationDeclinedMessage::create($a, $inv)->send();
 			}
 			ReviewInvitationDeclinedEmail::create($admin, $inv)->send();
 		}
 		else {
 			//generic user registration invitation
-			foreach(Admin::findAll() as $admin){
-				RegInvitationDeclinedMessage::create($admin, $inv)->send();
+			foreach(Admin::findAll() as $a){
+				RegInvitationDeclinedMessage::create($a, $inv)->send();
 			}
 			RegInvitationDeclinedEmail::create($admin, $inv)->send();
 		}

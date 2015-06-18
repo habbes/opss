@@ -29,13 +29,8 @@ class ResubmitHandler extends PaperHandler
 		PaperResubmittedMessage::create($this->paper, $this->paper->getResearcher())->send();
 		
 		//notify admins
-		$msg = null;
 		foreach(Admin::findAll() as $admin){
-			if(!$msg)
-				$msg = PaperResubmittedMessage::create($this->paper, $admin);
-			else
-				$msg->setUser($admin);
-			$msg->send();
+			PaperResubmittedMessage::create($this->paper, $admin)->send();
 		}
 	}
 	
