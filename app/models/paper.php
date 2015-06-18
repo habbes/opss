@@ -967,7 +967,7 @@ class Paper extends DBModel
 				break;
 			
 			case WorkshopReview::VERDICT_REJECTED:
-				$this->stauts = self::STATUS_REJECTED;
+				$this->status = self::STATUS_REJECTED;
 				break;
 				
 		}

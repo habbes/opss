@@ -4,7 +4,7 @@ $formerror = $data->errors;
 ?>
 
 <div class="form row">
-	<form class="form-horizontal" method="post" role="form">
+	<form class="form-horizontal passForm" method="post" role="form">
 		<input type="hidden" name="action" value="registration"/>
 		<!-- first col -->
 		<div class="col-sm-6 col-xs-12">
@@ -152,8 +152,9 @@ $formerror = $data->errors;
 				<div class="form-group">
 					<!-- password -->
 					<div class="col-sm-10 col-sm-offset-2">
-				        <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control">
+				        <input type="password" id="password" name="password" placeholder="Enter Password" class="form-control passwordCheck">
 				        <span class="help-block text-danger form-error" id="password-error"><?= escape($formerror->password) ?></span>
+				        <div class="passwordFeedback"><span></span><div class="strengthBarWrapper"></div></div>
 					</div>
 				</div>
 		

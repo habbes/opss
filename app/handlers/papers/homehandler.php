@@ -67,13 +67,8 @@ class HomeHandler extends PaperHandler
 			//TODO send email notification to researcher
 			
 			//notify admins
-			$msg = null;
 			foreach(Admin::findAll() as $admin){
-				if(!$msg)
-					$msg = PaperVettedMessage::create($this->paper, $vet->getVerdict(), $admin);
-				else
-					$msg->setUser($admin);
-				$msg->send();
+				PaperVettedMessage::create($this->paper, $vet->getVerdict(), $admin)->send();
 			}
 			
 			//redirect to paper home

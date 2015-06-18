@@ -211,3 +211,37 @@ label {
 }
 
 /** end details grid/vertical view **/
+
+
+/**password feedback **/
+
+.passwordFeedback {
+	text-align:center;
+	width:200px;
+	padding:0px;
+	position:relative;
+	/*border:1px solid grey;*/
+	display:none;
+	padding:2px 0px;
+	margin-top:5px;
+	font-size:0.8em;
+	
+}
+
+.passwordFeedback span {
+	z-index: 10;
+	font-st
+}
+
+
+.passwordFeedback .strengthBarWrapper {
+	position:absolute;
+	left:0px;
+	top:0px;
+	height:100%;
+	z-index: 1;
+	opacity:0.5;
+	
+	
+}
+/** end password feedback **/

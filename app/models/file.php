@@ -168,7 +168,7 @@ class File extends DBModel
 	public function getSize()
 	{
 		if($this->_size < 1){
-			$this->_size = count($this->getContent());
+			$this->_size = strlen($this->getContent());
 		}
 		return $this->_size;			
 	}
