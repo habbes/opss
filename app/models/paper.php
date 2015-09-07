@@ -24,7 +24,7 @@ class Paper extends DBModel
 	protected $other_parts;
 	protected $thematic_area;
 	protected $workshop_id;
-	protected $in_pipeline;
+	protected $in_workshop;
 	protected $viewed_by_admin;
 	
 	private $_researcher;
@@ -87,7 +87,7 @@ class Paper extends DBModel
 		$paper->recallable = true;
 		$paper->level = PaperLevel::PROPOSAL;
 		$paper->revision = 1;
-		$paper->in_pipeline = false;
+		$paper->in_workshop = false;
 		$paper->viewed_by_admin = false;
 		if(!$grace_period) $grace_period = self::GRACE_PERIOD;
 		$paper->end_recallable_date = time() + $grace_period * 84600;
@@ -267,12 +267,12 @@ class Paper extends DBModel
 	}
 	
 	/**
-	 * whether the paper is in the presentation pipeline
+	 * whether the paper is in a workshop queue
 	 * @return boolean
 	 */
-	public function isInPipeline()
+	public function isInWorkshop()
 	{
-		return (boolean) $this->in_pipeline;
+		return (boolean) $this->in_workshop;
 	}
 	
 	/**
@@ -421,7 +421,7 @@ class Paper extends DBModel
 	
 	/**
 	 * 
-	 * @param Workshop $workshop
+	 * @param in_workshop $workshop
 	 */
 	public function addToWorkshopQueue($workshop)
 	{
@@ -436,9 +436,9 @@ class Paper extends DBModel
 		$this->workshop_id = $workshop->getId();
 		$this->_workshop = $workshop;
 		$this->status = Paper::STATUS_WORKSHOP_QUEUE;
-		//add paper to presentation pipeline
-		if(!$this->in_pipeline)
-			$this->in_pipeline = true;
+		//add paper to workshop queue
+		if(!$this->in_workshop)
+			$this->in_workshop = true;
 	}
 	
 	/**
@@ -900,7 +900,7 @@ class Paper extends DBModel
 				$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				break;
-			case Review::VERDICT_PIPELINE_APPROVED:
+			case Review::VERDIC_WORKSHOP_APPROVED:
 				$this->status = self::STATUS_PENDING;
 				$this->resetNextActionsList();
 				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
@@ -909,7 +909,7 @@ class Paper extends DBModel
 				$this->editable = true;
 				$this->status = self::STATUS_REVIEW_REVISION_MAJ;
 				break;
-			case Review::VERDICT_PIPELINE_REVISION:
+			case Review::VERDICT_WORKSHOP_REVISION:
 				$this->editable = true;
 				$this->status = self::STATUS_POST_WORKSHOP_REVISION_MAJ;
 				break;
@@ -918,7 +918,7 @@ class Paper extends DBModel
 				$this->status = self::STATUS_REVIEW_REVISION_MIN;
 				break;
 			case Review::VERDICT_REJECTED:
-			case Review::VERDICT_PIPELINE_REJECTED;
+			case Review::VERDICT_WORKSHOP_REJECTED;
 				$this->status = self::STATUS_REJECTED;
 				break;
 			default:

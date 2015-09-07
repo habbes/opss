@@ -42,9 +42,9 @@ class Review extends DBModel
 	const VERDICT_REVISION_MIN = "revisionMin";
 	const VERDICT_REVISION_MAJ = "revisionMaj";
 	const VERDICT_REJECTED = "rejected";
-	const VERDICT_PIPELINE_APPROVED = "pipelineApproved";
-	const VERDICT_PIPELINE_REVISION = "pipelineRevision";
-	const VERDICT_PIPELINE_REJECTED = "pipelineRejected";
+	const VERDICT_WORKSHOP_APPROVED = "workshopApproved";
+	const VERDICT_WORKSHOP_REVISION = "workshopRevision";
+	const VERDICT_WORKSHOP_REJECTED = "workshopRejected";
 	
 	/**
 	 * 
@@ -400,11 +400,11 @@ class Review extends DBModel
 	 */
 	public static function getVerdicts($paper)
 	{
-		if(!$paper->isInPipeline())
+		if(!$paper->isInWorkshop())
 			return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
 				self::VERDICT_REVISION_MAJ];
 		else
-			return [self::VERDICT_PIPELINE_APPROVED, self::VERDICT_PIPELINE_REVISION];
+			return [self::VERDICT_WORKSHOP_APPROVED, self::VERDICT_WORKSHOP_REVISION];
 	}
 	
 	/**
@@ -413,12 +413,12 @@ class Review extends DBModel
 	 */
 	public static function getAdminVerdicts($paper)
 	{
-		if(!$paper->isInPipeline())
+		if(!$paper->isInWorkshop())
 			return [self::VERDICT_APPROVED, self::VERDICT_REVISION_MIN,
 				self::VERDICT_REVISION_MAJ, self::VERDICT_REJECTED];
 		else 
-			return [self::VERDICT_PIPELINE_APPROVED, self::VERDICT_PIPELINE_REVISION,
-					self::VERDICT_PIPELINE_REJECTED
+			return [self::VERDICT_WORKSHOP_APPROVED, self::VERDICT_WORKSHOP_REVISION,
+					self::VERDICT_WORKSHOP_REJECTED
 			];
 	}
 	
@@ -431,7 +431,7 @@ class Review extends DBModel
 	{
 		switch($verdict){
 			case self::VERDICT_APPROVED:
-			case self::VERDICT_PIPELINE_APPROVED:
+			case self::VERDICT_WORKSHOP_APPROVED:
 				return "Approved";
 			
 			case self::VERDICT_REVISION_MAJ:
@@ -440,11 +440,11 @@ class Review extends DBModel
 			case self::VERDICT_REVISION_MIN:
 				return "Minor Revision";
 			
-			case self::VERDICT_PIPELINE_REVISION:
+			case self::VERDICT_WORKSHOP_REVISION:
 				return "Revision";
 							
 			case self::VERDICT_REJECTED:
-			case self::VERDICT_PIPELINE_REJECTED:
+			case self::VERDICT_WORKSHOP_REJECTED:
 				return "Rejected";
 		}
 	}

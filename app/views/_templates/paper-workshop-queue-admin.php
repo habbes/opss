@@ -4,7 +4,7 @@ $formerror = $data->workshopReviewErrors or $formerror = new DataObject();
 ?>
 <div>
 	<p>
-	The paper has been added to the presentation pipeline for the workshop scheduled on
+	The paper has been added to the workshop scheduled on
 	<a class="link" href="<?=$data->workshop->getAbsoluteUrl()?>"><?= $data->workshop->toString()?></a>.
 	</p>
 	

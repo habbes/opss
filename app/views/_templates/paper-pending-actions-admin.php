@@ -126,7 +126,7 @@
 		?>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title">Add paper to presentation pipeline</h4>
+					<h4 class="panel-title">Add paper to workshop</h4>
 				</div>
 				<div class="panel-body">
 					<form method="post" action="<?= $data->paperBaseUrl?>/schedule-workshop">
@@ -141,7 +141,7 @@
 							</select>
 						</div>
 						<div class="form-group">
-							<button class="btn btn-default">Add to Presentation Pipeline</button>
+							<button class="btn btn-default">Add to Workshop</button>
 						</div>
 					</form>
 				</div>

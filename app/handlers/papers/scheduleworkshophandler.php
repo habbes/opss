@@ -28,7 +28,7 @@ class ScheduleWorkshopHandler extends PaperHandler
 				throw new OperationException(["WorkshopNotFound"]);
 			$this->paper->addToWorkshopQueue($workshop);
 			$this->paper->save();
-			$this->saveResultMessage("Paper added to presentation pipeline successfully.", "success");
+			$this->saveResultMessage("Paper added to workshop queue successfully.", "success");
 			$this->paperLocalRedirect();
 		}
 		catch(OperationException $e)
@@ -41,7 +41,7 @@ class ScheduleWorkshopHandler extends PaperHandler
 						$errors->workshop = "The specified workshop was not found.";
 						break;
 					case OperationError::PAPER_NOT_PENDING:
-						$this->setResultMessage("The paper must be pending in order to be added to pipeline.", "error");
+						$this->setResultMessage("The paper must be pending in order to be added to a workshop queue.", "error");
 						$msgSet = true;
 						break;
 					case OperationError::PAPER_ALREADY_IN_WORKSHOP:

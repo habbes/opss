@@ -7,7 +7,7 @@
 		<thead>
 			<tr>
 				<th>Date</th>
-				<th>Papers in pipeline</th>
+				<th>Papers in Workshop</th>
 			</tr>
 		</thead>
 		<tbody>
