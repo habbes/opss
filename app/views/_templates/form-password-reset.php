@@ -4,7 +4,7 @@ $formerror = $data->errors or $formerror = new DataObject();
 ?>
 <div class="col-sm-4 col-sm-offset-4 panel panel-default" >
 	<div class="panel-body">
-	    <form method="post" class="form-signin formPass" role="form" >
+	    <form method="post" class="form-signin passForm" role="form" >
 	       	<div class="form-group">
 	         	<input type="text" class="form-control" name="username" value="<?= escape($formdata->username) ?>" 
 	         		id="form-username" placeholder="Username or Email" required>
