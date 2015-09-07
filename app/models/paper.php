@@ -52,6 +52,7 @@ class Paper extends DBModel
 	const STATUS_REVIEW_REVISION_MIN = "reviewRevisionMin";
 	const STATUS_REVIEW_SUBMITTED = "reviewSubmitted";
 	const STATUS_REJECTED = "rejected";
+	const STATUS_PIPELINE = "pipeline";
 	const STATUS_WORKSHOP_QUEUE = "workshopQueue";
 	const STATUS_POST_WORKSHOP_REVISION_MIN = "postWorkshopRevisionMin";
 	const STATUS_POST_WORKSHOP_REVISION_MAJ = "postWorkshopRevisionMaj";
@@ -167,6 +168,8 @@ class Paper extends DBModel
 				return "Review submitted by external reviewer";
 			case Paper::STATUS_VETTING_REVISION:
 				return "Revision in progress after vetting";
+			case Paper::STATUS_PIPELINE:
+				return "Presentation Pipeline";
 			case Paper::STATUS_WORKSHOP_QUEUE:
 				return "In queue for workshop review";
 			case Paper::STATUS_POST_WORKSHOP_REVIEW_MIN:
@@ -264,6 +267,15 @@ class Paper extends DBModel
 	public function isRecallable()
 	{
 		return (boolean) $this->recallable();
+	}
+	
+	/**
+	 * whether paper is in presentation pipeline
+	 * @return boolean
+	 */
+	public function isInPipeline()
+	{
+		return $this->status == self::STATUS_PIPELINE;
 	}
 	
 	/**
@@ -428,7 +440,7 @@ class Paper extends DBModel
 		$errors = [];
 		if($this->status == Paper::STATUS_WORKSHOP_QUEUE)
 			$errors[] = OperationError::PAPER_ALREADY_IN_WORKSHOP;
-		else if($this->status != Paper::STATUS_PENDING)
+		else if($this->status != Paper::STATUS_PIPELINE)
 			$errors[] = OperationError::PAPER_NOT_PENDING;
 		
 		if(!empty($errors))
@@ -453,7 +465,8 @@ class Paper extends DBModel
 			throw new OperationException($errors);
 		$this->workshop_id = null;
 		$this->_workshop = null;
-		$this->status = Paper::STATUS_PENDING;
+		$this->status = Paper::STATUS_PIPELINE;
+		$this->in_workshop = false;
 		$this->resetNextActionsList();
 		$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 		$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
@@ -805,7 +818,8 @@ class Paper extends DBModel
 	
 	public function reviewResubmit()
 	{
-		$this->status = self::STATUS_PENDING;
+		//TODO: verify whether paper should go to presentation pipeline automatically after revision
+		$this->status = self::STATUS_PIPELINE;
 		$this->editable = false;
 		$this->incrementRevision();
 		$this->resetNextActionsList();
@@ -895,13 +909,13 @@ class Paper extends DBModel
 		$review->save();
 		switch($verdict){
 			case Review::VERDICT_APPROVED:
-				$this->status  = self::STATUS_PENDING;
+				$this->status  = self::STATUS_PIPELINE;
 				$this->resetNextActionsList();
 				$this->addNextAction(self::ACTION_EXTERNAL_REVIEW);
 				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				break;
 			case Review::VERDIC_WORKSHOP_APPROVED:
-				$this->status = self::STATUS_PENDING;
+				$this->status = self::STATUS_PIPELINE;
 				$this->resetNextActionsList();
 				$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
 				break;
@@ -947,14 +961,16 @@ class Paper extends DBModel
 		$review->save();
 		switch($verdict){
 			case WorkshopReview::VERDICT_APPROVED:
-				$this->status = self::STATUS_PENDING;
 				//do not allow to workshop queue if we're approving a final report
 				//because it goes into accepted state where it can be sent to comms
+				$this->status = self::STATUS_PENDING;
 				$allowAddToQueue = !$this->isFinalReportOrRevised();
 				$this->advanceLevel();				
 				$this->resetNextActionsList();
-				if($allowAddToQueue)
+				if($allowAddToQueue){
+					$this->status = self::STATUS_PIPELINE;
 					$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				}
 				break;
 			case WorkshopReview::VERDICT_REVISION_MIN:
 				$this->status = self::STATUS_POST_WORKSHOP_REVISION_MIN;
@@ -989,8 +1005,10 @@ class Paper extends DBModel
 				$this->status = self::STATUS_PENDING;
 				$this->resetNextActionsList();
 				$this->advanceLevel();
-				if($allowAddToQueue)
+				if($allowAddToQueue){
+					$this->status = self::STATUS_PIPELINE;
 					$this->addNextAction(self::ACTION_WORKSHOP_QUEUE);
+				}
 				
 				break;
 			case PostWorkshopReviewMin::VERDICT_REJECTED:
