@@ -19,7 +19,7 @@ class RegInvitationCancelledEmail extends Email
 		$e->setSubject("Registration Invitation Cancelled");
 		$e->setBodyFromTemplate("reg-invitation-cancelled",[
 				"name" => $inv->getName(),
-				"type" => UserType::getString($inv)
+				"type" => UserType::getString($inv->getUserType())
 		]);
 		return $e;
 	}
