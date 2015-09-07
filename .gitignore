@@ -2,7 +2,9 @@
 .project
 .buildpath
 app/data/*
+./**/dwsync.xml
 *dwsync.xml
+dwsync.xml
 *_notes*
 *_notes/.
 vendor/
