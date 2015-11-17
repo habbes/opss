@@ -81,6 +81,7 @@
 </div>
 
 <script type="text/javascript" src="<?=URL_ROOT?>/public/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<?=URL_ROOT?>/public/underscore/underscore-min.js"></script>
 </body>
 </html>
 	

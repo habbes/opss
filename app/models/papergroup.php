@@ -15,11 +15,11 @@ final class PaperGroup extends Enum
 	const E = 6;
 	
 	protected static $values = [
-			self::A => "A: Poverty, Income Distribution and Food Security",
-			self::B => "B: Macroeconomic Policies, Investments and Growth",
+			self::A => "A: Poverty, Labor Markets, and Income Distribution",
+			self::B => "B: Macroeconomic Policy and Growth",
 			self::C => "C: Finance and Resource Mobilization",
-			self::D => "D: Trade and Regional Integration",
-			self::E => "E: Political Economy, Natural Resource Management and Agricultural Policy Issues",
+			self::D => "D: Production, Trade, and Economic Integration",
+			self::E => "E: Agriculture, Climate Change, and Natural Resource Management",
 			self::OTHER => "None Applicable"
 		];
 }

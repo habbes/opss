@@ -30,6 +30,7 @@ $routes = [
 		['^papers\/?$', "Papers"],
 		['^papers\/search\/?$', "Papers@searchPaper"],
 		['^papers\/submit\/?$', "PaperSubmit"],
+		['^papers\/presentation\-pipeline\/?$', 'Pipeline'],
 		['^papers\/(\w+)\/?$', "papers/Home"],
 		['^papers\/(\w+)\/vet\/?$', "papers/Home@handleVetReview"],
 		['^papers\/(\w+)\/download\/?$', "papers/Download"],

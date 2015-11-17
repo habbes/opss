@@ -1080,6 +1080,15 @@ class Paper extends DBModel
 	
 	/**
 	 * 
+	 * @return Paper
+	 */
+	public static function findInPresentationPipeline()
+	{
+		return static::findByField('status', self::STATUS_PIPELINE);
+	}
+	
+	/**
+	 * 
 	 * @param Workshop $workshop
 	 * @return array(Paper)
 	 */
@@ -1089,6 +1098,7 @@ class Paper extends DBModel
 				$workshop->getId(), Paper::STATUS_WORKSHOP_QUEUE
 		]);
 	}
+	
 	
 	/**
 	 * find all papers not viewed by admin
