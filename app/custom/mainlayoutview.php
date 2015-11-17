@@ -31,6 +31,7 @@ class MainLayoutView extends BaseView
 				$this->addNavLink("Papers", "Pending Requests", URL_ROOT."/papers/review-requests", "PendingRequests");
 			
 			if($user->isAdmin()){
+				$this->addNavLink('Papers', 'Presentation Pipeline', URL_ROOT."/papers/presentation-pipeline",'PresentationPipeline');
 				$this->addNavGroup("Users", "user");
 				$this->addNavLink("Users", "User Invitations", URL_ROOT."/invitations");
 				$this->addNavLink("Users", "Admins", URL_ROOT."/admins");
