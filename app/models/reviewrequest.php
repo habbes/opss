@@ -35,7 +35,8 @@ class ReviewRequest extends DBModel
 	const RESPONSE_ACCEPTED = "accepted";
 	const RESPONSE_REJECTED = "rejected";
 	
-	const DEFAULT_VALIDITY  = 0;
+	//number of days before expiry
+	const DEFAULT_VALIDITY  = 28; //4 weeks
 	
 	/**
 	 * 

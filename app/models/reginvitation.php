@@ -19,7 +19,7 @@ class RegInvitation extends DBModel
 	protected $expiry_date;
 	protected $status;
 	protected $registration_code;
-	protected $payment;
+	protected $payment;		//in case invitation is for reviewer to review paper
 	
 	private $_user;
 	private $_admin;
@@ -126,7 +126,7 @@ class RegInvitation extends DBModel
 	}
 	
 	/**
-	 * 
+	 * payment to reviewer for reviewing paper
 	 * @param number $amount
 	 */
 	public function setPayment($amount)
@@ -135,7 +135,7 @@ class RegInvitation extends DBModel
 	}
 	
 	/**
-	 * 
+	 * payment to reviewer for reviewing paper
 	 * @return number
 	 */
 	public function getPayment()

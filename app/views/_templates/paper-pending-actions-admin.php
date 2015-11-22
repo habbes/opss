@@ -44,6 +44,10 @@
 		 				<li class="list-group-item">
 		 					<b>Sent to:</b> <?= escape($request->getReviewer()->getFullName()) ?><br>
 		 					<b>Sent on:</b> <?= Utils::siteDateTimeFormat($request->getDateSent())?><br>
+		 					<?php if(!$request->isPermanent()) {?>
+		 					<b>Expires on:</b> <?= Utils::siteDateFormat($request->getExpiryDate()) ?><br>
+		 					<?php } ?>
+		 					<b>Payment:</b> $<?= $request->getPayment() ?>
 		 					<form class="form" method="post" action="<?= $data->paperBaseUrl?>/manage-review-request">
 		 						<input type="hidden" name="request" value="<?= $request->getId()?>" >
 		 						<div class="form-group">

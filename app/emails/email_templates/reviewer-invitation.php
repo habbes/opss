@@ -15,7 +15,7 @@ The objective of this review is to assist the secretariat in:
 </ol>
 </p>
 <p>
-We would like to receive the review within <b>three weeks</b> so that we can write to the researchers without much delay.  AERC will pay you ${{payment}} for the two reviews as a token of our appreciation. 
+We would like to receive the review within <b>three weeks</b> so that we can write to the researchers without much delay.  AERC will pay you <b>${{payment}}</b> for the two reviews as a token of our appreciation. 
 
 Thank you in advance and I look forward to hearing from you soon.
 </p>
