@@ -92,7 +92,7 @@ $formerror = $data->errors;
 			
 			
 			<fieldset>
-				<legend>Area of Specialization</legend>
+				<legend>Thematic Area</legend>
 				<div class="form-group">
 	      		<!-- Thematic research -->
 	      			<div class="col-sm-10">
