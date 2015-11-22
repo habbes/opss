@@ -22,7 +22,8 @@ class ReviewRequestEmail extends Email
 			"name" => $reviewer->getFullName(),
 			"title" => $request->getPaper()->getTitle(),
 			"identifier" => $request->getPaper()->getIdentifier(),
-			"requestLink" => URL_PAPERS."/review-requests/".$request->getId()
+			"requestLink" => URL_PAPERS."/review-requests/".$request->getId(),
+			"payment" => $request->getPayment(),
 		]);
 		
 		return $e;

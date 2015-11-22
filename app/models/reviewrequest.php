@@ -19,6 +19,7 @@ class ReviewRequest extends DBModel
 	protected $response;
 	protected $response_text;
 	protected $request_text;
+	protected $payment;
 	
 	private $_admin;
 	private $_reviewer;
@@ -54,6 +55,7 @@ class ReviewRequest extends DBModel
 		$r->_paper = $paper;
 		$r->date_sent = Utils::dbDateFormat(time());
 		$r->status = self::STATUS_PENDING;
+		$t->payment = Review::DEFAULT_PAYMENT;
 		if(self::DEFAULT_VALIDITY > 0){
 			$r->expiry_date = Utils::dbDateFormat(time() + self::DEFAULT_VALIDITY * 24 * 3600);
 			$r->permanent = false;
@@ -109,6 +111,23 @@ class ReviewRequest extends DBModel
 		if(!$this->_paper)
 			$this->_paper = Paper::findById($this->paper_id);
 			return $this->_paper;
+	}
+	
+	/**
+	 * 
+	 * @param number $amount
+	 */
+	public function setPayment($amount)
+	{
+		$this->payment = $amount;
+	}
+	
+	/**
+	 * @return number
+	 */
+	public function getPayment()
+	{
+		return (int) $this->payment;
 	}
 	
 	/**

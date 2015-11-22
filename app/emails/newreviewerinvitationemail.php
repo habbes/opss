@@ -7,7 +7,7 @@ class NewReviewerInvitationEmail extends Email
 	 * @param string $name
 	 * @param string $email
 	 * @param Paper $paper
-	 * @param RegInvitation $invitation
+	 * @param RegInvitation $regInvitation
 	 * @return NewReviewerInvitationEmail
 	 */
 	public static function create($name, $email, $paper, $regInvitation)
@@ -17,7 +17,8 @@ class NewReviewerInvitationEmail extends Email
 			"name" => $name,
 			"title" => $paper->getTitle(),
 			"acceptLink" => URL_ROOT."/registration?invitation=".$regInvitation->getRegistrationCode(),
-			"declineLink" => URL_ROOT."/invitation-declined?reg-code=".$regInvitation->getRegistrationCode()
+			"declineLink" => URL_ROOT."/invitation-declined?reg-code=".$regInvitation->getRegistrationCode(),
+			"payment" => $regInvitation->getPayment(),
 		]);
 		
 		$e->innerMsg->addTo($email, $name);

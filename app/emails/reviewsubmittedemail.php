@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * email sent to admin after reviewer has submitted review
+ * @author Habbes
+ *
+ */
 class ReviewSubmittedEmail extends Email
 {
 	/**

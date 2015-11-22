@@ -23,6 +23,7 @@ class InviteReviewerHandler extends PaperHandler
 			$email = $this->trimPostVar("email");
 			$confirmEmail = $this->trimPostVar("confirm-email");
 			$name = $this->trimPostVar("name");
+			$amount = (int) $this->trimPostVar("amount");
 			
 			if($email != $this->trimPostVar("confirm-email")){
 				$errors[] = "EmailsDontMatch";
@@ -35,6 +36,7 @@ class InviteReviewerHandler extends PaperHandler
 			$inv = RegInvitation::create($this->user, UserType::REVIEWER, $email);
 			$inv->setName($name);
 			$inv->setPaper($this->paper);
+			$inv->setPayment($amount);
 			$inv->save();
 			NewReviewerInvitationEmail::create($name, $email, $this->paper, $inv)->send();
 			foreach(Admin::findAll() as $admin){
@@ -81,10 +83,12 @@ class InviteReviewerHandler extends PaperHandler
 	{
 		try {
 			$id = (int) $this->trimPostVar("reviewer");
+			$amount = (int) $this->trimPostVar("amount");
 			$reviewer = Reviewer::findById($id);
 			if(!$reviewer)
 				throw new OperationException(["ReviewerNotFound"]);
 			$request = ReviewRequest::create($this->user, $reviewer, $this->paper);
+			$request->setPayment($amount);
 			$request->save();
 			
 			

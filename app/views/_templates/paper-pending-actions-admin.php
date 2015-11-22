@@ -84,6 +84,13 @@
 		 					<span class="form-error help-block"><?= $formerror->reviewer ?></span>
 		 				</div>
 		 				<div class="form-group">
+		 					<div class="input-group">
+		 						<span class="input-group-addon">$</span>
+		 						<input type="number" name="amount" value="<?= $formdata->amount? $formdata->amount : 100 ?>" min="100"
+		 							class="form-control" placeholder="Amount to pay">
+		 					</div>
+		 				</div>
+		 				<div class="form-group">
 		 					<button class="btn btn-default" >Send Invitation</button>
 		 				</div>
 		 			</form>
@@ -103,6 +110,7 @@
 							<input type="email" name="email" class="form-control" placeholder="Email" value="<?= $formdata->email ?>">
 							<span class="form-error help-block"><?= $formerror->email ?></span>
 						</div>
+						
 						<div class="form-group">
 							<input type="email" name="confirm-email" class="form-control" placeholder="Confirm email" 
 								value="<?= $formdata->get("confirm-email") ?>">
@@ -112,6 +120,13 @@
 							<input type="text" name="name" class="form-control" placeholder="Name" value="<?= $formdata->name ?>">
 							<span class="form-error help-block"><?= $formerror->name ?></span>
 						</div>
+						<div class="form-group">
+		 					<div class="input-group">
+		 						<span class="input-group-addon">$</span>
+		 						<input type="number" name="amount" value="<?= $formdata->amount? $formdata->amount : 100 ?>" min="100"
+		 							class="form-control" placeholder="Amount to pay">
+		 					</div>
+		 				</div>
 						<div class="form-group">
 							<button class="btn btn-default">Send Invitation</button>
 						</div>

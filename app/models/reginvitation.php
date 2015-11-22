@@ -19,6 +19,7 @@ class RegInvitation extends DBModel
 	protected $expiry_date;
 	protected $status;
 	protected $registration_code;
+	protected $payment;
 	
 	private $_user;
 	private $_admin;
@@ -51,6 +52,7 @@ class RegInvitation extends DBModel
 		$inv->expiry_date = Utils::dbDateFormat(time() + $validity * 86400);
 		$inv->registration_code = Utils::uniqueRandomCode();
 		$inv->status = self::PENDING;
+		$inv->payment = Review::DEFAULT_PAYMENT;
 		
 		return $inv;
 	}
@@ -121,6 +123,24 @@ class RegInvitation extends DBModel
 	public function setName($name)
 	{
 		$this->name = $name;
+	}
+	
+	/**
+	 * 
+	 * @param number $amount
+	 */
+	public function setPayment($amount)
+	{
+		$this->payment = $amount;
+	}
+	
+	/**
+	 * 
+	 * @return number
+	 */
+	public function getPayment()
+	{
+		return (int) $this->payment;
 	}
 	
 	/**
