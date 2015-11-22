@@ -42,6 +42,7 @@ class OperationError
 	const PAPER_NOT_IN_WORKSHOP = "PaperNotInWorkshop";
 	const PAPER_NOT_PENDING = "PaperNotPending";
 	const PAPER_ALREADY_IN_WORKSHOP = "PaperAlreadyInWorkshop";
+	const PAPER_ALREADY_IN_REVIEW = "PaperAlreadyInReview";
 	//vet review errors
 	const VET_INVALID_VERDICT = "VetInvalidVerdict";
 	const VET_COMMENTS_EMPTY = "VetCommentsEmpty";

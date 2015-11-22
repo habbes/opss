@@ -46,6 +46,9 @@ class Review extends DBModel
 	const VERDICT_WORKSHOP_REVISION = "workshopRevision";
 	const VERDICT_WORKSHOP_REJECTED = "workshopRejected";
 	
+	//default payment
+	const DEFAULT_PAYMENT = 100;
+	
 	/**
 	 * 
 	 * @param Paper $paper
@@ -420,6 +423,16 @@ class Review extends DBModel
 			return [self::VERDICT_WORKSHOP_APPROVED, self::VERDICT_WORKSHOP_REVISION,
 					self::VERDICT_WORKSHOP_REJECTED
 			];
+	}
+	
+	public function onInsert(&$errors)
+	{
+		
+		//prevent simultineous reviews of the same paper
+		if(Review::findCurrentByPaper($this->getPaper())){
+			$errors[] = OperationError::PAPER_ALREADY_IN_REVIEW;
+		}
+		return true;
 	}
 	
 	/**

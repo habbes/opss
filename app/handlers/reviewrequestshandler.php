@@ -130,6 +130,9 @@ class ReviewRequestsHandler extends ReviewerHandler
 					case OperationError::REVIEW_REQUEST_INVALID:
 						$this->checkSelectedRequest();
 						break;
+					case OperationError::PAPER_ALREADY_IN_REVIEW:
+						$errors->action = "The paper is already being reviewed.";
+						break;
 				}
 			}
 			$this->viewParams->form = new DataObject($_POST);
