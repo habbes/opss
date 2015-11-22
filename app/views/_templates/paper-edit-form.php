@@ -28,7 +28,7 @@ $addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObje
 			</div>
 			
 			<div class="form-group">
-				<label>Country</label>
+				<label>Country of research</label>
 				<select class="form-control" type="text" name="country">
 					<?php foreach($data->countries as $country) {
 						$selected = $formdata->country == $country? "selected" : "";
@@ -38,11 +38,23 @@ $addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObje
 				</select>
 				<span class="form-error help-block"><?= $formerror->country ?></span>
 			</div>
+			<div class="form-group">
+				<label>Region of research</label>
+				<select class="form-control" type="text" name="region">
+					<option value="">Select region</option>
+					<?php foreach($data->regions as $region) {
+						$selected = $formdata->region == $region? "selected" : "";
+						?>
+					<option value="<?= $region ?>" <?= $selected ?> ><?= $region ?></option>
+					<?php } ?>
+				</select>
+				<span class="form-error help-block"><?= $formerror->region ?></span>
+			</div>
 			
 			<div class="form-group">
-				<label>Thematic Group</label>
+				<label>Thematic Area</label>
 				<select name="group" class="form-control">
-					<option value="">Select group for this paper</option>
+					<option value="">Select thematic area</option>
 					<?php foreach(PaperGroup::getValues() as $group => $name) { 
 						$selected = $formdata->group == $group? "selected" : "";
 					?>

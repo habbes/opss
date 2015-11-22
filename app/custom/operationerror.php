@@ -37,6 +37,7 @@ class OperationError
 	const PAPER_TITLE_EMPTY = "PaperTitleEmpty";
 	const PAPER_LANGUAGE_EMPTY = "PaperLanguageEmpty";
 	const PAPER_COUNTRY_EMPTY = "PaperCountryEmpty";
+	const PAPER_REGION_EMPTY = "PaperRegionEmpty";
 	const PAPER_MAX_AUTHORS_REACHED = "PaperMaxAuthorsReached";
 	const PAPER_THEMATIC_AREA_INVALID = "PaperThematicAreaInvalid";
 	const PAPER_NOT_IN_WORKSHOP = "PaperNotInWorkshop";

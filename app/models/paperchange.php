@@ -31,7 +31,8 @@ class PaperChange extends DBModel
 	const ACTION_TITLE_CHANGED = "titleChanged";
 	const ACTION_LANGUAGE_CHANGED = "languageChanged";
 	const ACTION_COUNTRY_CHANGED = "countryChanged";
-	const ACTION_GROUP_CHANGED = "groupChanged";
+	const ACTION_REGION_CHANGED = "regionChanged";
+	const ACTION_THEMATIC_AREA_CHANGED = "thematicAreaChanged";
 	const ACTION_AUTHOR_ADDED = "authorAdded";
 	const ACTION_AUTHOR_REMOVED = "authorRemoved";
 	const ACTION_FILE_CHANGED = "fileChanged";
@@ -252,15 +253,30 @@ class PaperChange extends DBModel
 	}
 	
 	/**
+	 *
+	 * @param Paper $paper
+	 * @param string $from
+	 * @param string $to
+	 * @return PaperChange
+	 */
+	public static function createRegionChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_REGION_CHANGED);
+		$pc->setArg("from", $from);
+		$pc->setArg("to", $to);
+		return $pc;
+	}
+	
+	/**
 	 * 
 	 * @param Paper $paper
 	 * @param int $from PaperGroup value
 	 * @param int $to PaperGroup value
 	 * @return PaperChange
 	 */
-	public static function createGroupChanged($paper, $from, $to)
+	public static function createThematicAreaChanged($paper, $from, $to)
 	{
-		$pc = static::create($paper, self::ACTION_GROUP_CHANGED);
+		$pc = static::create($paper, self::ACTION_THEMATIC_AREA_CHANGED);
 		$pc->setArg("from", $from);
 		$pc->setArg("to", $to);
 		return $pc;

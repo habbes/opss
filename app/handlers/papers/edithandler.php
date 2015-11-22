@@ -19,9 +19,12 @@ class EditHandler extends PaperHandler
 			$this->postVar("language") : $this->paper->getLanguage();
 		$form->group = $this->postVar("group")?
 			$this->postVar("group") : $this->paper->getThematicArea();
+		$form->region= $this->postVar("region")?
+			$this->postVar("region") : $this->paper->getRegion();
 		$this->viewParams->form = $form;
 		$this->viewParams->countries = SysDataList::get("countries-en");
 		$this->viewParams->languages = SysDataList::get("languages-en");
+		$this->viewParams->regions = SysDataList::get("regions");
 		
 		if($this->session()->paperChangesSaved){
 			$this->setResultMessage("Changes saved successfully.", "success");
@@ -61,16 +64,19 @@ class EditHandler extends PaperHandler
 			$oldLanguage = $this->paper->getLanguage();
 			$oldCountry = $this->paper->getCountry();
 			$oldGroup = $this->paper->getThematicArea();
+			$oldRegion = $this->paper->getRegion();
 			
 			$newTitle = $this->trimPostVar("title");
 			$newLanguage = $this->trimPostVar("language");
 			$newCountry = $this->trimPostVar("country");
 			$newGroup = $this->trimPostVar("group");
+			$newRegion = $this->trimPostVar("region");
 			
 			$this->paper->setTitle($newTitle);
 			$this->paper->setLanguage($newLanguage);
 			$this->paper->setCountry($newCountry);
 			$this->paper->setThematicArea($newGroup);
+			$this->paper->setRegion($newRegion);
 			
 			$this->paper->save();
 			
@@ -90,7 +96,12 @@ class EditHandler extends PaperHandler
 			}
 			
 			if($oldGroup != $this->paper->getThematicArea()){
-				PaperChange::createGroupChanged($this->paper, $oldGroup, $this->paper->getGroup())->save();
+				PaperChange::createThematicAreaChanged($this->paper, $oldGroup, $this->paper->getGroup())->save();
+				$changesMade = true;
+			}
+			
+			if($oldRegion != $this->paper->getRegion()){
+				PaperChange::createRegionChanged($this->paper, $oldRegion, $this->paper->getRegion())->save();
 				$changesMade = true;
 			}
 			
@@ -112,6 +123,8 @@ class EditHandler extends PaperHandler
 					case OperationError::PAPER_COUNTRY_EMPTY:
 						$errors->country = "You did not specify a country.";
 						break;
+					case OperationError::PAPER_GROUP_INVALID:
+						$errors->group = "Invalid group selected.";
 				}
 			}
 			

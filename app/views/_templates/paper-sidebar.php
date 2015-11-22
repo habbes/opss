@@ -54,7 +54,11 @@
 		</div>
 		<div>
 			<span class="font-bold">Country of Research</span><br>
-			<span><?= $data->paper->getCountry() ?></span>
+			<span><?= $data->paper->getCountry()? $data->paper->getCountry() : "n/a" ?></span>
+		</div>
+		<div>
+			<span class="font-bold">Region</span><br>
+			<span><?= $data->paper->getRegion()? $data->paper->getRegion() : "n/a" ?></span>
 		</div>
 		<div>
 			<span class="font-bold">Level</span><br>

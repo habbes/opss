@@ -13,6 +13,7 @@ class Paper extends DBModel
 	protected $title;
 	protected $date_submitted;
 	protected $country;
+	protected $region;
 	protected $language;
 	protected $file_id;
 	protected $cover_id;

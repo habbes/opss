@@ -62,6 +62,19 @@ $formerror = $data->errors;
 					</select>
 				</div>
 			</div>
+			<div class="form-group">
+			<!-- Region -->
+				<div class="col-sm-10">
+					<label for="country">Region of research</label>
+					<select class="form-control" name="region" id="region" placeholder="Region" required>
+						<option value="">Region of research</option>
+						<?php foreach($data->regions as $region) {?>
+						<option value="<?= $region ?>"  <?= $region == $formdata->region? "selected" : "" ?>><?= $region ?></option>
+						<?php } ?>
+						<span class="help-block text-danger form-error" id="region-error"><?= escape($formerror->region) ?></span>
+					</select>
+				</div>
+			</div>
 			
 			<fieldset>
 				<!-- Co-Authors  -->

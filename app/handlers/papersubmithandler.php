@@ -7,6 +7,7 @@ class PaperSubmitHandler extends ResearcherHandler
 	{
 		$this->viewParams->countries = SysDataList::get("countries-en");
 		$this->viewParams->languages = SysDataList::get("languages-en");
+		$this->viewParams->regions = SysDataList::get('regions');
 		$this->renderView("SubmitPaper");
 	}
 	
@@ -23,6 +24,7 @@ class PaperSubmitHandler extends ResearcherHandler
 			$paper->setTitle($this->trimPostVar("title"));
 			$paper->setLanguage($this->trimPostVar("language"));
 			$paper->setCountry($this->trimPostVar("country"));
+			$paper->setRegion($this->trimPostVar("region"));
 			
 			//file checks
 			$document = $this->fileVar("document");
@@ -112,6 +114,9 @@ class PaperSubmitHandler extends ResearcherHandler
 						break;
 					case OperationError::PAPER_COUNTRY_EMPTY:
 						$formerror->country = "Please specify the country of research.";
+						break;
+					case OperationError::PAPER_REGION_EMPTY:
+						$formerror->region = "Please specify the region.";
 						break;
 					case "Author1NameEmpty":
 						$formerror->set("author1-name", "Please specify the name of the co-author.");
