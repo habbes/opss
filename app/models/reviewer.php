@@ -11,7 +11,7 @@ class Reviewer extends UserRole
 	
 	public function getPapers()
 	{
-		return Paper::findAll("id=(SELECT paper_id FROM reviews WHERE reviewer_id=? AND status=?)", 
+		return Paper::findAll("id IN (SELECT paper_id FROM reviews WHERE reviewer_id=? AND status=?)", 
 				[ $this->user->getId(), Review::STATUS_ONGOING]);
 	}
 	
@@ -22,7 +22,7 @@ class Reviewer extends UserRole
 	public function countPapers()
 	{
 		//TODO find a way to refactor the count, the query is too redundant
-		return Paper::count("id=(SELECT paper_id FROM reviews WHERE reviewer_id=? AND status=?)", 
+		return Paper::count("id IN (SELECT paper_id FROM reviews WHERE reviewer_id=? AND status=?)", 
 				[ $this->user->getId(), Review::STATUS_ONGOING]);
 	}
 	public function hasResidence()
