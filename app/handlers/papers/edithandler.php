@@ -3,6 +3,11 @@
 class EditHandler extends PaperHandler
 {
 	
+	protected function getAllowedRoles()
+	{
+		return [UserType::ADMIN, UserType::RESEARCHER];
+	}
+	
 	private function showPage()
 	{
 		$form = new DataObject();
@@ -12,6 +17,8 @@ class EditHandler extends PaperHandler
 			$this->postVar("country") : $this->paper->getCountry();
 		$form->language = $this->postVar("language")?
 			$this->postVar("language") : $this->paper->getLanguage();
+		$form->group = $this->postVar("group")?
+			$this->postVar("group") : $this->paper->getThematicArea();
 		$this->viewParams->form = $form;
 		$this->viewParams->countries = SysDataList::get("countries-en");
 		$this->viewParams->languages = SysDataList::get("languages-en");
@@ -53,14 +60,17 @@ class EditHandler extends PaperHandler
 			$oldTitle = $this->paper->getTitle();
 			$oldLanguage = $this->paper->getLanguage();
 			$oldCountry = $this->paper->getCountry();
+			$oldGroup = $this->paper->getThematicArea();
 			
 			$newTitle = $this->trimPostVar("title");
 			$newLanguage = $this->trimPostVar("language");
 			$newCountry = $this->trimPostVar("country");
+			$newGroup = $this->trimPostVar("group");
 			
 			$this->paper->setTitle($newTitle);
 			$this->paper->setLanguage($newLanguage);
 			$this->paper->setCountry($newCountry);
+			$this->paper->setThematicArea($newGroup);
 			
 			$this->paper->save();
 			
@@ -76,6 +86,11 @@ class EditHandler extends PaperHandler
 			
 			if($oldCountry != $this->paper->getCountry()){
 				PaperChange::createCountryChanged($this->paper, $oldCountry, $this->paper->getCountry())->save();
+				$changesMade = true;
+			}
+			
+			if($oldGroup != $this->paper->getThematicArea()){
+				PaperChange::createGroupChanged($this->paper, $oldGroup, $this->paper->getGroup())->save();
 				$changesMade = true;
 			}
 			

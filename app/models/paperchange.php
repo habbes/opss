@@ -31,6 +31,7 @@ class PaperChange extends DBModel
 	const ACTION_TITLE_CHANGED = "titleChanged";
 	const ACTION_LANGUAGE_CHANGED = "languageChanged";
 	const ACTION_COUNTRY_CHANGED = "countryChanged";
+	const ACTION_GROUP_CHANGED = "groupChanged";
 	const ACTION_AUTHOR_ADDED = "authorAdded";
 	const ACTION_AUTHOR_REMOVED = "authorRemoved";
 	const ACTION_FILE_CHANGED = "fileChanged";
@@ -245,6 +246,21 @@ class PaperChange extends DBModel
 	public static function createCountryChanged($paper, $from, $to)
 	{
 		$pc = static::create($paper, self::ACTION_COUNTRY_CHANGED);
+		$pc->setArg("from", $from);
+		$pc->setArg("to", $to);
+		return $pc;
+	}
+	
+	/**
+	 * 
+	 * @param Paper $paper
+	 * @param int $from PaperGroup value
+	 * @param int $to PaperGroup value
+	 * @return PaperChange
+	 */
+	public static function createGroupChanged($paper, $from, $to)
+	{
+		$pc = static::create($paper, self::ACTION_GROUP_CHANGED);
 		$pc->setArg("from", $from);
 		$pc->setArg("to", $to);
 		return $pc;

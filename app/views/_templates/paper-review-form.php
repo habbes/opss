@@ -13,23 +13,7 @@ $formerror = $data->reviewErrors? $data->reviewErrors: new DataObject();
 		</div>
 		<div class="panel-body">
 			<form class="form-vertical" method="post" action="<?= $data->paperBaseUrl ?>/review" enctype="multipart/form-data">
-				<fieldset>
-					<legend>Comments for secretariate</legend>
-					<span class="help-block">These comments will not be visible to the author</span>
-					<div class="form-group">
-						<label>Comments for the secretariate</label>
-						<textarea class="form-control" name="comments" rows="7" placeholder="These comments will not be visible to the author"><?php 
-							escape($formdata->comments)
-						?></textarea>
-						<span class="form-error help-block"><?= $formerror->comments ?></span>
-					</div>
-					or
-					<div class="form-group">
-						<label>Upload detailed comments (not visible to author)</label>
-						<input type="file" name="file">
-						<span class="form-error help-block"><?= $formerror->file ?></span>
-					</div>
-				</fieldset>
+				
 				
 				<fieldset>
 					<legend>Comments for researcher</legend>
@@ -66,6 +50,24 @@ $formerror = $data->reviewErrors? $data->reviewErrors: new DataObject();
 							<?php }?>
 						</select>
 						<span class="form-error help-block"><?= $formerror->recommendation ?></span>
+					</div>
+				</fieldset>
+				
+				<fieldset>
+					<legend>Comments for secretariate</legend>
+					<span class="help-block">These comments will not be visible to the author</span>
+					<div class="form-group">
+						<label>Comments for the secretariate</label>
+						<textarea class="form-control" name="comments" rows="7" placeholder="These comments will not be visible to the author"><?php 
+							escape($formdata->comments)
+						?></textarea>
+						<span class="form-error help-block"><?= $formerror->comments ?></span>
+					</div>
+					or
+					<div class="form-group">
+						<label>Upload detailed comments (not visible to author)</label>
+						<input type="file" name="file">
+						<span class="form-error help-block"><?= $formerror->file ?></span>
 					</div>
 				</fieldset>
 				

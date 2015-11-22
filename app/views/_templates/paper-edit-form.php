@@ -40,6 +40,19 @@ $addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObje
 			</div>
 			
 			<div class="form-group">
+				<label>Thematic Group</label>
+				<select name="group" class="form-control">
+					<option value="">Select group for this paper</option>
+					<?php foreach(PaperGroup::getValues() as $group => $name) { 
+						$selected = $formdata->group == $group? "selected" : "";
+					?>
+					<option value="<?=$group?>" <?= $selected?> ><?= $name ?></option>
+					<?php } ?>
+				</select>
+				<span class="form-error help-block"><?= $formerror->group ?></span>
+			</div>
+			
+			<div class="form-group">
 				<button class="btn btn-default">Save Changes</button>
 			</div>
 			
@@ -47,7 +60,8 @@ $addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObje
 	</div>
 	<!-- end paper details -->
 	
-	<!-- paper details -->
+	<?php if($data->user->isResearcher()){?>
+	<!-- paper files -->
 	<div>
 		<h4>Files</h4>
 		<form class="form-vertical" enctype="multipart/form-data" method="post" action="<?=$data->paperBaseUrl?>/edit/files">
@@ -118,4 +132,5 @@ $addAuthorErrors = $data->addAuthorErrors? $data->addAuthorErrors : new DataObje
 	</div>
 	
 	<!-- end authors -->
+	<?php } // if($data->user->isResearcher())?>
 </div>
