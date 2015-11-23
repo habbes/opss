@@ -38,6 +38,15 @@ class RegistrationHandler extends LoggedOutHandler
 	{
 		$this->viewParams->titles = SysDataList::get("titles-en");
 		$this->viewParams->formType = "admin";
+		if($this->invitation){
+			$this->viewParams->email = $this->invitation->getEmail();
+			$names = explode(' ', $this->invitation->getName());
+			$this->viewParams->firstname = $names[0];
+			if(count($names) > 1){
+				$this->viewParams->lastname = $names[1];
+			}
+			$this->viewParams->username = implode('', $names );
+		}
 		$this->renderView("Registration");
 	}
 	
