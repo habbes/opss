@@ -8,6 +8,8 @@ class AllPapersView extends LoggedInView
 		$this->data->pageHeading = "All Papers";
 		$this->setActiveNavLink("Papers", "All");
 		//show search form for admin
+		$this->data->searchEndpoint = "papers";
+		$this->data->searchUrl = "papers";
 		$this->data->searchFieldId = "papers-search-field";
 		$this->data->tableContainerId = "papers-table-container";
 		$this->data->recordsTable = $this->read("papers-table");

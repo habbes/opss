@@ -86,6 +86,18 @@ abstract class UserRole
 	//ABSTRACT METHODS
 	
 	/**
+	 * find all users in this role with the given query
+	 * @param string $query
+	 * @param array $values
+	 * @return array
+	 */
+	public static function find($query, $values = [])
+	{
+		$values = array_merge([static::$type], $values);	
+		return User::find("type=? AND ($query)", $values)->fetchAll();
+	}
+	
+	/**
 	 * find all users with this role
 	 * @return array(User)
 	 */

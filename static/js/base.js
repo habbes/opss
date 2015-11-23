@@ -82,3 +82,17 @@ var PaperSearcher = {
 			Searcher.search(query);
 		}
 }
+
+var makeSearcher = function(endpoint, url){
+	var targetId = "#"+endpoint+"-table-container";
+	if(typeof(url) == undefined){
+		url = "/" + encodeURIComponent(endpoint) + "/search";
+	}
+	
+	return function(query){
+		Searcher.target = targetId;
+		Searcher.url = url;
+		Searcher.search(query);
+	}
+	
+}
