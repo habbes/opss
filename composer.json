@@ -1,5 +1,6 @@
 {
     "require": {
-        "intervention/image": "~2.2"
+        "intervention/image": "~2.2",
+        "josegonzalez/dotenv": "^1.0"
     }
 }
