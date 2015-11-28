@@ -86,7 +86,7 @@ $routes = [
 		['^workshops\/(\w+)-(\d+)\/?$', "WorkshopPapers"],
 		//this route is only used for initial setup to allow an inital admin to sign up
 		// after which it should be disabled
-		['^setup\/admin\/?$', "AdminSetup"],
+		//['^setup\/admin\/?$', "AdminSetup"],
 		
 		
 		
