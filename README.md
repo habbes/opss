@@ -27,6 +27,7 @@ and `.htaccess` to `/opss`.
 ### Setup Admin ###
 You will need to setup at least one Admin to properly use the site. A user cannot register
 himself as Admin, without invitation from an existing admin. To register the first admin
+
 * Open the `app/routes.php` file
 * Find the last route in the list, the route for `setup/admin` and uncomment that line
 * This will make the `setup/admin` route accessible
@@ -35,6 +36,29 @@ himself as Admin, without invitation from an existing admin. To register the fir
 
 ## Project Structure ##
 
+The root contains the a few files and folders
+
+* __index.php__, the starting point, loads necessary files and bootstraps the application
+* __database.sql__ is the mysql dump of the database structure
+* __.env__ contains environment variable settings (you should create this from .env.example template)
+* __.htaccess__ this does the url rewriting
+* __app/__ contains the main application files
+* __vendor/__ contains external libraries installed with composer
+* __static/__ contains static assets (js, css, etc.), they are accessible through the url /public
+* __composer__ composer dependencies
+
+The __app__ folder is where most of the code is written. It contains the core classes of the system, which are store in the __core__ folder. These are the core of the framework and could be used in other applications. You should not change these files. The __config__ directory stores the configurations file. The __data__ directory stores dynamically uploaded data files, such as submitted papers, profile photos, etc. The __messages__ directory stores classes used to create notification messages. The __emails__ directory stores classes used to create email messages.The __sys_data__ directory stores files used to generate options such as country lists, language lists, etc. The app folder also contains the __routes.php__ which registers all the url routes and their associated handlers.
+
+If you want to create custom helper or base classes, store them in the __custom__ directory.
+
+### MVC ###
+
+The system is loosely based on an MVC architecure. The request cycle starts from the index.php file, which creates an instance of an Application (defined in app/core/application.php) passing the url request. The application searches through the routes listed in `routes.php`, when it finds a matching route, it passes the request to the associated `RequestHandler`. The RequestHandler is set to handler GET or POST requests (or both) and return a response, mostly through a `View`. A View loads and combines various templates to which it passes data from the RequestHandler to create a complete response that is sent back to the browser.
+
+To create a request handler, create a subclass of `RequestHandler` in the __handlers__ directory. The name of the file must match the name of the class in lowercase. Example: `class MyHandler extends RequestHandler`. The base `RequestHandler` is defined in app/core/requesthandler.php.
+To create a view, create a subclass of `View`in the __views__ folder. Example: `class MyView extends View`. The base `View` is defined in app/core/view.php
+
+You can find, and add, reusable subclasses of `RequestHandler` and `View` in the __custom__ folder.
 
 ## Contribution guidelines ##
 
