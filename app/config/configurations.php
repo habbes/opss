@@ -2,23 +2,23 @@
 
 $config = [
 		"database" => [
-			"hostname" => "localhost",
-			"username" => "root",
-			"password" => "",
-			"dbname" => "aerc_opss",
+			"hostname" => env('DB_HOST'),
+			"username" => env('DB_USER'),
+			"password" => env('DB_PASS'),
+			"dbname" => env('DB_NAME'),
 		],
 		
 		"smtp" => [
-			"host" => "smtp.mail.yahoo.com",
-			"port" => "465",
-			"security" => "ssl",
-			"uname" => "nderitukelvin19@yahoo.com",
-			"pass" => "blackphantom",
-			"from" => "nderitukelvin19@yahoo.com",
-			"from_name" => "AERC OPSS"
+			"host" => env('SMTP_HOST'),
+			"port" => env('SMTP_PORT', 465),
+			"security" => env('SMTP_SECURITY', 'ssl'),
+			"uname" => env('SMTP_USER'),
+			"pass" => env('SMTP_PASS'),
+			"from" => env('SMTP_FROM'),
+			"from_name" => env('SMTP_FROM_NAME')
 		],
 		
 		"date" => [
-			"timezone" => "Africa/Nairobi"
+			"timezone" => env('TIMEZONE', "Africa/Nairobi")
 		]
 ];
