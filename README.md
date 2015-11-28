@@ -7,7 +7,7 @@ This README would normally document whatever steps are necessary to get your app
 * Paper submission system for the AERC
 * [Current Production Site](http://aercopss.newmark.co.ke)
 
-### Setting up ###
+### Setup Environment ###
 
 * Clone the repo: `git clone https://habbes@bitbucket.org/habbes/aerc_opss.git`
 * You need [Composer](https://getcomposer.org/doc/00-intro.md) installed.
