@@ -3,11 +3,12 @@
 require_once "vendor/autoload.php";
 
 // load environment variables from .env file
-if(file_exists(__DIR__ . DIRECTORY_SEPARATOR . '.ev')){
-	$envLoader = new josegonzales\Dotenv\Load(__DIR__. DIRECTORY_SEPARATOR . '.env');
+if(file_exists(__DIR__ . DIRECTORY_SEPARATOR . '.env')){
+	$envLoader = new josegonzalez\Dotenv\Loader(__DIR__. DIRECTORY_SEPARATOR . '.env');
 	$envLoader->parse()->toEnv();
 }
 
+require_once "app/helpers.php";
 require_once "app/dirs.php";
 require_once "app/autoload.php";
 require_once "app/routes.php";
