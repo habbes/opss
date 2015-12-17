@@ -1,5 +1,7 @@
 <?php
 
+
+
 $config = [
 		"database" => [
 			"hostname" => env('DB_HOST'),
