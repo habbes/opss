@@ -25,7 +25,10 @@ class Application
 	{
 		$this->url = $url;
 		$this->routes = $routes;
-		$this->findHandler() or die("Page not found!");
+		if(!$this->findHandler()){
+			header("HTTP/1.1 404 Not Found");
+			die("Pafe not found!");
+		}
 		Session::getInstance();
 	}
 	
