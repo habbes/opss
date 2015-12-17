@@ -1,5 +1,8 @@
 
-var URL_ROOT = window.location.origin + (URL_SUBDIR? URL_SUBDIR : '');
+var URL_ROOT = window.location.origin;
+if(typeof URL_SUBDIR !== 'undefined'){
+  URL_ROOT += URL_SUBDIR;
+}
 
 function showAlertMessage(message, type)
 {
