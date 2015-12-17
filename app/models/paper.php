@@ -144,13 +144,16 @@ class Paper extends DBModel
 		return $this->viewed_by_admin;
 	}
 	
+	
+	
 	/**
 	 * 
+	 * @param string $status
 	 * @return string
 	 */
-	public function getStatusString()
+	public static function getStatusStringStatic($status)
 	{
-		switch($this->status){
+		switch($status){
 			case Paper::STATUS_GRACE_PERIOD:
 				return "Grace Period";
 			case Paper::STATUS_PENDING:
@@ -185,8 +188,13 @@ class Paper extends DBModel
 			case Paper::STATUS_COMMUNICATIONS:
 				return "Sent to communications";
 			default:
-				return $this->status;
+				return $status;
 		}
+	}
+	
+	public function getStatusString()
+	{
+		return static::getStatusStringStatic($this->status);
 	}
 	
 	public function getThematicArea()

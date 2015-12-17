@@ -20,7 +20,7 @@ class Usershandler extends AdminHandler{
 		
 		
 		if($query){
-			$this->viewParams->reviewers = Reviewer::find("first_name like ? OR last_name like ?",["%$query%", "%$query%"]);
+			$this->viewParams->reviewers = Reviewer::find("first_name like ? OR last_name like ? OR title like ?",["%$query%", "%$query%", "%$query%"]);
 				
 		}
 		else {

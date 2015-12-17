@@ -1,5 +1,5 @@
 
-var URL_ROOT = window.location.origin + "/aerc_opss";
+var URL_ROOT = window.location.origin + (URL_SUBDIR? URL_SUBDIR : '');
 
 function showAlertMessage(message, type)
 {
@@ -68,9 +68,21 @@ var Searcher = {
 		target : null,
 		searchCallback : null,
 		
-		search : function(query)
+		search : function(query, filters)
 		{
-			$(Searcher.target).load(URL_ROOT + "/" + Searcher.url, "q=" + query);
+			var filterString = "";
+			if(filters){
+				filterString = "&filters=true";
+			}
+			if(typeof filters == 'object'){
+				for(name in filters){
+					filterString += "&"+ encodeURIComponent(name) + "=" + encodeURIComponent(filters[name]);
+				}
+			}
+			else if(typeof filters == 'string'){
+				filterString = '&'+filters;
+			}
+			$(Searcher.target).load(URL_ROOT + "/" + Searcher.url, "q=" + query + filterString);
 			
 		},
 }
@@ -89,10 +101,18 @@ var makeSearcher = function(endpoint, url){
 		url = "/" + encodeURIComponent(endpoint) + "/search";
 	}
 	
+
+	
 	return function(query){
+		var filters = {};
+		$.each($('.records-search-filters-container .form-control'),function(index, input){
+			console.log('input', input);
+			filters[$(input).attr('name')] = $(input).val();
+		});
+		console.log('filters parsed', filters);
 		Searcher.target = targetId;
 		Searcher.url = url;
-		Searcher.search(query);
+		Searcher.search(query, filters);
 	}
 	
 }

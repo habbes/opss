@@ -13,9 +13,20 @@ $(function(){
 //	});
 	
 	var searchField = $('.search-field');
+	var filterFields = $('.records-search-filters-container .form-control');
 	window.searchRecords = makeSearcher($(searchField).data('endpoint'), $(searchField).data('url'));
 	
 	$(searchField).keyup(function(){
 		searchRecords($(this).val());
 	});
+	
+	$(filterFields).change(function(){
+		searchRecords($(searchField).val());
+	});
+	
+	$('#search-button').click(function(){
+		console.log('Here');
+		searchRecords($(searchField).val());
+	});
+	
 });
